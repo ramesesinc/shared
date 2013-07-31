@@ -34,11 +34,11 @@ public class MainPage extends javax.swing.JPanel {
 
         setPreferredSize(new java.awt.Dimension(623, 423));
         jPanel3.setPreferredSize(new java.awt.Dimension(30, 30));
-        xButton2.setText("OK");
         xButton2.setName("save");
+        xButton2.setText("OK");
 
-        xButton1.setText("Cancel");
         xButton1.setName("_close");
+        xButton1.setText("Cancel");
 
         org.jdesktop.layout.GroupLayout jPanel3Layout = new org.jdesktop.layout.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -58,9 +58,9 @@ public class MainPage extends javax.swing.JPanel {
         );
 
         xLabel1.setBackground(new java.awt.Color(51, 102, 255));
-        xLabel1.setForeground(new java.awt.Color(255, 255, 255));
         xLabel1.setDepends(new String[] {"selection"});
         xLabel1.setFont(new java.awt.Font("Tahoma", 1, 12));
+        xLabel1.setForeground(new java.awt.Color(255, 255, 255));
         xLabel1.setName("selection.caption");
         xLabel1.setOpaque(true);
         xLabel1.setPadding(new java.awt.Insets(4, 4, 4, 4));
@@ -78,10 +78,10 @@ public class MainPage extends javax.swing.JPanel {
         );
         xSubFormPanel1Layout.setVerticalGroup(
             xSubFormPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 343, Short.MAX_VALUE)
+            .add(0, 358, Short.MAX_VALUE)
         );
 
-        xList1.setExpression("#{caption}");
+        xList1.setExpression("#{item.caption}");
         xList1.setItems("preferences");
         xList1.setName("selection");
         jScrollPane1.setViewportView(xList1);
@@ -110,7 +110,7 @@ public class MainPage extends javax.swing.JPanel {
                     .add(layout.createSequentialGroup()
                         .add(xLabel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(xSubFormPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE))
+                        .add(xSubFormPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE))
                     .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)

@@ -42,7 +42,7 @@
                   <Group type="102" attributes="0">
                       <Component id="xLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="xSubFormPanel1" pref="343" max="32767" attributes="0"/>
+                      <Component id="xSubFormPanel1" pref="358" max="32767" attributes="0"/>
                   </Group>
                   <Component id="jScrollPane1" pref="372" max="32767" attributes="0"/>
               </Group>
@@ -84,14 +84,14 @@
       <SubComponents>
         <Component class="com.rameses.rcp.control.XButton" name="xButton2">
           <Properties>
-            <Property name="text" type="java.lang.String" value="OK"/>
             <Property name="name" type="java.lang.String" value="save"/>
+            <Property name="text" type="java.lang.String" value="OK"/>
           </Properties>
         </Component>
         <Component class="com.rameses.rcp.control.XButton" name="xButton1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Cancel"/>
             <Property name="name" type="java.lang.String" value="_close"/>
+            <Property name="text" type="java.lang.String" value="Cancel"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -101,9 +101,6 @@
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="66" red="33" type="rgb"/>
         </Property>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-        </Property>
         <Property name="depends" type="[Ljava.lang.String;" editor="org.netbeans.beaninfo.editors.StringArrayEditor">
           <StringArray count="1">
             <StringItem index="0" value="selection"/>
@@ -111,6 +108,9 @@
         </Property>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="12" style="1"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
         <Property name="name" type="java.lang.String" value="selection.caption"/>
         <Property name="opaque" type="boolean" value="true"/>
@@ -142,7 +142,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="343" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="358" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -156,7 +156,7 @@
       <SubComponents>
         <Component class="com.rameses.rcp.control.XList" name="xList1">
           <Properties>
-            <Property name="expression" type="java.lang.String" value="#{caption}"/>
+            <Property name="expression" type="java.lang.String" value="#{item.caption}"/>
             <Property name="items" type="java.lang.String" value="preferences"/>
             <Property name="name" type="java.lang.String" value="selection"/>
           </Properties>
