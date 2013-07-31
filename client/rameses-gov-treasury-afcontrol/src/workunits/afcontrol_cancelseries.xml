@@ -1,0 +1,63 @@
+<workunit>
+    
+    <invokers>
+        <invoker type="afcontrol:cancelseries" caption="Cancel Series" target="popup"/>
+    </invokers>
+    
+    <code>
+        <![CDATA[    
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.osiris2.client.*;
+        import com.rameses.osiris2.common.*;
+        
+        class AFControlCancelSeriesController { 
+            def entity;
+            def entry = [:];
+            def saveHandler;
+            
+            @Service("AFControlService")
+            def afSvc;
+            
+            @PropertyChangeListener
+            def listener = [
+                "entry.(current|end)series": { o->
+                    entry.qty = (entry.endseries - entry.startseries) + 1;
+                    if(entry.qty<0) entry.qty = 0;
+                }
+            ]
+            
+            def doOk() {
+                if( entry.startseries < entity.currentseries ||
+                    entry.startseries > entity.endseries )
+                  throw new Exception("Invalid start series");    
+                    
+                if( entry.endseries < entity.currentseries || 
+                    entry.endseries > entity.endseries  ) 
+                  throw new Exception("Invalid end series");  
+                  
+                if(entry.endseries < entry.startseries)
+                    throw new Exception("End series must be greater than or equal to start series"); 
+                    
+                if(MsgBox.confirm("You are about to cancel the following series. Changes cannot be reversed. Continue?")) {
+                    entry.controlid = entity.objid;
+                    entry.collector = entity.collector;
+                    entry.currentseries = entity.currentseries;
+                    afSvc.cancelSeries(entry);
+                    if(saveHandler) saveHandler();
+                    return "_close";
+                }
+            }
+            
+            def doCancel() {
+                return "_close";
+            }
+            
+        }
+        ]]>
+    </code>
+    
+     <pages>
+        <page  template="com.rameses.gov.treasury.afcontrol.AFControlCancelSeries"/>
+    </pages>
+</workunit>

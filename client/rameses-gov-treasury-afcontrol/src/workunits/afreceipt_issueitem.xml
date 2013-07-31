@@ -1,0 +1,78 @@
+<workunit>
+    <invokers>
+        <invoker type="afreceipt:issueitem" caption="Issue AF"  target="popup" resizable="false"/>
+    </invokers>
+    
+    <code>
+        <![CDATA[    
+
+        import com.rameses.rcp.annotations.*
+        import com.rameses.rcp.common.*
+        import com.rameses.osiris2.client.*
+        import com.rameses.osiris2.common.*
+        
+        class  IRAFAddItem  {
+        
+            @Binding
+            def binding;
+            
+            @Service("AFInventoryService")
+            def afSvc;
+            
+            def request;
+            def receipt;
+            
+            def saveHandler;
+            def selectedItem;
+            
+            def qty;
+            
+            @PropertyChangeListener
+            def propHandler = [
+                "selectedItem": { o->
+                    qty = o.qty;
+                },
+                "qty": { o->
+                    receipt.items = [];
+                    availableItemsModel.reload();
+                }
+            ]
+            
+            def getAfList() {
+                return request.items;
+            }
+            
+            void checkAvailable() {
+                receipt.items = [];
+                if(qty> selectedItem.qty)
+                    throw new Exception("Qty to issue must not be greater than qty requested");
+                selectedItem.qtyreceived = qty;
+                selectedItem.qtybalance = selectedItem.qty-qty;
+                def p =[af:selectedItem.af, qty: qty];
+                def result = afSvc.getAvailableAF(p);
+                receipt.items.addAll( result.items );
+                availableItemsModel.reload();
+            }
+            
+            def availableItemsModel = [
+                fetchList: { o->
+                    return receipt.items;
+                }
+            ] as BasicListModel;
+            
+            def doClose() {
+                saveHandler();
+                return "_close";
+            }
+            
+        }
+        
+        ]]>
+        
+    </code>
+    
+    <pages>
+        <page template="com.rameses.gov.treasury.af.IRAFIssueItemPage"/>
+    </pages>
+    
+</workunit>

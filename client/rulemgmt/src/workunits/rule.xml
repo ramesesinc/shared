@@ -1,0 +1,186 @@
+<workunit>
+    
+    <invokers>
+        <invoker type="rule:open" action="open" caption="Edit Rule" target="popup" />
+        <invoker type="rule:create" action="create" caption="Create Rule" target="popup"/>
+        
+        <!-- actions -->
+        <invoker type="formActions" action="create" caption="New" visibleWhen="#{mode=='read'}" />
+        <invoker type="formActions" action="edit" caption="Edit"  visibleWhen="#{mode=='read'} &amp;&amp; rule.docstate != 'DEPLOYED'"/>
+        <invoker type="formActions" action="deploy" caption="Deploy"  visibleWhen="#{mode=='read' &amp;&amp; rule.docstate == 'DRAFT'}"/>
+        <invoker type="formActions" action="undeploy" caption="Undeploy"  visibleWhen="#{rule.docstate == 'DEPLOYED'}"/>
+        <invoker type="formActions" action="supersede" caption="Supersede"  visibleWhen="#{rule.docstate == 'DEPLOYED'}"/>
+        
+        <invoker type="formActions" action="save" caption="Save"  visibleWhen="#{mode!='read'} &amp;&amp; rule.docstate != 'DEPLOYED'"/>
+        <invoker type="formActions" action="cancelsave" caption="Cancel"  visibleWhen="#{mode!='read'} &amp;&amp; rule.docstate != 'DEPLOYED'"/>
+    </invokers>
+    
+    <code>
+        <![CDATA[    
+
+        import com.rameses.rcp.annotations.*
+        import com.rameses.rcp.common.*
+        import com.rameses.osiris2.client.*
+        import com.rameses.osiris2.common.*
+        import com.rameses.rules.helpers.*
+        
+        class RuleController {
+        
+            @Binding
+            def binding;
+            
+            @Service("RuleMgmtService")
+            def ruleMgmtSvc;
+            
+            def ruleMgmt;
+            def rule;
+            def mode;
+            
+            def conditionStatus;
+            def selectedCondition;
+            
+            def actionStatus;
+            def selectedAction;
+            
+            def getAgendaGroups() {
+                return ruleMgmt.agendaGroups;
+            }
+            
+            def create() {
+                rule = [conditions:[], actions:[], ruleset: ruleMgmt.ruleset, salience:0];
+                mode = 'create';
+                return "create";
+            }
+            
+            void open() {
+                if(rule.conditions==null) rule.conditions = [];
+                if(rule.actions==null) rule.actions = [];
+                mode='read';
+            }
+            
+            void edit() {
+                mode = 'edit';
+            }
+            
+            def cancelsave() {
+                if(MsgBox.confirm("Changes will be discarded. Continue?")) {
+                    if( mode =="create" ) return "_close";
+                    rule = ruleMgmtSvc.open(rule);
+                    mode = 'read';
+                    return null;
+                }
+            }
+            
+            void save() {
+                if(mode == "create") {
+                    rule = ruleMgmtSvc.create(rule);
+                }
+                else {
+                    rule = ruleMgmtSvc.update(rule);
+                }
+                mode = 'read';
+            }
+            
+            void deploy() {
+                if( MsgBox.confirm("You are about to deploy this rule and make it active. Continue?")) {
+                    rule = ruleMgmtSvc.deploy(rule);
+                }
+            }
+            
+            void undeploy() {
+                rule = ruleMgmtSvc.undeploy(rule);
+            }
+            
+            void supersede() {
+                if( MsgBox.confirm("You are about to supersede this rule. Continue?")) {
+                    rule = ruleMgmtSvc.supersede(rule);
+                }
+            }
+            
+            def addCondition() {
+                return InvokerUtil.lookupOpener("rulecondition:create", 
+                    [ rule:rule, 
+                      factList: ruleMgmt.facts, 
+                      varList: RuleUtil.getVars( rule, -1 ),
+                      saveHandler: { o->
+                            RuleUtil.checkReferences( ruleMgmt.facts, o );
+                            RuleUtil.checkVars( rule,o, -1 );
+                            rule.conditions << o;
+                            binding.refresh();
+                        }
+                    ]
+                );
+            }
+            
+            def editCondition() {
+                def position = conditionStatus.index;
+                return InvokerUtil.lookupOpener("rulecondition:edit", 
+                    [ rule:rule, 
+                      condition:selectedCondition, 
+                      factList: ruleMgmt.facts,
+                      varList: RuleUtil.getVars( rule, position ),
+                      saveHandler: { o->
+                        RuleUtil.checkReferences( ruleMgmt.facts, o );
+                        RuleUtil.checkVars( rule, o, position );
+                        selectedCondition.putAll( o );
+                        binding.refresh();
+                      }                      
+                    ]
+                 );
+            }
+            
+            
+            
+            void removeCondition() {
+                def position = conditionStatus.index;
+                RuleUtil.checkVars( rule, selectedCondition, position, true );
+                rule.conditions.remove( selectedCondition );
+            }
+            
+            def addAction() {
+                return InvokerUtil.lookupOpener("ruleaction:create", [
+                     rule: rule,
+                     actionList: ruleMgmt.actions,
+                     varList: RuleUtil.getVars( rule, -1 ),
+                     saveHandler:{ o->
+                        rule.actions << o;
+                        binding.refresh();
+                     }
+                ]);
+            }
+            
+            def editAction() {
+               return InvokerUtil.lookupOpener("ruleaction:edit", [
+                      actionList: ruleMgmt.actions,
+                      action:selectedAction,
+                      varList: RuleUtil.getVars( rule, -1 ),
+                      saveHandler:{ o->
+                        selectedAction.putAll( o );
+                        binding.refresh();
+                    }
+                ]);
+            }
+            
+            void removeAction() {
+                rule.actions.remove( selectedAction );
+            }
+            
+            @Service("RuleTestService")
+            def tester;
+            
+            void testRule() {
+                println tester.deploy(rule);
+            }
+            
+        }
+        
+        ]]>
+        
+    </code>
+    
+    <pages>
+        <page template="com.rameses.rules.ui.RulePage"/>
+        <page name="create" template="com.rameses.rules.ui.NewRulePage"/>
+    </pages>
+    
+</workunit>

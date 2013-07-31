@@ -1,0 +1,65 @@
+<workunit>
+    <invokers>
+        <invoker type="afrequest:additem" caption="Add Issuance" action="init"  target="popup" resizable="false"/>
+    </invokers>
+    
+    <code>
+        <![CDATA[    
+
+        import com.rameses.rcp.annotations.*
+        import com.rameses.rcp.common.*
+        import com.rameses.osiris2.client.*
+        import com.rameses.osiris2.common.*
+        
+        class  AFRequestAddItem  {
+            
+            @Service("AFService")
+            def afSvc;
+        
+            def request;
+            def items = [];
+            def saveHandler;
+            
+            void init() {
+                def afTypes = afSvc.getList([:]);
+                items = afTypes.collect{ [af:it.af, unit: it.unit, qty: 0 ] };
+                //if request not null, copy all attributes 
+                if(request?.items) {
+                    def existItems = request.items;
+                    items.each { o->
+                        def z = existItems.find{ it.af == o.af };
+                        if(z) o.putAll(z);
+                    }
+                }
+            }
+            
+            def listModel = [
+                fetchList: { o->
+                    return items;
+                }
+            ] as EditorListModel;
+            
+            def doOk() {
+                request.items = [];
+                def subItems = items.findAll{ it.qty > 0 };
+                subItems.each {
+                    request.items << it;
+                }
+                saveHandler();
+                return "_close";
+            }
+            
+            def doCancel() {
+                return "_close";
+            }
+        }
+        
+        ]]>
+        
+    </code>
+    
+    <pages>
+        <page template="com.rameses.gov.treasury.af.AFRequestAddItemPage"/>
+    </pages>
+    
+</workunit>

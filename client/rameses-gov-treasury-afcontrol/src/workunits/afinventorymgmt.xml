@@ -1,0 +1,51 @@
+<workunit extends="wtemplates/ListController.xml">
+    <invokers>
+        <invoker folderid="/explorer/txnmgmt/treasury/af" action="init" caption="AF Inventory"
+            role="AFO" permission="afinventory.view"/>
+            
+        <invoker type="formActions" action="viewJournal" caption="View Journal" />
+    </invokers>
+    
+    <code>
+         <![CDATA[    
+            import com.rameses.rcp.annotations.*;
+            import com.rameses.rcp.common.*;
+            import com.rameses.osiris2.client.*;
+            import com.rameses.osiris2.common.*;
+
+            class AFInventoryMgmtController extends ListController {        
+            
+                String serviceName = "AFInventoryMgmtService";
+                String entityName = "afinventorycontrol";
+                String formTarget = "popup";
+                
+                def afTypes;
+                
+                @Service("AFService")
+                def afSvc;
+               
+                @PropertyChangeListener
+                def listener = [
+                    "query.af": { o->   
+                        reload();
+                    }
+                ]
+
+                void init() {
+                    afTypes = afSvc.getList([:]);
+                }
+                
+                def viewJournal() {
+                    if( !query.af)
+                        throw new Exception("Please select an AF");
+                    return InvokerUtil.lookupOpener("afinventory:journal", [af:query.af] );
+                }
+            }
+        ]]>
+    </code>
+    
+    <pages>
+        <page name="queryform" template="com.rameses.gov.treasury.afinventory.AFInventoryQuery"/>
+    </pages>
+    
+</workunit>

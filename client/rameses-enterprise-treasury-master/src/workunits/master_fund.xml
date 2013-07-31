@@ -1,0 +1,44 @@
+<workunit>
+    <invokers>
+        <invoker type="quick_launcher" code="FUND01" action="create" caption="Fund" xrole="MASTER_ENCODER" xpermission="fund.create" target="window" />
+        <invoker type="fund:create" action="init" caption="Fund"/>
+        <invoker type="fund:open" action="open" caption="Fund"/>
+        <invoker type="formActions" action="approve" shortcut="ctrl A" visibleWhen="#{mode == 'view' and entity.objid != null and entity.docstate=='DRAFT'}" immediate="true" caption="Approve" mnemonic="d" icon="images/doc-approve.png"  />
+    </invokers>
+    <code>
+        <![CDATA[
+            import com.rameses.rcp.common.*;
+            import com.rameses.rcp.annotations.*;
+            import com.rameses.osiris2.client.*;
+            import com.rameses.osiris2.common.*
+
+            class FundMasterController extends CRUDController {
+                @Service('FundMasterService')
+                def fundMasterSvc
+                
+                @Service('FundListService')
+                def fundListSvc
+                
+                String serviceName = 'FundMasterService';
+                String entityName = 'fund';
+                String prefixId = 'F'
+                String getCreateFocusComponent() { return 'entity.parentid' }
+                String getEditFocusComponent() { return 'entity.parentid' }
+
+                Map createEntity() {
+                    return [
+                        state        : 'DRAFT',
+                        bankacctrequired  : true,
+                    ];
+                }
+
+                def getFundList(){
+                    return ['GENERAL', 'SEF', 'TRUST'];
+                }
+            }
+        ]]>
+    </code>
+    <pages>
+        <page template="com.rameses.enterprise.treasury.master.FundPage"/>
+    </pages>
+</workunit>

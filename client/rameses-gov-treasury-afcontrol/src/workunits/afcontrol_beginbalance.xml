@@ -1,0 +1,81 @@
+<workunit>
+    <invokers>
+        <invoker type="afcontrol:beginbalance" caption="AF Control(Begin Balance)" action="init" target="popup"/>
+        
+        <invoker type="formActions" caption="Issued" action="viewIssued"/>
+        <invoker type="formActions" caption="Assignees" action="viewAssignees"/>
+    </invokers>
+    
+    <code>
+        <![CDATA[    
+
+        import com.rameses.rcp.annotations.*
+        import com.rameses.rcp.common.*
+        import com.rameses.osiris2.client.*
+        import com.rameses.osiris2.common.*
+        import com.rameses.gov.treasury.af.*
+        
+        class  AFBeginBalanceController  {
+            
+            @Service("AFControlService")
+            def afControlSvc;
+        
+            @Service("AFService")
+            def afSvc;
+            
+            def selectedAf;
+            def afList;
+            def entity;
+            def saveHandler;
+            
+            @PropertyChangeListener
+            def listener = [
+                "selectedAf": { o->
+                    entity.af = o.af;
+                },
+                "entity.(qty|startseries)" : { o->
+                    entity.endseries = AFUtil.getEndSeries(selectedAf,entity);  
+                },
+                "entity.(qty|startstub)" : { o->
+                    entity.endstub = AFUtil.getEndStub(selectedAf,entity);  
+                },
+            ]
+            
+            void init() {
+                entity = [:];
+                afList = afSvc.getList([:]);
+            }
+            
+            def getLookupCollector() {
+                return InvokerUtil.lookupOpener("collector:lookup", [
+                    onselect: { o->
+                        entity.collectorname = o.name;
+                        entity.collector = o.objid;
+                    }
+                ]);
+            }
+            
+            def doOk() {
+                AFUtil.validate( selectedAf, entity );
+                if(MsgBox.confirm("You are about to add new af controls(stubs). Proceed")) {
+                    afControlSvc.postBeginBalance(entity);
+                    if(saveHandler) saveHandler();
+                    return "_close";
+                }
+            }
+            
+            def doCancel() {
+                return "_close";
+            }
+        }
+        
+        
+        ]]>
+        
+    </code>
+    
+    <pages>
+        <page template="com.rameses.gov.treasury.afcontrol.AFBeginBalance"/>
+    </pages>
+    
+</workunit>

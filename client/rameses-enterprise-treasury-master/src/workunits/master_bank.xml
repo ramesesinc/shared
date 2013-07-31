@@ -1,0 +1,26 @@
+<workunit>
+    <invokers>
+        <invoker type="quick_launcher" code="BANK01" action="create" caption="Bank" xrole="MASTER_ENCODER" xpermission="bank.create" target="window" />
+        <invoker type="bank:create" action="init" caption="Bank"/>
+        <invoker type="bank:open" action="open" caption="Bank"/>
+    </invokers>
+    <code>
+        <![CDATA[
+            import com.rameses.rcp.common.*;
+            import com.rameses.rcp.annotations.*;
+            import com.rameses.osiris2.client.*;
+            import com.rameses.osiris2.common.*
+
+            class BankMasterController extends CRUDController {   
+                String serviceName = 'BankMasterService'
+                String entityName  = 'bank'
+                String prefixId = 'B'
+                String getCreateFocusComponent() { return 'entity.code' }
+                String getEditFocusComponent() { return 'entity.code' }
+            }
+        ]]>
+    </code>
+    <pages>
+        <page template="com.rameses.enterprise.treasury.master.BankPage"/>
+    </pages>
+</workunit>

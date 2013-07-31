@@ -1,0 +1,5 @@
+"listModel:item.*"[ item.qty > 0 ] {
+    background-color: yellow;
+    text-decoration: underline;
+    font-style: bold;
+}

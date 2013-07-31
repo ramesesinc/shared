@@ -1,0 +1,113 @@
+<workunit>
+    <invokers>
+        <invoker type="securitygroup:open" caption="Security Group" target="popup" action="init"/>
+        
+        <invoker type="formActions" caption="New"  action="addNew" visibleWhen="#{mode=='read'}"/>
+        <invoker type="formActions" caption="Edit"  action="edit" visibleWhen="#{mode=='read'}"/>
+        <invoker type="formActions" caption="Save"  action="save" visibleWhen="#{mode!='read'}"/>
+        <invoker type="formActions" caption="Cancel"  action="cancel" visibleWhen="#{mode!='read'}"/>
+    </invokers>
+    
+    <code>
+    <![CDATA[ 
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.osiris2.client.*;
+        import com.rameses.osiris2.common.*;
+        
+        class SecurityGroupController {
+        
+            @Service("SecuritygroupAdminService")
+            def sgSvc;
+
+            @Service("UsergroupAdminService")
+            def userGrpSvc;
+            
+            def title = "Security Group"; 
+            def usergroupid;
+            def entity = [:]
+            def selectedEntity;
+            def mode = "read";
+            def permissions;
+            def objectList;
+            def selectedObject;            
+            
+            void init() {
+                mode = "read";
+                permissions = userGrpSvc.getPermissions([usergroupid:usergroupid]);
+                objectList = permissions.collect{ it.object }.unique();
+                if(objectList.size()>0) selectedObject = objectList[0];
+            }
+            
+            def listModel = [
+                fetchList: { o->
+                    def m = [usergroupid:usergroupid];
+                    return sgSvc.getList(m);
+                }
+            ] as BasicListModel;
+            
+            
+            //the editing page
+            def addNew() {
+                entity = [usergroupid:usergroupid];
+                permissions.each {
+                    it.checked = true;
+                }
+                mode = "create";
+                return "info";
+            }
+            
+            def edit() {
+                entity = sgSvc.open(selectedEntity);
+                def _exclude = entity.exclude;
+                permissions.each {
+                    if(_exclude) {
+                        it.checked = (it.code.matches(_exclude)) ? false : true;
+                    }
+		}
+                mode = "edit";
+                return "info";
+            }   
+            
+            def save() {
+                if(mode=='create')
+                    sgSvc.create(entity);    
+                else
+                    sgSvc.update(entity);
+                listModel.reload();
+                mode="read";
+                return "default";
+            }
+            
+            
+            def cancel() {
+                if(MsgBox.confirm("Any changes made will be discared. Confirm?")) {
+                    mode = "read";
+                    return "default";
+                }
+            }
+            
+            def permissionListModel = [
+                fetchList: { o->
+                    if(!selectedObject) return  [];
+                    return permissions.findAll{ it.object == selectedObject };
+                }
+            ] as EditorListModel;
+        
+            void build() {
+                def excludes = [];
+                permissions.each {
+                    if( !it.checked ) excludes << it.code;
+                }
+                MsgBox.alert(excludes.join(","));
+            }
+            
+        }
+    ]]> 
+    </code>
+        
+    <pages>
+        <page template="com.rameses.admin.usergroup.SecurityGroupSelectionPage"/> 
+        <page name="info" template="com.rameses.admin.usergroup.SecurityGroupInfoPage"/> 
+    </pages>    
+</workunit>

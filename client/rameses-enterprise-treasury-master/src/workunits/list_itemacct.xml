@@ -1,0 +1,6 @@
+<workunit extends="wtemplates/ListController.xml" serviceName="ItemAcctListService" entityName="itemaccount">
+    <invokers>
+        <invoker folderid="/explorer/master/treasury" caption="Item Accounts" xrole="MASTER_ENCODER" xpermission="incomeacct.view" target="window" index="10" />
+        <invoker type="quick_launcher" code="ACCT00" caption="Item Accounts" role="MASTER_ENCODER" permission="incomeacct.view"/>
+    </invokers>
+</workunit>

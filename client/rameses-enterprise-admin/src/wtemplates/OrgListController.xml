@@ -1,0 +1,13 @@
+<workunit>
+    <invokers>        
+        <invoker type="formActions" caption="Open" action="open" visibleWhen="#{selectedEntity!=null}"/>
+        <invoker type="formActions" caption="Create" action="create"/>
+    </invokers>
+
+    <code class="com.rameses.admin.usergroup.OrgListController"/>
+    
+    <pages>
+        <page template="com.rameses.osiris2.themes.ListPage"/>
+    </pages>
+    
+</workunit>

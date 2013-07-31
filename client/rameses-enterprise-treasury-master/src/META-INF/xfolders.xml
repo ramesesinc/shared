@@ -1,0 +1,17 @@
+<folders>
+    <folder id="explorer">
+        <folder id="txn" caption="Transactions" index="0">
+        </folder>
+        <folder id="master" caption="Master Management" index="1">
+            <folder id="treasury" caption="Treasury" index="0"/>
+        </folder>
+        <folder id="txnmgmt" caption="Transaction Management" index="2">
+        </folder>
+        <folder id="report" caption="Reports" index="4">
+        </folder>
+        <folder id="rulemgmt" caption="Rule Management" index="3">
+        </folder>   
+        <folder id="setting" caption="Settings Management" index="5">
+        </folder>
+    </folder>
+</folders>

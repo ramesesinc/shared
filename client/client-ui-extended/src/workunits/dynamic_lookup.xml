@@ -1,0 +1,52 @@
+<workunit>
+    <invokers>
+        <invoker type="dynamic:lookup" target="popup"/>
+    </invokers>
+    <code>
+        <![CDATA[    
+
+        import com.rameses.rcp.annotations.*
+        import com.rameses.rcp.common.*
+        import com.rameses.osiris2.client.*
+        import com.rameses.osiris2.common.*
+        import com.rameses.common.*;
+        
+        class DynamicLookupController extends BasicListModel {        
+        
+            @Binding
+            def binding;
+            
+            def selectedEntity;
+            
+            def listModel;
+            
+            
+            def listHandler = this;
+            
+            public Column[] getColumns() {
+                return listModel.getColumns();
+            }
+            
+            public List fetchList(Map map ) {
+                return listModel.fetchList(map);
+            }
+
+            def doSelect() {
+                listModel.onselect(selectedValue);
+                return "_close";
+            }
+            
+            def doCancel() {
+                return "_close";
+            }
+        }
+        
+        ]]>
+        
+    </code>
+    
+    <pages>
+        <page template="com.rameses.osiris2.themes.LookupPage"/>
+    </pages>
+    
+</workunit>

@@ -1,0 +1,76 @@
+<workunit>
+    <invokers>
+        <invoker type="quick_launcher" code="ACCT01" action="create" caption="Bank" role="MASTER_ENCODER" permission="incomeaccount.create" target="window" />
+        <invoker type="itemaccount:create" action="init" caption="Item Account"/>
+        <invoker type="itemaccount:open" action="open" caption="Item Account"/>
+        
+        <invoker type="formActions" action="approve" shortcut="ctrl A" visibleWhen="#{mode == 'read' and entity.docstate=='DRAFT'}" immediate="true" caption="Approve" mnemonic="d" icon="images/doc-approve.png"  />
+    </invokers>
+    <code>
+    <![CDATA[
+        import com.rameses.rcp.common.*;
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.osiris2.client.*;
+        import com.rameses.osiris2.common.*
+
+        class ItemAcctMasterController extends CRUDController {
+            @Service('ItemAcctMasterService')
+            def itemAcctMasterSvc
+            
+            @Service('ItemAcctGroupListService')
+            def itemAcctGroupListSvc
+
+            @Service('ItemAcctListService')
+            def itemAcctListSvc
+
+            String serviceName = 'ItemAcctMasterService'
+            String entityName  = 'itemaccount'
+            String prefixId = 'IA'
+            String getCreateFocusComponent(){ return 'entity.acctno' }
+            String getEditFocusComponent(){ return 'entity.acctno' }
+
+            def fund
+            def itemacctgroup
+            
+            void save() {
+                if( fund ) entity.fundid = fund.objid
+                //if( itemacctgroup ) entity.incomeaccountgroupid = incomeacctgroup.objid
+                super.save()
+            }
+            
+            void open() {
+                super.open()
+                fund = fundList.find{ it.objid == entity.fundid }
+                //itemacctgroup = itemaccountgrouplist.find{ it.objid == entity.incomeaccountgroupid }
+            }
+            
+            Map createEntity() {
+                return [
+                    defaultvalue  : 0.0,
+                    allowdiscount : 0
+                ]
+            }
+
+            def getFundList() {
+                return itemAcctListSvc.getFundList()
+            }
+
+            def getSystemTypeList() {
+                return itemAcctListSvc.getSystemTypeList();
+            }
+
+            def getValueTypeList() {
+                return ['FIX', 'FIXUNIT'];
+            }
+            
+            List getItemAccountGrouplist() {
+                return itemAcctGroupListSvc.getList(null)
+            }
+        }
+    ]]>        
+        
+    </code>
+    <pages>
+        <page template="com.rameses.enterprise.treasury.master.ItemAcctPage"/>
+    </pages>
+</workunit>

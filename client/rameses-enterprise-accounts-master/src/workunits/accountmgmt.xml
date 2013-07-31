@@ -1,0 +1,53 @@
+<workunit>
+    <invokers>
+        <invoker folderid="/explorer/master/accounts" caption="Accounts" role="ADMIN" permission="bank.view" target="window" index="55" />
+    </invokers>
+    <code>
+        <![CDATA[
+        import com.rameses.rcp.common.*
+        import com.rameses.rcp.annotations.*
+        import com.rameses.osiris2.client.*
+        import com.rameses.osiris2.common.*
+        
+        class AccountMgmtController {
+        
+            @Service("AccountMgmtService")
+            def acctSvc;
+        
+            def title = "Account Management";
+            def listItems = [];
+            
+            def treeModel = [
+                fetchNodes: { o->
+                    listItems = acctSvc.getNodes( o.item );
+                    def nodes = [];
+                    listItems.each {
+                        if(it.accttype != "ITEM" ) {
+                            def n = new Node(it.objid, it.title, it); 
+                            nodes<< n;
+                        }
+                    }
+                    listModel.reload();
+                    return nodes;
+                }
+            ]as TreeNodeModel;
+            
+            def listModel = [
+                getColumnList: { 
+                    return [
+                        [name:'code', caption:'Acct Code'],
+                        [name:'title', caption:'Acct Title']
+                    ]
+                },
+                fetchList: { o->
+                    return listItems;
+                }
+            ] as BasicListModel;
+            
+        }
+        ]]>
+    </code>
+    <pages>
+        <page template="com.rameses.enterprise.accounts.master.NaturalAccountPage"/>
+    </pages>
+</workunit>

@@ -1,0 +1,20 @@
+<workunit extends="wtemplates/ListController.xml">
+    <invokers>
+        <invoker folderid="/explorer/master/treasury" caption="Banks" doctype="bank" role="ADMIN" permission="bank.view" target="window" index="55" />
+        <invoker type="quick_launcher" code="BANK00" caption="Banks" doctype="bank" role="ADMIN" permission="bank.view"/>
+    </invokers>
+    <code>
+        import com.rameses.rcp.common.*
+        import com.rameses.rcp.annotations.*
+        import com.rameses.osiris2.client.*
+        import com.rameses.osiris2.common.*
+        
+        class BankListController extends ListController
+        {
+            String serviceName = 'BankListService'
+            String entityName  = 'bank'
+            
+            
+        }
+    </code>
+</workunit>

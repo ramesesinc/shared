@@ -1,0 +1,9 @@
+<workunit extends="wtemplates/UsergroupController.xml">
+    <invokers>
+        <invoker type="usergroup-collector:open" caption="Collector Group" target="popup" action="open"/>
+        <invoker type="usergroup-collector:create" caption="Collector Group" target="popup" action="create"/>
+    </invokers>
+    <pages>
+        <page template="com.rameses.gov.treasury.ui.CollectorGroupPage"/> 
+    </pages>
+</workunit>

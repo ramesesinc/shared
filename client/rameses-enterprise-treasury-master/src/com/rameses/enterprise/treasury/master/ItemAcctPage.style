@@ -1,0 +1,35 @@
+"entity.*|ngas|ngassubacct|sre|sresubacct|fund|itemacctgroup" [mode == 'read'] {
+    readonly:true;
+}
+
+"entity.*|ngas|ngassubacct|sre|sresubacct|fund|itemacctgroup" [mode != 'read'] {
+    readonly:false;
+}
+
+"selectedItem|searchText" [mode == 'read'] {
+    enabled:true;
+}
+
+"selectedItem|searchText" [mode != 'read'] {
+    enabled:false;
+}
+
+"entity.accttitle" [entity.docstate == 'APPROVED'] {
+    readonly:true;
+}
+
+"ngassubacct" [entity.ngastitle == null] {
+    enabled:false;
+}
+
+"ngassubacct" [entity.ngastitle != null] {
+    enabled:true;
+}
+
+"sresubacct" [entity.sretitle == null] {
+    enabled:false;
+}
+
+"sresubacct" [entity.sretitle != null] {
+    enabled:true;
+}
