@@ -1,6 +1,0 @@
-<workunit>
-    <code class="system.explorer.ManagementTreeExplorer"/>
-    <pages>
-        <page template="system.explorer.ui.TreeExplorerPage"/>
-    </pages>
-</workunit>
