@@ -1,7 +1,3 @@
 <folders>
-    
-    <folder id="explorer">
-         <folder id="usergroup" caption="User Groups" index="6"/>   
-    </folder>
-
+    <folder id="admin" caption="Administration"/>   
 </folders>

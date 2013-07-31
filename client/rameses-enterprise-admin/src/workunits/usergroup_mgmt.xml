@@ -1,5 +1,6 @@
-<workunit extends="wtemplates/ExplorerViewerController.xml" serviceName="UsergroupAdminService" scheme="usergroup">
+<workunit extends="wtemplates/ExplorerViewerController.xml" 
+    serviceName="UsergroupAdminService" scheme="usergroup">
     <invokers>
-        <invoker folderid="/menu/explorer" caption="User Groups" permission="system" index="5"/>
+        <invoker folderid="/admin" caption="User Groups" permission="system" index="5"/>
    </invokers>
 </workunit>
