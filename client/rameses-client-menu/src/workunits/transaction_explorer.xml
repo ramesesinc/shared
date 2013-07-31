@@ -1,0 +1,9 @@
+<workunit extends="wtemplates/FolderExplorerView.xml" root="/txn">
+    <invokers>
+        <invoker type="toolbar" caption="Transactions" icon="images/org.png" 
+            index="-18" permission="system" action="init" windowmode="explorer"/>
+                
+        <invoker type="transaction:explorer" caption="Transactions" 
+            permission="system" action="init" windowmode="explorer" />
+    </invokers>
+</workunit>

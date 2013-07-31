@@ -1,27 +1,7 @@
-<workunit>
+<workunit extends="wtemplates/FolderExplorerView.xml" root="/setting">
     <invokers>
-        <invoker folderid="/menu/mgmt"  windowmode="explorer" caption="Settings Management" action="init" 
-            permission="system" index="15" />
+        <invoker folderid="/menu/mgmt" caption="Settings" index="5" 
+            permission="system" windowmode="explorer" action="init"/>
+            
     </invokers>
-    
-    <code>
-        <![CDATA[
-        
-        import com.rameses.rcp.common.*;
-        import com.rameses.rcp.annotations.*;
-        import com.rameses.osiris2.client.*;
-        
-        public class TreeExplorerController extends system.explorer.AbstractTreeExplorer {
-            public void init() {
-                def root = [id:'/explorer/setting', caption:'Settings Management'];
-                doInit( root );
-            }
-        }
-        
-        ]]>
-    </code>
-    
-    <pages>
-        <page template="system.explorer.ui.TreeExplorerPage"/>
-    </pages>
 </workunit>
