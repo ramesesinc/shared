@@ -14,6 +14,7 @@ import com.rameses.osiris2.client.InvokerProxy;
 import com.rameses.osiris2.client.InvokerUtil;
 import com.rameses.rcp.annotations.Binding;
 import com.rameses.rcp.annotations.Invoker;
+import com.rameses.rcp.common.Action;
 import com.rameses.rcp.common.Node;
 import com.rameses.rcp.common.Opener;
 import com.rameses.rcp.common.TreeNodeModel;
@@ -113,6 +114,27 @@ public class ExplorerViewerController {
                     nodes.add(0, search); 
             }
             return nodes; 
+        }
+        
+        public void initChildNodes(Node[] nodes) {
+            if (nodes == null) return;
+            
+            for (Node node: nodes) {
+                String nodeClass = node.getPropertyString("nodeClass");
+                if (nodeClass == null || nodeClass.length() == 0) continue;
+                
+                try {
+                    List<Action> actions = InvokerUtil.lookupActions(getScheme()+":"+nodeClass); 
+                    if (actions == null || actions.isEmpty()) continue;
+                        
+                    Action a = actions.remove(0);
+                    actions.clear();
+                    if (a.getIcon() != null && a.getIcon().length() > 0) 
+                        node.setIcon(a.getIcon());
+                } catch(Throwable t) {
+                    System.out.println("[WARN] initChildNodes: " + t.getMessage());
+                }
+            }
         }
         
         public Object openFolder(Node node) {

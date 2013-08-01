@@ -72,7 +72,4 @@ public class ExplorerListViewController extends ListController implements Explor
     }
     
     // </editor-fold>
-    
-    
-    
 }
