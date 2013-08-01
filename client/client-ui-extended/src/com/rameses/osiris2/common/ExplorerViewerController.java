@@ -107,7 +107,8 @@ public class ExplorerViewerController {
                 search.put("name", "search");
                 search.put("caption", "Search"); 
                 search.put("type", "search"); 
-                search.put("icon", "images/doc-view16.png"); 
+                search.put("icon", "images/doc-view16.png");
+                search.put("nodemask", Node.LEAF); 
                 if (nodes.isEmpty())
                     nodes.add(search);
                 else 
@@ -120,10 +121,12 @@ public class ExplorerViewerController {
             if (nodes == null) return;
             
             for (Node node: nodes) {
-                String nodeClass = node.getPropertyString("nodeClass");
+                String nodeClass = node.getPropertyString("nodeclass");
                 if (nodeClass == null || nodeClass.length() == 0) continue;
-                
+                                
                 try {
+                    if ((node.getNodemask() & Node.DYNAMIC)<=0) continue; 
+                    
                     List<Action> actions = InvokerUtil.lookupActions(getScheme()+":"+nodeClass); 
                     if (actions == null || actions.isEmpty()) continue;
                         

@@ -88,6 +88,7 @@ public abstract class ListController extends BasicListController implements List
     
     public boolean isShowNavActions() { return true; } 
     public boolean isShowFormActions() { return true; } 
+    public boolean isAllowClose() { return true; } 
     public boolean isAllowCreate() { return true; } 
     public boolean isAllowOpen() { return true; } 
     public boolean isAllowSearch() { return true; } 
@@ -170,13 +171,12 @@ public abstract class ListController extends BasicListController implements List
             if (!isShowFormActions()) return null;
             
             formActions = new ArrayList();
-            formActions.add(createAction("close", "Close", "images/toolbars/cancel.png", "ctrl C", 'c', null, true)); 
-            
+            if (isAllowClose())
+                formActions.add(createAction("close", "Close", "images/toolbars/cancel.png", "ctrl C", 'c', null, true)); 
             if (isAllowCreate())
                 formActions.add(createAction("create", "New", "images/toolbars/create.png", "ctrl N", 'n', null, true));       
             
-            if (isAllowOpen())
-            {
+            if (isAllowOpen()) { 
                 Action a = createAction("open", "Open", "images/toolbars/open.png", "ctrl O", 'o', "#{selectedEntity != null}", true);
                 a.getProperties().put("depends", "selectedEntity");
                 formActions.add(a); 
