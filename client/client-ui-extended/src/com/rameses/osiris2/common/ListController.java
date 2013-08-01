@@ -24,7 +24,7 @@ public abstract class ListController extends BasicListController implements List
     public abstract String getServiceName();
     
     public String getEntityName() {
-        throw new RuntimeException("Please provide entity name");
+        throw new RuntimeException("Please provide an entityName");
     }
        
     // <editor-fold defaultstate="collapsed" desc=" Getter/Setter ">        
@@ -38,9 +38,13 @@ public abstract class ListController extends BasicListController implements List
     
     public Opener getQueryForm() 
     {
-        Opener o = new Opener();
-        o.setOutcome("queryform");
-        return o;
+        if (isAllowSearch()) { 
+            Opener o = new Opener();
+            o.setOutcome("queryform");
+            return o;
+        } else {
+            return null; 
+        } 
     } 
 
     public Column[] getColumns() { return null; }
@@ -86,14 +90,21 @@ public abstract class ListController extends BasicListController implements List
     public boolean isShowFormActions() { return true; } 
     public boolean isAllowCreate() { return true; } 
     public boolean isAllowOpen() { return true; } 
-        
+    public boolean isAllowSearch() { return true; } 
+    
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc=" Action Methods ">        
     
+    protected boolean onOpen(Map params) { return true; }
+    protected boolean onCreate(Map params) { return true; }
+    
     public Opener create() throws Exception 
     {
-        Opener o = InvokerUtil.lookupOpener(getEntityName()+":create", createOpenerParams());
+        Map params = createOpenerParams();
+        if (!onCreate(params)) return null; 
+        
+        Opener o = InvokerUtil.lookupOpener(getEntityName()+":create", params);
         o.setTarget(getFormTarget()); 
         return o;
     }
@@ -102,6 +113,7 @@ public abstract class ListController extends BasicListController implements List
     {
         Map params = createOpenerParams();
         params.put("entity", getSelectedEntity()); 
+        if (!onOpen(params)) return null; 
         
         Opener o = InvokerUtil.lookupOpener(getEntityName()+":open", params);
         o.setTarget(getFormTarget()); 
@@ -192,16 +204,17 @@ public abstract class ListController extends BasicListController implements List
         
     // </editor-fold>
     
+    protected void onfetchList(Map params) {}
     
     public List fetchList(Map m) {
         String stag = getTag();
         if (stag != null) m.put("_tag", stag);
         
+        onfetchList(m);
         return getService().getList(m); 
     }
     
-    protected ListService getService()
-    {
+    protected ListService getService(){
         String name = getServiceName();
         if (name == null || name.trim().length() == 0)
             throw new RuntimeException("No service name specified"); 

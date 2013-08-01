@@ -9,6 +9,7 @@
 
 package com.rameses.osiris2.common;
 
+import com.rameses.common.ExpressionResolver;
 import com.rameses.osiris2.client.InvokerProxy;
 import com.rameses.osiris2.client.InvokerUtil;
 import com.rameses.rcp.annotations.Binding;
@@ -115,17 +116,51 @@ public class ExplorerViewerController {
         }
         
         public Object openFolder(Node node) {
+            return openNodeImpl(node);
+        }
+
+        public Object openLeaf(Node node) {
+            return openNodeImpl(node);
+        }
+        
+        private Object openNodeImpl(Node node) {
             if (node == null) return null;
 
-            Opener opener = openers.get(node.getNodeType()); 
+            Opener opener = openers.get(node.getId()); 
             if (opener == null) {
-                String invokerType = root.getScheme() + ":" + node.getNodeType();
+                String invokerType = root.getScheme() + ":node";                
                 try { 
-                    opener = InvokerUtil.lookupOpener(invokerType, new HashMap());                     
-                } catch(Throwable t) {
-                    opener = InvokerUtil.lookupOpener("explorer-default-viewer", new HashMap());
+                    List list = InvokerUtil.lookupOpeners(invokerType); 
+                    if (list != null) {
+                        ExpressionResolver resolver = ExpressionResolver.getInstance(); 
+                        while (!list.isEmpty()) {
+                            Opener o = (Opener) list.remove(0); 
+                            String expr = (String) o.getProperties().get("expr"); 
+                            if (expr == null || expr.length() == 0) {
+                                opener = o;
+                                break; 
+                            }
+
+                            try { 
+                                if (resolver.evalBoolean(expr, node.getItem())) {
+                                    opener = o;
+                                    break; 
+                                }
+                            } catch(Throwable t) {
+                                System.out.println("[WARN] " + t.getMessage());
+                            }
+                        }
+                        list.clear(); 
+                    }
+                } 
+                catch(Throwable t) {
+                    System.out.println("[WARN] " + t.getMessage()); 
                 }
-                openers.put(node.getNodeType(), opener);
+                
+                if (opener == null) { 
+                    opener = InvokerUtil.lookupOpener("explorer-default-viewer", new HashMap());
+                } 
+                openers.put(node.getId(), opener);
             }
             
             ExplorerNodeViewer viewer = (ExplorerNodeViewer) opener.getHandle();
@@ -134,29 +169,6 @@ public class ExplorerViewerController {
             openerObject = opener;
             if (binding != null) binding.refresh("subform");         
 
-            return null; 
-        }
-
-        public Object openLeaf(Node node) {
-            if (node == null) return null;
-
-            Opener opener = openers.get(node.getNodeType()); 
-            if (opener == null) {
-                String invokerType = root.getScheme() + ":" + node.getNodeType();
-                try { 
-                    opener = InvokerUtil.lookupOpener(invokerType, new HashMap());                     
-                } catch(Throwable t) {
-                    opener = InvokerUtil.lookupOpener("explorer-default-viewer", new HashMap());
-                }
-                openers.put(node.getNodeType(), opener);
-            }
-            
-            ExplorerNodeViewer viewer = (ExplorerNodeViewer) opener.getHandle();
-            viewer.setNode(node); 
-            viewer.updateView();
-            openerObject = opener;
-            if (binding != null) binding.refresh("subform"); 
-            
             return null; 
         }
     }

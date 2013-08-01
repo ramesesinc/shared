@@ -236,6 +236,11 @@ public abstract class CRUDController
         focusComponent(getCreateFocusComponent()); 
     }
     
+    //this is to support elmo's crud implementation
+    public final void create() {
+        init();
+    }
+    
     public Object cancel() 
     {
         if (MODE_EDIT.equals(this.mode)) 

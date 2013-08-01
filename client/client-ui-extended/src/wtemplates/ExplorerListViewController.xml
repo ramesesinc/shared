@@ -1,0 +1,68 @@
+<workunit>
+    <pages>
+        <page template="com.rameses.osiris2.themes.ListPage"/>
+        <page name="queryform" template="com.rameses.osiris2.themes.DefaultQueryFormPanel"/>
+    </pages>
+    
+    <code>
+    import com.rameses.rcp.common.*;
+    import com.rameses.rcp.annotations.*;
+    import com.rameses.osiris2.client.*;
+    import com.rameses.osiris2.common.*;
+
+    class DefaultExplorerListViewController extends ExplorerListViewController {
+    
+        @Controller
+        def controller;
+        
+        private String serviceName;
+        private String entityName;
+        private String formTarget;
+        private String tag;
+        
+        private def wuprops;
+        private def getWorkunitProperties() {
+            if (wuprops == null) {
+                wuprops = controller?.workunit?.workunit?.properties; 
+            } 
+            return wuprops; 
+        } 
+        
+        
+        String getServiceName() {
+            if (serviceName == null) {
+                serviceName = workunitProperties?.serviceName;
+                
+                if (serviceName == null) 
+                    throw new NullPointerException("Please provide a serviceName");                
+            } 
+            return serviceName;
+        }
+        
+        String getEntityName() {
+            if (entityName == null) {
+                entityName = workunitProperties?.entityName;
+                
+                if (entityName == null) 
+                    throw new NullPointerException("Please provide an entityName");
+            }
+            return entityName;
+        }  
+        
+        String getFormTarget() {
+            if (formTarget == null) {
+                formTarget = workunitProperties?.formTarget;
+                if (formTarget == null) formTarget = "popup";
+            } 
+            return formTarget; 
+        }  
+        
+        String getTag() {
+            if (tag == null) {
+                tag = workunitProperties?.tag;
+            } 
+            return tag; 
+        }          
+    }   
+    </code>    
+</workunit>
