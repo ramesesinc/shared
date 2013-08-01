@@ -37,21 +37,25 @@
             
             def login()
             {
+                def encPwd = user.encodePwd(pwd, uid);        
+                
                 user.clientCode = clientcode;
-                if(!offline) {
+                if (!offline) 
+                {
                     OsirisContext.env.CLIENTTYPE='desktop';
-                    def loginSvc = InvokerProxy.instance.create("LoginService");                
-                    def usr = loginSvc.login( [ username:uid, password:pwd ] );
-                    
-                    String _pwd = user.encodePwd(pwd, uid);
-                    user.init( usr, _pwd );
-                    
-                    if( !config.getProperty("app.clientcode") ) {
-                        config.put("app.clientcode", clientcode ? clientcode : '');
+                    def loginSvc = InvokerProxy.instance.create("LoginService"); 
+                    def usr = loginSvc.login([ username:uid, password:encPwd ]);
+
+                    user.init( usr, encPwd );
+
+                    if (!config.getProperty("app.clientcode")) 
+                    {
+                        config.put("app.clientcode", clientcode? clientcode: '');
                         config.update();
                     }
                 }
-                else {
+                else 
+                {
                     user.fetchProfile( uid, _pwd ); 
                     OsirisContext.session.offline = true;
                 }

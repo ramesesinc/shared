@@ -6,10 +6,14 @@
 
 package system.user.ui;
 
+import com.rameses.rcp.ui.annotations.Template;
+import system.template.ui.TemplatePage;
+
 /**
  *
  * @author  JAYROME VERGARA
  */
+//@Template(TemplatePage.class)
 public class LoginPage extends javax.swing.JPanel {
     
     /**
@@ -26,6 +30,7 @@ public class LoginPage extends javax.swing.JPanel {
      */
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
     private void initComponents() {
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         formPanel1 = new com.rameses.rcp.util.FormPanel();
@@ -35,6 +40,9 @@ public class LoginPage extends javax.swing.JPanel {
         xCheckBox1 = new com.rameses.rcp.control.XCheckBox();
         xButton1 = new com.rameses.rcp.control.XButton();
 
+        setLayout(new java.awt.BorderLayout());
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 1));
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18));
         jLabel1.setText("Login ");
 
@@ -76,40 +84,48 @@ public class LoginPage extends javax.swing.JPanel {
         formPanel1.add(xCheckBox1);
 
         xButton1.setMnemonic('l');
-        xButton1.setText("Login");
         xButton1.setDefaultCommand(true);
         xButton1.setName("login");
         xButton1.setPreferredSize(new java.awt.Dimension(57, 32));
+        xButton1.setText("Login");
 
-        org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
-                .add(50, 50, 50)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jLabel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 241, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jLabel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE)
-                    .add(formPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 317, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .add(270, 270, 270))
-            .add(layout.createSequentialGroup()
-                .add(144, 144, 144)
+        org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jPanel1Layout.createSequentialGroup()
+                        .add(formPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 317, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                        .add(jPanel1Layout.createSequentialGroup()
+                            .add(jLabel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 241, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .addContainerGap())
+                        .add(jPanel1Layout.createSequentialGroup()
+                            .add(jLabel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+                            .add(150, 150, 150)))))
+            .add(jPanel1Layout.createSequentialGroup()
+                .add(105, 105, 105)
                 .add(xButton1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 80, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(430, Short.MAX_VALUE))
+                .addContainerGap(215, Short.MAX_VALUE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
-                .add(59, 59, 59)
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel1Layout.createSequentialGroup()
+                .add(48, 48, 48)
                 .add(jLabel1)
                 .add(18, 18, 18)
                 .add(jLabel2)
-                .add(21, 21, 21)
+                .add(20, 20, 20)
                 .add(formPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 135, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(xButton1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(187, Short.MAX_VALUE))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
+        add(jPanel1, java.awt.BorderLayout.WEST);
+
     }// </editor-fold>//GEN-END:initComponents
     
     
@@ -117,6 +133,7 @@ public class LoginPage extends javax.swing.JPanel {
     private com.rameses.rcp.util.FormPanel formPanel1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
     private com.rameses.rcp.control.XButton xButton1;
     private com.rameses.rcp.control.XCheckBox xCheckBox1;
     private com.rameses.rcp.control.XPasswordField xPasswordField1;

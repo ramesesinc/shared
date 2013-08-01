@@ -42,7 +42,7 @@ public class SystemHelpPage extends javax.swing.JPanel {
         formPanel1.add(xActionTextField1);
 
         xList1.setDynamic(true);
-        xList1.setExpression("#{title}");
+        xList1.setExpression("#{item.title}");
         xList1.setItems("searchResult");
         xList1.setName("selectedResult");
         jScrollPane2.setViewportView(xList1);
@@ -59,7 +59,7 @@ public class SystemHelpPage extends javax.swing.JPanel {
             .add(jPanel1Layout.createSequentialGroup()
                 .add(formPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE))
+                .add(jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 399, Short.MAX_VALUE))
         );
         jTabbedPane1.addTab("Search", jPanel1);
 

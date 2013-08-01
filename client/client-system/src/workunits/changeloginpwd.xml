@@ -9,32 +9,28 @@
         import com.rameses.rcp.common.*;
         import com.rameses.rcp.annotations.*;
         import com.rameses.util.*;
-        
-        
+                
         public class ChangeLoginPwdController
-        {
-            
+        {            
             @Script("User")
             def user;
             
-            String uid;
             String newpwd;
             String confirmpwd;
             
-            public def init() {
-                boolean changePwd = user.env.remove( "CHANGE_PWD_ON_LOGIN" );
-                if( changePwd == true)  { 
-                    return "default";
-                }    
-                else    
-                    return "_close";
+            public def init() 
+            {
+                def changePwd = user.authOptions?.remove("CHANGE_PWD_ON_LOGIN");
+                if (changePwd == true) return "default";
+
+                return "_close";
             }    
 
-            public def changePwd() {
+            public def changePwd() 
+            {
                 user.changePwd( null, newpwd, confirmpwd );
                 return "_close";
-            }
-            
+            }            
         }
         ]]>
     </code>

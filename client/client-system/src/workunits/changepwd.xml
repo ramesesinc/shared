@@ -1,6 +1,7 @@
 <workunit>
     <invokers>
-        <invoker folderid="/menu/system" caption="Change Password" target="popup" permission="system"/> 
+        <invoker folderid="/menu/system" caption="Change Password" target="popup" 
+            permission="system" resizable="false"/> 
     </invokers>
     
     <code>
@@ -17,12 +18,13 @@
             def newpwd;
             def confirmpwd;
             
-            def changePwd() {
+            def changePwd() 
+            {
                 user.changePwd( oldpwd, newpwd, confirmpwd );
-                return "_close";    
+                return "_close"; 
             }
         }
-        ]]>
+    ]]>
     </code>
     <pages>
         <page template="system.user.ui.ChangePwdPage"/>

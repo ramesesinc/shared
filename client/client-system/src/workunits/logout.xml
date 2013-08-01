@@ -13,37 +13,44 @@
         import com.rameses.rcp.annotations.*;
         import com.rameses.util.*;
 
-        public class LogoutController {
-        
+        public class LogoutController 
+        {
             @Script("User")
             def user;
 
-            public void init() {
-                def loginSvc = null;
-                if( user.sessionId ) {
-                    loginSvc = InvokerProxy.instance.create("LoginService");       
-                }
+            public void init() 
+            {
+                def service = null;
+                if ( user.sessionId ) 
+                    service = InvokerProxy.instance.create("LogoutService"); 
                 
-                def logout = new LogoutSession( loginSvc: loginSvc, user: user );
-                OsirisContext.mainWindowListener.add(logout);
+                def handler = new LogoutHandler( service: service, user: user );
+                OsirisContext.mainWindowListener.add(handler);
             }
         }
         
-        public class LogoutSession implements MainWindowListener {
-            def loginSvc;
+
+        public class LogoutHandler implements MainWindowListener 
+        {
+            def service;
             def user;
+
             public Object onEvent(String eventName, Object evt) {
                 return null;
             }
-            public boolean onClose() {
-                if( MsgBox.confirm( "Are you sure you want to logout this application?") ) {
-                    if(loginSvc) loginSvc.logout( user.env );
+
+            public boolean onClose() 
+            {
+                if ( MsgBox.confirm( "Are you sure you want to logout this application?") ) 
+                {
+                    if (service) service.logout( user.env );
+
                     return true;
                 }
                 return false;
             }
         }
-        ]]>
-    </code>
-    
+    ]]>
+    </code>    
+
 </workunit>
