@@ -1,5 +1,7 @@
 package com.rameses.osiris2.common;
+import com.rameses.osiris2.client.InvokerFilter;
 import com.rameses.osiris2.client.InvokerProxy;
+import com.rameses.osiris2.client.InvokerUtil;
 import com.rameses.rcp.annotations.Binding;
 import com.rameses.rcp.annotations.ChangeLog;
 import com.rameses.rcp.annotations.Invoker;
@@ -185,6 +187,11 @@ public abstract class CRUDController
                 formActions.add(createAction("save", "Save", "images/toolbars/save.png", "ctrl S", 's', "#{mode!='read'}", false)); 
                 formActions.add(createAction("undo", "Undo", "images/toolbars/undo.png", "ctrl Z", 'u', "#{mode=='edit'}", true)); 
             } 
+            
+            List<Action> xactions = lookupActions("formActions");
+            while (!xactions.isEmpty()) {
+                formActions.add(xactions.remove(0)); 
+            }
         } 
         return formActions;         
     }
@@ -201,7 +208,21 @@ public abstract class CRUDController
             }
         }
         return navActions;
-    }
+    } 
+        
+    protected final List<Action> lookupActions(String type) { 
+        List<Action> actions = InvokerUtil.lookupActions(type, new InvokerFilter() {
+            public boolean accept(com.rameses.osiris2.Invoker o) { 
+                return o.getWorkunitid().equals(invoker.getWorkunitid()); 
+            }
+        }); 
+        
+        for (int i=0; i<actions.size(); i++) {
+            Action newAction = actions.get(i).clone();
+            actions.set(i, newAction);
+        }
+        return actions;  
+    }    
     
     private Action createAction(String name, String caption, String icon, String shortcut, char mnemonic, String visibleWhen, boolean immediate) 
     {
