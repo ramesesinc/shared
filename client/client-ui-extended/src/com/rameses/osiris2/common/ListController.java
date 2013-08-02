@@ -204,14 +204,17 @@ public abstract class ListController extends BasicListController implements List
         
     // </editor-fold>
     
-    protected void onfetchList(Map params) {}
+    protected void onbeforeFetchList(Map params) {}
+    protected void onafterFetchList(List list) {}
     
     public List fetchList(Map m) {
         String stag = getTag();
         if (stag != null) m.put("_tag", stag);
         
-        onfetchList(m);
-        return getService().getList(m); 
+        onbeforeFetchList(m);
+        List list = getService().getList(m); 
+        onafterFetchList(list); 
+        return list; 
     }
     
     protected ListService getService(){

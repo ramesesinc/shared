@@ -108,7 +108,7 @@ public class ExplorerViewerController {
                 search.put("caption", "Search"); 
                 search.put("type", "search"); 
                 search.put("icon", "images/doc-view16.png");
-                search.put("nodemask", Node.LEAF); 
+                search.put("leaf", true); 
                 if (nodes.isEmpty())
                     nodes.add(search);
                 else 
@@ -125,7 +125,7 @@ public class ExplorerViewerController {
                 if (nodeClass == null || nodeClass.length() == 0) continue;
                                 
                 try {
-                    if ((node.getNodemask() & Node.DYNAMIC)<=0) continue; 
+                    //if ((node.getNodemask() & Node.DYNAMIC)<=0) continue; 
                     
                     List<Action> actions = InvokerUtil.lookupActions(getScheme()+":"+nodeClass); 
                     if (actions == null || actions.isEmpty()) continue;

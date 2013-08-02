@@ -42,22 +42,6 @@ public class ExplorerListViewController extends ListController implements Explor
     
     public Opener getQueryForm() { return null; }
 
-    public boolean isAllowChildren() {
-        Node node = getNode();
-        if (node == null) return false; 
-
-        boolean passed = (node.getNodemask() & Node.ALLOW_CHILDREN)>0; 
-        //System.out.println("caption=" + node.getCaption() + ", nodemask="+node.getNodemask() + ", allowChildren="+passed);
-        return passed; 
-    }
-    
-    public boolean isDynamic() {
-        Node node = getNode();
-        if (node == null) return false; 
-        
-        return (node.getNodemask() & Node.DYNAMIC)>0; 
-    }    
-    
     public List getFormActions() {
         if (formActions == null) {
             formActions = new ArrayList(); 
@@ -114,7 +98,7 @@ public class ExplorerListViewController extends ListController implements Explor
         }
     }
     
-    protected void onfetchList(Map params) {
+    protected void onbeforeFetchList(Map params) {
         Node node = getNode(); 
         Object item = (node == null? null: node.getItem()); 
         if (item instanceof Map) params.putAll((Map) item); 
