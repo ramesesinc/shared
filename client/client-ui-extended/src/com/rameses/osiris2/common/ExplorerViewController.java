@@ -9,12 +9,14 @@
 
 package com.rameses.osiris2.common;
 
+import com.rameses.common.ExpressionResolver;
 import com.rameses.common.PropertyResolver;
 import com.rameses.osiris2.client.InvokerProxy;
 import com.rameses.osiris2.client.InvokerUtil;
 import com.rameses.rcp.annotations.Binding;
 import com.rameses.rcp.annotations.Controller;
 import com.rameses.rcp.annotations.Invoker;
+import com.rameses.rcp.common.Action;
 import com.rameses.rcp.common.Node;
 import com.rameses.rcp.common.Opener;
 import com.rameses.rcp.common.TreeNodeModel;
@@ -47,7 +49,9 @@ public class ExplorerViewController {
     private ExplorerViewService service;
     private Opener openerObject; 
     private Opener defaultViewOpener; 
+    
     private Map<String,Opener> fileTypes = new HashMap(); 
+    private ActionsProvider actionsProvider = new ActionsProvider(); 
     
     public ExplorerViewController() {
     }
@@ -56,6 +60,7 @@ public class ExplorerViewController {
     
     public void init() {
         fileTypes.clear();
+        actionsProvider.init();
         
         List list = new ArrayList(); 
         try {
@@ -188,13 +193,7 @@ public class ExplorerViewController {
         public void initChildNodes(Node[] nodes) {
             if (nodes == null) return;
             
-            Node selNode = getSelectedNode();
-            if (selNode != null) {
-                System.out.println("initChildNodes for " + selNode.getItem());
-            }
-            
             for (Node node: nodes) {
-                System.out.println(">>> " + node.getItem());
                 String filetype = node.getPropertyString("filetype");
                 if (filetype == null) filetype = getDefaultFileType();
                 if (filetype == null) continue;
@@ -237,9 +236,12 @@ public class ExplorerViewController {
                 defaultViewOpener = InvokerUtil.lookupOpener(name, new HashMap());
             }
             
-            //System.out.println("openNode-> " + node.getItem());
+            //System.out.println("openNode-> " + node.getItem());            
             ExplorerViewHandler handler = (ExplorerViewHandler) defaultViewOpener.getHandle(); 
+            List<Action> nodeActions = actionsProvider.getActions(node); 
+            
             handler.setNode(node); 
+            handler.setNodeActions(nodeActions); 
             handler.setService(getService());             
             handler.setOpener((filetype == null? null: fileTypes.get(filetype.toLowerCase()))); 
             handler.updateView();
@@ -269,4 +271,43 @@ public class ExplorerViewController {
     
     // </editor-fold>
     
+    // <editor-fold defaultstate="collapsed" desc=" ActionsProvider (class) "> 
+    
+    private class ActionsProvider 
+    {
+        private ExpressionResolver resolver = ExpressionResolver.getInstance(); 
+        private List<Action> actions;
+        
+        void init() {
+            try {
+                actions = InvokerUtil.lookupActions(getContext()+":formActions"); 
+            } catch(Throwable t) {
+                actions = new ArrayList(); 
+            }
+        }
+        
+        List<Action> getActions(Node node) {
+            List<Action> list = new ArrayList();
+            if (node == null || actions == null) return list;
+            
+            Object item = node.getItem(); 
+            for (Action a: actions) { 
+                String expr = (String) a.getProperties().get("expr");
+                boolean passed = (expr == null); 
+                if (!passed) {
+                    try {
+                        passed = resolver.evalBoolean(expr, item);
+                    } catch(Throwable t) {
+                        System.out.println("[WARN] failed to eval action expr caused by " + t.getMessage()); 
+                        passed = false; 
+                    }
+                }
+                
+                if (passed) list.add(a);
+            }
+            return list; 
+        }
+    }
+    
+    // </editor-fold>
 }

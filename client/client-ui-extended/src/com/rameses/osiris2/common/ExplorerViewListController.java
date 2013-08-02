@@ -28,6 +28,9 @@ public class ExplorerViewListController extends ListController implements Explor
     private Opener opener;
     private ExplorerViewService service;
     private List<Action> formActions; 
+
+    private List<Action> nodeActions; 
+    private List<Action> oldActions; 
     
     public ExplorerViewListController() {
     }
@@ -62,7 +65,7 @@ public class ExplorerViewListController extends ListController implements Explor
                 formActions.add(a); 
             }
             
-            formActions.add(createAction("reload", "Refresh", "images/toolbars/refresh.png", "ctrl R", 'r', null, true));             
+            formActions.add(createAction("reload", "Refresh", "images/toolbars/refresh.png", "ctrl R", 'r', null, true)); 
         }
         return formActions; 
     }  
@@ -80,6 +83,11 @@ public class ExplorerViewListController extends ListController implements Explor
     public Node getNode() { return node; } 
     public void setNode(Node node) { this.node = node; }
     
+    public void setNodeActions(List<Action> nodeActions) {
+        this.oldActions = this.nodeActions; 
+        this.nodeActions = nodeActions; 
+    }
+    
     public void setOpener(Opener opener) { this.opener = opener; } 
     
     protected ListService getService() { return service; }    
@@ -88,6 +96,16 @@ public class ExplorerViewListController extends ListController implements Explor
     }
     
     public void updateView() { 
+        getFormActions();
+        if (oldActions != null) {
+            for (Action a: oldActions) formActions.remove(a); 
+            
+            oldActions.clear(); 
+            oldActions = null; 
+        }
+        if (nodeActions != null) {
+            for (Action a: nodeActions) formActions.add(a); 
+        }
         reload(); 
     }
     
@@ -100,13 +118,6 @@ public class ExplorerViewListController extends ListController implements Explor
         Object item = (node == null? null: node.getItem()); 
         if (item instanceof Map) params.putAll((Map) item); 
     }
-    
-    protected void onafterFetchList1(List list) {
-        System.out.println("onafterFetchList:");
-        for (Object o: list) {
-            System.out.println(o);
-        }
-    }    
     
     public Object open() throws Exception {
         Map item = (Map) getSelectedEntity(); 

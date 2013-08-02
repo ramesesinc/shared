@@ -9,8 +9,10 @@
 
 package com.rameses.osiris2.common;
 
+import com.rameses.rcp.common.Action;
 import com.rameses.rcp.common.Node;
 import com.rameses.rcp.common.Opener;
+import java.util.List;
 
 /**
  *
@@ -19,6 +21,8 @@ import com.rameses.rcp.common.Opener;
 public interface ExplorerViewHandler {
     
     void setNode(Node node); 
+    
+    void setNodeActions(List<Action> actions); 
     
     void setOpener(Opener opener); 
     
