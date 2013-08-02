@@ -14,6 +14,7 @@ import com.rameses.rcp.common.Action;
 import com.rameses.rcp.common.MsgBox;
 import com.rameses.rcp.common.Node;
 import com.rameses.rcp.common.Opener;
+import com.rameses.rcp.framework.Binding;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -106,6 +107,11 @@ public class ExplorerViewListController extends ListController implements Explor
         if (nodeActions != null) {
             for (Action a: nodeActions) formActions.add(a); 
         }
+        
+        Binding binding = getBinding();
+        if (binding != null) {
+            binding.refresh("formActions");
+        } 
         reload(); 
     }
     
