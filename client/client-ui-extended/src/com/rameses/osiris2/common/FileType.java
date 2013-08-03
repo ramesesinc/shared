@@ -18,14 +18,7 @@ import java.util.Map;
  */
 public interface FileType {
 
-    String getFileType();
-    String getIcon();    
-    
     Node getNode(); 
-    void setNode(Node node); 
-    
-    void setSelectedItem(Map item); 
-    
-    void open(); 
-    void create(); 
+    void setNode(Node node);     
+    void setEntity(Map entity); 
 } 

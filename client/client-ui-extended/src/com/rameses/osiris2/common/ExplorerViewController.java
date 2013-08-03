@@ -9,17 +9,16 @@
 
 package com.rameses.osiris2.common;
 
-import com.rameses.common.ExpressionResolver;
 import com.rameses.common.PropertyResolver;
 import com.rameses.osiris2.client.InvokerProxy;
 import com.rameses.osiris2.client.InvokerUtil;
 import com.rameses.rcp.annotations.Binding;
 import com.rameses.rcp.annotations.Controller;
 import com.rameses.rcp.annotations.Invoker;
-import com.rameses.rcp.common.Action;
 import com.rameses.rcp.common.Node;
 import com.rameses.rcp.common.Opener;
 import com.rameses.rcp.common.TreeNodeModel;
+import com.rameses.rcp.util.ControlSupport;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -50,42 +49,11 @@ public class ExplorerViewController {
     private Opener openerObject; 
     private Opener defaultViewOpener; 
     
-    private Map<String,Opener> fileTypes = new HashMap(); 
-    private ActionsProvider actionsProvider = new ActionsProvider(); 
-    
     public ExplorerViewController() {
     }
     
-    // <editor-fold defaultstate="collapsed" desc=" init ">
-    
-    public void init() {
-        fileTypes.clear();
-        actionsProvider.init();
-        
-        List list = new ArrayList(); 
-        try {
-            list = InvokerUtil.lookupOpeners(getContext() + ":filetypes");
-        } catch(Throwable t) {;} 
-        
-        while (!list.isEmpty()) {
-            Opener o = (Opener) list.remove(0); 
-            Object bean = o.getHandle();
-            if (!(bean instanceof FileType)) continue; 
-            
-            FileType handler = (FileType) bean;
-            String ftype = handler.getFileType();
-            if (ftype == null) continue;
-            
-            fileTypes.put(ftype.toLowerCase(), o);             
-            String target = o.getTarget()+"";
-            if (!target.matches("window|popup|process|_window|_popup|_process"))
-                target = "popup";
-
-            o.setTarget(target);            
-        }
-    }
-    
-    // </editor-fold> 
+    public void init(){
+    } 
     
     // <editor-fold defaultstate="collapsed" desc=" Getters/Settters ">
     
@@ -157,7 +125,7 @@ public class ExplorerViewController {
         
         public String getIcon() { 
             String icon = root.getIcon();
-            if (icon == null || icon.length() == 0)
+            if (icon == null || icon.length() == 0) 
                 return "Tree.closedIcon"; 
             else 
                 return icon; 
@@ -194,20 +162,16 @@ public class ExplorerViewController {
             if (nodes == null) return;
             
             for (Node node: nodes) {
-                String filetype = node.getPropertyString("filetype");
-                if (filetype == null) filetype = getDefaultFileType();
-                if (filetype == null) continue;
+                if (node.getIcon() != null) continue;
                 
-                Opener opener = fileTypes.get(filetype.toLowerCase()); 
-                if (opener == null) continue;
-                                
-                try {
-                    FileType fileType = (FileType) opener.getHandle(); 
-                    String icon = fileType.getIcon();
-                    if (icon != null && icon.length() > 0) 
-                        node.setIcon(icon);
-                } catch(Throwable t) {
-                    System.out.println("[WARN] init failed to node "+ node.getCaption() + " caused by " + t.getMessage());
+                String icon = node.getPropertyString("filetype");
+                if (icon == null) icon = "default_folder"; 
+                
+                String res = "images/explorer/"+root.getContext()+"/"+icon.toLowerCase()+".png";
+                if (ControlSupport.isResourceExist(res)) { 
+                    node.setIcon(res);
+                } else {
+                    node.setIcon(getIcon());
                 }
             }
         }
@@ -236,14 +200,10 @@ public class ExplorerViewController {
                 defaultViewOpener = InvokerUtil.lookupOpener(name, new HashMap());
             }
             
-            //System.out.println("openNode-> " + node.getItem());            
+            System.out.println("openNode-> " + node.getItem());            
             ExplorerViewHandler handler = (ExplorerViewHandler) defaultViewOpener.getHandle(); 
-            List<Action> nodeActions = actionsProvider.getActions(node); 
-            
+            handler.setParent(root); 
             handler.setNode(node); 
-            handler.setNodeActions(nodeActions); 
-            handler.setService(getService());             
-            handler.setOpener((filetype == null? null: fileTypes.get(filetype.toLowerCase()))); 
             handler.updateView();
             openerObject = defaultViewOpener; 
             if (binding != null) binding.refresh("subform"); 
@@ -270,44 +230,5 @@ public class ExplorerViewController {
     }
     
     // </editor-fold>
-    
-    // <editor-fold defaultstate="collapsed" desc=" ActionsProvider (class) "> 
-    
-    private class ActionsProvider 
-    {
-        private ExpressionResolver resolver = ExpressionResolver.getInstance(); 
-        private List<Action> actions;
-        
-        void init() {
-            try {
-                actions = InvokerUtil.lookupActions(getContext()+":formActions"); 
-            } catch(Throwable t) {
-                actions = new ArrayList(); 
-            }
-        }
-        
-        List<Action> getActions(Node node) {
-            List<Action> list = new ArrayList();
-            if (node == null || actions == null) return list;
-            
-            Object item = node.getItem(); 
-            for (Action a: actions) { 
-                String expr = (String) a.getProperties().get("expr");
-                boolean passed = (expr == null); 
-                if (!passed) {
-                    try {
-                        passed = resolver.evalBoolean(expr, item);
-                    } catch(Throwable t) {
-                        System.out.println("[WARN] failed to eval action expr caused by " + t.getMessage()); 
-                        passed = false; 
-                    }
-                }
-                
-                if (passed) list.add(a);
-            }
-            return list; 
-        }
-    }
-    
-    // </editor-fold>
+
 }

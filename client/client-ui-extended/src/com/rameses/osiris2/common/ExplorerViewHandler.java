@@ -9,10 +9,8 @@
 
 package com.rameses.osiris2.common;
 
-import com.rameses.rcp.common.Action;
 import com.rameses.rcp.common.Node;
 import com.rameses.rcp.common.Opener;
-import java.util.List;
 
 /**
  *
@@ -20,13 +18,9 @@ import java.util.List;
  */
 public interface ExplorerViewHandler {
     
+    void setParent(ExplorerViewController parentController); 
+    
     void setNode(Node node); 
-    
-    void setNodeActions(List<Action> actions); 
-    
-    void setOpener(Opener opener); 
-    
-    void setService(ExplorerViewService service); 
     
     void updateView(); 
     
