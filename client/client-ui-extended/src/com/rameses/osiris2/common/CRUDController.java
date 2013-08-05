@@ -359,10 +359,9 @@ public abstract class CRUDController
     {
         if (MsgBox.confirm("You are about to approve this document. Continue?"))
         {
-            Map data = getService().approve(getEntity()); 
-            setEntity(data);
-
-            if (data.get("state") == null) data.put("state", "DRAFT"); 
+            Map data = getEntity();
+            getService().approve(data); 
+            data.put("state", "APPROVED");
         } 
     }
     
