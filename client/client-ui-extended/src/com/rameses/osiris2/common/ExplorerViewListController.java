@@ -17,6 +17,7 @@ import com.rameses.rcp.common.Action;
 import com.rameses.rcp.common.MsgBox;
 import com.rameses.rcp.common.Node;
 import com.rameses.rcp.common.Opener;
+import com.rameses.rcp.common.PopupMenuOpener;
 import com.rameses.rcp.framework.Binding;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,6 +33,7 @@ public class ExplorerViewListController extends ListController implements Explor
     private Node node; 
     private ExplorerViewService service;
     private List<Action> formActions; 
+    private List<Invoker> defaultInvokers; 
 
     public ExplorerViewListController() {
     }
@@ -96,18 +98,18 @@ public class ExplorerViewListController extends ListController implements Explor
              
         Node node = getNode();
         if (node == null) return;
-                
-        String context = parentController.getContext();                
+
+        String defaultFiletype = parentController.getDefaultFileType();        
+        String context = parentController.getContext();        
         String filetype = node.getPropertyString("filetype");
-        if (filetype == null) filetype = parentController.getDefaultFileType();
+        if (filetype == null) filetype = defaultFiletype;
 
         if (isAllowCreate() && filetype != null) { 
             List<Invoker> list = (List) node.getProperties().get("Invoker.createlist"); 
             if (list == null && filetype != null) {
                 list = actionsProvider.getInvokers(node, (filetype+":additem").toLowerCase());
                 node.getProperties().put("Invoker.createlist", list);
-            } 
-            
+            }             
             if (!list.isEmpty()) { 
                 Action a = createAction("create", "New", "images/toolbars/create.png", "ctrl N", 'n', null, true); 
                 formActions.add(a); 
@@ -121,19 +123,31 @@ public class ExplorerViewListController extends ListController implements Explor
             } 
             
             Action a = createAction("open", "Open", "images/toolbars/open.png", "ctrl O", 'o', "#{selectedEntity != null}", true); 
-            a.getProperties().put("depends", "selectedEntity");
+            a.getProperties().put("depends", "selectedEntity"); 
             formActions.add(a); 
-        }   
-        formActions.add(createAction("reload", "Refresh", "images/toolbars/refresh.png", "ctrl R", 'r', null, true));         
+        }
+        formActions.add(createAction("reload", "Refresh", "images/toolbars/refresh.png", "ctrl R", 'r', null, true)); 
         
-//        if (filetype != null) {
-//            List<Invoker> list = (List) node.getProperties().get("Invoker.actionlist"); 
-//            if (list == null) {
-//                list = actionsProvider.getInvokers(node, (filetype+":formActions").toLowerCase());
-//                node.getProperties().put("Invoker.actionlist", list);
-//            }
-//        }
-        
+        //load generic actions
+        if (defaultInvokers == null && defaultFiletype != null) {
+            defaultInvokers = actionsProvider.getInvokers(node, defaultFiletype.toLowerCase()+":formActions");
+        }        
+        if (defaultInvokers != null && !defaultInvokers.isEmpty()) {
+            for (Invoker invoker: defaultInvokers) {
+                formActions.add(new ActionInvoker(invoker)); 
+            }
+        }
+        //load specific actions
+        List<Invoker> list = (List) node.getProperties().get("Invoker.formActions"); 
+        if (list == null && filetype != null) {
+            list = actionsProvider.getInvokers(node, filetype.toLowerCase()+":formActions");
+            node.getProperties().put("Invoker.formActions", list);
+        } 
+        if (list != null && !list.isEmpty()) {
+            for (Invoker invoker: list) {
+                formActions.add(new ActionInvoker(invoker)); 
+            }
+        } 
     }
     
     // </editor-fold>
@@ -174,57 +188,42 @@ public class ExplorerViewListController extends ListController implements Explor
             selNode.open(); 
             return null; 
         } 
-
-        Opener opener = null;
+        
         List<Invoker> list = (List) node.getProperties().get("Invoker.openlist");
-        if (list != null && !list.isEmpty()) {
-            Invoker inv = list.get(0);
+        if (list == null || list.isEmpty()) {
+            MsgBox.alert("No available file type handler");
+            return null;
+        }
+        
+        PopupMenuOpener opener = new PopupMenuOpener();        
+        for (Invoker invoker: list) {
             HashMap map = new HashMap();
             map.put("node", node);
             map.put("entity", item);
-            opener = actionsProvider.toOpener(inv, map, node); 
-        } 
-                         
-        if (opener == null) {
-            MsgBox.alert("No available file type handler");
-            System.out.println("node-item-> " + node.getItem());            
-            System.out.println("sel-item-> " + item);            
-            return null;
-        } else {
-            return opener;
+            opener.add(actionsProvider.toOpener(invoker, map, node));
         }
+        return opener;
     }
     
     public Opener create() throws Exception {
         Node node = getNode();
         if (node == null) return null;
         
-        Opener opener = null;
         List<Invoker> list = (List) node.getProperties().get("Invoker.createlist");
-        if (list != null && !list.isEmpty()) {
-            Invoker inv = list.get(0);
-            HashMap map = new HashMap();
-            map.put("node", node);
-            map.put("entity", new HashMap()); 
-            opener = actionsProvider.toOpener(inv, map, node);             
-        }
-                         
-        if (opener == null) {
+        if (list == null || list.isEmpty()) {
             MsgBox.alert("No available file type handler");
             System.out.println("node-item-> " + node.getItem());            
-            return null;
-        } else {
-            return opener;
+            return null;            
         }
-    }
-    
-    private boolean toBoolean(Object value) {
-        if (value == null) return false; 
-        if (value instanceof Boolean) return ((Boolean) value).booleanValue();
-        if ("true".equals(value.toString())) return true; 
-        if ("1".equals(value.toString())) return true;
         
-        return false; 
+        PopupMenuOpener opener = new PopupMenuOpener();        
+        for (Invoker invoker: list) {
+            HashMap map = new HashMap();
+            map.put("node", node);
+            map.put("entity", new HashMap());
+            opener.add(actionsProvider.toOpener(invoker, map, node));
+        }
+        return opener;        
     }
     
     // </editor-fold>
@@ -242,16 +241,7 @@ public class ExplorerViewListController extends ListController implements Explor
                 return new ArrayList(); 
             }   
         }
-        
-        List<Opener> getOpeners(Node node, String invokerType) {
-            try {                
-                List<Invoker> invokers = InvokerUtil.lookup(invokerType);
-                return toOpeners(invokers, node); 
-            } catch(Throwable t) {
-                return new ArrayList(); 
-            }   
-        }
-        
+                
         Opener toOpener(Invoker invoker, Map params, Node node) {
             Opener a = InvokerUtil.createOpener(invoker, params); 
             String target = a.getTarget()+"";
@@ -260,76 +250,68 @@ public class ExplorerViewListController extends ListController implements Explor
             } 
             return a;
         }
-        
-        private List<Opener> toOpeners(List<Invoker> invokers, Node node) {
-            List<Opener> openers = new ArrayList();
-            Object item = node.getItem(); 
-            for (Invoker inv: invokers) { 
-                Opener a = InvokerUtil.createOpener(inv);
-                String expr = (String) a.getProperties().get("expr"); 
-                boolean passed = (expr == null || expr.length() == 0); 
-                if (!passed) {
-                    try {
-                        FileType handle = (FileType) a.getHandle();
-                        handle.setNode(node);
-                        passed = resolver.evalBoolean(expr, item);
-                    } catch(Throwable t) {
-                        System.out.println("[WARN] failed to eval action expr caused by " + t.getMessage()); 
-                        passed = false; 
-                    }
-                }
-                if (passed) {
-                    String target = a.getTarget()+"";
-                    if (!target.matches("window|popup|process|_window|_popup|_process")) {
-                        a.setTarget("popup"); 
-                    } 
-                    openers.add(a);
-                }
-            }   
-            return openers;
-        }
     }
     
     // </editor-fold>
-        
-    // <editor-fold defaultstate="collapsed" desc=" ActionOpener (class) "> 
     
-    private class ActionOpener extends Action
+    // <editor-fold defaultstate="collapsed" desc=" ActionInvoker (class) "> 
+    
+    private class ActionInvoker extends Action 
     {
         ExplorerViewListController root = ExplorerViewListController.this;
-        private Opener opener;
+        private Invoker invoker;
         
-        ActionOpener(Opener opener) {
-            this.opener = opener; 
-            this.setName(opener.getAction());
-            this.setCaption(opener.getCaption());
+        ActionInvoker(Invoker invoker) {
+            this.invoker = invoker; 
             
-            Map props = opener.getProperties(); 
-            this.getProperties().putAll(props);            
-            this.setIcon(getString(props, "icon"));
-            this.setVisibleWhen(getString(props, "visibleWhen"));
+            this.setName(invoker.getAction()); 
+            this.setCaption(invoker.getCaption()); 
+            this.setIcon(getString("icon"));
+            this.setVisibleWhen(getString("visibleWhen"));            
+            this.setMnemonic(getChar("mnemonic"));
+            this.setTooltip(getString("tooltip"));
+            
+            Boolean bool = getBoolean("immediate"); 
+            if (bool != null) this.setImmediate(bool.booleanValue());
+            
+            bool = getBoolean("showCaption"); 
+            if (bool != null) this.setShowCaption(bool.booleanValue());
+            
+            this.getProperties().putAll(invoker.getProperties()); 
         }
-        
+
         public Object execute() { 
-            String target = opener.getTarget()+"";
-            if (!target.matches("window|popup|process|_window|_popup|_process"))
-                opener.setTarget("popup");
-                        
-            Node node = getNode();
-            FileType handle = (FileType) opener.getHandle(); 
-            handle.setNode(node); 
-            handle.setEntity((Map) node.getItem()); 
-            return opener; 
+            Node node = root.getNode();
+            HashMap map = new HashMap();
+            map.put("node", node);
+            map.put("entity", (Map) root.getSelectedEntity());
+            return actionsProvider.toOpener(invoker, map, node); 
         } 
         
-        private String getString(Map data, String name) {
-            Object o = data.get(name);
-            return (o == null? null: o.toString()); 
+        private String getString(String name) {
+            if (invoker == null || invoker.getProperties() == null) return null;
+            
+            Object ov = invoker.getProperties().get(name); 
+            return (ov == null? null: ov.toString()); 
         }
+        
+        private char getChar(String name) {
+            String sv = getString(name);
+            if (sv == null || sv.trim().length() == 0) return '\u0000';
+            
+            return sv.trim().charAt(0); 
+        } 
+        
+        private Boolean getBoolean(String name) {
+            String sv = getString(name);
+            if (sv == null || sv.length() == 0) return null;
+            
+            return "true".equalsIgnoreCase(sv); 
+        }         
     }
     
-    // </editor-fold>    
-
+    // </editor-fold>
+    
     // <editor-fold defaultstate="collapsed" desc=" DefaultListService (class) "> 
     
     private class DefaultListService implements ListService 
