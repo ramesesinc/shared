@@ -1,0 +1,32 @@
+<workunit serviceName="UserAdminService" entityName="user">
+    <invokers>
+        <invoker type="user:create" action="init" caption="New User"/>
+        <invoker type="user:open" action="open" caption="User"/>
+        
+        <!-- actions within the page -->
+        <invoker type="navActions" action="changePassword"  caption="Set Password"/>
+   </invokers>
+   
+   <code>
+        <![CDATA[
+
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.osiris2.client.*;
+        import com.rameses.osiris2.common.*;
+
+        public class UserController extends BasicCRUDController {
+        
+            def pwd = [:];
+        
+            def changePassword() {
+                return InvokerUtil.lookupOpener("user:setpwd", [entity:entity]);
+            }
+        }
+        
+       ]]>
+   </code>
+   <pages>
+       <page template="com.rameses.admin.user.UserPage"/>
+   </pages>
+</workunit>

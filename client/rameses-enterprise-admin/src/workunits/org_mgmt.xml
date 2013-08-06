@@ -1,6 +1,5 @@
-<workunit extends="wtemplates/ExplorerViewerController.xml" 
-    serviceName="OrgAdminService" scheme="org">
+<workunit extends="wtemplates/ExplorerViewController.xml" serviceName="OrgAdminService" context="org">
     <invokers>
-        <invoker folderid="/admin" caption="Organization" permission="system" index="5"/>
+        <invoker folderid="/admin" caption="Organization" permission="system" index="1" action="init"/>
    </invokers>
 </workunit>

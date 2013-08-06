@@ -1,0 +1,9 @@
+"entity.org"[node.item.orgclass == null] {
+    editable: false;
+    enabled: false;
+}
+
+"entity.org"[node.item.orgclass!=null] {
+    editable: true;
+    enabled:true;
+}

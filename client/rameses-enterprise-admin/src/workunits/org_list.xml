@@ -1,5 +1,0 @@
-<workunit extends="wtemplates/OrgListController.xml">
-    <invokers>
-        <invoker type="org:list" caption="Organization"/>
-    </invokers>
-</workunit>

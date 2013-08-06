@@ -1,0 +1,33 @@
+<workunit>
+    <invokers>
+        <invoker type="user:setpwd" caption="Set Pwd" target="popup"/>
+   </invokers>
+   <code>
+        <![CDATA[
+
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.osiris2.client.*;
+        import com.rameses.osiris2.common.*;
+
+        public class UserSetPwdController  {
+            
+            def entity;
+            def pwd = [:];
+            
+            def doOk() {
+               
+            }
+            
+            def doCancel() {
+               
+            }
+            
+        }
+        
+       ]]>
+   </code>
+   <pages>
+       <page template="com.rameses.admin.user.SetPasswordPage"/>
+   </pages>
+</workunit>

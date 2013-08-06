@@ -1,0 +1,34 @@
+<workunit>
+    <invokers>
+        
+    </invokers>
+    <code>
+        <![CDATA[
+        import com.rameses.osiris2.common.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.osiris2.client.*;
+
+        public class ProvinceFileTypeController implements FileType {
+            
+            Node node;
+            String fileType = "province";
+            String icon = "images/tree/cube.png";
+            Map selectedItem;
+            
+            def entity = [:]
+            void create() {
+                MsgBox.alert('create me!');
+            }
+            
+            void open() {
+                MsgBox.alert('open me!');
+            }
+            
+        }        
+    ]]>
+    </code>
+    <pages>
+        <page template="com.rameses.admin.org.OrgPage"/>
+    </pages>
+</workunit>

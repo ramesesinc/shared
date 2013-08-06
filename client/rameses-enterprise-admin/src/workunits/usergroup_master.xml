@@ -1,6 +1,0 @@
-<workunit extends="wtemplates/UsergroupController.xml">
-    <invokers>
-        <invoker type="usergroup:open" caption="Open" target="popup" action="open"/>
-        <invoker type="usergroup:create" caption="Create" target="popup" action="create"/>
-    </invokers>
-</workunit>

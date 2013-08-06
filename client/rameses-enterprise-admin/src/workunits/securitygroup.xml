@@ -1,6 +1,6 @@
 <workunit>
     <invokers>
-        <invoker type="securitygroup:open" caption="Security Group" target="popup" action="init"/>
+        <invoker type="usergroup-folder:formActions" caption="Security Group" target="popup" action="init"/>
         
         <invoker type="formActions" caption="New"  action="addNew" visibleWhen="#{mode=='read'}"/>
         <invoker type="formActions" caption="Edit"  action="edit" visibleWhen="#{mode=='read'}"/>
@@ -14,6 +14,7 @@
         import com.rameses.rcp.common.*;
         import com.rameses.osiris2.client.*;
         import com.rameses.osiris2.common.*;
+        import java.rmi.server.*;
         
         class SecurityGroupController {
         
@@ -27,12 +28,14 @@
             def usergroupid;
             def entity = [:]
             def selectedEntity;
+            def node;
             def mode = "read";
             def permissions;
             def objectList;
             def selectedObject;            
             
             void init() {
+                usergroupid =  node.item.usergroupid;
                 mode = "read";
                 permissions = userGrpSvc.getPermissions([usergroupid:usergroupid]);
                 objectList = permissions.collect{ it.object }.unique();
@@ -50,6 +53,7 @@
             //the editing page
             def addNew() {
                 entity = [usergroupid:usergroupid];
+                entity.objid = "USG-"+new UID();
                 permissions.each {
                     it.checked = true;
                 }
@@ -70,6 +74,7 @@
             }   
             
             def save() {
+                entity.exclude = buildExclude();
                 if(mode=='create')
                     sgSvc.create(entity);    
                 else
@@ -94,12 +99,21 @@
                 }
             ] as EditorListModel;
         
-            void build() {
+            def buildExclude() {
                 def excludes = [];
-                permissions.each {
-                    if( !it.checked ) excludes << it.code;
+                permissions.groupBy{ it.object }.each{ k,v->
+                    def checkedList = v.findAll{ it.checked };
+                    if(checkedList.size()==0) {
+                        excludes << k + ".*";
+                    }   
+                    else {
+                        def uncheckedList = v.findAll{ !it.checked }; 
+                        if(uncheckedList.size() >0) {
+                            excludes << k + ".(" + uncheckedList*.permission.join("|") + ")";
+                        }
+                    } 
                 }
-                MsgBox.alert(excludes.join(","));
+                return excludes.join("|");
             }
             
         }

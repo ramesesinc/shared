@@ -1,5 +1,0 @@
-<workunit extends="wtemplates/UsergroupListController.xml">
-    <invokers>
-        <invoker type="usergroup:usergroup" caption="User Group"/>
-    </invokers>
-</workunit>

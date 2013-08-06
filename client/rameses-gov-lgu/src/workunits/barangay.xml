@@ -1,0 +1,37 @@
+<workunit>
+    <invokers>
+        <!-- if municipality -->
+        <invoker type="municipality-barangay:openitem" action="open"/>
+        <invoker type="municipality-barangay:additem" action="create"/>
+        
+        <!-- if city -->
+        <invoker type="city-barangay:openitem" action="open"/>
+        <invoker type="city-barangay:additem" action="create"/>
+    </invokers>
+    <code>
+        <![CDATA[
+        import com.rameses.osiris2.common.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.osiris2.client.*;
+
+        public class BarangayFileTypeController extends CrudFileType {
+        
+            String serviceName = "OrgAdminService";
+            String entityName = "org";
+            String title = "Barangay";
+            
+            Map createEntity() {
+                return [
+                    parentid:node.item.parentid, 
+                    orgclass: 'BARANGAY',
+                    parentclass: node.item.orgclass
+                ];
+            }
+        }        
+    ]]>
+    </code>
+    <pages>
+        <page template="com.rameses.gov.lgu.ui.BarangayPage"/> 
+    </pages>
+</workunit>

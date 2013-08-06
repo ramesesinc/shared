@@ -7,12 +7,14 @@
 package com.rameses.admin.usergroup;
 
 import com.rameses.osiris2.themes.FormPage;
+import com.rameses.rcp.ui.annotations.StyleSheet;
 import com.rameses.rcp.ui.annotations.Template;
 
 /**
  *
  * @author  Elmo
  */
+@StyleSheet
 @Template(FormPage.class)
 public class UsergroupPage extends javax.swing.JPanel {
     
@@ -32,10 +34,11 @@ public class UsergroupPage extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         xFormPanel1 = new com.rameses.rcp.control.XFormPanel();
         xLabel1 = new com.rameses.rcp.control.XLabel();
-        xTextField1 = new com.rameses.rcp.control.XTextField();
-        xTextField2 = new com.rameses.rcp.control.XTextField();
         xLookupField1 = new com.rameses.rcp.control.XLookupField();
+        xTextField2 = new com.rameses.rcp.control.XTextField();
+        xLookupField2 = new com.rameses.rcp.control.XLookupField();
         xComboBox1 = new com.rameses.rcp.control.XComboBox();
+        xTextField1 = new com.rameses.rcp.control.XTextField();
         xButton1 = new com.rameses.rcp.control.XButton();
         jPanel3 = new javax.swing.JPanel();
 
@@ -50,29 +53,40 @@ public class UsergroupPage extends javax.swing.JPanel {
         xLabel1.setExpression("#{entity.usergroupid}");
         xFormPanel1.add(xLabel1);
 
-        xTextField1.setCaption("Name");
-        xTextField1.setName("entity.name");
-        xTextField1.setPreferredSize(new java.awt.Dimension(0, 19));
-        xFormPanel1.add(xTextField1);
+        xLookupField1.setCaption("User");
+        xLookupField1.setExpression("#{  (item ) ?  item.lastname + ' ,  ' +  item.firstname: ''  }");
+        xLookupField1.setHandler("lookupUser");
+        xLookupField1.setName("entity.user");
+        xLookupField1.setPreferredSize(new java.awt.Dimension(0, 19));
+        xLookupField1.setRequired(true);
+        xFormPanel1.add(xLookupField1);
 
-        xTextField2.setCaption("Title");
-        xTextField2.setName("entity.title");
+        xTextField2.setCaption("Job Title");
+        xTextField2.setDepends(new String[] {"entity.user"});
+        xTextField2.setName("entity.jobtitle");
         xTextField2.setPreferredSize(new java.awt.Dimension(0, 19));
         xFormPanel1.add(xTextField2);
 
-        xLookupField1.setCaption("User");
-        xLookupField1.setExpression("#{item.name}");
-        xLookupField1.setHandler("user:lookup");
-        xLookupField1.setName("entity.user");
-        xLookupField1.setPreferredSize(new java.awt.Dimension(0, 19));
-        xFormPanel1.add(xLookupField1);
+        xLookupField2.setCaption("Org");
+        xLookupField2.setExpression("#{  (item) ? item.name : '' }");
+        xLookupField2.setHandler("lookupOrg");
+        xLookupField2.setName("entity.org");
+        xLookupField2.setPreferredSize(new java.awt.Dimension(0, 19));
+        xFormPanel1.add(xLookupField2);
 
         xComboBox1.setCaption("Security Group");
         xComboBox1.setExpression("#{item.name}");
+        xComboBox1.setItemKey("objid");
         xComboBox1.setItems("securityGroups");
-        xComboBox1.setName("entity.securitygroup");
+        xComboBox1.setName("entity.securitygroupid");
         xComboBox1.setPreferredSize(new java.awt.Dimension(0, 22));
+        xComboBox1.setRequired(true);
         xFormPanel1.add(xComboBox1);
+
+        xTextField1.setCaption("User Txn Code");
+        xTextField1.setName("entity.usertxncode");
+        xTextField1.setPreferredSize(new java.awt.Dimension(0, 19));
+        xFormPanel1.add(xTextField1);
 
         xButton1.setText("v");
 
@@ -85,17 +99,19 @@ public class UsergroupPage extends javax.swing.JPanel {
                 .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 356, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(xButton1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel1Layout.createSequentialGroup()
-                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 111, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(77, Short.MAX_VALUE)
-                .add(xButton1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(22, 22, 22))
+                .addContainerGap()
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jPanel1Layout.createSequentialGroup()
+                        .add(xFormPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .add(xButton1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(36, 36, 36))))
         );
 
         jPanel3.setLayout(new java.awt.BorderLayout());
@@ -108,18 +124,18 @@ public class UsergroupPage extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(77, Short.MAX_VALUE))
+                .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jPanel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 15, Short.MAX_VALUE)
+                .add(jPanel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 182, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         add(jPanel2, java.awt.BorderLayout.CENTER);
@@ -136,6 +152,7 @@ public class UsergroupPage extends javax.swing.JPanel {
     private com.rameses.rcp.control.XFormPanel xFormPanel1;
     private com.rameses.rcp.control.XLabel xLabel1;
     private com.rameses.rcp.control.XLookupField xLookupField1;
+    private com.rameses.rcp.control.XLookupField xLookupField2;
     private com.rameses.rcp.control.XTextField xTextField1;
     private com.rameses.rcp.control.XTextField xTextField2;
     // End of variables declaration//GEN-END:variables

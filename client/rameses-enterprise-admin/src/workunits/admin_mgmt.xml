@@ -4,6 +4,6 @@
             caption="Administration" index="-5" action="init"/>
 
         <invoker type="quick_launcher" caption="Administration" 
-            code="ADMIN" action="init"/>            
+            code="ADMIN" action="init"/>  
     </invokers>
 </workunit>
