@@ -3,7 +3,6 @@ package com.rameses.osiris2.common;
 import com.rameses.osiris2.client.InvokerProxy;
 import com.rameses.osiris2.client.InvokerUtil;
 import com.rameses.rcp.common.Action;
-import com.rameses.rcp.common.CallbackHandler;
 import com.rameses.rcp.common.Column;
 import com.rameses.rcp.common.ListItem;
 import com.rameses.rcp.common.Opener;
@@ -106,7 +105,10 @@ public abstract class ListController extends BasicListController implements List
         if (!onCreate(params)) return null; 
         
         Opener o = InvokerUtil.lookupOpener(getEntityName()+":create", params);
-        o.setTarget(getFormTarget()); 
+        String target = o.getTarget()+"";
+        if (!target.matches("window|popup|process|_window|_popup|_process")) { 
+            o.setTarget(getFormTarget()); 
+        } 
         return o;
     }
     
@@ -117,7 +119,10 @@ public abstract class ListController extends BasicListController implements List
         if (!onOpen(params)) return null; 
         
         Opener o = InvokerUtil.lookupOpener(getEntityName()+":open", params);
-        o.setTarget(getFormTarget()); 
+        String target = o.getTarget()+"";
+        if (!target.matches("window|popup|process|_window|_popup|_process")) { 
+            o.setTarget(getFormTarget()); 
+        }         
         return o;
     }    
     
@@ -137,13 +142,8 @@ public abstract class ListController extends BasicListController implements List
     
     private Map createOpenerParams() 
     {
-        Map handlers = new HashMap();
-        handlers.put("saveCreate", new InsertRefreshHandler());
-        handlers.put("saveUpdate", new UpdateRefreshHandler());
-        
         Map params = new HashMap();
-        params.put("listModelHandler", this);
-        params.put("refreshHandler", handlers); 
+        params.put("listModel", this);
         return params;
     }
           
@@ -233,7 +233,7 @@ public abstract class ListController extends BasicListController implements List
      */ 
     // <editor-fold defaultstate="collapsed" desc=" ListControllerHandler implementation "> 
     
-    public void handleInsert(Object data) 
+    public void addItem(Object data) 
     {
         if (data == null) return;
         
@@ -255,7 +255,7 @@ public abstract class ListController extends BasicListController implements List
         setSelectedItem(idx); 
     }
     
-    public void handleUpdate(Object data) 
+    public void updateItem(Object data) 
     {
         ListItem item = getSelectedItem(); 
         if (item == null) return;
@@ -271,7 +271,7 @@ public abstract class ListController extends BasicListController implements List
         }
     }
 
-    public void handleRemove(Object data) 
+    public void removeItem(Object data) 
     {
         if (getSelectedEntity() == null) return;
         
@@ -285,41 +285,4 @@ public abstract class ListController extends BasicListController implements List
     
     // </editor-fold>
     
-    // <editor-fold defaultstate="collapsed" desc=" refresh handler support "> 
-    
-    public class InsertRefreshHandler implements CallbackHandler
-    {
-        public Object call() { 
-            throw new NullPointerException("Please feed the data when invoking this method");
-        }
-
-        public Object call(Object arg) { 
-            return call(new Object[]{ arg }); 
-        }
-
-        public Object call(Object[] args) { 
-            Object data = args[0];
-            handleInsert(data);
-            return null;
-        } 
-    }
-    
-    public class UpdateRefreshHandler implements CallbackHandler
-    {
-        public Object call() { 
-            throw new NullPointerException("Please feed the data when invoking this method");
-        }
-
-        public Object call(Object arg) { 
-            return call(new Object[]{ arg }); 
-        }
-
-        public Object call(Object[] args) { 
-            Object data = args[0];
-            handleUpdate(data);
-            return null;
-        } 
-    }    
-    
-    // </editor-fold>
 }
