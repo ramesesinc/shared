@@ -34,8 +34,8 @@ public abstract class CRUDController
     
 
     private ListModelHandler listModelHandler;
-    private List formActions;    
-    private List navActions;    
+    private List formActions; 
+    private List navActions;   
     
     private Map entity = new HashMap();    
     private String mode = MODE_READ;  
@@ -95,8 +95,8 @@ public abstract class CRUDController
         return changeLog.hasChanges(); 
     }
     
-    public ListModelHandler getListModelHandler() { return this.listModelHandler; } 
-    public void setListModelHandler(ListModelHandler listModelHandler) {
+    public ListModelHandler getListModel() { return this.listModelHandler; } 
+    public void setListModel(ListModelHandler listModelHandler) {
         this.listModelHandler = listModelHandler;
     }
     
@@ -315,12 +315,12 @@ public abstract class CRUDController
             
             onafterSave(); 
             
-            if (listModelHandler != null) 
-            {
+            ListModelHandler lm = getListModel();
+            if (lm != null) {
                 if (MODE_EDIT.equals(oldmode)) 
-                    listModelHandler.handleUpdate(getEntity()); 
+                    lm.updateItem(getEntity()); 
                 else if (MODE_CREATE.equals(oldmode)) 
-                    listModelHandler.handleInsert(getEntity());                 
+                    lm.addItem(getEntity());                 
             }
         }
         catch(Exception ex) {
@@ -371,8 +371,9 @@ public abstract class CRUDController
         {
             Map data = getEntity();
             getService().delete(data); 
-            if (listModelHandler != null)
-                listModelHandler.handleRemove(data); 
+            
+            ListModelHandler lm = getListModel();
+            if (lm != null) lm.removeItem(data); 
                 
             return close();
         }
@@ -383,10 +384,11 @@ public abstract class CRUDController
     
     public void moveBackRecord() 
     {
-        if (listModelHandler != null)
-        {
-            listModelHandler.moveBackRecord();
-            Object data = listModelHandler.getSelectedEntity(); 
+        ListModelHandler lm = getListModel();
+        if (lm != null){
+            lm.moveBackRecord(); 
+            
+            Object data = lm.getSelectedEntity(); 
             if (data == null) return;
             
             setEntity((Map) data); 
@@ -398,10 +400,11 @@ public abstract class CRUDController
     
     public void moveNextRecord() 
     {
-        if (listModelHandler != null)
-        {
-            listModelHandler.moveNextRecord();
-            Object data = listModelHandler.getSelectedEntity(); 
+        ListModelHandler lm = getListModel();
+        if (lm != null) {
+            lm.moveNextRecord();
+            
+            Object data = lm.getSelectedEntity(); 
             if (data == null) return;
             
             setEntity((Map) data); 
