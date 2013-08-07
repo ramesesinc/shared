@@ -1,10 +1,10 @@
 <workunit serviceName="UserAdminService" entityName="user">
     <invokers>
-        <invoker type="user:create" action="init" caption="New User"/>
-        <invoker type="user:open" action="open" caption="User"/>
+        <invoker type="user:create" action="init" caption="New User" resizable="false"/>
+        <invoker type="user:open" action="open" caption="User" resizable="false"/>
         
         <!-- actions within the page -->
-        <invoker type="navActions" action="changePassword"  caption="Set Password"/>
+        <invoker type="extActions" action="changePassword"  caption="Reset Password" resizable="false"/>
    </invokers>
    
    <code>
@@ -20,7 +20,7 @@
             def pwd = [:];
         
             def changePassword() {
-                return InvokerUtil.lookupOpener("user:setpwd", [entity:entity]);
+                return InvokerUtil.lookupOpener("user:resetpwd", [entity:entity]);
             }
         }
         

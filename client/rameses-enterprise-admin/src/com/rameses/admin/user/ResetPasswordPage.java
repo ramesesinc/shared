@@ -14,10 +14,10 @@ import com.rameses.rcp.ui.annotations.Template;
  * @author  Elmo
  */
 @Template(OKCancelPage.class)
-public class SetPasswordPage extends javax.swing.JPanel {
+public class ResetPasswordPage extends javax.swing.JPanel {
     
     /** Creates new form UserPage */
-    public SetPasswordPage() {
+    public ResetPasswordPage() {
         initComponents();
     }
     
@@ -33,19 +33,22 @@ public class SetPasswordPage extends javax.swing.JPanel {
         xPasswordField2 = new com.rameses.rcp.control.XPasswordField();
 
         com.rameses.rcp.control.border.XTitledBorder xTitledBorder1 = new com.rameses.rcp.control.border.XTitledBorder();
+        xTitledBorder1.setPadding(new java.awt.Insets(30, 15, 15, 15));
         xTitledBorder1.setTitle("General Information");
         xFormPanel1.setBorder(xTitledBorder1);
         xFormPanel1.setCaptionWidth(120);
         xPasswordField1.setText("xPasswordField1");
-        xPasswordField1.setCaption("Password");
+        xPasswordField1.setCaption("New Password");
         xPasswordField1.setName("pwd.newpwd");
-        xPasswordField1.setPreferredSize(new java.awt.Dimension(200, 22));
+        xPasswordField1.setPreferredSize(new java.awt.Dimension(0, 22));
+        xPasswordField1.setRequired(true);
         xFormPanel1.add(xPasswordField1);
 
         xPasswordField2.setText("xPasswordField1");
         xPasswordField2.setCaption("Confirm Password");
         xPasswordField2.setName("pwd.confirmpwd");
-        xPasswordField2.setPreferredSize(new java.awt.Dimension(200, 22));
+        xPasswordField2.setPreferredSize(new java.awt.Dimension(0, 22));
+        xPasswordField2.setRequired(true);
         xFormPanel1.add(xPasswordField2);
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
@@ -54,15 +57,15 @@ public class SetPasswordPage extends javax.swing.JPanel {
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 371, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(156, Short.MAX_VALUE))
+                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 113, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(176, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     
