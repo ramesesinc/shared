@@ -1,6 +1,7 @@
 <workunit>
     <invokers>
-        <invoker type="usergroup-folder:formActions" caption="Security Group" target="popup" action="init"/>
+        <invoker type="usergroup-folder:formActions" caption="Security Group" 
+            target="popup" action="init" role="SYSADMIN"/>
         
         <invoker type="formActions" caption="New"  action="addNew" visibleWhen="#{mode=='read'}"/>
         <invoker type="formActions" caption="Edit"  action="edit" visibleWhen="#{mode=='read'}"/>
@@ -21,9 +22,6 @@
             @Service("SecuritygroupAdminService")
             def sgSvc;
 
-            @Service("UsergroupAdminService")
-            def userGrpSvc;
-            
             def title = "Security Group"; 
             def usergroupid;
             def entity = [:]
@@ -37,7 +35,7 @@
             void init() {
                 usergroupid =  node.item.usergroupid;
                 mode = "read";
-                permissions = userGrpSvc.getPermissions([usergroupid:usergroupid]);
+                permissions = sgSvc.getPermissions([usergroupid:usergroupid]);
                 objectList = permissions.collect{ it.object }.unique();
                 if(objectList.size()>0) selectedObject = objectList[0];
             }

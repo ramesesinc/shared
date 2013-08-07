@@ -10,7 +10,7 @@ public class UserGroupController extends CrudFileType {
     @Service("SecuritygroupAdminService")
     def sgSvc;
 
-    String serviceName = "UsergroupAdminService"
+    String serviceName = "UsergroupService"
     
     public String getEntityName() {
         if(node.item.type) {
@@ -36,7 +36,7 @@ public class UserGroupController extends CrudFileType {
     def getLookupUser() {
         return InvokerUtil.lookupOpener("user:lookup", [
             onselect: { u->
-                entity.user = [objid:u.objid, firstname:u.firstname, lastname:u.lastname];
+                entity.user = [objid:u.objid, username:u.username, firstname:u.firstname, lastname:u.lastname];
                 entity.jobtitle = u.jobtitle;
             }
         ]);

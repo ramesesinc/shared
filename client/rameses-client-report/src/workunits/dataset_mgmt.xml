@@ -1,7 +1,7 @@
 <workunit extends="wtemplates/ExplorerViewController.xml" 
-    serviceName="ReportMgmtService" context="report">
+    serviceName="DatasetService" context="dataset">
     <invokers>
-        <invoker folderid="/menu/mgmt" caption="Report Management" 
+        <invoker folderid="/menu/mgmt" caption="Dataset Management" 
             permission="system" index="1" action="init"/>
    </invokers>
 </workunit>

@@ -167,9 +167,12 @@ public class ExplorerViewController {
                 String icon = node.getPropertyString("filetype");
                 if (icon == null) icon = "default_folder"; 
                 
-                String res = "images/explorer/"+root.getContext()+"/"+icon.toLowerCase()+".png";
+                String path = "images/explorer/"+root.getContext();
+                node.getProperties().put("iconpath", path); 
+                
+                String res = path+"/"+icon.toLowerCase()+".png";
                 if (ControlSupport.isResourceExist(res)) { 
-                    node.setIcon(res);
+                    node.setIcon(res);                    
                 } else {
                     node.setIcon(getIcon());
                 }
