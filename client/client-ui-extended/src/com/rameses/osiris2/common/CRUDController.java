@@ -36,6 +36,7 @@ public abstract class CRUDController
     private ListModelHandler listModelHandler;
     private List formActions; 
     private List navActions;   
+    private List extActions;   
     
     private Map entity = new HashMap();    
     private String mode = MODE_READ;  
@@ -209,6 +210,14 @@ public abstract class CRUDController
         }
         return navActions;
     } 
+    
+    public List getExtActions() 
+    {
+        if (extActions == null) 
+            extActions = lookupActions("extActions");
+        
+        return extActions;
+    }     
         
     protected final List<Action> lookupActions(String type) { 
         List<Action> actions = InvokerUtil.lookupActions(type, new InvokerFilter() {
@@ -235,7 +244,6 @@ public abstract class CRUDController
     }      
     
     // </editor-fold> 
-
         
     protected Map createEntity() {
         return new LinkedHashMap();
