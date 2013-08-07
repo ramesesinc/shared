@@ -13,11 +13,11 @@ interface ListModelHandler
 {
     Object getSelectedEntity();
     
-    void handleInsert(Object data);
+    void addItem(Object data);
     
-    void handleUpdate(Object data); 
+    void updateItem(Object data); 
     
-    void handleRemove(Object data);
+    void removeItem(Object data);
     
     void moveFirstPage();
     
