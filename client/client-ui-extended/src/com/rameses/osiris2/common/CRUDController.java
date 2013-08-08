@@ -1,4 +1,5 @@
 package com.rameses.osiris2.common;
+import com.rameses.common.MethodResolver;
 import com.rameses.osiris2.client.InvokerFilter;
 import com.rameses.osiris2.client.InvokerProxy;
 import com.rameses.osiris2.client.InvokerUtil;
@@ -17,7 +18,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class CRUDController 
+public class CRUDController 
 {
     public final static String MODE_CREATE = "create";
     public final static String MODE_EDIT = "edit";
@@ -32,22 +33,25 @@ public abstract class CRUDController
     @ChangeLog
     private com.rameses.rcp.framework.ChangeLog changeLog; 
     
-
     private ListModelHandler listModelHandler;
     private List formActions; 
     private List navActions;   
     private List extActions;   
-    
+
+    private CRUDServiceProxy serviceProxy; 
+    private MapEditor mapEditor;  
     private Map entity = new HashMap();    
     private String mode = MODE_READ;  
-    private CRUDService service; 
-    private MapEditor mapEditor;
     
     protected String styleSource;
+        
+    public String getServiceName() {
+        throw new NullPointerException("Please specify a serviceName"); 
+    } 
     
-    
-    public abstract String getServiceName(); 
-    public abstract String getEntityName();
+    public String getEntityName() {
+        throw new NullPointerException("Please specify an entityName"); 
+    }
     
             
     // <editor-fold defaultstate="collapsed" desc=" Getter/Setter "> 
@@ -62,35 +66,25 @@ public abstract class CRUDController
             return text; 
     }
     
-    public final String getMode() { 
-        return mode; 
-    }
+    public final String getMode() { return mode; }
             
-    public Map getEntity() { 
-        return entity; 
+    public Map getEntity() { return entity; }
+    
+    public void setEntity(Map entity) {
+        this.entity = entity;        
+        if (entity != null && entity.get("state") == null) {
+            entity.put("state", "DRAFT"); 
+        } 
     }
     
-    public void setEntity(Map entity) 
-    {
-        if (entity != null) 
-        {
-            if (entity.get("state") == null) entity.put("state", "DRAFT"); 
-        }
-        
-        this.entity = entity;
-    }
-    
-    public CRUDService getService() 
+    public Object getService() 
     {
         String name = getServiceName();
         if (name == null || name.trim().length() == 0)
-            throw new RuntimeException("No service name specified"); 
+            throw new NullPointerException("Please specify a serviceName"); 
             
-        if (service == null) {
-            service = (CRUDService) InvokerProxy.getInstance().create(name, CRUDService.class);
-        }
-        return service;
-    }    
+        return InvokerProxy.getInstance().create(name); 
+    } 
     
     public final boolean isDirty() { 
         return changeLog.hasChanges(); 
@@ -249,8 +243,7 @@ public abstract class CRUDController
         return new LinkedHashMap();
     }
     
-    public final void init()
-    {
+    public final void init() { 
         if (!isAllowCreate())
             throw new IllegalStateException("PERMISSION DENIED! Invoking this method is not authorized."); 
                         
@@ -270,12 +263,9 @@ public abstract class CRUDController
         init();
     }
     
-    public Object cancel() 
-    {
-        if (MODE_EDIT.equals(this.mode)) 
-        {
-            if (changeLog.hasChanges()) 
-            {
+    public Object cancel() {
+        if (MODE_EDIT.equals(this.mode)) {
+            if (changeLog.hasChanges()) {
                 if (!MsgBox.confirm("Changes will be discarded. Continue?")) 
                     return null; 
 
@@ -291,8 +281,7 @@ public abstract class CRUDController
         }
     }
     
-    public Object close() 
-    {
+    public Object close() {
         this.mode = MODE_READ; 
         this.changeLog.clear(); 
         return "_close"; 
@@ -301,21 +290,22 @@ public abstract class CRUDController
     protected void onbeforeSave(){}
     protected void onafterSave(){}
     
-    public void save()
-    {
-        try 
-        {
+    public void save(){
+        try {
             if (isShowConfirmOnSave()) {
                 if (!MsgBox.confirm("You are about to save this record. Continue?")) return;
             }
             
             onbeforeSave();
 
-            if (MODE_CREATE.equals(this.mode))
-                setEntity(getService().create(getEntity())); 
-            
-            else if (MODE_EDIT.equals(this.mode)) 
-                setEntity(getService().update(getEntity())); 
+            if (MODE_CREATE.equals(this.mode)) {
+                Map data = getServiceProxy().create(getEntity()); 
+                if (data != null) setEntity(data); 
+            }             
+            else if (MODE_EDIT.equals(this.mode)) {
+                Map data = getServiceProxy().update(getEntity()); 
+                if (data != null) setEntity(data);  
+            } 
 
             String oldmode = this.mode;
             this.mode = MODE_READ; 
@@ -336,12 +326,11 @@ public abstract class CRUDController
         } 
     }
     
-    public void open() 
-    {
+    public void open() {
         if (!isAllowOpen())
             throw new IllegalStateException("PERMISSION DENIED! Invoking this method is not authorized."); 
         
-        Map data = getService().open(getEntity());
+        Map data = getServiceProxy().open(getEntity());
         if (data == null) throw new NullPointerException("Record does not exist");
         
         if (data.get("state") == null) data.put("state", "DRAFT"); 
@@ -350,8 +339,7 @@ public abstract class CRUDController
         mode = MODE_READ;                 
     }
     
-    public void edit() 
-    {
+    public void edit() {
         if (!isAllowEdit())
             throw new IllegalStateException("PERMISSION DENIED! Invoking this method is not authorized."); 
         
@@ -363,22 +351,18 @@ public abstract class CRUDController
         changeLog.undo(); 
     }    
     
-    public void approve()
-    {
-        if (MsgBox.confirm("You are about to approve this document. Continue?"))
-        {
+    public void approve() {
+        if (MsgBox.confirm("You are about to approve this document. Continue?")){
             Map data = getEntity();
-            getService().approve(data); 
+            getServiceProxy().approve(data); 
             data.put("state", "APPROVED");
         } 
     }
     
-    public Object delete()
-    {
-        if (MsgBox.confirm("You are about to delete this document. Continue?"))
-        {
+    public Object delete(){
+        if (MsgBox.confirm("You are about to delete this document. Continue?")){
             Map data = getEntity();
-            getService().delete(data); 
+            getServiceProxy().removeEntity(data); 
             
             ListModelHandler lm = getListModel();
             if (lm != null) lm.removeItem(data); 
@@ -390,8 +374,7 @@ public abstract class CRUDController
         }
     }    
     
-    public void moveBackRecord() 
-    {
+    public void moveBackRecord() {
         ListModelHandler lm = getListModel();
         if (lm != null){
             lm.moveBackRecord(); 
@@ -406,8 +389,7 @@ public abstract class CRUDController
         }
     }
     
-    public void moveNextRecord() 
-    {
+    public void moveNextRecord() {
         ListModelHandler lm = getListModel();
         if (lm != null) {
             lm.moveNextRecord();
@@ -422,9 +404,59 @@ public abstract class CRUDController
         }
     }    
       
-    private void focusComponent(String ctrlname)
-    {
+    private void focusComponent(String ctrlname){
         if ( binding != null ) binding.focus(ctrlname); 
     }    
     
+    // <editor-fold defaultstate="collapsed" desc=" CRUDServiceProxy "> 
+    
+    private CRUDServiceProxy getServiceProxy() {
+        if (serviceProxy == null) 
+            serviceProxy = new CRUDServiceProxy(); 
+        if (serviceProxy.serviceObj == null) 
+            serviceProxy.serviceObj = getService();
+
+        return serviceProxy;
+    }
+    
+    private class CRUDServiceProxy { 
+        
+        Object serviceObj;   
+        MethodResolver resolver = MethodResolver.getInstance();
+        
+        Map create(Map data) { 
+            return (Map) invoke("create", data); 
+        } 
+
+        Map open(Map data) {
+            return (Map) invoke("open", data); 
+        }
+
+        Map update(Map data) {
+            return (Map) invoke("update", data);  
+        }
+
+        void removeEntity(Map data) {
+            invoke("removeEntity", data);  
+        }
+
+        Map approve(Map data) {
+            return (Map) invoke("approve", data);  
+        }     
+        
+        Object invoke(String methodName, Object data) {
+            try { 
+                if (serviceObj == null) 
+                    throw new NullPointerException("No available service object");
+                
+                return resolver.invoke(serviceObj, methodName, new Object[]{data}); 
+            } catch(RuntimeException re) {
+                throw re;
+            } catch(Exception re) { 
+                throw new RuntimeException(re.getMessage(), re); 
+            }
+        }
+    }
+    
+    // </editor-fold>
 }
