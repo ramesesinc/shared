@@ -15,10 +15,10 @@ import com.rameses.rcp.ui.annotations.Template;
  * @author  Elmo
  */
 @Template(value=OrgPage.class, target="content")
-public class BarangayPage extends javax.swing.JPanel {
+public class DistrictPage extends javax.swing.JPanel {
     
     /** Creates new form BarangayPage */
-    public BarangayPage() {
+    public DistrictPage() {
         initComponents();
     }
     
@@ -35,7 +35,7 @@ public class BarangayPage extends javax.swing.JPanel {
         xTextField2 = new com.rameses.rcp.control.XTextField();
 
         com.rameses.rcp.control.border.XTitledBorder xTitledBorder1 = new com.rameses.rcp.control.border.XTitledBorder();
-        xTitledBorder1.setTitle("Barangay Information");
+        xTitledBorder1.setTitle("District Information");
         jPanel1.setBorder(xTitledBorder1);
 
         xFormPanel1.setCaptionWidth(120);

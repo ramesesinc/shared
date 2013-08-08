@@ -35,18 +35,20 @@ public class CityPage extends javax.swing.JPanel {
         xTextField2 = new com.rameses.rcp.control.XTextField();
 
         com.rameses.rcp.control.border.XTitledBorder xTitledBorder1 = new com.rameses.rcp.control.border.XTitledBorder();
-        xTitledBorder1.setTitle("City  Info");
+        xTitledBorder1.setTitle("City  Information");
         jPanel1.setBorder(xTitledBorder1);
 
         xFormPanel1.setCaptionWidth(120);
         xTextField1.setCaption("Index No");
         xTextField1.setName("entity.indexno");
         xTextField1.setPreferredSize(new java.awt.Dimension(0, 19));
+        xTextField1.setRequired(true);
         xFormPanel1.add(xTextField1);
 
         xTextField2.setCaption("PIN");
         xTextField2.setName("entity.pin");
         xTextField2.setPreferredSize(new java.awt.Dimension(0, 19));
+        xTextField2.setRequired(true);
         xFormPanel1.add(xTextField2);
 
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);

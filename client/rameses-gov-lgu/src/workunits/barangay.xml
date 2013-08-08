@@ -5,8 +5,10 @@
         <invoker type="municipality-barangay:additem" action="create"/>
         
         <!-- if city -->
-        <invoker type="city-barangay:openitem" action="open"/>
-        <invoker type="city-barangay:additem" action="create"/>
+        <invoker type="district-barangay:openitem" action="open"/>
+        <invoker type="district-barangay:additem" caption="Barangay" action="create"/>
+        
+        <invoker type="district-barangay:additem" caption="District Brgy" action="create"/>
     </invokers>
     <code>
         <![CDATA[
