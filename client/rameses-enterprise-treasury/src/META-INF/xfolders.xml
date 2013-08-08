@@ -1,0 +1,11 @@
+<folders>
+    <folder id="master">
+        <folder id="treasury" caption="Treasury" index="5"/>
+    </folder>
+    <folder id="txnmgmt">
+        <folder id="treasury" caption="Treasury" index="-1"/>
+    </folder>
+    <folder id="txn">
+        <folder id="treasury" caption="Treasury" index="5"/>
+    </folder>
+</folders>

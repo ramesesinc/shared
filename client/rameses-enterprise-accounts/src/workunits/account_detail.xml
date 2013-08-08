@@ -1,0 +1,34 @@
+<workunit>
+        
+    <invokers>
+         <invoker type="accountgroup:open" caption="Account Detail" action="open"/>
+         <invoker type="accountgroup:create" caption="Account Detail" action="create"/>
+   </invokers>
+   
+   <code>
+       <![CDATA[
+        import com.rameses.osiris2.common.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.osiris2.client.*;
+        
+        class AccountDetailController extends CrudFileType {
+        
+            String serviceName = "AccountService";
+            String entityName = "account";
+            String title = "Account";
+            String prefixId = "ACCT";
+            
+            Map createEntity() {
+                return [parentid:node.item.objid, accttype:'detail'];
+            }
+            
+        }      
+       ]]>
+   </code>
+   
+   <pages>
+       <page template="com.rameses.enterprise.accounts.AccountPage"/>
+   </pages>
+   
+</workunit>

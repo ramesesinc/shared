@@ -1,7 +1,8 @@
 <workunit>
     <invokers>
-        <invoker type="province-municipality:openitem" action="open"/>
-        <invoker type="province-municipality:additem" action="create"/>
+        <invoker type="node:municipality:edit" caption="Municipality" action="open"/>
+        <invoker type="node:municipality-folder:open" caption="Municipality" action="open"/>
+        <invoker type="node:municipality-folder:create"  caption="Municipality" action="create"/>
     </invokers>
    <code>
         <![CDATA[

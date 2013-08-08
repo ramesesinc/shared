@@ -21,6 +21,10 @@ public class OrgController extends CRUDController {
         return node.item.orgclass;
     }
 
+    public String getPrefixId() {
+        return "ORG";
+    }
+
     Map createEntity() {
         def e = [:];
         e.orgclass  = node.item.orgclass;

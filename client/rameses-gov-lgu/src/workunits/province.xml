@@ -1,6 +1,7 @@
 <workunit>
     <invokers>
-        
+        <invoker type="node:province:open"  caption="Province" target="popup" action="open"/>
+        <invoker type="node:province:edit"  caption="Province" target="popup" action="open"/>
     </invokers>
     <code>
         <![CDATA[

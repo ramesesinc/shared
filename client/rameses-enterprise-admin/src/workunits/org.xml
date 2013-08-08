@@ -1,7 +1,7 @@
 <workunit>
     <invokers>
-        <invoker type="org:create" caption="New Org" action="create"/>
-        <invoker type="org:open" caption="New Org" action="open"/>
+        <invoker type="node:org:create" caption="New Org" action="create"/>
+        <invoker type="node:org:open" caption="New Org" action="open"/>
     </invokers>
     <code class="com.rameses.admin.controller.OrgController"/>
     <pages>
