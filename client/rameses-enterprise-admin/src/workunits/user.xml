@@ -16,7 +16,8 @@
         import com.rameses.osiris2.common.*;
 
         public class UserController extends BasicCRUDController {
-        
+            String prefixId = "USR";
+         
             def pwd = [:];
         
             def changePassword() {

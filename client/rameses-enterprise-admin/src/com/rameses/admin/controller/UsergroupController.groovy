@@ -42,6 +42,10 @@ public class UserGroupController extends CrudFileType {
         ]);
     }
 
+    public String getPrefixId() {
+        return "USRGRP";
+    }
+
     def getLookupOrg() {
         if( !node.item.orgclass ) return null;
         return InvokerUtil.lookupOpener( "org:lookup", [

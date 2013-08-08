@@ -1,7 +1,7 @@
 <workunit>
     <invokers>
-        <invoker type="city-district:openitem" action="open"/>
-        <invoker type="city-district:additem" action="create"/>
+        <invoker type="district:open" caption="District" action="open"/>
+        <invoker type="district:create" caption="District" action="create"/>
     </invokers>
    <code>
         <![CDATA[

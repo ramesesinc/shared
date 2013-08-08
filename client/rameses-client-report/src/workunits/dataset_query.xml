@@ -42,10 +42,9 @@
             def datasources = ["main"]
             
             void execute() {              
-                def p = [statement:entity.statement];
-                def rs = svc.execStatement(p); 
+                resultList = svc.execQuery(entity.statement, [:]); 
                 columns.clear(); 
-                rs.metaData.each {
+                resultList.columns.each {
                     if( it.columnLabel.indexOf("_") > 0) {
                         def name = it.columnLabel.split('_')[0];
                        columns << [name:name, caption:name]; 
@@ -53,10 +52,7 @@
                         columns << [name:it.columnLabel, caption:it.columnLabel];
                     }                     
                 } 
-                columns << [name:'items', caption:'Items']
                 columns.unique();
-                resultList = rs.results;
-                resultList.first().items = [[phone:'1234'],[phone:'23434']];
                 resultModel.reloadAll();
             }
         }

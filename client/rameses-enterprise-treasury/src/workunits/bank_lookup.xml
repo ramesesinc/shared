@@ -1,0 +1,53 @@
+<workunit>
+    
+   <invokers>
+         <invoker type="bank:lookup" caption="Bank" />
+         <invoker type="formActions" caption="Add New" action="addNew" visibleWhen="#{mode=='read'}"/>
+         <invoker type="formActions" caption="Edit" action="addNew" visibleWhen="#{mode=='read'}"/>
+         <invoker type="formActions" caption="Save" action="save" visibleWhen="#{mode!='read'}"/>
+   </invokers>
+   
+   <code>
+       <![CDATA[
+        import com.rameses.osiris2.common.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.osiris2.client.*;
+        
+        class BankController extends BasicLookupController {
+        
+            String serviceName = "BankService";
+            String entityName = "bank";
+            String title = "Bank";
+            
+            @Service("BankService")
+            def bankSvc;
+            
+            def entity = [:];
+            def mode = "read";
+            
+            def addNew() {
+                entity = [:];
+                mode = "create";
+                return "info";
+            }
+            
+            def save() {
+                if(mode=="create") {
+                    bankSvc.create(entity);
+                }    
+                refresh(true);
+                mode = "read";
+                return "default";
+            }
+            
+        }      
+       ]]>
+   </code>
+   
+   <pages>
+       <page template="com.rameses.osiris2.themes.LookupPage" />
+       <page name="info" template="com.rameses.enterprise.treasury.bank.BankPage" />
+   </pages>
+   
+</workunit>
