@@ -289,7 +289,7 @@ public class CRUDController
     
     protected void onbeforeSave(){}
     protected void onafterSave(){}
-    
+        
     public void save(){
         try {
             if (isShowConfirmOnSave()) {
@@ -326,17 +326,25 @@ public class CRUDController
         } 
     }
     
+    protected void beforeOpen(Object params) {} 
+    protected void afterOpen(Object data) {} 
+    
     public void open() {
         if (!isAllowOpen())
             throw new IllegalStateException("PERMISSION DENIED! Invoking this method is not authorized."); 
         
-        Map data = getServiceProxy().open(getEntity());
+        Map params = getEntity();
+        if (params == null) params = new HashMap();
+        
+        beforeOpen(params);
+        Map data = getServiceProxy().open(params);        
         if (data == null) throw new NullPointerException("Record does not exist");
         
         if (data.get("state") == null) data.put("state", "DRAFT"); 
         
         setEntity(data); 
-        mode = MODE_READ;                 
+        mode = MODE_READ; 
+        afterOpen(data); 
     }
     
     public void edit() {
