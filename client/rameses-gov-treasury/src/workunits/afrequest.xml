@@ -3,10 +3,16 @@
         <invoker type="afrequest:create" caption="AF Requisition" action="create" target="window"/>
         <invoker folderid="/txn/treasury" action="create" caption="Request Accountable Form" target="window"/>
 
-        <!--
-        <invoker type="navActions" action="addReceipt" caption="Add Receipt" />
-        -->
-        <invoker type="formActions" action="start" caption="Next" />
+        <invoker type="node:afrequest:open" caption="AF Requisition" action="open" target="window"/>
+        
+        <invoker type="formActions" action="start" caption="Next" visibleWhen="#{mode=='initial'}"/>
+        <invoker type="formActions" action="submit" caption="Submit" visibleWhen="#{mode=='create'}"/>
+        
+        <invoker type="navActions" action="addItem" caption="Add Receipt" visibleWhen="#{mode=='create'}"/>
+        
+        <invoker type="formActions" action="_close" caption="Close" visibleWhen="#{mode=='read'}"/>
+        <invoker type="formActions" action="approve" caption="Approve" visibleWhen="#{mode=='read'}"/>
+
     </invokers>
     
     <code>
@@ -34,13 +40,15 @@
                 
                 def create() {
                    entity =  [items:[]];
+                   mode = "initial";
                    requestTypes = InvokerUtil.lookupOpeners( "afrequest:type", [entity: entity ]);
                    return "initial";
                 }
                 
                 def start() {
                     entity.txntype = requestType.caption; 
-                    return "newpage";
+                    mode = "create";
+                    return "info";
                 }
 
                 def reqItemModel = [
@@ -50,7 +58,7 @@
                 ] as BasicListModel;
 
                 
-                def addReqItem() {
+                def addItem() {
                     return InvokerUtil.lookupOpener( "afrequest:additem", 
                         [  entity: entity,
                            saveHandler: { 
@@ -59,6 +67,23 @@
                          ]
                      );
                 }
+                
+                void submit() {
+                    if(MsgBox.confirm("You are about to submit this request. Proceed?")) {
+                        entity = afrequestSvc.create( entity );
+                        this.mode = "read";
+                    }
+                }
+                
+                def open() {
+                    entity = afrequestSvc.open(entity);
+                    mode = "read";
+                    return "info";
+                }
+                
+                def approve() {
+                    MsgBox.alert( "approve");
+                }
             }
             
      ]]>
@@ -66,6 +91,6 @@
     
     <pages>
         <page name="initial" template="com.rameses.gov.treasury.af.AFRequestInitialPage"/>
-        <page name="newpage" template="com.rameses.gov.treasury.af.AFRequestPage"/>
+        <page name="info" template="com.rameses.gov.treasury.af.AFRequestPage"/>
     </pages>
 </workunit>

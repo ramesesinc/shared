@@ -1,0 +1,7 @@
+"selectedForm" [mode == 'read'] {
+    enabled:false;
+}
+
+"selectedForm" [mode != 'read'] {
+    enabled:true;
+}

@@ -56,7 +56,7 @@ public class CollectionTypePage extends javax.swing.JPanel {
         xComboBox1.setExpression("#{item.formno}");
         xComboBox1.setItems("formTypes");
         xComboBox1.setName("selectedForm");
-        xComboBox1.setPreferredSize(new java.awt.Dimension(120, 22));
+        xComboBox1.setPreferredSize(new java.awt.Dimension(0, 22));
         xComboBox1.setRequired(true);
         xFormPanel1.add(xComboBox1);
 
@@ -67,7 +67,7 @@ public class CollectionTypePage extends javax.swing.JPanel {
         xComboBox2.setItemKey("name");
         xComboBox2.setItems("handlers");
         xComboBox2.setName("entity.handler");
-        xComboBox2.setPreferredSize(new java.awt.Dimension(120, 22));
+        xComboBox2.setPreferredSize(new java.awt.Dimension(0, 22));
         xComboBox2.setRequired(true);
         xFormPanel1.add(xComboBox2);
 
@@ -77,8 +77,8 @@ public class CollectionTypePage extends javax.swing.JPanel {
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 381, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(151, Short.MAX_VALUE))
+                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 432, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(100, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
