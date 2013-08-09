@@ -1,0 +1,6 @@
+<workunit extends="wtemplates/ServiceLookupController.xml" 
+    serviceName="EntityLookupService">
+   <invokers>
+         <invoker type="entity:lookup" caption="Lookup Entity" target="popup"/>
+   </invokers>
+</workunit>

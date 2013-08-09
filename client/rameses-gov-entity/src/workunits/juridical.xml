@@ -1,0 +1,5 @@
+<workunit>
+   <invokers>
+         <invoker type="juridicalentity:create" caption="Juridical" target="popup"/>
+   </invokers>
+</workunit>

@@ -1,0 +1,28 @@
+<workunit>
+    <invokers>
+        <invoker type="collectiontype:handler" caption="Cash Tickets" name="ct" formtype="nonserial" />
+        <invoker type="cashreceipt:ct" />
+    </invokers>
+    
+    <code>
+        <![CDATA[    
+
+        import com.rameses.rcp.annotations.*
+        import com.rameses.rcp.common.*
+        import com.rameses.osiris2.client.*
+        import com.rameses.osiris2.common.*
+        
+        class  CashTicketReceiptController {
+            
+        }
+        
+        
+        ]]>
+        
+    </code>
+    
+    <pages>
+        <page template="com.rameses.gov.treasury.cashreceipt.MiscCashReceiptPage"/>
+    </pages>
+    
+</workunit>

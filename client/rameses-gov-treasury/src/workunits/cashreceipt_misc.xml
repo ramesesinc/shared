@@ -1,0 +1,33 @@
+<workunit>
+    <invokers>
+        <invoker type="collectiontype:handler" caption="Miscellaneous" name="misc" 
+            formtype="serial" index="100"/>
+        <invoker type="cashreceipt:misc" action="init" />
+        
+        <invoker type="formActions" action="_close" caption="Back" immediate="true" visibleWhen="#{!completed}"/>
+        <invoker type="formActions" action="post" caption="Save" visibleWhen="#{!completed}"/>
+        <invoker type="formActions" action="print" caption="Print" visibleWhen="#{completed}"/>
+        <invoker type="formActions" action="_close" caption="New" visibleWhen="#{completed}"/>
+    </invokers>
+    
+    <code>
+        <![CDATA[    
+        import com.rameses.rcp.annotations.*
+        import com.rameses.rcp.common.*
+        import com.rameses.osiris2.client.*
+        import com.rameses.osiris2.common.*
+        import com.rameses.enterprise.treasury.cashreceipt.*
+        
+        class  MiscCashReceiptController extends BasicCashReceipt {
+        
+        }
+        ]]>
+        
+    </code>
+    
+    <pages>
+        <page template="com.rameses.enterprise.treasury.cashreceipt.MiscCashReceiptPage"/>
+        <page name="completed" template="com.rameses.enterprise.treasury.cashreceipt.CashReceiptCompletedPage"/>
+    </pages>
+    
+</workunit>

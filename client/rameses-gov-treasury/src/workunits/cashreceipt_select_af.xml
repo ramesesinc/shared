@@ -1,0 +1,48 @@
+<workunit>
+    <invokers>
+        <invoker type="cashreceipt:select-afcontrol" caption="Select Accountable Form" target="popup"/>
+    </invokers>
+    
+    <code>
+        <![CDATA[    
+        import com.rameses.rcp.annotations.*
+        import com.rameses.rcp.common.*
+        import com.rameses.osiris2.client.*
+        import com.rameses.osiris2.common.*
+        import com.rameses.enterprise.treasury.cashreceipt.*
+        
+        class  SelectAFController  {
+            def handler;
+        
+            def listModel = [
+                getColumnList: { o->
+                    return [
+                        [name:'afno', caption:'AF No'],
+                        [name:'startseries', caption:'Start Series'],
+                        [name:'stubno', caption:'Stub No'],
+                    ]
+                },
+            
+                fetchList: { o->
+                    return [];
+                }
+            ] as BasicListModel;
+            
+            def doOk() {
+                handler();
+                return "_close";
+            }
+            
+            def doCancel() {
+                return "_close";
+            }
+        }
+        ]]>
+        
+    </code>
+    
+    <pages>
+        <page template="com.rameses.gov.treasury.cashreceipt.SelectAFPage"/>
+    </pages>
+    
+</workunit>

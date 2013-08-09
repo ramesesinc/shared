@@ -52,15 +52,19 @@ public class CollectionTypePage extends javax.swing.JPanel {
         xTextField2.setRequired(true);
         xFormPanel1.add(xTextField2);
 
-        xComboBox1.setCaption("Acct Type");
+        xComboBox1.setCaption("Form name");
+        xComboBox1.setExpression("#{item.formno}");
         xComboBox1.setItems("formTypes");
-        xComboBox1.setName("entity.formtype");
+        xComboBox1.setName("selectedForm");
         xComboBox1.setPreferredSize(new java.awt.Dimension(120, 22));
         xComboBox1.setRequired(true);
         xFormPanel1.add(xComboBox1);
 
-        xComboBox2.setAllowNull(false);
         xComboBox2.setCaption("Handler");
+        xComboBox2.setDepends(new String[] {"selectedForm"});
+        xComboBox2.setDynamic(true);
+        xComboBox2.setExpression("#{item.caption}");
+        xComboBox2.setItemKey("name");
         xComboBox2.setItems("handlers");
         xComboBox2.setName("entity.handler");
         xComboBox2.setPreferredSize(new java.awt.Dimension(120, 22));

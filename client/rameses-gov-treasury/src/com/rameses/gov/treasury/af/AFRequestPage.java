@@ -33,12 +33,11 @@ public class AFRequestPage extends javax.swing.JPanel {
         xDataTable1 = new com.rameses.rcp.control.XDataTable();
         jPanel3 = new javax.swing.JPanel();
         xFormPanel1 = new com.rameses.rcp.control.XFormPanel();
+        xLabel3 = new com.rameses.rcp.control.XLabel();
+        xLabel4 = new com.rameses.rcp.control.XLabel();
+        xFormPanel2 = new com.rameses.rcp.control.XFormPanel();
         xLabel1 = new com.rameses.rcp.control.XLabel();
         xLabel2 = new com.rameses.rcp.control.XLabel();
-        xLabel3 = new com.rameses.rcp.control.XLabel();
-        xFormPanel2 = new com.rameses.rcp.control.XFormPanel();
-        xLabel4 = new com.rameses.rcp.control.XLabel();
-        xLabel5 = new com.rameses.rcp.control.XLabel();
         xButton1 = new com.rameses.rcp.control.XButton();
 
         setLayout(new java.awt.BorderLayout());
@@ -60,30 +59,25 @@ public class AFRequestPage extends javax.swing.JPanel {
         xTitledBorder1.setTitle("Request Info");
         jPanel3.setBorder(xTitledBorder1);
 
-        xLabel1.setCaption("Req No");
-        xLabel1.setExpression("#{request.objid}");
-        xLabel1.setPreferredSize(new java.awt.Dimension(0, 20));
-        xFormPanel1.add(xLabel1);
-
-        xLabel2.setCaption("Req Date");
-        xLabel2.setExpression("#{request.txndate}");
-        xLabel2.setPreferredSize(new java.awt.Dimension(0, 20));
-        xFormPanel1.add(xLabel2);
-
-        xLabel3.setCaption("Req By");
-        xLabel3.setExpression("#{request.requester}");
+        xLabel3.setCaption("Requester");
+        xLabel3.setExpression("#{entity.requester.lastname}, #{entity.requester.firstname}");
         xLabel3.setPreferredSize(new java.awt.Dimension(0, 20));
         xFormPanel1.add(xLabel3);
 
         xLabel4.setCaption("Req Type");
-        xLabel4.setExpression("#{request.txntype}");
+        xLabel4.setExpression("#{entity.txntype}");
         xLabel4.setPreferredSize(new java.awt.Dimension(0, 20));
-        xFormPanel2.add(xLabel4);
+        xFormPanel1.add(xLabel4);
 
-        xLabel5.setCaption("State");
-        xLabel5.setExpression("#{request.state}");
-        xLabel5.setPreferredSize(new java.awt.Dimension(0, 20));
-        xFormPanel2.add(xLabel5);
+        xLabel1.setCaption("Req No");
+        xLabel1.setExpression("#{entity.objid}");
+        xLabel1.setPreferredSize(new java.awt.Dimension(0, 20));
+        xFormPanel2.add(xLabel1);
+
+        xLabel2.setCaption("Req Date");
+        xLabel2.setPreferredSize(new java.awt.Dimension(0, 20));
+        xLabel2.setText("#{entity.txndate}");
+        xFormPanel2.add(xLabel2);
 
         org.jdesktop.layout.GroupLayout jPanel3Layout = new org.jdesktop.layout.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -92,15 +86,15 @@ public class AFRequestPage extends javax.swing.JPanel {
             .add(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 280, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(xFormPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 280, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .add(65, 65, 65)
+                .add(xFormPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 256, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel3Layout.createSequentialGroup()
                 .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(xFormPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
+                    .add(xFormPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
                     .add(xFormPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 89, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -115,14 +109,11 @@ public class AFRequestPage extends javax.swing.JPanel {
             .add(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jPanel1Layout.createSequentialGroup()
-                        .add(xButton1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 133, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(698, Short.MAX_VALUE))
-                    .add(jPanel1Layout.createSequentialGroup()
-                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
-                            .add(org.jdesktop.layout.GroupLayout.LEADING, xDataTable1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap())))
+                    .add(xButton1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 133, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
+                        .add(org.jdesktop.layout.GroupLayout.LEADING, xDataTable1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(197, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -133,7 +124,7 @@ public class AFRequestPage extends javax.swing.JPanel {
                 .add(xDataTable1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 207, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(xButton1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addContainerGap(90, Short.MAX_VALUE))
         );
         add(jPanel1, java.awt.BorderLayout.CENTER);
 
@@ -152,7 +143,6 @@ public class AFRequestPage extends javax.swing.JPanel {
     private com.rameses.rcp.control.XLabel xLabel2;
     private com.rameses.rcp.control.XLabel xLabel3;
     private com.rameses.rcp.control.XLabel xLabel4;
-    private com.rameses.rcp.control.XLabel xLabel5;
     // End of variables declaration//GEN-END:variables
     
 }
