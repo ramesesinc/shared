@@ -106,7 +106,7 @@ public class ExplorerViewListController extends ListController implements Explor
         if (filetype != null) {
             List<Invoker> list = (List) node.getProperties().get("Invoker.editlist"); 
             if (list == null) {
-                String invtype = "node:" + filetype + ":edit";
+                String invtype = filetype.toLowerCase() + ":edit";
                 list = actionsProvider.getInvokers(node, invtype);
                 node.getProperties().put("Invoker.editlist", list); 
             }
@@ -129,10 +129,10 @@ public class ExplorerViewListController extends ListController implements Explor
                     for (int i=0; i<values.length; i++) {
                         if (values[i].trim().length() == 0) continue;
                         
-                        String invtype = "node:" + values[i].trim() + ":create";
+                        String invtype = values[i].trim().toLowerCase() + ":create";
                         List<Invoker> invokers = actionsProvider.getInvokers(node, invtype); 
                         if (invokers.isEmpty() && defaultFiletype != null) { 
-                            invtype = "node:" + defaultFiletype + ":create"; 
+                            invtype = defaultFiletype.toLowerCase() + ":create"; 
                             Invoker invoker = actionsProvider.getInvoker(node, invtype); 
                             if (invoker != null) {
                                 Invoker clone = invoker.clone();
@@ -146,7 +146,7 @@ public class ExplorerViewListController extends ListController implements Explor
                 }
                 
                 if (list.isEmpty() && filetype != null) {
-                    String invtype = "node:" + filetype + ":create";
+                    String invtype = filetype.toLowerCase() + ":create";
                     list.addAll(actionsProvider.getInvokers(node, invtype));
                 }
                 
@@ -157,7 +157,8 @@ public class ExplorerViewListController extends ListController implements Explor
                 Action a = createAction("create", "New", "images/toolbars/create.png", "ctrl N", 'n', null, true); 
                 formActions.add(a); 
             }
-        }        
+        }   
+        
         if (isAllowOpen()) { 
             List<Invoker> list = (List) node.getProperties().get("Invoker.openlist"); 
             if (list == null) {
@@ -168,10 +169,10 @@ public class ExplorerViewListController extends ListController implements Explor
                     for (int i=0; i<values.length; i++) { 
                         if (values[i].trim().length() == 0) continue;
                         
-                        String invtype = "node:" + values[i].trim() + ":open"; 
+                        String invtype = values[i].trim().toLowerCase() + ":open"; 
                         List<Invoker> invokers = actionsProvider.getInvokers(node, invtype); 
                         if (invokers.isEmpty() && defaultFiletype != null) { 
-                            invtype = "node:" + defaultFiletype + ":open"; 
+                            invtype = defaultFiletype.toLowerCase() + ":open"; 
                             Invoker invoker = actionsProvider.getInvoker(node, invtype); 
                             if (invoker != null) {
                                 Invoker clone = invoker.clone();
@@ -185,7 +186,7 @@ public class ExplorerViewListController extends ListController implements Explor
                 } 
 
                 if (list.isEmpty() && filetype != null) {
-                    String invtype = "node:" + filetype + ":open";
+                    String invtype = filetype.toLowerCase() + ":open";
                     list.addAll(actionsProvider.getInvokers(node, invtype));                
                 } 
                 
@@ -201,7 +202,7 @@ public class ExplorerViewListController extends ListController implements Explor
         
         //load generic actions
         if (defaultInvokers == null && defaultFiletype != null) {
-            String invtype = "node:" + defaultFiletype + ":formActions";
+            String invtype = "node:" + defaultFiletype.toLowerCase() + ":formActions";
             defaultInvokers = actionsProvider.getInvokers(node, invtype);
         } 
         if (defaultInvokers != null && !defaultInvokers.isEmpty()) {
@@ -212,7 +213,7 @@ public class ExplorerViewListController extends ListController implements Explor
         //load specific actions
         List<Invoker> list = (List) node.getProperties().get("Invoker.formActions"); 
         if (list == null && filetype != null) {
-            String invtype = "node:" + filetype + ":formActions";
+            String invtype = "node:" + filetype.toLowerCase() + ":formActions";
             list = actionsProvider.getInvokers(node, invtype);
             node.getProperties().put("Invoker.formActions", list);
         } 
@@ -270,7 +271,7 @@ public class ExplorerViewListController extends ListController implements Explor
         
         PopupMenuOpener opener = new PopupMenuOpener();        
         for (Invoker invoker: list) {
-            HashMap map = new HashMap();
+            Map map = createOpenerParams(); 
             map.put("node", node);
             map.put("entity", item);
             opener.add(actionsProvider.toOpener(invoker, map, node));
@@ -324,10 +325,10 @@ public class ExplorerViewListController extends ListController implements Explor
     private class ActionsProvider 
     {
         private ExpressionResolver resolver = ExpressionResolver.getInstance(); 
-        
+
         List<Invoker> getInvokers(Node node, String invokerType) {
-            try {                
-                return InvokerUtil.lookup(invokerType.toLowerCase());
+            try { 
+                return InvokerUtil.lookup(invokerType);
             } catch(Throwable t) {
                 return new ArrayList(); 
             }   

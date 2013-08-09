@@ -140,7 +140,7 @@ public abstract class ListController extends BasicListController implements List
         load(); 
     }    
     
-    private Map createOpenerParams() 
+    protected Map createOpenerParams() 
     {
         Map params = new HashMap();
         params.put("listModel", this);
@@ -211,7 +211,11 @@ public abstract class ListController extends BasicListController implements List
         String stag = getTag();
         if (stag != null) m.put("_tag", stag);
         
+        Map qrymap = getQuery();
+        if (qrymap != null) m.putAll(qrymap); 
+        
         onbeforeFetchList(m);
+        //System.out.println("[ListController] fetchlist... " + m);        
         List list = getService().getList(m); 
         onafterFetchList(list); 
         return list; 

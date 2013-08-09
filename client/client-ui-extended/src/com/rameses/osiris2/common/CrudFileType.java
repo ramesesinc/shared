@@ -10,7 +10,6 @@
 package com.rameses.osiris2.common;
 
 import com.rameses.rcp.common.Node;
-import java.util.Map;
 
 /**
  *
@@ -19,20 +18,8 @@ import java.util.Map;
 public abstract class CrudFileType extends CRUDController implements FileType {
     
     private Node node;
-    
-    /** Creates a new instance of CrudFileType */
    
-    public Node getNode() {
-        return node;
-    }
+    public Node getNode() { return node; }
+    public void setNode(Node node) { this.node = node; }
 
-    public void setNode(Node node) {
-        this.node = node;
-    }
-
-    public void setSelectedItem(Map item) {
-        super.setEntity(item);
-    }
-
-    
 }

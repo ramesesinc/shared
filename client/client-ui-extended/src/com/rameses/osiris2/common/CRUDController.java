@@ -243,6 +243,9 @@ public class CRUDController
         return new LinkedHashMap();
     }
     
+    protected void beforeCreate(Object data){}
+    protected void afterCreate(Object data){}
+    
     public final void init() { 
         if (!isAllowCreate())
             throw new IllegalStateException("PERMISSION DENIED! Invoking this method is not authorized."); 
@@ -253,8 +256,10 @@ public class CRUDController
         if (data.get("state") == null) 
             data.put("state", "DRAFT"); 
         
-        setEntity(data);
+        beforeCreate(data); 
+        setEntity(data); 
         mode = MODE_CREATE; 
+        afterCreate(data); 
         focusComponent(getCreateFocusComponent()); 
     }
     
@@ -262,6 +267,8 @@ public class CRUDController
     public final void create() {
         init();
     }
+    
+    protected void afterCancel(){}
     
     public Object cancel() {
         if (MODE_EDIT.equals(this.mode)) {
@@ -274,6 +281,7 @@ public class CRUDController
             }
             
             this.mode = MODE_READ; 
+            afterCancel();
             return null; 
         }
         else {
@@ -347,11 +355,17 @@ public class CRUDController
         afterOpen(data); 
     }
     
+    protected void beforeEdit(Object data) {} 
+    protected void afterEdit(Object data) {} 
+    
     public void edit() {
         if (!isAllowEdit())
             throw new IllegalStateException("PERMISSION DENIED! Invoking this method is not authorized."); 
         
+        Object data = getEntity();
+        beforeEdit(data);        
         this.mode = MODE_EDIT; 
+        afterEdit(data); 
         focusComponent(getEditFocusComponent()); 
     }
     
