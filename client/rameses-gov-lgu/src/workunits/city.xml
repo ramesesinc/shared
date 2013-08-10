@@ -1,6 +1,7 @@
 <workunit>
     <invokers>
         <invoker type="city:open"  caption="City" target="popup" action="open"/>
+        <invoker type="city:edit"  caption="City" target="popup" action="open"/>
     </invokers>
    
     <code>

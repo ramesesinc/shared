@@ -1,7 +1,7 @@
 <workunit>
     <invokers>
-        <invoker type="node:hospital:open" caption="Hospital" action="open"/>
-        <invoker type="node:hospital:create" caption="Hospital" action="create"/>
+        <invoker type="hospital-folder:open" caption="Hospital" action="open"/>
+        <invoker type="hospital-folder:create" caption="Hospital" action="create"/>
     </invokers>
     <code>
         <![CDATA[
@@ -14,12 +14,12 @@
         
             String serviceName = "OrgAdminService";
             String entityName = "org";
-            String title = "Barangay";
+            String title = "Hospital";
             
             Map createEntity() {
                 return [
                     parentid:node.item.parentid, 
-                    orgclass: 'BARANGAY',
+                    orgclass: 'HOSPITAL',
                     parentclass: node.item.orgclass
                 ];
             }

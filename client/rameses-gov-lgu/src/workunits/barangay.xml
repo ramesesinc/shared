@@ -1,7 +1,10 @@
 <workunit>
     <invokers>
-        <invoker type="node:barangay-folder:open" caption="Barangay" action="open"/>
-        <invoker type="node:barangay-folder:create" caption="Barangay" action="create"/>
+        <invoker type="barangay-folder:open" caption="Barangay" action="open"/>
+        <invoker type="barangay-folder:create" caption="Barangay" action="create"/>
+        
+        <invoker type="barangay:open" caption="Barangay" action="open"/>
+        <invoker type="barangay:create" caption="Barangay" action="create"/>        
     </invokers>
     <code>
         <![CDATA[

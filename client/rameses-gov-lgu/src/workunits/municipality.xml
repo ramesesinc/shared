@@ -1,8 +1,9 @@
 <workunit>
     <invokers>
-        <invoker type="node:municipality:edit" caption="Municipality" action="open"/>
-        <invoker type="node:municipality-folder:open" caption="Municipality" action="open"/>
-        <invoker type="node:municipality-folder:create"  caption="Municipality" action="create"/>
+        <invoker type="municipality-folder:open" caption="Municipality" action="open"/>
+        <invoker type="municipality-folder:create"  caption="Municipality" action="create"/>
+        
+        <invoker type="municipality:edit" caption="Municipality" action="open"/>        
     </invokers>
    <code>
         <![CDATA[

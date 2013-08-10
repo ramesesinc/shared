@@ -1,7 +1,9 @@
 <workunit>
     <invokers>
-        <invoker type="district:open" caption="District" action="open"/>
-        <invoker type="district:create" caption="District" action="create"/>
+        <invoker type="district-folder:open" caption="District" action="open"/>
+        <invoker type="district-folder:create"  caption="District" action="create"/>
+        
+        <invoker type="district:edit" caption="District" action="open"/>        
     </invokers>
    <code>
         <![CDATA[

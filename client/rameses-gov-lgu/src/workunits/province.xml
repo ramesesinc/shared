@@ -1,7 +1,7 @@
 <workunit>
     <invokers>
-        <invoker type="node:province:open"  caption="Province" target="popup" action="open"/>
-        <invoker type="node:province:edit"  caption="Province" target="popup" action="open"/>
+        <invoker type="province:open"  caption="Province" target="popup" action="open"/>
+        <invoker type="province:edit"  caption="Province" target="popup" action="open"/>
     </invokers>
     <code>
         <![CDATA[
@@ -10,14 +10,11 @@
         import com.rameses.rcp.annotations.*;
         import com.rameses.osiris2.client.*;
 
-        public class ProvinceFileTypeController implements FileType {
+        public class ProvinceFileTypeController {
             
-            Node node;
-            String fileType = "province";
-            String icon = "images/tree/cube.png";
-            Map selectedItem;
+            def node;
+            def entity = [:];
             
-            def entity = [:]
             void create() {
                 MsgBox.alert('create me!');
             }
