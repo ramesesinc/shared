@@ -1,6 +1,6 @@
 <workunit extends="wtemplates/FolderExplorerView.xml" root="/master">
     <invokers>
-        <invoker folderid="/menu/mgmt" caption="Master Management" index="0" 
+        <invoker folderid="/menu/mgmt" caption="Master Files" index="0" 
             permission="system" windowmode="explorer" action="init"/>
     </invokers>
 </workunit>

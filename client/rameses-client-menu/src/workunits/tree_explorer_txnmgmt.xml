@@ -1,6 +1,6 @@
 <workunit extends="wtemplates/FolderExplorerView.xml" root="/txnmgmt">
     <invokers>
-        <invoker folderid="/menu/mgmt" caption="Transaction Management" index="2" 
+        <invoker folderid="/menu/mgmt" caption="Transactions" index="2" 
             windowmode="explorer" action="init" permission="system"/>
             
     </invokers>
