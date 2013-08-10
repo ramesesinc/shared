@@ -172,7 +172,7 @@ public class ExplorerViewController {
                 
                 String res = path+"/"+icon.toLowerCase()+".png";
                 if (ControlSupport.isResourceExist(res)) { 
-                    node.setIcon(res);                    
+                    node.setIcon(res);  
                 } else {
                     node.setIcon(getIcon());
                 }

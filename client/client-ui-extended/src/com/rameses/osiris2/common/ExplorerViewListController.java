@@ -222,27 +222,6 @@ public class ExplorerViewListController extends ListController implements Explor
         
     // <editor-fold defaultstate="collapsed" desc=" overrides/helper/utility methods ">
     
-    private boolean isChildNodeFolder(String filetype) {
-        Node selNode = getNode();
-        if (selNode == null || filetype == null) return false; 
-        
-        String sval = selNode.getPropertyString("childnodes"); 
-        if (sval == null) return false;
-        
-        String[] childnodes = sval.split(",");
-        for (String name: childnodes) {
-            String cfiletype = name.trim();
-            if (cfiletype.length() == 0) continue;            
-            if (filetype.equalsIgnoreCase(cfiletype+"-folder")) return true;
-        }
-        return false;
-    }
-    
-    public void setSelectedEntity(Object selectedEntity) {
-        System.out.println("selectedEntity-> " + selectedEntity);        
-        super.setSelectedEntity(selectedEntity);
-    }
-            
     protected void onbeforeFetchList(Map params) {
         Node node = getNode(); 
         Object item = (node == null? null: node.getItem());             
@@ -255,32 +234,7 @@ public class ExplorerViewListController extends ListController implements Explor
         
         Node node = getNode();
         if (node == null) return null;
-        
-//        boolean childNodeFolder = isChildNodeFolder((String) item.get("filetype"));  
-//        if (childNodeFolder) {
-//            node.loadItems();
-//
-//            Node selNode = null;      
-//            Object srcid = item.get("objid");
-//            PropertyResolver resolver = PropertyResolver.getInstance();
-//            List<Node> nodes = node.getItems();
-//            for (Node cnode: nodes) { 
-//                Object citem = cnode.getItem();
-//                if (!(citem instanceof Map)) continue;
-//
-//                Object oid = ((Map) citem).get("objid");
-//                if (oid != null && srcid != null && oid.equals(srcid)) {
-//                    selNode = cnode;
-//                    break; 
-//                }
-//            }
-//            
-//            if (selNode != null) {
-//                selNode.open();
-//            }
-//            return null;
-//        }
-        
+                
         /*
          *  if the selected item has a filetype, then use this as our primary handler 
          */
@@ -316,7 +270,7 @@ public class ExplorerViewListController extends ListController implements Explor
         }
         
         /*
-         *  the last option is the default file type handler if there is...
+         *  use the default file type handler if there is...
          */
         String dfiletype = parentController.getDefaultFileType();        
         Invoker invoker = (Invoker) node.getProperty("Invoker.defaultOpen"); 
@@ -337,8 +291,29 @@ public class ExplorerViewListController extends ListController implements Explor
         }
         
         /*
-         *  do nothing, there are no handlers attached
-         */
+         *  last option is the item's objid
+         */ 
+        if (!node.isLeaf() && getString(item,"objid") != null) {
+            node.loadItems(); 
+
+            Node selNode = null; 
+            String srcid = getString(item, "objid");
+            List<Node> nodes = node.getItems();
+            for (Node cnode: nodes) { 
+                Object citem = cnode.getItem();
+                if (!(citem instanceof Map)) continue;
+
+                String oid = getString((Map) citem, "objid");
+                if (oid != null && oid.equals(srcid)) {
+                    selNode = cnode;
+                    break; 
+                }
+            }            
+            if (selNode != null) {
+                selNode.open();
+            }            
+        }        
+        //always return a null value for this line
         return null; 
     }
     
@@ -380,6 +355,13 @@ public class ExplorerViewListController extends ListController implements Explor
         map.put("entity", node.getItem());
         return actionsProvider.toOpener(invoker, map, node); 
     }
+    
+    public void refresh() {         
+        super.refresh(); 
+        
+        Node node = getNode();
+        if (node != null) node.reloadItems();
+    } 
     
     private String getString(Map data, String name) {
         Object o = (data == null? null: data.get(name));
@@ -451,7 +433,7 @@ public class ExplorerViewListController extends ListController implements Explor
         public Object execute() { 
             Node node = root.getNode();
             HashMap map = new HashMap();
-            map.put("node", node);
+            map.put("node", node.getItem());
             map.put("entity", (Map) root.getSelectedEntity());
             return actionsProvider.toOpener(invoker, map, node); 
         } 
