@@ -14,7 +14,6 @@ import com.rameses.common.PropertyResolver;
 import com.rameses.osiris2.Invoker;
 import com.rameses.osiris2.client.InvokerUtil;
 import com.rameses.rcp.common.Action;
-import com.rameses.rcp.common.MsgBox;
 import com.rameses.rcp.common.Node;
 import com.rameses.rcp.common.Opener;
 import com.rameses.rcp.common.PopupMenuOpener;
@@ -35,6 +34,7 @@ public class ExplorerViewListController extends ListController implements Explor
     private List<Invoker> defaultInvokers; 
     private List<Action> formActions = new ArrayList(); 
     private List<Action> nodeActions = new ArrayList();
+    private Object extendedParams;
     
     public ExplorerViewListController() {
     }
@@ -92,6 +92,18 @@ public class ExplorerViewListController extends ListController implements Explor
         reload(); 
     }
     
+    private Node getChildNode(String filetype) {
+        Node node = getNode();
+        if (node == null || filetype == null) return null;
+        
+        List<Node> cnodes = node.getItems();
+        for (Node cnode: cnodes) {
+            String cfiletype = cnode.getPropertyString("filetype")+"";
+            if (cfiletype.equalsIgnoreCase(filetype)) return cnode;
+        }
+        return null; 
+    }
+    
     private void buildActions() {
         formActions.clear();
         nodeActions.clear();
@@ -99,8 +111,12 @@ public class ExplorerViewListController extends ListController implements Explor
         Node node = getNode();
         if (node == null) return;
 
-        String defaultFiletype = parentController.getDefaultFileType();  
-        String context = parentController.getContext();  
+        String childnodes = node.getPropertyString("childnodes");
+        if (childnodes != null && childnodes.trim().length() > 0) {
+            childnodes = childnodes.trim();
+            node.loadItems(); 
+        }
+        
         String filetype = node.getPropertyString("filetype");
         //load node actions
         if (filetype != null) {
@@ -116,38 +132,46 @@ public class ExplorerViewListController extends ListController implements Explor
                 nodeActions.add(a);
             } 
         }
-                
+
+        String defaultFiletype = parentController.getDefaultFileType();          
         if (filetype == null) filetype = defaultFiletype;
 
         if (isAllowCreate() && filetype != null) { 
             List<Invoker> list = (List) node.getProperties().get("Invoker.createlist"); 
             if (list == null) {
                 list = new ArrayList();                 
-                String childnodes = node.getPropertyString("childnodes");
-                if (childnodes != null && childnodes.trim().length() > 0) {
-                    String[] values = childnodes.trim().split(",");
+                if (childnodes != null) {
+                    String[] values = childnodes.split(",");
                     for (int i=0; i<values.length; i++) {
-                        if (values[i].trim().length() == 0) continue;
+                        String cfiletype = values[i].trim().toLowerCase();
+                        if (cfiletype.length() == 0) continue;
                         
-                        String invtype = values[i].trim().toLowerCase() + ":create";
-                        List<Invoker> invokers = actionsProvider.getInvokers(node, invtype); 
-                        if (invokers.isEmpty() && defaultFiletype != null) { 
+                        Node cnode = getChildNode(cfiletype + "-folder");
+                        
+                        String invtype = cfiletype + ":create";
+                        Invoker invoker = actionsProvider.getInvoker(node, invtype); 
+                        if (invoker == null && defaultFiletype != null) { 
                             invtype = defaultFiletype.toLowerCase() + ":create"; 
-                            Invoker invoker = actionsProvider.getInvoker(node, invtype); 
+                            invoker = actionsProvider.getInvoker(node, invtype); 
                             if (invoker != null) {
-                                Invoker clone = invoker.clone();
-                                clone.setCaption(values[i].trim());
-                                list.add(clone); 
-                            } 
-                        } else { 
-                            list.addAll(invokers);
-                        }
+                                invoker = invoker.clone(); 
+                                invoker.setCaption((cnode==null? values[i].trim(): cnode.getCaption()));
+                            }                             
+                        } else {
+                            invoker = invoker.clone(); 
+                        } 
+                        
+                        if (invoker != null) {
+                            invoker.getProperties().put(Node.class, (cnode == null? node: cnode));
+                            list.add(invoker);
+                        } 
                     }
                 }
                 
                 if (list.isEmpty() && filetype != null) {
                     String invtype = filetype.toLowerCase() + ":create";
-                    list.addAll(actionsProvider.getInvokers(node, invtype));
+                    Invoker invoker = actionsProvider.getInvoker(node, invtype);
+                    if (invoker != null) list.add(invoker); 
                 }
                 
                 node.getProperties().put("Invoker.createlist", list);
@@ -163,33 +187,39 @@ public class ExplorerViewListController extends ListController implements Explor
             List<Invoker> list = (List) node.getProperties().get("Invoker.openlist"); 
             if (list == null) {
                 list = new ArrayList();
-                String childnodes = node.getPropertyString("childnodes"); 
-                if (childnodes != null && childnodes.trim().length() > 0) { 
-                    String[] values = childnodes.trim().split(","); 
+                if (childnodes != null) { 
+                    String[] values = childnodes.split(","); 
                     for (int i=0; i<values.length; i++) { 
-                        if (values[i].trim().length() == 0) continue;
+                        String cfiletype = values[i].trim().toLowerCase();
+                        if (cfiletype.length() == 0) continue;
                         
-                        String invtype = values[i].trim().toLowerCase() + ":open"; 
-                        List<Invoker> invokers = actionsProvider.getInvokers(node, invtype); 
-                        if (invokers.isEmpty() && defaultFiletype != null) { 
+                        Node cnode = getChildNode(cfiletype + "-folder");
+                        
+                        String invtype = cfiletype + ":open";
+                        Invoker invoker = actionsProvider.getInvoker(node, invtype); 
+                        if (invoker == null && defaultFiletype != null) { 
                             invtype = defaultFiletype.toLowerCase() + ":open"; 
-                            Invoker invoker = actionsProvider.getInvoker(node, invtype); 
+                            invoker = actionsProvider.getInvoker(node, invtype); 
                             if (invoker != null) {
-                                Invoker clone = invoker.clone();
-                                clone.setCaption(values[i].trim());
-                                list.add(clone); 
-                            } 
-                        } else { 
-                            list.addAll(invokers);
-                        }
+                                invoker = invoker.clone(); 
+                                invoker.setCaption((cnode==null? values[i].trim(): cnode.getCaption()));
+                            }                             
+                        } else {
+                            invoker = invoker.clone(); 
+                        } 
+                        
+                        if (invoker != null) {
+                            invoker.getProperties().put(Node.class, (cnode == null? node: cnode));
+                            list.add(invoker);
+                        } 
                     } 
                 } 
 
                 if (list.isEmpty() && filetype != null) {
                     String invtype = filetype.toLowerCase() + ":open";
-                    list.addAll(actionsProvider.getInvokers(node, invtype));                
+                    Invoker invoker = actionsProvider.getInvoker(node, invtype); 
+                    if (invoker != null) list.add(invoker); 
                 } 
-                
                 node.getProperties().put("Invoker.openlist", list); 
             } 
             
@@ -228,9 +258,30 @@ public class ExplorerViewListController extends ListController implements Explor
         
     // <editor-fold defaultstate="collapsed" desc=" overrides/helper/utility methods ">
         
+    private boolean isChildNodeFolder(String filetype) {
+        Node selNode = getNode();
+        if (selNode == null || filetype == null) return false; 
+        
+        String sval = selNode.getPropertyString("childnodes"); 
+        if (sval == null) return false;
+        
+        String[] childnodes = sval.split(",");
+        for (String name: childnodes) {
+            String cfiletype = name.trim();
+            if (cfiletype.length() == 0) continue;            
+            if (filetype.equalsIgnoreCase(cfiletype+"-folder")) return true;
+        }
+        return false;
+    }
+    
+    public void setSelectedEntity(Object selectedEntity) {
+        super.setSelectedEntity(selectedEntity); 
+        System.out.println("setSelectedEntity-> " + selectedEntity);
+    }
+        
     protected void onbeforeFetchList(Map params) {
         Node node = getNode(); 
-        Object item = (node == null? null: node.getItem()); 
+        Object item = (node == null? null: node.getItem());             
         if (item instanceof Map) params.putAll((Map) item); 
     }
     
@@ -241,31 +292,34 @@ public class ExplorerViewListController extends ListController implements Explor
         Node node = getNode();
         if (node == null) return null;
         
-        if (!node.hasItems()) node.reloadItems(); 
+        boolean childNodeFolder = isChildNodeFolder((String) item.get("filetype"));  
+        if (childNodeFolder) {
+            node.loadItems();
 
-        Node selNode = null;      
-        Object srcid = item.get("objid");
-        PropertyResolver resolver = PropertyResolver.getInstance();
-        List<Node> nodes = node.getItems();
-        for (Node cnode: nodes) {
-            Object citem = cnode.getItem();
-            if (!(citem instanceof Map)) continue;
+            Node selNode = null;      
+            Object srcid = item.get("objid");
+            PropertyResolver resolver = PropertyResolver.getInstance();
+            List<Node> nodes = node.getItems();
+            for (Node cnode: nodes) { 
+                Object citem = cnode.getItem();
+                if (!(citem instanceof Map)) continue;
 
-            Object oid = ((Map) citem).get("objid");
-            if (oid != null && srcid != null && oid.equals(srcid)) {
-                selNode = cnode;
-                break; 
+                Object oid = ((Map) citem).get("objid");
+                if (oid != null && srcid != null && oid.equals(srcid)) {
+                    selNode = cnode;
+                    break; 
+                }
             }
+            
+            if (selNode != null) {
+                selNode.open();
+            }
+            return null;
         }
-
-        if (selNode != null) {
-            selNode.open(); 
-            return null; 
-        } 
         
         List<Invoker> list = (List) node.getProperties().get("Invoker.openlist");
         if (list == null || list.isEmpty()) {
-            MsgBox.alert("No available file type handler");
+            System.out.println("No available file type handler");
             return null;
         }
         
@@ -274,6 +328,9 @@ public class ExplorerViewListController extends ListController implements Explor
             Map map = createOpenerParams(); 
             map.put("node", node);
             map.put("entity", item);
+            Node invokerNode = (Node) invoker.getProperties().get(Node.class); 
+            if (invokerNode != null) map.put("node", invokerNode); 
+            
             opener.add(actionsProvider.toOpener(invoker, map, node));
         }
         return opener;
@@ -285,16 +342,18 @@ public class ExplorerViewListController extends ListController implements Explor
         
         List<Invoker> list = (List) node.getProperties().get("Invoker.createlist");
         if (list == null || list.isEmpty()) {
-            MsgBox.alert("No available file type handler");
-            System.out.println("node-item-> " + node.getItem());            
+            System.out.println("No available file type handler");
             return null;            
         }
         
         PopupMenuOpener opener = new PopupMenuOpener();        
         for (Invoker invoker: list) {
-            HashMap map = new HashMap();
+            Map map = createOpenerParams(); 
             map.put("node", node);
             map.put("entity", new HashMap());
+            Node invokerNode = (Node) invoker.getProperties().get(Node.class); 
+            if (invokerNode != null) map.put("node", invokerNode); 
+            
             opener.add(actionsProvider.toOpener(invoker, map, node));
         }
         return opener;        
@@ -306,8 +365,7 @@ public class ExplorerViewListController extends ListController implements Explor
 
         List<Invoker> list = (List) node.getProperties().get("Invoker.editlist");
         if (list == null || list.isEmpty()) {
-            MsgBox.alert("No available file type handler");
-            System.out.println("node-item-> " + node.getItem());            
+            System.out.println("No available file type handler");
             return null;            
         }
         
@@ -340,6 +398,9 @@ public class ExplorerViewListController extends ListController implements Explor
         }        
                 
         Opener toOpener(Invoker invoker, Map params, Node node) {
+            Object nodeTitle = invoker.getProperties().get("formTitle");
+            if (nodeTitle != null) params.put("nodeTitle", nodeTitle); 
+            
             Opener a = InvokerUtil.createOpener(invoker, params); 
             String target = a.getTarget()+"";
             if (!target.matches("window|popup|process|_window|_popup|_process")) {

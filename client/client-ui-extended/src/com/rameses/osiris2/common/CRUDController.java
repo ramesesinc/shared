@@ -295,9 +295,14 @@ public class CRUDController
         return "_close"; 
     }
     
+    @Deprecated
     protected void onbeforeSave(){}
+    @Deprecated
     protected void onafterSave(){}
-        
+    
+    protected void beforeSave(Object data){}
+    protected void afterSave(Object data){}
+    
     public void save(){
         try {
             if (isShowConfirmOnSave()) {
@@ -307,10 +312,12 @@ public class CRUDController
             onbeforeSave();
 
             if (MODE_CREATE.equals(this.mode)) {
+                beforeSave(getEntity());
                 Map data = getServiceProxy().create(getEntity()); 
                 if (data != null) setEntity(data); 
             }             
             else if (MODE_EDIT.equals(this.mode)) {
+                beforeSave(getEntity());
                 Map data = getServiceProxy().update(getEntity()); 
                 if (data != null) setEntity(data);  
             } 
@@ -319,7 +326,7 @@ public class CRUDController
             this.mode = MODE_READ; 
             this.changeLog.clear();
             
-            onafterSave(); 
+            afterSave(getEntity()); 
             
             ListModelHandler lm = getListModel();
             if (lm != null) {

@@ -213,11 +213,8 @@ public abstract class ListController extends BasicListController implements List
         
         Map qrymap = getQuery();
         if (qrymap != null) m.putAll(qrymap); 
-        
-        onbeforeFetchList(m);
-        //System.out.println("[ListController] fetchlist... " + m);        
+               
         List list = getService().getList(m); 
-        onafterFetchList(list); 
         return list; 
     }
     
