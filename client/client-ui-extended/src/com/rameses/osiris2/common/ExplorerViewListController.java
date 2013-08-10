@@ -273,12 +273,7 @@ public class ExplorerViewListController extends ListController implements Explor
         }
         return false;
     }
-    
-    public void setSelectedEntity(Object selectedEntity) {
-        super.setSelectedEntity(selectedEntity); 
-        System.out.println("setSelectedEntity-> " + selectedEntity);
-    }
-        
+            
     protected void onbeforeFetchList(Map params) {
         Node node = getNode(); 
         Object item = (node == null? null: node.getItem());             
