@@ -8,6 +8,8 @@ import com.rameses.osiris2.common.*;
 public class OrgController extends CRUDController {
         
     def node;
+    def nodeTitle;
+    def fileType;
 
     public String getServiceName() {
         return "OrgAdminService";
@@ -18,7 +20,7 @@ public class OrgController extends CRUDController {
     }
 
     public String getTitle() {
-        return node.item.orgclass;
+        return (nodeTitle? nodeTitle: node.item.orgclass);
     }
 
     public String getPrefixId() {

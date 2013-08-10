@@ -10,8 +10,16 @@ public class UserGroupController extends CrudFileType {
     @Service("SecuritygroupAdminService")
     def sgSvc;
 
-    String serviceName = "UsergroupService"
+    @SubWindow
+    def subwindow;
     
+    String serviceName = "UsergroupService"            
+            
+    @FormTitle
+    public String getFormTitle() { 
+        return getTitle(); 
+    } 
+
     public String getEntityName() {
         if(node.item.type) {
             return node.item.userclass;   
@@ -20,11 +28,11 @@ public class UserGroupController extends CrudFileType {
             return "usergroup"
         }
     }
-
+    
     public String getTitle() {
         return entity.usergroupid;
     }
-
+    
     Map createEntity() {
         return [usergroupid: node.item.usergroupid ];
     } 
@@ -56,4 +64,26 @@ public class UserGroupController extends CrudFileType {
         ]);
     }
 
+    def openSecurityGroup() {
+        return InvokerUtil.lookupOpener('user-securitygroup:open', [entity: entity]);
+    }
+    
+    void afterCreate( data ) {
+        if (data?.usergroupid && subwindow) {
+            subwindow.setTitle( data.usergroupid + ' (New)' ); 
+        }
+    }
+    
+    void afterEdit( data ) {
+        if (data?.usergroupid && subwindow) {
+            subwindow.setTitle( data.usergroupid + ' (Edit)' ); 
+        }
+    }    
+    
+    void afterCancel() {
+        if (entity?.usergroupid && subwindow) {
+            subwindow.setTitle( entity.usergroupid ); 
+        }        
+    }
+    
 }

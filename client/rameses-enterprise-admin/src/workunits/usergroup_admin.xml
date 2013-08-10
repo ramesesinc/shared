@@ -1,6 +1,6 @@
 <workunit>
     <invokers>
-        <invoker type="usergroup-folder:formActions" 
+        <invoker type="node:usergroup-folder:formActions" 
             caption="Admins" target="popup" action="init" role="SYSADMIN"/>
     </invokers>
     <code>

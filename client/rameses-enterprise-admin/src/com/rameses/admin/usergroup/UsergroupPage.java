@@ -88,6 +88,7 @@ public class UsergroupPage extends javax.swing.JPanel {
         xTextField1.setPreferredSize(new java.awt.Dimension(0, 19));
         xFormPanel1.add(xTextField1);
 
+        xButton1.setName("openSecurityGroup");
         xButton1.setText("v");
 
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);

@@ -1,6 +1,6 @@
 <workunit>
     <invokers>
-        <invoker type="usergroup-folder:formActions" caption="Security Group" 
+        <invoker type="node:usergroup-folder:formActions" caption="Security Group" 
             target="popup" action="init" role="SYSADMIN"/>
         
         <invoker type="formActions" caption="New"  action="addNew" visibleWhen="#{mode=='read'}"/>
