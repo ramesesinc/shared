@@ -27,9 +27,9 @@ public class TreeExplorerPage extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         xTree1 = new com.rameses.rcp.control.XTree();
 
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         xTree1.setHandler("tree");
         xTree1.setName("selection");
-        xTree1.setRowHeight(20);
         jScrollPane1.setViewportView(xTree1);
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
