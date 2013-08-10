@@ -1,0 +1,18 @@
+<workunit>
+    <invokers>
+        <invoker type="formActions" action="_close" caption="Back" immediate="true" visibleWhen="#{!completed}" 
+            icon="images/toolbars/cancel.png"/>
+        <invoker type="formActions" action="post" caption="Save1" visibleWhen="#{!completed}"
+            icon="images/toolbars/save.png" />
+        <invoker type="formActions" action="print" caption="Print" visibleWhen="#{completed}"/>
+        <invoker type="formActions" action="_close" caption="New" visibleWhen="#{completed}"
+            icon="images/toolbars/cancel.png" />
+    </invokers>
+    
+    <code class="com.rameses.enterprise.treasury.cashreceipt.BasicCashReceipt"/>
+
+    <pages>
+        <page name="completed" template="com.rameses.enterprise.treasury.cashreceipt.CashReceiptCompletedPage"/>
+    </pages>
+    
+</workunit>

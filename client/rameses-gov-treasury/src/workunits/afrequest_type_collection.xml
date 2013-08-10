@@ -1,6 +1,7 @@
 <workunit>
     <invokers>
-        <invoker type="afrequest:type" caption="COLLECTION" index="0" />
+        <invoker type="afrequest:type" caption="USE" index="0" role="AFO" action="_assist"/>
+        <invoker type="afrequest:type" caption="USE" index="0" role="COLLECTOR" action="_blank"/>
     </invokers>
     
     <code>
@@ -19,7 +20,8 @@
     </code>
     
     <pages>
-        <page template="com.rameses.gov.treasury.af.types.AFRequestCollectionType"/>
+        <page name="assist" template="com.rameses.gov.treasury.af.types.AFRequestCollectionType"/>
+        <page name="blank" template="com.rameses.gov.treasury.af.types.AFRequestBlank"/>
     </pages>
     
 </workunit>

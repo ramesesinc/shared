@@ -1,8 +1,9 @@
 <workunit extends="wtemplates/gov/treasury/BasicCashReceiptController.xml">
     <invokers>
-        <invoker type="collectiontype:handler" caption="Miscellaneous" name="misc" 
-            formtype="serial" index="100"/>
-        <invoker type="cashreceipt:misc" action="init" />
+        <invoker type="collectiontype:handler" caption="Large Cattle Ownership" 
+            name="lco"  formno="53" formtype="serial" index="0"/>
+            
+        <invoker type="cashreceipt:lco" action="init" />
     </invokers>
     
     <code>
@@ -13,15 +14,15 @@
         import com.rameses.osiris2.common.*
         import com.rameses.enterprise.treasury.cashreceipt.*
         
-        class  MiscCashReceiptController extends BasicCashReceipt {
-        
+        class  LaregCattleOwnershipReceiptController extends BasicCashReceipt {
+            def sexList = ["MALE", "FEMALE"];
         }
         ]]>
         
     </code>
     
     <pages>
-        <page template="com.rameses.enterprise.treasury.cashreceipt.MiscCashReceiptPage"/>
+        <page name="default" template="com.rameses.gov.treasury.cashreceipt.LargeCattleOwnershipPage"/>
     </pages>
     
 </workunit>

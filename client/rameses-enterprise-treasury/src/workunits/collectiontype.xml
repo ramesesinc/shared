@@ -29,6 +29,10 @@
                 }
             ]
             
+            void afterOpen( def o ) {
+                selectedForm = formTypes.find{ it.formno == o.formno };
+            }
+            
             def getFormTypes() {
                 return service.getFormTypes();
             }
@@ -42,7 +46,13 @@
                         formtype:it.properties.formtype
                     ]
                 }.findAll {
-                    return ((it.formno == selectedForm.formno ) || (it.formtype == selectedForm.formtype ))
+                    if( it.formno ) {
+                        return (it.formno == selectedForm.formno);
+                    }
+                    else if(it.formtype) {
+                        return (it.formtype == selectedForm.formtype);
+                    }
+                    return false;
                 };
             }   
         }      

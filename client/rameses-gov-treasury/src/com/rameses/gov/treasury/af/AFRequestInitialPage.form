@@ -14,7 +14,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+              <Component id="jPanel1" min="-2" pref="468" max="-2" attributes="0"/>
               <EmptySpace pref="587" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -42,15 +42,13 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-                  <Component id="xFormPanel1" pref="294" max="32767" attributes="1"/>
-                  <EmptySpace min="-2" pref="151" max="-2" attributes="0"/>
-              </Group>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="xSubFormPanel1" min="-2" pref="435" max="-2" attributes="1"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="xFormPanel1" alignment="0" min="-2" pref="339" max="-2" attributes="1"/>
+                      <Component id="xSubFormPanel1" alignment="0" min="-2" pref="435" max="-2" attributes="1"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
