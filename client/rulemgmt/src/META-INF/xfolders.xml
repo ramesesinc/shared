@@ -1,5 +1,3 @@
 <folders>
-    <folder id="explorer">
-        <folder id="rulemgmt" caption="Rule Management" index="3"/>        
-    </folder>
+    <folder id="rules" caption="Rules"/>    
 </folders>
