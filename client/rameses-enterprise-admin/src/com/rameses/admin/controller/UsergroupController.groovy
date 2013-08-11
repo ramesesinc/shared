@@ -5,14 +5,17 @@ import com.rameses.rcp.common.*;
 import com.rameses.osiris2.client.*;
 import com.rameses.osiris2.common.*;
         
-public class UserGroupController extends CrudFileType {
+public class UserGroupController extends CRUDController {
         
     @Service("SecuritygroupAdminService")
     def sgSvc;
 
     @SubWindow
     def subwindow;
-    
+
+    //to be injected by the explorer
+    def node, filetype;
+        
     String serviceName = "UsergroupService"            
             
     @FormTitle
@@ -21,11 +24,10 @@ public class UserGroupController extends CrudFileType {
     } 
 
     public String getEntityName() {
-        if(node.item.type) {
-            return node.item.userclass;   
-        }
-        else {
-            return "usergroup"
+        if(node.type) {
+            return node.userclass;   
+        } else {
+            return "usergroup";
         }
     }
     
@@ -34,7 +36,7 @@ public class UserGroupController extends CrudFileType {
     }
     
     Map createEntity() {
-        return [usergroupid: node.item.usergroupid ];
+        return [usergroupid: node.usergroupid ];
     } 
 
     def getSecurityGroups() {
@@ -55,9 +57,9 @@ public class UserGroupController extends CrudFileType {
     }
 
     def getLookupOrg() {
-        if( !node.item.orgclass ) return null;
+        if( !node.orgclass ) return null;
         return InvokerUtil.lookupOpener( "org:lookup", [
-            "query.orgclass":node.item.orgclass,
+            "query.orgclass":node.orgclass,
             onselect: { o->
                 entity.org = [objid:o.objid, orgclass:o.orgclass, name:o.name]
             }

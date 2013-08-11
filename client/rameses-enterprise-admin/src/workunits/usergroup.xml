@@ -1,7 +1,7 @@
 <workunit>
     <invokers>
-        <invoker type="usergroup-folder:open" action="open"/>
-        <invoker type="usergroup-folder:create" action="create"/>
+        <invoker type="usergroup:open" action="open"/>
+        <invoker type="usergroup:create" action="create"/>
     </invokers>
     <code class="com.rameses.admin.controller.UsergroupController"/>
     <pages>

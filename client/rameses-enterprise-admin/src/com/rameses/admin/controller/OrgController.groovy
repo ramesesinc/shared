@@ -7,29 +7,23 @@ import com.rameses.osiris2.common.*;
         
 public class OrgController extends CRUDController {
         
-    def node;
-    def nodeTitle;
-    def fileType;
+    def node, filetype;
 
-    public String getServiceName() {
-        return "OrgAdminService";
-    }
+    public String getServiceName() { return "OrgAdminService"; }
     
-    public String getEntityName() {
-        return node.item.orgclass;
-    }
+    public String getEntityName() { return node.orgclass; }
 
+    public String getPrefixId() { return "ORG"; }
+    
     public String getTitle() {
-        return (nodeTitle? nodeTitle: node.item.orgclass);
-    }
-
-    public String getPrefixId() {
-        return "ORG";
+        if (filetype?.caption) 
+            return filetype.caption;
+        else 
+            return node.orgclass;
     }
 
     Map createEntity() {
-        def e = [:];
-        e.orgclass  = node.item.orgclass;
+        def e = [orgclass: node.orgclass];
         return e;
     } 
 
