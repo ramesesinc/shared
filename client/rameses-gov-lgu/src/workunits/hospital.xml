@@ -1,7 +1,9 @@
 <workunit>
     <invokers>
-        <invoker type="hospital-folder:open" caption="Hospital" action="open"/>
-        <invoker type="hospital-folder:create" caption="Hospital" action="create"/>
+        <invoker type="hospital-folder:formActions" caption="New Hospital" action="create"/>
+        
+        <invoker type="hospital:open" caption="Hospital" action="open"/>
+        <invoker type="hospital:create" caption="Hospital" action="create"/>
     </invokers>
     <code>
         <![CDATA[
@@ -10,18 +12,25 @@
         import com.rameses.rcp.annotations.*;
         import com.rameses.osiris2.client.*;
 
-        public class HospitalController extends CrudFileType {
+        public class HospitalController extends CRUDController {
+        
+            //injected by the caller
+            def node, filetype;         
         
             String serviceName = "OrgAdminService";
             String entityName = "org";
             String title = "Hospital";
             
             Map createEntity() {
-                return [
-                    parentid:node.item.parentid, 
-                    orgclass: 'HOSPITAL',
-                    parentclass: node.item.orgclass
+                def e = [
+                    orgclass: 'HOSPITAL', 
+                    parentid: node.objid,                 
+                    parentclass: node.orgclass 
                 ];
+                if ("${node.parentid}-${node.name}".toString() == node.objid) { 
+                    e.parentid = node.parentid; 
+                } 
+                return e;
             }
         }        
     ]]>

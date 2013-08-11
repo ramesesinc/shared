@@ -1,9 +1,7 @@
 <workunit>
     <invokers>
-        <invoker type="district-folder:open" caption="District" action="open"/>
-        <invoker type="district-folder:create"  caption="District" action="create"/>
-        
-        <invoker type="district:edit" caption="District" action="open"/>        
+        <invoker type="district:open" caption="District" action="open"/>
+        <invoker type="district:create"  caption="District" action="create"/>
     </invokers>
    <code>
         <![CDATA[
@@ -12,7 +10,9 @@
         import com.rameses.rcp.annotations.*;
         import com.rameses.osiris2.client.*;
 
-        public class DistrictFileTypeController extends CrudFileType {
+        public class DistrictFileTypeController extends CRUDController {
+        
+            def node, filetype;
         
             String serviceName = "OrgAdminService";
             String entityName = "org";
@@ -20,9 +20,9 @@
             
             Map createEntity() {
                 return [
-                    parentid:node.item.parentid, 
-                    orgclass: 'DISTRICT',
-                    parentclass: node.item.orgclass
+                    orgclass: 'DISTRICT',                
+                    parentid:node.parentid, 
+                    parentclass: node.orgclass
                 ];
             }
         }        

@@ -11,8 +11,10 @@
         import com.rameses.rcp.annotations.*;
         import com.rameses.osiris2.client.*;
 
-        public class CityFileTypeController extends CrudFileType {
+        public class CityFileTypeController extends CRUDController {
         
+            def node, filetype;
+            
             String serviceName = "OrgAdminService";
             String entityName = "org";
             String title = "city";

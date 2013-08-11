@@ -1,9 +1,10 @@
 <workunit>
     <invokers>
-        <invoker type="municipality-folder:open" caption="Municipality" action="open"/>
-        <invoker type="municipality-folder:create"  caption="Municipality" action="create"/>
+        <invoker type="municipality-folder:formActions" caption="New Municipality" action="create"/> 
         
-        <invoker type="municipality:edit" caption="Municipality" action="open"/>        
+        <invoker type="municipality:open"   caption="Municipality" action="open"/>
+        <invoker type="municipality:create" caption="Municipality" action="create"/>        
+        <invoker type="municipality:edit" caption="Municipality" action="open"/>         
     </invokers>
    <code>
         <![CDATA[
@@ -12,20 +13,27 @@
         import com.rameses.rcp.annotations.*;
         import com.rameses.osiris2.client.*;
 
-        public class MunicipalityFileTypeController extends CrudFileType {
+        public class MunicipalityFileTypeController extends CRUDController {
         
+            //injected by the caller
+            def node, filetype; 
+            
             String serviceName = "OrgAdminService";
             String entityName = "org";
             String title = "Municipality";
             
             Map createEntity() {
-                return [
-                    parentid:node.item.parentid, 
-                    orgclass: 'MUNICIPALITY',
-                    parentclass: node.item.orgclass
+                def e = [
+                    orgclass: 'MUNICIPALITY',                
+                    parentclass: node.orgclass, 
+                    parentid: node.objid                    
                 ];
+                if ("${node.parentid}-${node.name}".toString() == node.objid) { 
+                    e.parentid = node.parentid; 
+                } 
+                return e;
             }
-        }        
+        } 
          ]]>
     </code>
     <pages>

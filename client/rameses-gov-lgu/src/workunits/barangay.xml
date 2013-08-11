@@ -1,8 +1,5 @@
 <workunit>
     <invokers>
-        <invoker type="barangay-folder:open" caption="Barangay" action="open"/>
-        <invoker type="barangay-folder:create" caption="Barangay" action="create"/>
-        
         <invoker type="barangay:open" caption="Barangay" action="open"/>
         <invoker type="barangay:create" caption="Barangay" action="create"/>        
     </invokers>
@@ -13,19 +10,25 @@
         import com.rameses.rcp.annotations.*;
         import com.rameses.osiris2.client.*;
 
-        public class BarangayFileTypeController extends CrudFileType {
+        public class BarangayFileTypeController extends CRUDController {
         
+            def node, filetype;
+            
             String serviceName = "OrgAdminService";
             String entityName = "org";
             String title = "Barangay";
             
             Map createEntity() {
-                return [
-                    parentid:node.item.parentid, 
-                    orgclass: 'BARANGAY',
-                    parentclass: node.item.orgclass
-                ];
-            }
+                def e = [
+                    orgclass: 'BARANGAY', 
+                    parentid:node.objid, 
+                    parentclass: node.orgclass 
+                ]; 
+                if ("${node.parentid}-${node.name}".toString() == node.objid) { 
+                    e.parentid = node.parentid; 
+                } 
+                return e;
+            } 
         }        
     ]]>
     </code>
