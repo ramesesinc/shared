@@ -89,7 +89,7 @@ public class ExplorerViewListController extends ListController implements Explor
         if (binding != null) {
             binding.refresh("formActions");
         } 
-        reload(); 
+        reloadAll(); 
     }
     
     private Node getChildNode(String filetype) {
@@ -221,6 +221,12 @@ public class ExplorerViewListController extends ListController implements Explor
     // </editor-fold>
         
     // <editor-fold defaultstate="collapsed" desc=" overrides/helper/utility methods ">
+        
+    protected void beforeGetColumns(Map params) {
+        Node node = getNode(); 
+        Object item = (node == null? null: node.getItem()); 
+        if (item instanceof Map) params.putAll((Map) item);         
+    }
     
     protected void onbeforeFetchList(Map params) {
         Node node = getNode(); 
@@ -248,7 +254,7 @@ public class ExplorerViewListController extends ListController implements Explor
                 return null; 
             } 
             
-            Map map = new HashMap(); 
+            Map map = createOpenerParams();
             map.put("node", node.getItem()); 
             map.put("entity", item);
             return actionsProvider.toOpener(invoker, map, node); 
@@ -261,7 +267,7 @@ public class ExplorerViewListController extends ListController implements Explor
         if (list != null && !list.isEmpty()) {
             PopupMenuOpener opener = new PopupMenuOpener();   
             for (Invoker invoker: list) {
-                Map map = new HashMap();
+                Map map = createOpenerParams();
                 map.put("node", node.getItem());
                 map.put("entity", item);
                 opener.add(actionsProvider.toOpener(invoker, map, node));
@@ -283,12 +289,14 @@ public class ExplorerViewListController extends ListController implements Explor
                 return null; 
             } 
             node.setProperty("Invoker.defaultOpen", invoker);
-                        
-            Map map = new HashMap(); 
+        } 
+        if (invoker != null) {
+            Map map = createOpenerParams();
             map.put("node", node.getItem()); 
             map.put("entity", item);
             return actionsProvider.toOpener(invoker, map, node); 
         }
+        
         
         /*
          *  last option is the item's objid
@@ -329,7 +337,7 @@ public class ExplorerViewListController extends ListController implements Explor
         
         PopupMenuOpener opener = new PopupMenuOpener();        
         for (Invoker invoker: list) {
-            Map map = new HashMap(); 
+            Map map = createOpenerParams();
             map.put("node", node.getItem());
             
             Object fileTypeObject = invoker.getProperties().get("Node.fileTypeObject"); 
@@ -350,7 +358,7 @@ public class ExplorerViewListController extends ListController implements Explor
             return null;            
         }
         
-        HashMap map = new HashMap();
+        Map map = createOpenerParams();
         map.put("node", node.getItem());
         map.put("entity", node.getItem());
         return actionsProvider.toOpener(invoker, map, node); 
@@ -366,6 +374,12 @@ public class ExplorerViewListController extends ListController implements Explor
     private String getString(Map data, String name) {
         Object o = (data == null? null: data.get(name));
         return (o == null? null: o.toString()); 
+    }
+
+    protected Map createOpenerParams() {
+        Map params = super.createOpenerParams(); 
+        params.put("listModel", new ListModelHandlerImpl()); 
+        return params; 
     }
     
     // </editor-fold>
@@ -432,7 +446,7 @@ public class ExplorerViewListController extends ListController implements Explor
 
         public Object execute() { 
             Node node = root.getNode();
-            HashMap map = new HashMap();
+            Map map = createOpenerParams();
             map.put("node", node.getItem());
             map.put("entity", (Map) root.getSelectedEntity());
             return actionsProvider.toOpener(invoker, map, node); 
@@ -478,6 +492,31 @@ public class ExplorerViewListController extends ListController implements Explor
         public List getList(Map params) {
             return new ArrayList(); 
         }        
+    }
+    
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc=" ListModelHandlerImpl (class) "> 
+    
+    private class ListModelHandlerImpl implements ListModelHandler {
+        
+        ExplorerViewListController root = ExplorerViewListController.this; 
+        
+        public Object getSelectedEntity() { 
+            return root.getSelectedEntity(); 
+        }
+
+        public void addItem(Object data) { 
+            root.addItem(data); 
+        }
+
+        public void updateItem(Object data) {
+            root.updateItem(data); 
+        }
+
+        public void removeItem(Object data) {
+            root.removeItem(data); 
+        } 
     }
     
     // </editor-fold>

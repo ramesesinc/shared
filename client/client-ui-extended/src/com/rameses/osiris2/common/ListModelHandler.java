@@ -19,15 +19,4 @@ interface ListModelHandler
     
     void removeItem(Object data);
     
-    void moveFirstPage();
-    
-    void moveBackPage();
-    
-    void moveNextPage();
-    
-    void moveLastPage();
-    
-    void moveBackRecord();
-    
-    void moveNextRecord();    
 }

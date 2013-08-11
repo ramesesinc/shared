@@ -46,13 +46,16 @@ public abstract class ListController extends BasicListController implements List
         } 
     } 
 
+    protected void beforeGetColumns(Map params){}
+        
     public Column[] getColumns() { return null; }
-
+        
     public List<Map> getColumnList() {
         Map params = new HashMap();
         String stag = getTag();
         if (stag != null) params.put("_tag", stag);
-        
+    
+        beforeGetColumns(params); 
         return getService().getColumns(params); 
     }
     

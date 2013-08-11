@@ -405,8 +405,8 @@ public class CRUDController
     
     public void moveBackRecord() {
         ListModelHandler lm = getListModel();
-        if (lm != null){
-            lm.moveBackRecord(); 
+        if (lm != null && lm instanceof PageListModelHandler){
+            ((PageListModelHandler) lm).moveBackRecord(); 
             
             Object data = lm.getSelectedEntity(); 
             if (data == null) return;
@@ -420,8 +420,8 @@ public class CRUDController
     
     public void moveNextRecord() {
         ListModelHandler lm = getListModel();
-        if (lm != null) {
-            lm.moveNextRecord();
+        if (lm != null && lm instanceof PageListModelHandler) {
+            ((PageListModelHandler) lm).moveNextRecord();
             
             Object data = lm.getSelectedEntity(); 
             if (data == null) return;
