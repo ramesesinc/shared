@@ -1,7 +1,6 @@
 <workunit>
     <invokers>
         <invoker type="city:open"  caption="City" target="popup" action="open"/>
-        <invoker type="city:edit"  caption="City" target="popup" action="open"/>
     </invokers>
    
     <code>
@@ -17,11 +16,11 @@
             
             String serviceName = "OrgAdminService";
             String entityName = "org";
-            String title = "city";
+            String title = "City";
             
-            Map createEntity() {
-                return [ orgclass: 'CITY' ];
-            }
+            boolean isAllowCreate() { return false; } 
+            boolean isAllowDelete() { return false; } 
+            boolean isAllowApprove() { return false; } 
         }        
         ]]>    
     </code>

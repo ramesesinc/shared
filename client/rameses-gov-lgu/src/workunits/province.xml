@@ -1,7 +1,6 @@
 <workunit>
     <invokers>
         <invoker type="province:open"  caption="Province" target="popup" action="open"/>
-        <invoker type="province:edit"  caption="Province" target="popup" action="open"/>
     </invokers>
     <code>
         <![CDATA[
@@ -10,19 +9,17 @@
         import com.rameses.rcp.annotations.*;
         import com.rameses.osiris2.client.*;
 
-        public class ProvinceFileTypeController {
+        public class OrgProvinceController extends CRUDController {
             
-            def node;
-            def entity = [:];
+            def node, filetype;
             
-            void create() {
-                MsgBox.alert('create me!');
-            }
+            String serviceName = "OrgAdminService";
+            String entityName = "org";
+            String title = "Province";
             
-            void open() {
-                MsgBox.alert('open me!');
-            }
-            
+            boolean isAllowCreate() { return false; } 
+            boolean isAllowDelete() { return false; } 
+            boolean isAllowApprove() { return false; } 
         }        
     ]]>
     </code>
