@@ -13,15 +13,19 @@ import com.rameses.common.ExpressionResolver;
 import com.rameses.osiris2.Invoker;
 import com.rameses.osiris2.client.InvokerUtil;
 import com.rameses.rcp.common.Action;
+import com.rameses.rcp.common.Column;
+import com.rameses.rcp.common.IconColumnHandler;
 import com.rameses.rcp.common.MsgBox;
 import com.rameses.rcp.common.Node;
 import com.rameses.rcp.common.Opener;
 import com.rameses.rcp.common.PopupMenuOpener;
 import com.rameses.rcp.framework.Binding;
+import com.rameses.rcp.support.ImageIconSupport;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.swing.UIManager;
 
 /**
  *
@@ -57,11 +61,8 @@ public class ExplorerViewListController extends ListController implements Explor
     public Opener getQueryForm() { return null; }    
     public List getFormActions() { return formActions; }  
     public List getNodeActions() { return nodeActions; } 
+    public int getRows() { return 20; } 
     
-    public boolean isAllowCreateItems() {
-        return true;
-    }
-        
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc=" ExplorerViewHandler implementation ">
@@ -232,6 +233,22 @@ public class ExplorerViewListController extends ListController implements Explor
         Node node = getNode(); 
         Object item = (node == null? null: node.getItem());             
         if (item instanceof Map) params.putAll((Map) item); 
+    }
+    
+    public Column[] initColumns(Column[] columns) { 
+        if (columns == null || columns.length == 0) return columns;
+                
+        Column[] newColumns = new Column[columns.length+1]; 
+        for (int i=0; i<columns.length; i++) {
+            newColumns[i+1] = columns[i]; 
+        } 
+        
+        Column aColumn = new Column(null, "");
+        aColumn.setTypeHandler(new DefaultIconColumnHandler()); 
+        aColumn.setResizable(false);
+        aColumn.setWidth(25);
+        newColumns[0] = aColumn; 
+        return newColumns; 
     }
     
     public Object open() throws Exception {
@@ -524,6 +541,35 @@ public class ExplorerViewListController extends ListController implements Explor
         public void removeItem(Object data) {
             root.removeItem(data); 
         } 
+    }
+    
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc=" DefaultIconColumnHandler (class) "> 
+    
+    private class DefaultIconColumnHandler extends IconColumnHandler {
+        
+        ExplorerViewListController root = ExplorerViewListController.this;
+        
+        public Object getValue(Object rowValue, Object columnValue) {
+            if (rowValue instanceof Map) {
+                Map map = (Map) rowValue; 
+                String filetype = root.getString(map, "filetype");
+                if (filetype == null) return "default_file";
+                
+                String context = (root.parentController == null? null: root.parentController.getContext()); 
+                String iconpath = "images/explorer/"+context+"/"+filetype+".png";
+                Object anIcon = ImageIconSupport.getInstance().getIcon(iconpath.toLowerCase()); 
+                if (anIcon == null) {
+                    try {
+                        anIcon = UIManager.getLookAndFeelDefaults().getIcon("Tree.closedIcon"); 
+                    } catch(Throwable t){;} 
+                }
+                return anIcon; 
+            } else { 
+                return null; 
+            }
+        }
     }
     
     // </editor-fold>
