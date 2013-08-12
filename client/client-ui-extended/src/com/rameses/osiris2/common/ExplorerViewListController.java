@@ -254,9 +254,9 @@ public class ExplorerViewListController extends ListController implements Explor
                 return null; 
             } 
             
-            Map map = createOpenerParams();
+            Map map = createOpenerParams(); 
             map.put("node", node.getItem()); 
-            map.put("entity", item);
+            map.put("entity", item); 
             return actionsProvider.toOpener(invoker, map, node); 
         }
         
@@ -265,6 +265,12 @@ public class ExplorerViewListController extends ListController implements Explor
          */
         List<Invoker> list = node.getPropertyList("Invoker.openlist");
         if (list != null && !list.isEmpty()) {
+            Map map = createOpenerParams();
+            map.put("node", node.getItem());
+            map.put("entity", item); 
+            return actionsProvider.toOpener(list.get(0), map, node); 
+            
+            /*
             PopupMenuOpener opener = new PopupMenuOpener();   
             for (Invoker invoker: list) {
                 Map map = createOpenerParams();
@@ -273,6 +279,7 @@ public class ExplorerViewListController extends ListController implements Explor
                 opener.add(actionsProvider.toOpener(invoker, map, node));
             } 
             return opener;
+            */
         }
         
         /*
