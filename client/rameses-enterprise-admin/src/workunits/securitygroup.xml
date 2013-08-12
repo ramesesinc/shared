@@ -64,9 +64,10 @@
                 entity = sgSvc.open(selectedEntity);
                 def _exclude = entity.exclude;
                 permissions.each {
-                    if(_exclude) {
-                        it.checked = (it.code.matches(_exclude)) ? false : true;
-                    }
+                    it.checked = true;
+                    if (_exclude) { 
+                        it.checked = (it.code.matches(_exclude)? false: true);
+                    } 
 		}
                 mode = "edit";
                 return "info";
