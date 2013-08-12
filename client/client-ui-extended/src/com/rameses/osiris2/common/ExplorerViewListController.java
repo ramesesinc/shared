@@ -402,7 +402,7 @@ public class ExplorerViewListController extends ListController implements Explor
 
     protected Map createOpenerParams() {
         Map params = super.createOpenerParams(); 
-        params.put("listModel", new ListModelHandlerImpl()); 
+        params.put("listModelHandler", new ListModelHandlerImpl()); 
         return params; 
     }
     
@@ -470,7 +470,7 @@ public class ExplorerViewListController extends ListController implements Explor
 
         public Object execute() { 
             Node node = root.getNode();
-            Map map = createOpenerParams();
+            Map map = root.createOpenerParams();
             map.put("node", node.getItem());
             map.put("entity", (Map) root.getSelectedEntity());
             return actionsProvider.toOpener(invoker, map, node); 

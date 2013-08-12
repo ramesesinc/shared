@@ -90,8 +90,8 @@ public class CRUDController
         return changeLog.hasChanges(); 
     }
     
-    public ListModelHandler getListModel() { return this.listModelHandler; } 
-    public void setListModel(ListModelHandler listModelHandler) {
+    public ListModelHandler getListModelHandler() { return this.listModelHandler; } 
+    public void setListModelHandler(ListModelHandler listModelHandler) {
         this.listModelHandler = listModelHandler;
     }
     
@@ -332,7 +332,7 @@ public class CRUDController
             
             afterSave(getEntity()); 
             
-            ListModelHandler lm = getListModel();
+            ListModelHandler lm = getListModelHandler();
             if (lm != null) {
                 if (MODE_EDIT.equals(oldmode)) 
                     lm.updateItem(getEntity()); 
@@ -397,7 +397,7 @@ public class CRUDController
             Map data = getEntity();
             getServiceProxy().removeEntity(data); 
             
-            ListModelHandler lm = getListModel();
+            ListModelHandler lm = getListModelHandler();
             if (lm != null) lm.removeItem(data); 
                 
             return close();
@@ -408,7 +408,7 @@ public class CRUDController
     }    
     
     public void moveBackRecord() {
-        ListModelHandler lm = getListModel();
+        ListModelHandler lm = getListModelHandler();
         if (lm != null && lm instanceof PageListModelHandler){
             ((PageListModelHandler) lm).moveBackRecord(); 
             
@@ -423,7 +423,7 @@ public class CRUDController
     }
     
     public void moveNextRecord() {
-        ListModelHandler lm = getListModel();
+        ListModelHandler lm = getListModelHandler();
         if (lm != null && lm instanceof PageListModelHandler) {
             ((PageListModelHandler) lm).moveNextRecord();
             
