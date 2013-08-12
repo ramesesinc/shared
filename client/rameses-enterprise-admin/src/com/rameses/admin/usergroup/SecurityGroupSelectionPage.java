@@ -34,7 +34,7 @@ public class SecurityGroupSelectionPage extends javax.swing.JPanel {
             new com.rameses.rcp.common.Column("name", "Name", 100, 0, 0, false, true, true, false, null, new com.rameses.rcp.common.TextColumnHandler())
         });
         xDataTable3.setDynamic(true);
-        xDataTable3.setHandler("listModel");
+        xDataTable3.setHandler("listHandler");
         xDataTable3.setName("selectedEntity");
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);

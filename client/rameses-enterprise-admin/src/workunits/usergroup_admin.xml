@@ -1,6 +1,6 @@
 <workunit>
     <invokers>
-        <invoker type="node:usergroup-folder:formActions" 
+        <invoker type="usergroup-folder:formActions" 
             caption="Admins" target="popup" action="init" role="SYSADMIN"/>
     </invokers>
     <code>
@@ -18,14 +18,14 @@
                 @Service("UsergroupAdminService")
                 def usergroupAdminSvc;
                 
-                def node;
+                def node, filetype;
                 def selectedEntity;
                 def usergroupid;
                 
                 String title;
                 
                 void init() {
-                    usergroupid = node.item.usergroupid;
+                    usergroupid = node.usergroupid;
                     title = usergroupid;
                 }
                 

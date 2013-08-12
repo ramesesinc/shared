@@ -1,6 +1,6 @@
 <workunit>
     <invokers>
-        <invoker type="node:usergroup-folder:formActions" caption="Security Group" 
+        <invoker type="usergroup-folder:formActions" caption="Security Group" 
             target="popup" action="init" role="SYSADMIN"/>
         
         <invoker type="formActions" caption="New"  action="addNew" visibleWhen="#{mode=='read'}"/>
@@ -21,29 +21,32 @@
         
             @Service("SecuritygroupAdminService")
             def sgSvc;
-
+            
+            def node, filetype;
+            
             def title = "Security Group"; 
-            def usergroupid;
             def entity = [:]
+            def usergroupid;            
             def selectedEntity;
-            def node;
             def mode = "read";
             def permissions;
             def objectList;
             def selectedObject;            
             
             void init() {
-                usergroupid =  node.item.usergroupid;
-                mode = "read";
+                mode = "read";            
+                usergroupid =  node.usergroupid;
                 permissions = sgSvc.getPermissions([usergroupid:usergroupid]);
                 objectList = permissions.collect{ it.object }.unique();
                 if(objectList.size()>0) selectedObject = objectList[0];
             }
             
-            def listModel = [
+            def listHandler = [
                 fetchList: { o->
                     def m = [usergroupid:usergroupid];
-                    return sgSvc.getList(m);
+                    def list = sgSvc.getList(m);
+                    println 'listHandler_fetchList-> ' + list;
+                    return list;
                 }
             ] as BasicListModel;
             
@@ -77,7 +80,7 @@
                     sgSvc.create(entity);    
                 else
                     sgSvc.update(entity);
-                listModel.reload();
+                listHandler.reload();
                 mode="read";
                 return "default";
             }
