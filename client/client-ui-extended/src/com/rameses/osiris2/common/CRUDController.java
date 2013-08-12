@@ -3,6 +3,7 @@ import com.rameses.common.MethodResolver;
 import com.rameses.osiris2.client.InvokerFilter;
 import com.rameses.osiris2.client.InvokerProxy;
 import com.rameses.osiris2.client.InvokerUtil;
+import com.rameses.osiris2.client.OsirisContext;
 import com.rameses.rcp.annotations.Binding;
 import com.rameses.rcp.annotations.ChangeLog;
 import com.rameses.rcp.annotations.Invoker;
@@ -316,14 +317,18 @@ public class CRUDController
             onbeforeSave();
 
             if (MODE_CREATE.equals(this.mode)) {
-                beforeSave(getEntity());
-                Map data = getServiceProxy().create(getEntity()); 
+                Map data = getEntity();
+                beforeSave(data);
+                data.put("createdby", OsirisContext.getEnv().get("USERID")); 
+                data = getServiceProxy().create(data); 
                 if (data != null) setEntity(data); 
-            }             
+            } 
             else if (MODE_EDIT.equals(this.mode)) {
-                beforeSave(getEntity());
-                Map data = getServiceProxy().update(getEntity()); 
-                if (data != null) setEntity(data);  
+                Map data = getEntity();
+                beforeSave(data);
+                data.put("modifiedby", OsirisContext.getEnv().get("USERID")); 
+                data = getServiceProxy().update(data); 
+                if (data != null) setEntity(data); 
             } 
 
             String oldmode = this.mode;
