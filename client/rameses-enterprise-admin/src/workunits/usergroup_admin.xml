@@ -42,6 +42,7 @@
                             entity.objid = "UGA"+ new UID();
                             entity.user = o;
                             entity.usergroupid = usergroupid;
+                            println 'onselect-> '+entity;
                             usergroupAdminSvc.create(entity);
                             adminListModel.reload();
                         }

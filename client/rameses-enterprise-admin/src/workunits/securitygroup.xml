@@ -3,10 +3,10 @@
         <invoker type="usergroup-folder:formActions" caption="Security Group" 
             target="popup" action="init" role="SYSADMIN"/>
         
-        <invoker type="formActions" caption="New"  action="addNew" visibleWhen="#{mode=='read'}"/>
-        <invoker type="formActions" caption="Edit"  action="edit" visibleWhen="#{mode=='read'}"/>
-        <invoker type="formActions" caption="Save"  action="save" visibleWhen="#{mode!='read'}"/>
-        <invoker type="formActions" caption="Cancel"  action="cancel" visibleWhen="#{mode!='read'}"/>
+        <invoker type="formActions" caption="New"  action="addNew" visibleWhen="#{mode=='read'}" icon="images/toolbars/create.png"/>
+        <invoker type="formActions" caption="Edit"  action="edit" visibleWhen="#{mode=='read'}" icon="images/toolbars/edit.png"/>
+        <invoker type="formActions" caption="Save"  action="save" visibleWhen="#{mode!='read'}" icon="images/toolbars/save.png"/>
+        <invoker type="formActions" caption="Cancel"  action="cancel" visibleWhen="#{mode!='read'}" icon="images/toolbars/cancel.png"/>
     </invokers>
     
     <code>
@@ -44,9 +44,7 @@
             def listHandler = [
                 fetchList: { o->
                     def m = [usergroupid:usergroupid];
-                    def list = sgSvc.getList(m);
-                    println 'listHandler_fetchList-> ' + list;
-                    return list;
+                    return sgSvc.getList(m);
                 }
             ] as BasicListModel;
             
@@ -76,10 +74,11 @@
             
             def save() {
                 entity.exclude = buildExclude();
-                if(mode=='create')
+                if (mode == 'create')
                     sgSvc.create(entity);    
                 else
                     sgSvc.update(entity);
+                    
                 listHandler.reload();
                 mode="read";
                 return "default";
