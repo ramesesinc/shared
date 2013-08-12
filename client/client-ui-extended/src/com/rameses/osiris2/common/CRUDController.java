@@ -134,6 +134,8 @@ public class CRUDController
     public boolean isAllowCreate() { return true; } 
     public boolean isAllowOpen() { return true; } 
     public boolean isAllowEdit() { return true; } 
+    public boolean isAllowDelete() { return true; } 
+    public boolean isAllowApprove() { return true; } 
     public boolean isShowFormActions() { return true; } 
     
     protected boolean isShowConfirmOnSave() { return false; }  
@@ -172,8 +174,10 @@ public class CRUDController
             if (isAllowEdit())
             {
                 formActions.add(createAction("edit", "Edit", "images/toolbars/edit.png", "ctrl E", 'e',  "#{mode=='read' && entity.state=='DRAFT'}", true)); 
-                formActions.add(createAction("delete", "Delete", "images/toolbars/trash.png", null, 'd', "#{mode=='read' && entity.state=='DRAFT'}", true)); 
-                formActions.add(createAction("approve", "Approve", "images/toolbars/approve.png", null, 'v', "#{mode=='read' && entity.state=='DRAFT'}", true)); 
+                if (isAllowDelete()) 
+                    formActions.add(createAction("delete", "Delete", "images/toolbars/trash.png", null, 'd', "#{mode=='read' && entity.state=='DRAFT'}", true)); 
+                if (isAllowApprove())
+                    formActions.add(createAction("approve", "Approve", "images/toolbars/approve.png", null, 'v', "#{mode=='read' && entity.state=='DRAFT'}", true)); 
             }
             
             if (isAllowCreate() || isAllowEdit())
