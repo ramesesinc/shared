@@ -1,6 +1,6 @@
 <workunit>
     <invokers>
-        <invoker type="province:open"  caption="Province" target="popup" action="open"/>
+        <invoker type="province:open"  caption="Province" target="popup" action="open" resizable="false" height="500"/>
     </invokers>
     <code>
         <![CDATA[
@@ -9,7 +9,7 @@
         import com.rameses.rcp.annotations.*;
         import com.rameses.osiris2.client.*;
 
-        public class OrgProvinceController extends CRUDController {
+        public class ProvinceOrgController extends CRUDController {
             
             def node, filetype;
             
@@ -24,6 +24,6 @@
     ]]>
     </code>
     <pages>
-        <page template="com.rameses.admin.org.OrgPage"/>
+        <page template="com.rameses.gov.lgu.ui.ProvincePage"/>
     </pages>
 </workunit>

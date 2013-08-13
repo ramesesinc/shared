@@ -1,9 +1,9 @@
 <workunit extends="wtemplates/FolderExplorerView.xml" root="/admin">
     <invokers>
         <invoker folderid="/menu/mgmt" windowmode="explorer" caption="Administration" 
-            permission="system" index="-5" action="init"/>
+            role="SYSADMIN" index="-5" action="init"/>
 
         <invoker type="quick_launcher" caption="Administration" 
-            permission="system" code="ADMIN" action="init"/>  
+            role="SYSADMIN" code="ADMIN" action="init"/>  
     </invokers>
 </workunit>

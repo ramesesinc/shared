@@ -10,7 +10,7 @@
         import com.rameses.rcp.annotations.*;
         import com.rameses.osiris2.client.*;
 
-        public class CityFileTypeController extends CRUDController {
+        public class CityOrgController extends CRUDController {
         
             def node, filetype;
             

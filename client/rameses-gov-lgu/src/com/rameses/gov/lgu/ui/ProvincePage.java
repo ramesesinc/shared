@@ -1,5 +1,5 @@
 /*
- * CityPage.java
+ * ProvincePage.java
  *
  * Created on July 31, 2013, 9:19 PM
  */
@@ -15,9 +15,9 @@ import com.rameses.rcp.ui.annotations.Template;
  * @author  Elmo
  */
 @Template(value=OrgPage.class, target="content")
-public class CityPage extends javax.swing.JPanel {
+public class ProvincePage extends javax.swing.JPanel {
     
-    public CityPage() {
+    public ProvincePage() {
         initComponents();
     }
     
@@ -41,18 +41,18 @@ public class CityPage extends javax.swing.JPanel {
 
         com.rameses.rcp.control.border.XTitledBorder xTitledBorder1 = new com.rameses.rcp.control.border.XTitledBorder();
         xTitledBorder1.setPadding(new java.awt.Insets(25, 0, 0, 0));
-        xTitledBorder1.setTitle("City Information");
+        xTitledBorder1.setTitle("Province Information");
         jPanel1.setBorder(xTitledBorder1);
 
         xFormPanel1.setCaptionWidth(120);
-        xTextField1.setCaption("Mayor Name");
-        xTextField1.setName("entity.mayorname");
+        xTextField1.setCaption("Governor Name");
+        xTextField1.setName("entity.governorname");
         xTextField1.setPreferredSize(new java.awt.Dimension(0, 19));
         xTextField1.setRequired(true);
         xFormPanel1.add(xTextField1);
 
-        xTextField2.setCaption("Mayor Title");
-        xTextField2.setName("entity.mayortitle");
+        xTextField2.setCaption("Governor Title");
+        xTextField2.setName("entity.governortitle");
         xTextField2.setPreferredSize(new java.awt.Dimension(0, 19));
         xFormPanel1.add(xTextField2);
 

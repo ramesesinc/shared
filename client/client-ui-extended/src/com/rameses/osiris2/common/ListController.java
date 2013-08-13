@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class ListController extends BasicListController implements ListModelHandler 
+public abstract class ListController extends BasicListController implements PageListModelHandler 
 {     
     private ListService service;
     private List formActions;
@@ -146,7 +146,7 @@ public abstract class ListController extends BasicListController implements List
     protected Map createOpenerParams() 
     {
         Map params = new HashMap();
-        params.put("listModel", this);
+        params.put("listModelHandler", this);
         return params;
     }
           
