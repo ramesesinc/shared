@@ -1,0 +1,3 @@
+"requestItems:item.remarks"[item.remarks!='OK'] {
+    color: red;
+} 

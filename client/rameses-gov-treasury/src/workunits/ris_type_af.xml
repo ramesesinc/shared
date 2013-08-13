@@ -1,0 +1,17 @@
+<!-- REQUISITION ISSUE SLIP -->
+<workunit>
+    <invokers>
+       <invoker type="ris:types" caption="Issuance AF" txntype="AF:ISSUE"/>
+       <invoker type="ris:types" caption="Sale AF" txntype="AF:SALE"/>
+       <invoker type="ris:types" caption="Purchase AF" txntype="AF:PURCHASE"/>
+       
+       <invoker type="ris:open" action="open" caption="RIS AF" target="window"/>
+    </invokers>
+    
+    <code class="com.rameses.gov.treasury.controllers.AFRISController"/>
+    
+    <pages>
+        <page template="com.rameses.gov.treasury.ris.RISPage"/>
+    </pages>
+    
+</workunit>

@@ -1,0 +1,41 @@
+<!-- REQUISITION ISSUE SLIP -->
+<workunit>
+    <invokers>
+       <invoker type="ris:create" caption="New RIS"  action="init" target="window" />
+       <invoker folderid="/txn/treasury" caption="Req.Issue Slip (RIS)" action="init" />
+       <invoker type="formActions" caption="Next" action="process" />
+    </invokers>
+    
+    <code>
+        <![CDATA[    
+        import com.rameses.rcp.annotations.*
+        import com.rameses.rcp.common.*
+        import com.rameses.osiris2.client.*
+        import com.rameses.osiris2.common.*
+        import com.rameses.enterprise.treasury.cashreceipt.*
+        
+        class  RISController  {
+        
+            def risTypes;
+            def risType;
+            def title = "Requisition Issue Slip (RIS)"
+            
+            void init() {
+                risTypes = InvokerUtil.lookupOpeners("ris:types");
+            }
+            
+            def process() {
+                risType.handle.create();
+                return risType;
+            }
+            
+        }
+        ]]>
+        
+    </code>
+    
+    <pages>
+        <page template="com.rameses.gov.treasury.ris.RISInitialPage"/>
+    </pages>
+    
+</workunit>

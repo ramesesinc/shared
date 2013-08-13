@@ -1,13 +1,6 @@
 <workunit>
     <invokers>
-        <invoker type="ris:create" caption="RIS" action="create" target="window"/>
-        
-        <invoker type="ris:formActions" 
-            caption="New AF Request" action="create" target="window"/>
-            
-        <invoker type="formActions" 
-            caption="Next" action="create" target="window"/>
-            
+        <invoker folderid="/txn/treasury" action="create" caption="Request Accountable Form" target="window"/>
     </invokers>
     
     <code>

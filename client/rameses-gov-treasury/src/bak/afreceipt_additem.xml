@@ -1,0 +1,122 @@
+<workunit>
+    <invokers>
+        <invoker type="afreceipt:additem" caption="Add Receipt"  target="popup" resizable="false"/>
+    </invokers>
+    
+    <code>
+        <![CDATA[    
+
+        import com.rameses.rcp.annotations.*
+        import com.rameses.rcp.common.*
+        import com.rameses.osiris2.client.*
+        import com.rameses.osiris2.common.*
+        
+        class  IRAFAddItem  {
+        
+            @Binding
+            def binding;
+            
+            def request;
+            def receipt;
+            
+            def saveHandler;
+            def selectedItem;
+            
+            def entity = [startstub:1];
+
+            def getAfList() {
+                return request.items;
+            }
+            
+            @PropertyChangeListener
+            def listener = [
+                "selectedItem": {
+                    entity= [:];
+                },
+                "selectedItem|entity.(startseries|qty)": { o->
+                    if(entity.qty!=null && entity.startseries != null && selectedItem!=null) {
+                        entity.endseries = entity.startseries + (entity.qty * selectedItem.unitqty) - 1;
+                    }
+                },
+                "selectedItem|entity.(startstub|qty)": { o->
+                    if(entity.qty!=null && entity.startstub != null && selectedItem!=null) {
+                        entity.endstub = entity.startstub + entity.qty -1;
+                    }
+                }
+            ];
+            
+            void checkSerial() {
+                if(!(entity.startseries+"").endsWith("1")) {
+                    throw new Exception("Last number of start series must be 1");
+                }
+                if( (entity.startseries+"").length() != (entity.endseries+"").length() ) {
+                    throw new Exception("Start series must be same length as end series" );
+                }
+                if( (entity.startseries+"").length() != selectedItem.serieslength ) {
+                    throw new Exception("Series number length must be " + selectedItem.serieslength );
+                }
+                if( ( (entity.startseries-1) % selectedItem.unitqty) != 0 ) {
+                    throw new Exception("Start series must be divisible by " + selectedItem.unitqty);
+                }
+            }
+            
+            void checkNonserial() {
+            
+            }
+            
+            void addItem() {
+                if(selectedItem.aftype =="serial") {
+                    checkSerial();
+                }
+                else {
+                    checkNonserial();
+                }
+                if( (selectedItem.qtybalance - entity.qty) < 0 ) {
+                    throw new Exception("Qty must not exceed the requested qty");
+                }
+                entity.af = selectedItem.af;
+                entity.unit = selectedItem.unit;
+                selectedItem.qtyreceived += entity.qty;
+                selectedItem.qtybalance -= entity.qty;
+                receipt.items << entity;
+                saveHandler();
+                def m = [
+                    prefix: entity.prefix, suffix: entity.suffix,
+                ]
+                entity = m;
+            }
+            
+            
+            def doClose() {
+                return "_close";
+            }
+            
+            def receiptItemModel = [
+                fetchList: { o->
+                    if(!selectedItem) return [];
+                    return receipt.items.findAll { it.af == selectedItem.af };
+                },
+                onRemoveItem: { o->
+                    if(!MsgBox.confirm("You are about to remove this item. Confirm?")) {
+                        return false;
+                    }
+                    selectedItem.qtyreceived -= o.qty;
+                    selectedItem.qtybalance += o.qty;
+                    receipt.items.remove(o);
+                    binding.refresh("selectedItem.qty(received|balance)");
+                    saveHandler();
+                    return true;
+                }
+            ] as EditorListModel;
+            
+        }
+        
+        ]]>
+        
+    </code>
+    
+    <pages>
+        <page template="com.rameses.gov.treasury.af.IRAFAddItemPage"/>
+    </pages>
+    
+</workunit>

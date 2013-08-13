@@ -1,7 +1,7 @@
 <workunit>
     <invokers>
-        <invoker type="cashreceipt:select-afcontrol" caption="Select Accountable Form" target="popup"/>
-        <invoker type="cashreceipt-initial:formActions" caption="Select AF" target="popup" action="init"/>
+       <invoker type="cashreceipt-initial:formActions" 
+        caption="Assign AF" target="popup" action="init" index="100"/>
     </invokers>
     
     <code>
@@ -12,7 +12,7 @@
         import com.rameses.osiris2.common.*
         import com.rameses.enterprise.treasury.cashreceipt.*
         
-        class  SelectAFController  {
+        class  AssignAFController  {
             
             @Service("AFControlService")
             def svc;
@@ -20,14 +20,8 @@
             @Caller
             def caller
             
-            def formno;
-            def handler;
-            def selectedItem;
-        
             void init() {
-                formno = caller.formno;
-                if(!formno)
-                    throw new Exception("Please select an accountable form first");
+            
             }
             
             def listModel = [
@@ -35,30 +29,22 @@
                     return [
                         [name:'startseries', caption:'Start Series'],
                         [name:'endseries', caption:'End Series'],
-                        [name:'stub', caption:'Stub']
+                        [name:'stub', caption:'Stub'],
+                        [name:'assignee.name', caption:'Assigned To'],
                     ]
                 },
                 fetchList: { o->
-                    return svc.getOpenControlList( [af:formno] );
+                    return [];
+                    //return svc.getOpenControlList( [af:formno] );
                 }
             ] as BasicListModel;
-            
-            def doOk() {
-                svc.activateControl(selectedItem);
-                MsgBox.alert('Control activated');
-                return "_close";
-            }
-            
-            def doCancel() {
-                return "_close";
-            }
         }
         ]]>
         
     </code>
     
     <pages>
-        <page template="com.rameses.gov.treasury.cashreceipt.SelectAFPage"/>
+        <page template="com.rameses.gov.treasury.cashreceipt.AFAssigneePage"/>
     </pages>
     
 </workunit>

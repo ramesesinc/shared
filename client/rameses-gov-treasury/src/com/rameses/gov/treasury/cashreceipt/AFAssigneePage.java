@@ -14,10 +14,10 @@ import com.rameses.rcp.ui.annotations.Template;
  * @author  Elmo
  */
 @Template(OKCancelPage.class)
-public class SelectAFPage extends javax.swing.JPanel {
+public class AFAssigneePage extends javax.swing.JPanel {
     
     /** Creates new form OnlinePage */
-    public SelectAFPage() {
+    public AFAssigneePage() {
         initComponents();
     }
     

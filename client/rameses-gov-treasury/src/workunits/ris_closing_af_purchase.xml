@@ -1,0 +1,70 @@
+<!-- REQUISITION ISSUE SLIP -->
+<workunit>
+    <invokers>
+       <invoker type="ris-close:AF:PURCHASE" caption="Receive Items" action="create" 
+        visibleWhen="#{entity.state == 'APPROVED'}" />
+    </invokers>
+    
+    <code>
+        <![CDATA[    
+        import com.rameses.rcp.annotations.*
+        import com.rameses.rcp.common.*
+        import com.rameses.osiris2.client.*
+        import com.rameses.osiris2.common.*
+        import com.rameses.gov.treasury.controllers.*
+        import java.rmi.server.*;
+        
+        class  CloseAFPurchaseController  extends CRUDController {
+        
+            @Service("AFReceiptService")
+            def  service;
+        
+            String title = "Purchase Receipt";
+            def ris;
+            boolean showSelected = false;
+            
+            Map createEntity() {
+                def m = [objid:"AFRCT"+ new UID() ];
+                m.items = [];
+                m.ris = ris;
+                return m;
+            }
+            
+            def reqItemModel = [
+                fetchList: { o->
+                    return ris.items;
+                }
+            ] as BasicListModel;
+            
+            def issuedItemModel = [
+                fetchList: { o->
+                    if( showSelected ) {
+                        return entity.items.findAll{ 
+                            it.af == selectedItem?.item?.code 
+                        };
+                    }
+                    return entity.items;
+                }
+            ] as BasicListModel;
+            
+            def addItems() {
+                return InvokerUtil.lookupOpener("afreceipt:additem", [
+                    afList: ris.items,
+                    addHandler: { o->
+                        entity.items << o;
+                        issuedItemModel.reload();
+                        reqItemModel.reload();
+                    }
+                ]);
+            }
+            
+        }
+        ]]>
+        
+    </code>
+    
+    <pages>
+        <page template="com.rameses.gov.treasury.ris.AFReceiptPage"/>
+    </pages>
+    
+</workunit>

@@ -1,0 +1,91 @@
+<!-- REQUISITION ISSUE SLIP -->
+<workunit>
+    <invokers>
+       <invoker type="ris-close:AF:ISSUE" caption="Issue Items" action="init" 
+        visibleWhen="#{entity.state == 'APPROVED'}" />
+       
+    </invokers>
+    
+    <code>
+        <![CDATA[    
+        import com.rameses.rcp.annotations.*
+        import com.rameses.rcp.common.*
+        import com.rameses.osiris2.client.*
+        import com.rameses.osiris2.common.*
+        import java.rmi.server.*;
+        import com.rameses.gov.treasury.controllers.*
+        
+        class  CloseAFIssueController extends CRUDController {
+        
+            @Service("AFIssueService")
+            def  service;
+
+            @Service("AFStockQueryService")
+            def  stockService;
+            
+            String title = "Issue Accountable Forms";
+            def ris;
+            def selectedItem;
+            boolean showSelected = false;
+            
+            Map createEntity() {
+                def m = [objid:"AFISS"+ new UID() ];
+                m.items = [];
+                m.ris = ris;
+                return m;
+            }
+
+            def reqItemModel = [
+                onColumnUpdate: { item, colname->
+                   if( item.qty < item.qtyissued )
+                        throw new Exception("Qty to issue must be less than requested qty");
+                },
+                fetchList: { o->
+                    return ris.items;
+                }
+            ] as EditorListModel;
+            
+            def issuedItemModel = [
+                fetchList: { o->
+                    if( showSelected ) {
+                        return entity.items.findAll{ 
+                            it.af == selectedItem?.item?.code 
+                        };
+                    }
+                    return entity.items;
+                }
+            ] as BasicListModel;
+            
+            void loadStock() {
+                //load each item requested
+                entity.items = [];
+                ris.items.each {
+                    try {
+                        if(it.qtyissued) {
+                            def list = stockService.getAvailable( 
+                                [qty:it.qtyissued, af:it.item.code]
+                            );
+                            entity.items.addAll( list );
+                            it.remarks = 'OK';
+                        }
+                    }
+                    catch(e) {
+                        it.remarks = "Not enough stock available";
+                    }
+                }
+                issuedItemModel.reload();
+                reqItemModel.reload();
+            }
+            
+            
+            
+        }
+        ]]>
+        
+    </code>
+    
+    <pages>
+        <page template="com.rameses.gov.treasury.ris.AFIssuePage"/>
+    </pages>
+    
+</workunit>

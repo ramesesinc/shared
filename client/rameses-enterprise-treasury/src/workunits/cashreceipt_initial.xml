@@ -34,6 +34,10 @@
             
             def mode;
             
+            def getExtActions() {
+                return InvokerUtil.lookupActions( "cashreceipt-initial:formActions" );
+            }
+            
             void init() {
                 formTypes = collectionTypeSvc.getAvailableFormTypes();    
                 modeOpeners = InvokerUtil.lookupOpeners( "cashreceipt:mode", [entity:[:]]);
