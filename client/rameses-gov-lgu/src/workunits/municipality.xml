@@ -33,6 +33,12 @@
                 } 
                 return e;
             }
+            
+            void afterOpen(data) {
+                if (!data.mayor) data.mayor = [:];
+                if (!data.assessor) data.assessor = [:];
+                if (!data.treasurer) data.treasurer = [:];
+            }             
         } 
          ]]>
     </code>

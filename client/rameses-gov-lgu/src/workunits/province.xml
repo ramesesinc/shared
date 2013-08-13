@@ -20,7 +20,13 @@
             boolean isAllowCreate() { return false; } 
             boolean isAllowDelete() { return false; } 
             boolean isAllowApprove() { return false; } 
-        }        
+            
+            void afterOpen(data) {
+                if (!data.governor) data.governor = [:];
+                if (!data.assessor) data.assessor = [:];
+                if (!data.treasurer) data.treasurer = [:];
+            } 
+        }   
     ]]>
     </code>
     <pages>

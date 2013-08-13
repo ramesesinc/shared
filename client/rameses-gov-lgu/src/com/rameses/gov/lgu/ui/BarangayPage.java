@@ -32,9 +32,11 @@ public class BarangayPage extends javax.swing.JPanel {
         xFormPanel1 = new com.rameses.rcp.control.XFormPanel();
         xTextField1 = new com.rameses.rcp.control.XTextField();
         xTextField2 = new com.rameses.rcp.control.XTextField();
+        xTextField3 = new com.rameses.rcp.control.XTextField();
         xFormPanel3 = new com.rameses.rcp.control.XFormPanel();
         xTextField5 = new com.rameses.rcp.control.XTextField();
         xTextField6 = new com.rameses.rcp.control.XTextField();
+        xTextField7 = new com.rameses.rcp.control.XTextField();
 
         com.rameses.rcp.control.border.XTitledBorder xTitledBorder1 = new com.rameses.rcp.control.border.XTitledBorder();
         xTitledBorder1.setPadding(new java.awt.Insets(25, 0, 0, 0));
@@ -43,46 +45,56 @@ public class BarangayPage extends javax.swing.JPanel {
 
         xFormPanel1.setCaptionWidth(120);
         xTextField1.setCaption("Captain Name");
-        xTextField1.setName("entity.captainname");
+        xTextField1.setName("entity.captain.name");
         xTextField1.setPreferredSize(new java.awt.Dimension(0, 19));
         xTextField1.setRequired(true);
         xFormPanel1.add(xTextField1);
 
         xTextField2.setCaption("Captain Title");
-        xTextField2.setName("entity.captaintitle");
+        xTextField2.setName("entity.captain.title");
         xTextField2.setPreferredSize(new java.awt.Dimension(0, 19));
         xFormPanel1.add(xTextField2);
 
+        xTextField3.setCaption("Captain Office");
+        xTextField3.setName("entity.captain.office");
+        xTextField3.setPreferredSize(new java.awt.Dimension(0, 19));
+        xFormPanel1.add(xTextField3);
+
         xFormPanel3.setCaptionWidth(120);
         xTextField5.setCaption("Treasurer Name");
-        xTextField5.setName("entity.treasurername");
+        xTextField5.setName("entity.treasurer.name");
         xTextField5.setNullWhenEmpty(false);
         xTextField5.setPreferredSize(new java.awt.Dimension(0, 19));
         xTextField5.setRequired(true);
         xFormPanel3.add(xTextField5);
 
         xTextField6.setCaption("Treasurer Title");
-        xTextField6.setName("entity.treasurertitle");
+        xTextField6.setName("entity.treasurer.title");
         xTextField6.setPreferredSize(new java.awt.Dimension(0, 19));
         xFormPanel3.add(xTextField6);
+
+        xTextField7.setCaption("Treasurer Office");
+        xTextField7.setName("entity.treasurer.office");
+        xTextField7.setPreferredSize(new java.awt.Dimension(0, 19));
+        xFormPanel3.add(xTextField7);
 
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
+            .add(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, xFormPanel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, xFormPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE))
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, xFormPanel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, xFormPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel1Layout.createSequentialGroup()
-                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 69, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(xFormPanel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(xFormPanel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 74, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -105,8 +117,10 @@ public class BarangayPage extends javax.swing.JPanel {
     private com.rameses.rcp.control.XFormPanel xFormPanel3;
     private com.rameses.rcp.control.XTextField xTextField1;
     private com.rameses.rcp.control.XTextField xTextField2;
+    private com.rameses.rcp.control.XTextField xTextField3;
     private com.rameses.rcp.control.XTextField xTextField5;
     private com.rameses.rcp.control.XTextField xTextField6;
+    private com.rameses.rcp.control.XTextField xTextField7;
     // End of variables declaration//GEN-END:variables
     
 }

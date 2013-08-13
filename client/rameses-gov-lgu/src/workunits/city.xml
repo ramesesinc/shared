@@ -21,6 +21,12 @@
             boolean isAllowCreate() { return false; } 
             boolean isAllowDelete() { return false; } 
             boolean isAllowApprove() { return false; } 
+            
+            void afterOpen(data) {
+                if (!data.mayor) data.mayor = [:];
+                if (!data.assessor) data.assessor = [:];
+                if (!data.treasurer) data.treasurer = [:];
+            }                
         }        
         ]]>    
     </code>

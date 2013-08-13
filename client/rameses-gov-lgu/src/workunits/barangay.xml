@@ -29,6 +29,11 @@
                 } 
                 return e;
             } 
+            
+            void afterOpen(data) {
+                if (!data.captain) data.captain = [:];
+                if (!data.treasurer) data.treasurer = [:];
+            }                
         }        
     ]]>
     </code>
