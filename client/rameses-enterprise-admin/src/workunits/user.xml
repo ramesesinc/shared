@@ -1,7 +1,7 @@
 <workunit serviceName="UserAdminService" entityName="user">
     <invokers>
-        <invoker type="user:create" action="init" caption="New User" resizable="false"/>
-        <invoker type="user:open" action="open" caption="User" resizable="false"/>
+        <invoker type="user:create" action="init" caption="User Information" resizable="false"/>
+        <invoker type="user:open" action="open" caption="User Information" resizable="false"/>
         
         <!-- actions within the page -->
         <invoker type="extActions" action="changePassword"  caption="Reset Password" resizable="false"/>
