@@ -32,12 +32,15 @@ public class MunicipalityPage extends javax.swing.JPanel {
         xFormPanel1 = new com.rameses.rcp.control.XFormPanel();
         xTextField1 = new com.rameses.rcp.control.XTextField();
         xTextField2 = new com.rameses.rcp.control.XTextField();
+        xTextField7 = new com.rameses.rcp.control.XTextField();
         xFormPanel2 = new com.rameses.rcp.control.XFormPanel();
         xTextField3 = new com.rameses.rcp.control.XTextField();
         xTextField4 = new com.rameses.rcp.control.XTextField();
+        xTextField8 = new com.rameses.rcp.control.XTextField();
         xFormPanel3 = new com.rameses.rcp.control.XFormPanel();
         xTextField5 = new com.rameses.rcp.control.XTextField();
         xTextField6 = new com.rameses.rcp.control.XTextField();
+        xTextField9 = new com.rameses.rcp.control.XTextField();
 
         com.rameses.rcp.control.border.XTitledBorder xTitledBorder1 = new com.rameses.rcp.control.border.XTitledBorder();
         xTitledBorder1.setPadding(new java.awt.Insets(25, 0, 0, 0));
@@ -45,42 +48,69 @@ public class MunicipalityPage extends javax.swing.JPanel {
         jPanel1.setBorder(xTitledBorder1);
 
         xFormPanel1.setCaptionWidth(120);
+        xFormPanel1.setIndex(1);
         xTextField1.setCaption("Mayor Name");
-        xTextField1.setName("entity.mayorname");
+        xTextField1.setIndex(10);
+        xTextField1.setName("entity.mayor.name");
         xTextField1.setPreferredSize(new java.awt.Dimension(0, 19));
         xTextField1.setRequired(true);
         xFormPanel1.add(xTextField1);
 
         xTextField2.setCaption("Mayor Title");
-        xTextField2.setName("entity.mayortitle");
+        xTextField2.setIndex(11);
+        xTextField2.setName("entity.mayor.title");
         xTextField2.setPreferredSize(new java.awt.Dimension(0, 19));
         xFormPanel1.add(xTextField2);
 
+        xTextField7.setCaption("Mayor Office");
+        xTextField7.setIndex(12);
+        xTextField7.setName("entity.mayor.office");
+        xTextField7.setPreferredSize(new java.awt.Dimension(0, 19));
+        xFormPanel1.add(xTextField7);
+
         xFormPanel2.setCaptionWidth(120);
+        xFormPanel2.setIndex(2);
         xTextField3.setCaption("Assessor Name");
-        xTextField3.setName("entity.assessorname");
+        xTextField3.setIndex(13);
+        xTextField3.setName("entity.assessor.name");
         xTextField3.setNullWhenEmpty(false);
         xTextField3.setPreferredSize(new java.awt.Dimension(0, 19));
         xTextField3.setRequired(true);
         xFormPanel2.add(xTextField3);
 
         xTextField4.setCaption("Assessor Title");
-        xTextField4.setName("entity.assessortitle");
+        xTextField4.setIndex(14);
+        xTextField4.setName("entity.assessor.title");
         xTextField4.setPreferredSize(new java.awt.Dimension(0, 19));
         xFormPanel2.add(xTextField4);
 
+        xTextField8.setCaption("Assessor Office");
+        xTextField8.setIndex(15);
+        xTextField8.setName("entity.assessor.office");
+        xTextField8.setPreferredSize(new java.awt.Dimension(0, 19));
+        xFormPanel2.add(xTextField8);
+
         xFormPanel3.setCaptionWidth(120);
+        xFormPanel3.setIndex(3);
         xTextField5.setCaption("Treasurer Name");
-        xTextField5.setName("entity.treasurername");
+        xTextField5.setIndex(16);
+        xTextField5.setName("entity.treasurer.name");
         xTextField5.setNullWhenEmpty(false);
         xTextField5.setPreferredSize(new java.awt.Dimension(0, 19));
         xTextField5.setRequired(true);
         xFormPanel3.add(xTextField5);
 
         xTextField6.setCaption("Treasurer Title");
-        xTextField6.setName("entity.treasurertitle");
+        xTextField6.setIndex(17);
+        xTextField6.setName("entity.treasurer.title");
         xTextField6.setPreferredSize(new java.awt.Dimension(0, 19));
         xFormPanel3.add(xTextField6);
+
+        xTextField9.setCaption("Treasurer Office");
+        xTextField9.setIndex(18);
+        xTextField9.setName("entity.treasurer.office");
+        xTextField9.setPreferredSize(new java.awt.Dimension(0, 19));
+        xFormPanel3.add(xTextField9);
 
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -90,19 +120,19 @@ public class MunicipalityPage extends javax.swing.JPanel {
                 .addContainerGap()
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, xFormPanel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE)
-                    .add(xFormPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, xFormPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE))
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, xFormPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE)
+                    .add(xFormPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel1Layout.createSequentialGroup()
-                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 68, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(xFormPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(xFormPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 69, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(xFormPanel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .add(xFormPanel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 71, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
@@ -129,6 +159,9 @@ public class MunicipalityPage extends javax.swing.JPanel {
     private com.rameses.rcp.control.XTextField xTextField4;
     private com.rameses.rcp.control.XTextField xTextField5;
     private com.rameses.rcp.control.XTextField xTextField6;
+    private com.rameses.rcp.control.XTextField xTextField7;
+    private com.rameses.rcp.control.XTextField xTextField8;
+    private com.rameses.rcp.control.XTextField xTextField9;
     // End of variables declaration//GEN-END:variables
     
 }

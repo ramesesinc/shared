@@ -117,15 +117,25 @@ public abstract class ListController extends BasicListController implements Page
     
     public Object open() throws Exception 
     {
+        Map data = (Map) getSelectedEntity(); 
+        if (data == null) return null;
+        
         Map params = createOpenerParams();
-        params.put("entity", getSelectedEntity()); 
+        String filetype = (data.get("filetype")==null? null: data.get("filetype").toString());
+        if (filetype != null && filetype.length() > 0) { 
+            params.put("listModelHandler", new ListModelHandlerProxy()); 
+        } else {
+            filetype = getEntityName();
+        }
+        
+        params.put("entity", data); 
         if (!onOpen(params)) return null; 
         
-        Opener o = InvokerUtil.lookupOpener(getEntityName()+":open", params);
+        Opener o = InvokerUtil.lookupOpener(filetype+":open", params);
         String target = o.getTarget()+"";
         if (!target.matches("window|popup|process|_window|_popup|_process")) { 
             o.setTarget(getFormTarget()); 
-        }         
+        } 
         return o;
     }    
     
@@ -288,5 +298,30 @@ public abstract class ListController extends BasicListController implements Page
     }
     
     // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc=" ListModelHandlerProxy (class) "> 
+    
+    private class ListModelHandlerProxy implements ListModelHandler {
+        
+        ListController root = ListController.this; 
+        
+        public Object getSelectedEntity() { 
+            return root.getSelectedEntity(); 
+        }
+
+        public void addItem(Object data) { 
+            root.addItem(data); 
+        }
+
+        public void updateItem(Object data) {
+            root.updateItem(data); 
+        }
+
+        public void removeItem(Object data) {
+            root.removeItem(data); 
+        } 
+    }
+    
+    // </editor-fold>    
     
 }

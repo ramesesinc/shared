@@ -4,7 +4,7 @@
         <invoker type="user:open" action="open" caption="User Information" resizable="false"/>
         
         <!-- actions within the page -->
-        <invoker type="extActions" action="changePassword"  caption="Reset Password" resizable="false"/>
+        <invoker type="extActions" action="changePassword"  caption="Reset Password" resizable="false" visibleWhen="#{mode=='read'}"/>
    </invokers>
    
    <code>

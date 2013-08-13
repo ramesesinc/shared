@@ -14,6 +14,9 @@
         
             def node, filetype;
         
+            String createFocusComponent = 'entity.name'; 
+            String editFocusComponent = 'entity.name'; 
+            
             String serviceName = "OrgAdminService";
             String entityName = "org";
             String title = "District";
@@ -24,7 +27,7 @@
                     parentid:node.parentid, 
                     parentclass: node.orgclass
                 ];
-            }
+            }                        
         }        
          ]]>
     </code>
