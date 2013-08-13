@@ -1,0 +1,7 @@
+<workunit extends="wtemplates/ExplorerViewController.xml" 
+    serviceName="RISMgmtService" defaultFileType="ris">
+    <invokers>
+        <invoker folderid="/txnmgmt/treasury"
+            caption="Requisition Issue Slip(RIS)" index="-5" action="init"/>
+    </invokers>
+</workunit>

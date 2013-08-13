@@ -1,0 +1,97 @@
+<workunit>
+    <invokers>
+        <invoker type="afreceipt:create" caption="AF Receipt" action="create" target="window"/>
+        <invoker type="node:afreceipt:open" caption="AF Receipt" action="open" target="window"/>
+        
+        <invoker type="formActions" action="_close" caption="Back" visibleWhen="#{mode == 'create'}"/>
+        
+        <invoker type="formActions" action="save" caption="Save" 
+            visibleWhen="#{mode=='create'}"/>
+
+        <invoker type="navActions" action="addReceiptItems" caption="Add Receipt Items" 
+            visibleWhen="#{mode=='create'}"/>
+    
+        <invoker type="formActions" action="_close" caption="Close" visibleWhen="#{mode!='create'}"/>
+
+    </invokers>
+    
+    <code>
+        <![CDATA[
+        
+            import com.rameses.rcp.annotations.*
+            import com.rameses.rcp.common.*
+            import com.rameses.osiris2.client.*
+            import com.rameses.osiris2.common.*
+
+            class AFReceiptController {
+            
+                @Service("AFReceiptService")
+                def svc;
+            
+                def entity;
+                def request;
+                def mode;
+                def selectedItem;
+                boolean showselected = false;
+                String title = "AF Receipt";
+                
+                void create() {
+                    entity = [request:request];
+                    entity.state = "DRAFT";
+                    mode = "create";
+                }
+                
+                void open() {
+                    entity = svc.open( entity );
+                    request = entity.request;
+                }
+                
+                def reqItemModel = [
+                    fetchList: {o->
+                        return request.items;
+                    }
+                ] as BasicListModel;
+
+                def issuedItemModel = [
+                    fetchList: { o->
+                        if(!showselected) return entity.items;
+                        if(!selectedItem) return [];
+                        return entity.items.findAll { it.af == selectedItem.af };
+                    }
+                ] as BasicListModel;
+                
+                def addReceiptItems() {
+                    def openerName = "afreceipt:additem";
+                    if( request.txntype != "PURCHASE" ) {
+                        openerName = "afreceipt:issueitem";
+                    }
+                    return InvokerUtil.lookupOpener( 
+                        openerName, [  
+                            request:request, 
+                            receipt: entity,
+                            saveHandler: {
+                                reqItemModel.reload();
+                                issuedItemModel.reload();
+                            }
+                     ]);
+                }
+                
+                void save() {
+                    if(!entity.items) {
+                        throw new Exception("Please add at least one item");
+                    }    
+                    if( MsgBox.confirm("You are about to update the AF inventory. Proceed?")) {
+                        svc.create( entity );
+                        mode = "read";
+                    }
+                }
+                
+            }
+            
+     ]]>
+    </code>
+    
+    <pages>
+        <page template="com.rameses.gov.treasury.af.AFReceiptPage"/>
+    </pages>
+</workunit>

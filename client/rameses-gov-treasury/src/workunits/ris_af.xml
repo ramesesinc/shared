@@ -1,0 +1,95 @@
+<!--
+   RIS for Accountable Forms
+-->
+<workunit>
+    <invokers>
+        <invoker type="ris:types" caption="Accountable Form (Purchase)"/>
+    </invokers>
+    
+    <code>
+        <![CDATA[
+        
+            import com.rameses.rcp.annotations.*
+            import com.rameses.rcp.common.*
+            import com.rameses.osiris2.client.*
+            import com.rameses.osiris2.common.*
+
+            class AFRequestController {
+
+                @Service("AFRequestService")
+                def afrequestSvc;
+                
+                String title = "AF Request";
+                
+                def entity;
+                def requestTypes;
+                def requestType;
+                
+                def selectedItem;
+                boolean showall = true;
+                def mode = "create";
+                
+                def create() {
+                   entity =  [items:[]];
+                   mode = "initial";
+                   requestTypes = InvokerUtil.lookupOpeners( "afrequest:type", [entity: entity ]);
+                   return "initial";
+                }
+                
+                def start() {
+                    entity.txntype = requestType.caption; 
+                    mode = "create";
+                    return "info";
+                }
+
+                def reqItemModel = [
+                    fetchList: {o->
+                        entity.items;
+                    }
+                ] as BasicListModel;
+
+                
+                def addItem() {
+                    return InvokerUtil.lookupOpener( "afrequest:additem", 
+                        [  entity: entity,
+                           saveHandler: { 
+                              reqItemModel.reload();
+                           }
+                         ]
+                     );
+                }
+                
+                void submit() {
+                    if(MsgBox.confirm("You are about to submit this request. Proceed?")) {
+                        entity = afrequestSvc.create( entity );
+                        this.mode = "read";
+                    }
+                }
+                
+                def open() {
+                    entity = afrequestSvc.open(entity);
+                    mode = "read";
+                    return "info";
+                }
+                
+                def approve() {
+                    if(MsgBox.confirm("Approve this document?")) {
+                        afrequestSvc.approve(entity);
+                        entity.state = 'APPROVED';
+                    }
+                }
+                def createReceipt() {
+                   def opener = InvokerUtil.lookupOpener( "afreceipt:create", [request:entity] );
+                   opener.target = null;
+                   return opener;
+                }
+            }
+            
+     ]]>
+    </code>
+    
+    <pages>
+        <page name="initial" template="com.rameses.gov.treasury.af.AFRequestInitialPage"/>
+        <page name="info" template="com.rameses.gov.treasury.af.AFRequestPage"/>
+    </pages>
+</workunit>

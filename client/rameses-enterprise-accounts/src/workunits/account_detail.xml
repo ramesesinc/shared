@@ -1,8 +1,8 @@
 <workunit>
         
     <invokers>
-         <invoker type="accountgroup:open" caption="Account Detail" action="open"/>
-         <invoker type="accountgroup:create" caption="Account Detail" action="create"/>
+         <invoker type="account-detail:open" caption="Account Detail" action="open"/>
+         <invoker type="account-detail:create" caption="Account Detail" action="create"/>
    </invokers>
    
    <code>
@@ -12,15 +12,16 @@
         import com.rameses.rcp.annotations.*;
         import com.rameses.osiris2.client.*;
         
-        class AccountDetailController extends CrudFileType {
+        class AccountDetailController extends CRUDController {
         
             String serviceName = "AccountService";
             String entityName = "account";
             String title = "Account";
             String prefixId = "ACCT";
+            def node;
             
             Map createEntity() {
-                return [parentid:node.item.objid, accttype:'detail'];
+                return [parentid:node.objid,parentcode:node.code, type:'detail'];
             }
             
         }      

@@ -153,6 +153,15 @@
                         </Property>
                       </Properties>
                     </Component>
+                    <Component class="com.rameses.rcp.control.XLabel" name="xLabel5">
+                      <Properties>
+                        <Property name="caption" type="java.lang.String" value="Req Status"/>
+                        <Property name="expression" type="java.lang.String" value="#{entity.state}"/>
+                        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[0, 20]"/>
+                        </Property>
+                      </Properties>
+                    </Component>
                   </SubComponents>
                 </Container>
               </SubComponents>

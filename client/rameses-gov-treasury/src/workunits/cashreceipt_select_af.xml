@@ -14,22 +14,28 @@
         class  SelectAFController  {
             def handler;
         
+            @Service("AFControlService")
+            def svc;
+            def formno;
+            
+            def selectedItem;
+            
             def listModel = [
                 getColumnList: { o->
                     return [
-                        [name:'afno', caption:'AF No'],
                         [name:'startseries', caption:'Start Series'],
-                        [name:'stubno', caption:'Stub No'],
+                        [name:'endseries', caption:'End Series'],
+                        [name:'stub', caption:'Stub'],
                     ]
                 },
-            
                 fetchList: { o->
-                    return [];
+                    return svc.getOpenControlList( [af:formno] );
                 }
             ] as BasicListModel;
             
             def doOk() {
-                handler();
+                svc.activateControl(selectedItem);
+                MsgBox.alert('Control activated');
                 return "_close";
             }
             

@@ -9,6 +9,7 @@ package com.rameses.enterprise.treasury.master;
 
 import com.rameses.osiris2.themes.FormPage;
 import com.rameses.rcp.ui.annotations.Template;
+import com.rameses.util.TemplateProvider;
 
 /**
  *

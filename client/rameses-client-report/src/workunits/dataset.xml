@@ -1,9 +1,9 @@
 <workunit>
     <invokers>
-        <invoker type="dataset-folder:openitem" caption="View Datasets" 
+        <invoker type="node:dataset:open" caption="View Datasets" 
              index="1" action="open"/>
         
-        <invoker type="dataset-folder:additem" caption="Add Dataset" 
+        <invoker type="node:dataset:create" caption="Add Dataset" 
             index="1" action="create"/>
 
              <invoker type="formActions" caption="Show SQL" action="showSql"/>
