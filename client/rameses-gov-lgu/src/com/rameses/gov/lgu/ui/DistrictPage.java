@@ -1,5 +1,5 @@
 /*
- * BarangayPage.java
+ * DistrictPage.java
  *
  * Created on July 31, 2013, 9:19 PM
  */
@@ -17,7 +17,6 @@ import com.rameses.rcp.ui.annotations.Template;
 @Template(value=OrgPage.class, target="content")
 public class DistrictPage extends javax.swing.JPanel {
     
-    /** Creates new form BarangayPage */
     public DistrictPage() {
         initComponents();
     }
@@ -29,63 +28,21 @@ public class DistrictPage extends javax.swing.JPanel {
      */
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
     private void initComponents() {
-        jPanel1 = new javax.swing.JPanel();
-        xFormPanel1 = new com.rameses.rcp.control.XFormPanel();
-        xTextField1 = new com.rameses.rcp.control.XTextField();
-        xTextField2 = new com.rameses.rcp.control.XTextField();
-
-        com.rameses.rcp.control.border.XTitledBorder xTitledBorder1 = new com.rameses.rcp.control.border.XTitledBorder();
-        xTitledBorder1.setPadding(new java.awt.Insets(25, 0, 0, 0));
-        xTitledBorder1.setTitle("District Information");
-        jPanel1.setBorder(xTitledBorder1);
-
-        xFormPanel1.setCaptionWidth(120);
-        xTextField1.setCaption("Index No");
-        xTextField1.setName("entity.indexno");
-        xTextField1.setPreferredSize(new java.awt.Dimension(0, 19));
-        xTextField1.setRequired(true);
-        xFormPanel1.add(xTextField1);
-
-        xTextField2.setCaption("PIN");
-        xTextField2.setName("entity.pin");
-        xTextField2.setPreferredSize(new java.awt.Dimension(0, 19));
-        xTextField2.setRequired(true);
-        xFormPanel1.add(xTextField2);
-
-        org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel1Layout.createSequentialGroup()
-                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 84, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(68, Short.MAX_VALUE))
-        );
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .add(0, 175, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .add(0, 81, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
-    private com.rameses.rcp.control.XFormPanel xFormPanel1;
-    private com.rameses.rcp.control.XTextField xTextField1;
-    private com.rameses.rcp.control.XTextField xTextField2;
     // End of variables declaration//GEN-END:variables
     
 }

@@ -10,7 +10,7 @@
         import com.rameses.rcp.annotations.*;
         import com.rameses.osiris2.client.*;
 
-        public class DistrictFileTypeController extends CRUDController {
+        public class DistrictOrgController extends CRUDController {
         
             def node, filetype;
         

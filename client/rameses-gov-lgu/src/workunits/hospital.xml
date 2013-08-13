@@ -12,7 +12,7 @@
         import com.rameses.rcp.annotations.*;
         import com.rameses.osiris2.client.*;
 
-        public class HospitalController extends CRUDController {
+        public class HospitalOrgController extends CRUDController {
         
             //injected by the caller
             def node, filetype;         
