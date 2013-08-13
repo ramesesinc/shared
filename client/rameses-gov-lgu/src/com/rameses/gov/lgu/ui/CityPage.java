@@ -48,24 +48,30 @@ public class CityPage extends javax.swing.JPanel {
         jPanel1.setBorder(xTitledBorder1);
 
         xFormPanel1.setCaptionWidth(120);
+        xFormPanel1.setIndex(1);
         xTextField1.setCaption("Mayor Name");
+        xTextField1.setIndex(10);
         xTextField1.setName("entity.mayor.name");
         xTextField1.setPreferredSize(new java.awt.Dimension(0, 19));
         xTextField1.setRequired(true);
         xFormPanel1.add(xTextField1);
 
         xTextField2.setCaption("Mayor Title");
+        xTextField2.setIndex(11);
         xTextField2.setName("entity.mayor.title");
         xTextField2.setPreferredSize(new java.awt.Dimension(0, 19));
         xFormPanel1.add(xTextField2);
 
         xTextField7.setCaption("Mayor Office");
+        xTextField7.setIndex(12);
         xTextField7.setName("entity.mayor.office");
         xTextField7.setPreferredSize(new java.awt.Dimension(0, 19));
         xFormPanel1.add(xTextField7);
 
         xFormPanel2.setCaptionWidth(120);
+        xFormPanel2.setIndex(2);
         xTextField3.setCaption("Assessor Name");
+        xTextField3.setIndex(13);
         xTextField3.setName("entity.assessor.name");
         xTextField3.setNullWhenEmpty(false);
         xTextField3.setPreferredSize(new java.awt.Dimension(0, 19));
@@ -73,17 +79,21 @@ public class CityPage extends javax.swing.JPanel {
         xFormPanel2.add(xTextField3);
 
         xTextField4.setCaption("Assessor Title");
+        xTextField4.setIndex(14);
         xTextField4.setName("entity.assessor.title");
         xTextField4.setPreferredSize(new java.awt.Dimension(0, 19));
         xFormPanel2.add(xTextField4);
 
         xTextField8.setCaption("Assessor Office");
+        xTextField8.setIndex(15);
         xTextField8.setName("entity.assessor.office");
         xTextField8.setPreferredSize(new java.awt.Dimension(0, 19));
         xFormPanel2.add(xTextField8);
 
         xFormPanel3.setCaptionWidth(120);
+        xFormPanel3.setIndex(3);
         xTextField5.setCaption("Treasurer Name");
+        xTextField5.setIndex(16);
         xTextField5.setName("entity.treasurer.name");
         xTextField5.setNullWhenEmpty(false);
         xTextField5.setPreferredSize(new java.awt.Dimension(0, 19));
@@ -91,11 +101,13 @@ public class CityPage extends javax.swing.JPanel {
         xFormPanel3.add(xTextField5);
 
         xTextField6.setCaption("Treasurer Title");
+        xTextField6.setIndex(17);
         xTextField6.setName("entity.treasurer.title");
         xTextField6.setPreferredSize(new java.awt.Dimension(0, 19));
         xFormPanel3.add(xTextField6);
 
         xTextField9.setCaption("Treasurer Office");
+        xTextField9.setIndex(18);
         xTextField9.setName("entity.treasurer.office");
         xTextField9.setPreferredSize(new java.awt.Dimension(0, 19));
         xFormPanel3.add(xTextField9);

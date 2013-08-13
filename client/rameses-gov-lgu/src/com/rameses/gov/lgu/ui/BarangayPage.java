@@ -44,24 +44,30 @@ public class BarangayPage extends javax.swing.JPanel {
         jPanel1.setBorder(xTitledBorder1);
 
         xFormPanel1.setCaptionWidth(120);
+        xFormPanel1.setIndex(1);
         xTextField1.setCaption("Captain Name");
+        xTextField1.setIndex(10);
         xTextField1.setName("entity.captain.name");
         xTextField1.setPreferredSize(new java.awt.Dimension(0, 19));
         xTextField1.setRequired(true);
         xFormPanel1.add(xTextField1);
 
         xTextField2.setCaption("Captain Title");
+        xTextField2.setIndex(11);
         xTextField2.setName("entity.captain.title");
         xTextField2.setPreferredSize(new java.awt.Dimension(0, 19));
         xFormPanel1.add(xTextField2);
 
         xTextField3.setCaption("Captain Office");
+        xTextField3.setIndex(12);
         xTextField3.setName("entity.captain.office");
         xTextField3.setPreferredSize(new java.awt.Dimension(0, 19));
         xFormPanel1.add(xTextField3);
 
         xFormPanel3.setCaptionWidth(120);
+        xFormPanel3.setIndex(2);
         xTextField5.setCaption("Treasurer Name");
+        xTextField5.setIndex(13);
         xTextField5.setName("entity.treasurer.name");
         xTextField5.setNullWhenEmpty(false);
         xTextField5.setPreferredSize(new java.awt.Dimension(0, 19));
@@ -69,11 +75,13 @@ public class BarangayPage extends javax.swing.JPanel {
         xFormPanel3.add(xTextField5);
 
         xTextField6.setCaption("Treasurer Title");
+        xTextField6.setIndex(14);
         xTextField6.setName("entity.treasurer.title");
         xTextField6.setPreferredSize(new java.awt.Dimension(0, 19));
         xFormPanel3.add(xTextField6);
 
         xTextField7.setCaption("Treasurer Office");
+        xTextField7.setIndex(15);
         xTextField7.setName("entity.treasurer.office");
         xTextField7.setPreferredSize(new java.awt.Dimension(0, 19));
         xFormPanel3.add(xTextField7);

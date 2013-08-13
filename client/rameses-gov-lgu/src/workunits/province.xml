@@ -13,6 +13,9 @@
             
             def node, filetype;
             
+            String createFocusComponent = 'entity.name'; 
+            String editFocusComponent = 'entity.name'; 
+            
             String serviceName = "OrgAdminService";
             String entityName = "org";
             String title = "Province";
@@ -22,10 +25,14 @@
             boolean isAllowApprove() { return false; } 
             
             void afterOpen(data) {
+                resolveData(data);
+            } 
+            
+            void resolveData(data) {
                 if (!data.governor) data.governor = [:];
                 if (!data.assessor) data.assessor = [:];
-                if (!data.treasurer) data.treasurer = [:];
-            } 
+                if (!data.treasurer) data.treasurer = [:];            
+            }
         }   
     ]]>
     </code>

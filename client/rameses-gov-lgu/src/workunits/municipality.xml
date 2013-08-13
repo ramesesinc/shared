@@ -18,6 +18,9 @@
             //injected by the caller
             def node, filetype; 
             
+            String createFocusComponent = 'entity.name'; 
+            String editFocusComponent = 'entity.name'; 
+            
             String serviceName = "OrgAdminService";
             String entityName = "org";
             String title = "Municipality";
@@ -31,14 +34,19 @@
                 if ("${node.parentid}-${node.name}".toString() == node.objid) { 
                     e.parentid = node.parentid; 
                 } 
+                resolveData(e);
                 return e;
             }
             
             void afterOpen(data) {
+                resolveData(data);
+            }    
+            
+            void resolveData(data) {
                 if (!data.mayor) data.mayor = [:];
                 if (!data.assessor) data.assessor = [:];
-                if (!data.treasurer) data.treasurer = [:];
-            }             
+                if (!data.treasurer) data.treasurer = [:];            
+            } 
         } 
          ]]>
     </code>
