@@ -56,12 +56,14 @@ public class OrgPage extends javax.swing.JPanel {
         xFormPanel1.add(xTextField1);
 
         xTextField2.setCaption("Index No.");
+        xTextField2.setIndex(1);
         xTextField2.setName("entity.indexno");
         xTextField2.setPreferredSize(new java.awt.Dimension(0, 19));
         xTextField2.setRequired(true);
         xFormPanel1.add(xTextField2);
 
         xTextField3.setCaption("PIN");
+        xTextField3.setIndex(2);
         xTextField3.setName("entity.pin");
         xTextField3.setPreferredSize(new java.awt.Dimension(0, 19));
         xTextField3.setRequired(true);
