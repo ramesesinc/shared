@@ -1,8 +1,14 @@
 <workunit>
     <invokers>
         <invoker type="afrequest:create" caption="AF Requisition" action="create" target="window"/>
+        
+        <invoker type="afrequest:formActions" 
+            caption="New AF Request" action="create" target="window"/>
+        
+        
         <invoker folderid="/txn/treasury" action="create" caption="Request Accountable Form" target="window"/>
 
+        <invoker type="node:afrequest:create" caption="AF Requisition" action="create" target="window"/>
         <invoker type="node:afrequest:open" caption="AF Requisition" action="open" target="window"/>
         
         <invoker type="formActions" action="start" caption="Next" visibleWhen="#{mode=='initial'}"/>
@@ -10,8 +16,9 @@
         
         <invoker type="navActions" action="addItem" caption="Add Receipt" visibleWhen="#{mode=='create'}"/>
         
-        <invoker type="formActions" action="_close" caption="Close" visibleWhen="#{mode=='read'}"/>
-        <invoker type="formActions" action="approve" caption="Approve" visibleWhen="#{mode=='read'}"/>
+        <invoker type="formActions" action="_close" caption="Close" visibleWhen="#{!!(entity.state)}"/>
+        <invoker type="formActions" action="approve" caption="Approve" visibleWhen="#{entity.state=='DRAFT'}"/>
+        <invoker type="formActions" action="createReceipt" caption="Create Receipt" visibleWhen="#{entity.state=='APPROVED'}"/>
 
     </invokers>
     
@@ -82,7 +89,15 @@
                 }
                 
                 def approve() {
-                    MsgBox.alert( "approve");
+                    if(MsgBox.confirm("Approve this document?")) {
+                        afrequestSvc.approve(entity);
+                        entity.state = 'APPROVED';
+                    }
+                }
+                def createReceipt() {
+                   def opener = InvokerUtil.lookupOpener( "afreceipt:create", [request:entity] );
+                   opener.target = null;
+                   return opener;
                 }
             }
             

@@ -1,0 +1,38 @@
+<workunit>
+    <invokers>
+        <invoker type="ris:create" caption="RIS" action="create" target="window"/>
+        
+        <invoker type="ris:formActions" 
+            caption="New AF Request" action="create" target="window"/>
+            
+        <invoker type="formActions" 
+            caption="Next" action="create" target="window"/>
+            
+    </invokers>
+    
+    <code>
+        <![CDATA[
+        
+            import com.rameses.rcp.annotations.*
+            import com.rameses.rcp.common.*
+            import com.rameses.osiris2.client.*
+            import com.rameses.osiris2.common.*
+
+            class RISController {
+                
+                String title = "Requisition Issue Slip";
+                def risTypes;  
+                def risType;
+            
+                void create() {
+                    risTypes = InvokerUtil.lookupOpeners( "ris:types", [:] );
+                }
+            }
+            
+     ]]>
+    </code>
+    
+    <pages>
+        <page template="com.rameses.gov.treasury.ris.RISInitialPage"/>
+    </pages>
+</workunit>

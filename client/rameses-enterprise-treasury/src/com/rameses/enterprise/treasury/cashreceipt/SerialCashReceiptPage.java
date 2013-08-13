@@ -35,9 +35,9 @@ public class SerialCashReceiptPage extends javax.swing.JPanel {
         xTextField2 = new com.rameses.rcp.control.XTextField();
         xTextField3 = new com.rameses.rcp.control.XTextField();
         xFormPanel2 = new com.rameses.rcp.control.XFormPanel();
-        xLabel2 = new com.rameses.rcp.control.XLabel();
-        xLabel3 = new com.rameses.rcp.control.XLabel();
-        xLabel8 = new com.rameses.rcp.control.XLabel();
+        xTextField1 = new com.rameses.rcp.control.XTextField();
+        xTextField4 = new com.rameses.rcp.control.XTextField();
+        xDateField1 = new com.rameses.rcp.control.XDateField();
         xLabel1 = new com.rameses.rcp.control.XLabel();
         xLabel4 = new com.rameses.rcp.control.XLabel();
         jPanel3 = new javax.swing.JPanel();
@@ -95,20 +95,23 @@ public class SerialCashReceiptPage extends javax.swing.JPanel {
         xTextField3.setRequired(true);
         xFormPanel1.add(xTextField3);
 
-        xLabel2.setCaption("Form No");
-        xLabel2.setExpression("#{entity.formno}");
-        xLabel2.setPreferredSize(new java.awt.Dimension(0, 20));
-        xFormPanel2.add(xLabel2);
+        xTextField1.setCaption("Form No");
+        xTextField1.setEnabled(false);
+        xTextField1.setName("entity.formno");
+        xTextField1.setPreferredSize(new java.awt.Dimension(0, 19));
+        xFormPanel2.add(xTextField1);
 
-        xLabel3.setCaption("Stub No");
-        xLabel3.setExpression("#{entity.stubno}");
-        xLabel3.setPreferredSize(new java.awt.Dimension(0, 20));
-        xFormPanel2.add(xLabel3);
+        xTextField4.setCaption("Stub");
+        xTextField4.setEnabled(false);
+        xTextField4.setName("entity.stub");
+        xTextField4.setPreferredSize(new java.awt.Dimension(0, 19));
+        xFormPanel2.add(xTextField4);
 
-        xLabel8.setCaption("Txn Date");
-        xLabel8.setExpression("#{entity.receiptdate}");
-        xLabel8.setPreferredSize(new java.awt.Dimension(0, 20));
-        xFormPanel2.add(xLabel8);
+        xDateField1.setCaption("Receipt Date");
+        xDateField1.setEnabled(false);
+        xDateField1.setName("entity.receiptdate");
+        xDateField1.setPreferredSize(new java.awt.Dimension(0, 19));
+        xFormPanel2.add(xDateField1);
 
         xLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         xLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
@@ -234,7 +237,7 @@ public class SerialCashReceiptPage extends javax.swing.JPanel {
         xDecimalField6.setDepends(new String[] {"cash"});
         xDecimalField6.setEnabled(false);
         xDecimalField6.setFont(new java.awt.Font("Tahoma", 0, 14));
-        xDecimalField6.setName("entity.change");
+        xDecimalField6.setName("entity.cashchange");
 
         xDecimalField7.setEditable(false);
         xDecimalField7.setBackground(new java.awt.Color(204, 204, 255));
@@ -371,14 +374,14 @@ public class SerialCashReceiptPage extends javax.swing.JPanel {
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 198, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(283, 283, 283))
+                .add(307, 307, 307))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(jPanel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(layout.createSequentialGroup()
+            .add(layout.createSequentialGroup()
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
                         .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 97, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(contentPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
@@ -408,6 +411,7 @@ public class SerialCashReceiptPage extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private com.rameses.rcp.control.XButton xButton3;
     private com.rameses.rcp.control.XDataTable xDataTable1;
+    private com.rameses.rcp.control.XDateField xDateField1;
     private com.rameses.rcp.control.XDecimalField xDecimalField2;
     private com.rameses.rcp.control.XDecimalField xDecimalField3;
     private com.rameses.rcp.control.XDecimalField xDecimalField4;
@@ -417,14 +421,13 @@ public class SerialCashReceiptPage extends javax.swing.JPanel {
     private com.rameses.rcp.control.XFormPanel xFormPanel1;
     private com.rameses.rcp.control.XFormPanel xFormPanel2;
     private com.rameses.rcp.control.XLabel xLabel1;
-    private com.rameses.rcp.control.XLabel xLabel2;
-    private com.rameses.rcp.control.XLabel xLabel3;
     private com.rameses.rcp.control.XLabel xLabel4;
-    private com.rameses.rcp.control.XLabel xLabel8;
     private com.rameses.rcp.control.XLookupField xLookupField1;
     private com.rameses.rcp.control.XTextArea xTextArea1;
+    private com.rameses.rcp.control.XTextField xTextField1;
     private com.rameses.rcp.control.XTextField xTextField2;
     private com.rameses.rcp.control.XTextField xTextField3;
+    private com.rameses.rcp.control.XTextField xTextField4;
     // End of variables declaration//GEN-END:variables
     
 }

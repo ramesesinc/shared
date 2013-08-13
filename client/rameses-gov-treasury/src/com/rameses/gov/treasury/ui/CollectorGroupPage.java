@@ -19,6 +19,7 @@ public class CollectorGroupPage extends javax.swing.JPanel {
     /** Creates new form CollectionGroupPage */
     public CollectorGroupPage() {
         initComponents();
+        
     }
     
     /** This method is called from within the constructor to

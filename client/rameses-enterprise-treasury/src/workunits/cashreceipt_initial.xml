@@ -13,7 +13,7 @@
         import com.rameses.osiris2.client.*;
         import com.rameses.util.*;
         
-        class CashReceiptController  {
+        class CashReceiptInitialController  {
         
             @Binding
             def binding;
@@ -57,7 +57,7 @@
                 }
                 catch(Warning w) {
                     String m = "cashreceipt:"+w.message;
-                    return InvokerUtil.lookupOpener( m, [handler: {}] );
+                    return InvokerUtil.lookupOpener( m, [formno: formno ] );
                 }
                 catch(e) {
                     throw e;

@@ -30,10 +30,54 @@ public class AFRequestSaleType extends javax.swing.JPanel {
      */
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
     private void initComponents() {
-        jLabel1 = new javax.swing.JLabel();
+        formPanel4 = new com.rameses.rcp.util.FormPanel();
+        xSeparator1 = new com.rameses.rcp.control.XSeparator();
+        formPanel6 = new com.rameses.rcp.util.FormPanel();
+        xTextField10 = new com.rameses.rcp.control.XTextField();
+        xTextField11 = new com.rameses.rcp.control.XTextField();
 
         setPreferredSize(new java.awt.Dimension(337, 385));
-        jLabel1.setText("AF Receipt Sale Type");
+
+        formPanel4.setAddCaptionColon(false);
+        formPanel4.setCaptionBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        formPanel4.setCaptionFont(new java.awt.Font("Arial", 1, 12));
+        formPanel4.setPadding(new java.awt.Insets(5, 0, 0, 0));
+        formPanel4.setPreferredSize(new java.awt.Dimension(583, 177));
+        formPanel4.setShowCaption(false);
+        xSeparator1.setCaption("Sale Information");
+        xSeparator1.setCaptionWidth(120);
+        xSeparator1.setPreferredSize(new java.awt.Dimension(0, 20));
+        xSeparator1.setShowCaption(true);
+        org.jdesktop.layout.GroupLayout xSeparator1Layout = new org.jdesktop.layout.GroupLayout(xSeparator1);
+        xSeparator1.setLayout(xSeparator1Layout);
+        xSeparator1Layout.setHorizontalGroup(
+            xSeparator1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 411, Short.MAX_VALUE)
+        );
+        xSeparator1Layout.setVerticalGroup(
+            xSeparator1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 20, Short.MAX_VALUE)
+        );
+        formPanel4.add(xSeparator1);
+
+        formPanel6.setCaptionFont(new java.awt.Font("Arial", 0, 12));
+        formPanel6.setCaptionWidth(150);
+        formPanel6.setPadding(new java.awt.Insets(0, 20, 5, 5));
+        formPanel6.setPreferredSize(new java.awt.Dimension(0, 150));
+        formPanel6.setShowCaption(false);
+        xTextField10.setCaption("Sold To");
+        xTextField10.setFont(new java.awt.Font("Arial", 0, 12));
+        xTextField10.setName("entity.soldto");
+        xTextField10.setPreferredSize(new java.awt.Dimension(0, 19));
+        formPanel6.add(xTextField10);
+
+        xTextField11.setCaption("Requested By");
+        xTextField11.setFont(new java.awt.Font("Arial", 0, 12));
+        xTextField11.setName("entity.requester");
+        xTextField11.setPreferredSize(new java.awt.Dimension(0, 19));
+        formPanel6.add(xTextField11);
+
+        formPanel4.add(formPanel6);
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
@@ -41,21 +85,25 @@ public class AFRequestSaleType extends javax.swing.JPanel {
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jLabel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 171, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(156, Short.MAX_VALUE))
+                .add(formPanel4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jLabel1)
-                .addContainerGap(83, Short.MAX_VALUE))
+                .add(formPanel4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 116, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(72, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private com.rameses.rcp.util.FormPanel formPanel4;
+    private com.rameses.rcp.util.FormPanel formPanel6;
+    private com.rameses.rcp.control.XSeparator xSeparator1;
+    private com.rameses.rcp.control.XTextField xTextField10;
+    private com.rameses.rcp.control.XTextField xTextField11;
     // End of variables declaration//GEN-END:variables
     
 }

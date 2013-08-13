@@ -35,8 +35,8 @@ public class CashReceiptCompletedPage extends javax.swing.JPanel {
         xLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         xLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         xLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        xLabel1.setExpression("#{receiptInfo}");
         xLabel1.setOpaque(true);
+        xLabel1.setText("<html>#{entity}</html>");
         xLabel1.setUseHtml(true);
         add(xLabel1, java.awt.BorderLayout.CENTER);
 

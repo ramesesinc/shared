@@ -35,8 +35,8 @@ public class MiscCashReceiptPage extends javax.swing.JPanel {
         xTitledBorder1.setTitle("Account details");
         setBorder(xTitledBorder1);
         xDataTable1.setColumns(new com.rameses.rcp.common.Column[]{
-            new com.rameses.rcp.common.Column("code", "Account Code", 120, 120, 120, true, true, true, true, null, new com.rameses.rcp.common.LookupColumnHandler(null, "lookupItems")),
-            new com.rameses.rcp.common.Column("title", "Account Title", 100, 0, 0, true, true, true, false, null, new com.rameses.rcp.common.TextColumnHandler()),
+            new com.rameses.rcp.common.Column("item.code", "Account Code", 120, 120, 120, true, true, true, true, null, new com.rameses.rcp.common.LookupColumnHandler(null, "lookupItems")),
+            new com.rameses.rcp.common.Column("item.title", "Account Title", 100, 0, 0, true, true, true, false, null, new com.rameses.rcp.common.TextColumnHandler()),
             new com.rameses.rcp.common.Column("amount", "Amount", 120, 120, 120, true, true, true, true, null, new com.rameses.rcp.common.DecimalColumnHandler("#,##0.00", -1.0, -1.0, false))
         });
         xDataTable1.setHandler("itemListModel");
