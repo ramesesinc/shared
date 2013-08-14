@@ -1,0 +1,35 @@
+<workunit extends="wtemplates/ListController.xml">
+    
+    <invokers>
+        <invoker folderid="/explorer/txnmgmt/bpls/business"
+            caption="Active Business" target="window" index="0"/>
+    </invokers>
+    
+    <code>
+    import com.rameses.rcp.annotations.*
+    import com.rameses.rcp.common.*
+    import com.rameses.osiris2.client.*
+    import com.rameses.osiris2.common.*;
+    
+    class ApplicationList extends BasicListController {
+    
+        @Service("BPApplicationService")
+        def appSvc;
+    
+        public Opener open() {
+            return InvokerUtil.lookupOpener( "businessapplication:renew", [mode:"renew", entity: selectedEntity] );
+        }
+        
+        public Column[] getColumns() {
+            return [
+                new Column( name:'appno', caption:"App No" ),
+                new Column( name:'title', caption:"Title" ),
+            ] as Column[];
+        }
+        public List fetchList(Map o) {
+            return appSvc.getList([:]);
+        }
+    }
+    </code>
+    
+</workunit>

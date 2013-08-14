@@ -1,7 +1,7 @@
-"selectedForm" [mode == 'read'] {
+"selectedForm|selectedHandler" [mode == 'read'] {
     enabled:false;
 }
 
-"selectedForm" [mode != 'read'] {
+"selectedForm|selectedHandler" [mode != 'read'] {
     enabled:true;
 }

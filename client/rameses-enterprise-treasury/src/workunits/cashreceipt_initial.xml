@@ -1,7 +1,7 @@
 <workunit>
     
    <invokers>
-         <invoker folderid="/txn/treasury" caption="Cash Receipt" action="init" />
+         <invoker folderid="/explorer/txn/treasury" caption="Cash Receipt" action="init" index="3"/>
          <invoker type="formActions" caption="Next" action="runProcess"/>
    </invokers>
    

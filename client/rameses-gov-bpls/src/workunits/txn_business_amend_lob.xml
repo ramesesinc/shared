@@ -1,0 +1,43 @@
+<workunit>
+    
+    <invokers>
+        <invoker folderid="/explorer/txn/bpls" 
+            caption="Amend Line of Business" action="start" target="window" index="4"/>
+    </invokers>
+    
+    <code>
+        <![CDATA[    
+        import com.rameses.rcp.annotations.*
+        import com.rameses.rcp.common.*
+        import com.rameses.osiris2.client.*
+        import com.rameses.osiris2.common.*
+        import etracs2.bpls.application.*;
+        
+        class AmendLobController extends AbstractSearchBplsApplication {
+            
+        }
+        ]]>
+        
+    </code>
+    
+    <pageflow>
+        <start>
+            <transition cond="#{application==null}" to="search"/>
+            <transition cond="#{application!=null}" to="view"/>
+        </start>
+        <page name="search" title="Search Business Application">
+            <transition to="end" caption="Close"/>
+            <transition to="view-lob" caption="Next" immediate="true"/>
+        </page>
+        <page name="view-lob" title="Add or Retire Line of Business">
+            <transition to="end" caption="Close"/>
+        </page>
+        <end/>
+    </pageflow>
+    
+    <pages>
+        <page name="search" template="etracs2.bpls.application.SearchApplicationPage" />
+        <page name="view-lob" template="etracs2.bpls.application.SpecifyLobPage" />
+    </pages>
+    
+</workunit>

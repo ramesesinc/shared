@@ -10,7 +10,9 @@ public abstract class AbstractTreeExplorer {
     def selection;
     def rootNode;
     def defaultIcon = 'images/doc-view16.png';
-                
+
+    boolean rootVisible = true;
+
     public abstract void init();
 
     void doInit( root ) { 
@@ -42,7 +44,7 @@ public abstract class AbstractTreeExplorer {
 
     def tree = [
         isAllowOpenOnSingleClick: { return false; },  
-    
+        isRootVisible: { return rootVisible },
         getRootNode : { return rootNode; },
 
         getNodeList: {node-> 

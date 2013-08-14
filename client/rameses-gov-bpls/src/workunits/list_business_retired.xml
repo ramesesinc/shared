@@ -1,0 +1,35 @@
+<workunit extends="wtemplates/ListController.xml">
+    
+    <invokers>
+        <invoker folderid="/explorer/txnmgmt/bpls/business"
+            caption="Retired" target="window" index="1"/>
+    </invokers>
+    
+    <code>
+    import com.rameses.rcp.annotations.*
+    import com.rameses.rcp.common.*
+    import com.rameses.osiris2.client.*
+    import com.rameses.osiris2.common.*;
+    
+    class ApplicationList extends BasicListController {
+    
+        public Opener open() {
+            return InvokerUtil.lookupOpener( "businessapplication:renew", [mode:"renew", entity: selectedEntity] );
+        }
+        
+        public Column[] getColumns() {
+            return [
+                new Column( name:'appno', caption:"App No" ),
+                new Column( name:'title', caption:"Title" ),
+            ] as Column[];
+        }
+        public List fetchList(Map o) {
+            return [ 
+                [appno: "0001", title: "BP 0001"],
+                [appno: "0002", title: "BP 0002"],
+            ];
+        }
+    }
+    </code>
+    
+</workunit>

@@ -1,7 +1,0 @@
-<workunit extends="wtemplates/FolderExplorerView.xml" root="/setting">
-    <invokers>
-        <invoker folderid="/menu/mgmt" caption="Settings" index="5" 
-            permission="system" windowmode="explorer" action="init"/>
-            
-    </invokers>
-</workunit>

@@ -20,25 +20,32 @@
             String entityName = "collectiontype";
             String prefixId = "COLLTYPE";
             def selectedForm;
+            def selectedHandler;
+            def handlers;
             
-           
             @PropertyChangeListener
             def listener = [
                 "selectedForm" : { o->
                     entity.formno = o.formno;
+                    buildHandlers();
+                },
+                "selectedHandler" : { o->
+                    entity.handler = o.name;
                 }
             ]
             
             void afterOpen( def o ) {
                 selectedForm = formTypes.find{ it.formno == o.formno };
+                buildHandlers();
+                selectedHandler = handlers.find{ it.name == entity.handler };
             }
             
             def getFormTypes() {
                 return service.getFormTypes();
             }
             
-            def getHandlers() {
-                return InvokerUtil.lookupOpeners( "collectiontype:handler" ).collect {
+            void buildHandlers() {
+                handlers = InvokerUtil.lookupOpeners( "collectiontype:handler" ).collect {
                     [ 
                         name:it.properties.name,  
                         caption: it.caption,
@@ -54,7 +61,8 @@
                     }
                     return false;
                 };
-            }   
+            }
+            
         }      
        ]]>
    </code>

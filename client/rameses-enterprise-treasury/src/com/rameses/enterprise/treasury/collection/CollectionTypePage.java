@@ -34,9 +34,9 @@ public class CollectionTypePage extends javax.swing.JPanel {
         xTextField1 = new com.rameses.rcp.control.XTextField();
         xTextField2 = new com.rameses.rcp.control.XTextField();
         xComboBox1 = new com.rameses.rcp.control.XComboBox();
-        xComboBox2 = new com.rameses.rcp.control.XComboBox();
+        xComboBox3 = new com.rameses.rcp.control.XComboBox();
 
-        setPreferredSize(new java.awt.Dimension(542, 174));
+        setPreferredSize(new java.awt.Dimension(469, 231));
 
         xFormPanel1.setCaptionWidth(150);
         xTextField1.setCaption("Name");
@@ -60,16 +60,15 @@ public class CollectionTypePage extends javax.swing.JPanel {
         xComboBox1.setRequired(true);
         xFormPanel1.add(xComboBox1);
 
-        xComboBox2.setCaption("Handler");
-        xComboBox2.setDepends(new String[] {"selectedForm"});
-        xComboBox2.setDynamic(true);
-        xComboBox2.setExpression("#{item.caption}");
-        xComboBox2.setItemKey("name");
-        xComboBox2.setItems("handlers");
-        xComboBox2.setName("entity.handler");
-        xComboBox2.setPreferredSize(new java.awt.Dimension(0, 22));
-        xComboBox2.setRequired(true);
-        xFormPanel1.add(xComboBox2);
+        xComboBox3.setCaption("Handler");
+        xComboBox3.setDepends(new String[] {"selectedForm"});
+        xComboBox3.setDynamic(true);
+        xComboBox3.setExpression("#{item.caption}");
+        xComboBox3.setItems("handlers");
+        xComboBox3.setName("selectedHandler");
+        xComboBox3.setPreferredSize(new java.awt.Dimension(0, 22));
+        xComboBox3.setRequired(true);
+        xFormPanel1.add(xComboBox3);
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
@@ -78,21 +77,21 @@ public class CollectionTypePage extends javax.swing.JPanel {
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 432, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 121, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(99, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.rameses.rcp.control.XComboBox xComboBox1;
-    private com.rameses.rcp.control.XComboBox xComboBox2;
+    private com.rameses.rcp.control.XComboBox xComboBox3;
     private com.rameses.rcp.control.XFormPanel xFormPanel1;
     private com.rameses.rcp.control.XTextField xTextField1;
     private com.rameses.rcp.control.XTextField xTextField2;

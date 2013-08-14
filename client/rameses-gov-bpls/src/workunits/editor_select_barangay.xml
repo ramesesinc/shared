@@ -1,0 +1,47 @@
+<workunit>
+    <invokers>
+        <invoker type="selectbarangay:actionparam-editor" action="init"/>
+    </invokers>
+    <code>
+        <![CDATA[    
+
+        import com.rameses.rcp.annotations.*
+        import com.rameses.rcp.common.*
+        import com.rameses.osiris2.client.*
+        import com.rameses.osiris2.common.*
+        
+        class SelectBarangayEditor  {
+        
+            @Binding
+            def binding;
+        
+            def actionParam;
+            def ruleEntity;
+            
+            def value;
+            
+            public void init() {
+                value = actionParam.name;
+            }
+            
+            public def edit() {
+               return InvokerUtil.lookupOpener( "barangay:lookup", 
+                  [onselect: { o-> actionParam.putAll(o); value=o.name; binding.refresh(); }]
+               );
+            }
+            
+            def reset() {
+                value = null;
+            }
+            
+        }
+        
+        ]]>
+        
+    </code>
+    
+    <pages>
+        <page name="default" template="com.rameses.osiris2.themes.EditorPanel"/>
+    </pages>
+    
+</workunit>

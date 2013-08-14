@@ -7,9 +7,10 @@
         <folder id="help" caption="Help" index="9999"/>
     </folder>
     
-    <folder id="master" caption="Master Management"/>
-    <folder id="txn" caption="Transactions"/>
-    <folder id="txnmgmt" caption="Transaction Management"/>
-    <folder id="setting" caption="Settings"/>
-    
+    <folder id="explorer" caption="Explorer">
+        <folder id="txn" caption="Transactions"/>
+        <folder id="master" caption="Master Data"/>
+        <folder id="setting" caption="Settings"/>
+    </folder>    
+        
 </folders>

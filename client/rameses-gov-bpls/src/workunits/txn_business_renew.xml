@@ -1,0 +1,118 @@
+<workunit>
+    
+    <invokers>
+        <invoker folderid="/explorer/txn/bpls" 
+            caption="Renew Application" action="start" target="window" index="1"/>
+        <invoker type="bplapplication:renew" caption="Renew Application" action="startRenew"/> 
+    </invokers>
+    
+    <code>
+        <![CDATA[    
+        import com.rameses.rcp.annotations.*
+        import com.rameses.rcp.common.*
+        import com.rameses.osiris2.client.*
+        import com.rameses.osiris2.common.*
+        import etracs2.bpls.application.*;
+        
+        class RenewBusinessApplicationController extends AbstractSearchBplsApplication {
+
+            def unpaidStack;
+            
+            //this is sample implementation
+            public def findApplication(def o) {
+                def app = [lobs:[], infos:[] ];
+                app.txntype = "RENEW";
+                app.controlno = "BP001";
+                app.txnmode = "ONLINE";
+                app.iyear = 2013;
+                app.docstate = "DRAFT";
+                app.txndate = "2013-01-01";
+                app.permitee = [:];
+                app.permitee.name ="NAZARENO, ELMO";
+                app.permitee.address ="CEBU CITY";
+                app.tradename ="RAMESES SYSTEMS INC.";
+                app.businessaddress = "CAPITOL, CEBU CITY";
+                app.lobs << [objid:'L1', name:'SARI-SARI STORE', assessmenttype:"NEW"];
+                app.lobs <<[objid:'L2', name:'BAKESHOP', assessmenttype:"NEW"];
+                app.infos << [type:'decimal',name:'POLICE FEE',level:0, value:150];
+                app.infos << [lobid: 'L1', type:'decimal',name:'CAPITAL',level:0, value:25000];
+                app.infos << [lobid: 'L2', type:'integer',name:'NUM_EMPLOYEES',level:0,value:3];
+                
+                return app;
+            }
+
+            def startRenew() {
+                application = findApplication(application);
+                return super.start();
+            }
+            
+            void initInfos() {
+                editableInfos.clear();
+                editableInfos.addAll( application.infos );
+                application.lobs.findAll{ it.assessmenttype == 'NEW' }.each {
+                    editableInfos << [lobid: it.objid, type:'decimal',caption:'CAPITAL',level:0];
+                    editableInfos << [lobid: it.objid, type:'integer',caption:'NUM_EMPLOYEES',level:0];
+                }
+            }
+            
+            void initUnpaid() {
+                unpaidStack = new Stack();
+                unpaidStack.push( "bpls:updategross" );
+                unpaidStack.push( "bpls:laterenewal" );
+                unpaidStack.push( "bpls:updategross" );
+            }
+           
+            boolean getHasUnpaid() {
+                return !unpaidStack.empty();
+            }
+            
+            def getOpener() {
+                String handler = unpaidStack.pop();
+                return InvokerUtil.lookupOpener(handler ,[
+                    application: application
+                ]);
+            }
+            
+        }
+        ]]>
+    </code>    
+    
+    <pageflow>
+        <start>
+            <transition cond="#{application==null}" to="search"/>
+            <transition cond="#{application!=null}" to="view"/>
+        </start>
+        <page name="search" title="Search Business Application for Renewal">
+            <transition to="end" caption="Close"/>
+            <transition to="process-unpaid" caption="Next" immediate="false" action="initUnpaid" />
+        </page>
+        
+        <process name="process-unpaid">
+            <transition to="handle-unpaid" cond="#{hasUnpaid == true}"/>
+            <transition to="view" cond="#{hasUnpaid == false}"/>
+        </process>
+        
+        <subprocess name="handle-unpaid" handler="#{opener}">
+            <transition to="search" name="reset"  />
+            <transition to="process-unpaid"  name="proceed"/>
+        </subprocess>
+
+        <page name="view" title="Specify Line of Business Info">
+            <transition to="end" caption="Close"/>
+            <transition to="info" caption="Next"  action="initInfos" />
+        </page>
+        
+        <page name="info" title="Specify Business Details">
+            <transition to="view" caption="Back"/>
+        </page>    
+        
+        <end/>
+    </pageflow>
+    
+    <pages>
+        <page name="search" template="etracs2.bpls.application.SearchApplicationPage" />
+        <page name="view" template="etracs2.bpls.application.SpecifyLobPage" />
+        <page name="info" template="etracs2.bpls.application.SpecifyInfoPage" />
+    </pages>
+    
+</workunit>
