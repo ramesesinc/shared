@@ -69,6 +69,10 @@
                 usergroupSvc.updatePermission([objid: entity.objid, exclude: entity.exclude]); 
                 return '_close';
             } 
+            
+            def doCancel() {
+                return '_close';
+            }
         }
         
        ]]>

@@ -48,6 +48,7 @@ public abstract class LookupController extends LookupModel
     public void setTag(String tag) { this.tag = tag; }
     
     public String getServiceName() { return null; }
+    public String getEntityName() { return null; } 
     
     public Column[] getColumns() { return null; }
 

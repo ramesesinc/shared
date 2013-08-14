@@ -6,14 +6,14 @@
 
 package com.rameses.admin.usergroup;
 
-import com.rameses.osiris2.themes.FormPage;
+import com.rameses.osiris2.themes.FormSelectionPage;
 import com.rameses.rcp.ui.annotations.Template;
 
 /**
  *
  * @author  Elmo
  */
-@Template(FormPage.class)
+@Template(FormSelectionPage.class)
 public class SecurityGroupSelectionPage extends javax.swing.JPanel {
     
     /** Creates new form SecurityGroupPage */

@@ -4,9 +4,9 @@
             target="popup" action="init" role="SYSADMIN"/>
         
         <invoker type="formActions" caption="New"  action="addNew" visibleWhen="#{mode=='read'}" icon="images/toolbars/create.png"/>
-        <invoker type="formActions" caption="Edit"  action="edit" visibleWhen="#{mode=='read'}" icon="images/toolbars/edit.png"/>
-        <invoker type="formActions" caption="Save"  action="save" visibleWhen="#{mode!='read'}" icon="images/toolbars/save.png"/>
-        <invoker type="formActions" caption="Cancel"  action="cancel" visibleWhen="#{mode!='read'}" icon="images/toolbars/cancel.png"/>
+        <invoker type="formActions" caption="Edit"  action="edit" visibleWhen="#{editVisible == true}"/>
+        <invoker type="formActions" caption="Save"  action="save" visibleWhen="#{mode!='read'}"/>
+        <invoker type="formActions" caption="Cancel"  action="cancel" visibleWhen="#{mode!='read'}"/>
     </invokers>
     
     <code>
@@ -58,6 +58,10 @@
                 }
                 mode = "create";
                 return "info";
+            }
+            
+            boolean isEditVisible(){
+                return (mode == 'read' && selectedEntity != null); 
             }
             
             def edit() {
