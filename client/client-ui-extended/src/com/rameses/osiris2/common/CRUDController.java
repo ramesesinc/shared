@@ -143,7 +143,11 @@ public class CRUDController
     protected boolean isShowNavigationBar() { return true; }
     
     public String getCreateFocusComponent() {  return "entity.code"; }    
-    public String getEditFocusComponent() { return "entity.description"; }        
+    public String getEditFocusComponent() { return "entity.description"; }
+    
+    public String getConfirmSaveMsg() { return null; } 
+    public String getConfirmApproveMsg() { return null; }
+    public String getConfirmDeleteMsg() { return null; }
     
     
     /*
@@ -311,7 +315,11 @@ public class CRUDController
     public void save(){
         try {
             if (isShowConfirmOnSave()) {
-                if (!MsgBox.confirm("You are about to save this record. Continue?")) return;
+                String msg = getConfirmSaveMsg();
+                if (msg == null || msg.length() == 0) { 
+                    msg = "You are about to save this record. Continue?";
+                } 
+                if (!MsgBox.confirm(msg)) return;
             }
             
             onbeforeSave();
@@ -390,21 +398,36 @@ public class CRUDController
     }    
     
     public void approve() {
-        if (MsgBox.confirm("You are about to approve this document. Continue?")){
+        String msg = getConfirmApproveMsg();
+        if (msg == null || msg.length() == 0) {
+            msg = "You are about to approve this document. Continue?";
+        }
+        
+        if (MsgBox.confirm(msg)){
             Map data = getEntity();
             getServiceProxy().approve(data); 
             data.put("state", "APPROVED");
         } 
     }
     
+    protected void beforeDelete(Object data){}
+    protected void afterDelete(Object data) {}
+    
     public Object delete(){
-        if (MsgBox.confirm("You are about to delete this document. Continue?")){
+        String msg = getConfirmDeleteMsg();
+        if (msg == null || msg.length() == 0) {
+            msg = "You are about to delete this document. Continue?";
+        }
+        
+        if (MsgBox.confirm(msg)){
             Map data = getEntity();
+            beforeDelete(data);
             getServiceProxy().removeEntity(data); 
             
             ListModelHandler lm = getListModelHandler();
             if (lm != null) lm.removeItem(data); 
-                
+            
+            afterDelete(data);
             return close();
         }
         else {

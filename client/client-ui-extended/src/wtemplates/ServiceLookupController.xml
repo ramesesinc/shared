@@ -16,6 +16,7 @@
         def controller;
         
         private String serviceName;
+        private String entityName;
         private String tag;
         
         String getServiceName() {
@@ -27,6 +28,13 @@
             } 
             return serviceName;
         } 
+        
+        String getEntityName() {
+            if (entityName == null) {
+                entityName = controller?.workunit?.workunit?.properties?.entityName;
+            } 
+            return entityName;
+        }         
         
         String getTag() {
             if (tag == null) {
