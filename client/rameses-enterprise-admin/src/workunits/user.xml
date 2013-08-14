@@ -4,7 +4,7 @@
         <invoker type="user:open" action="open" caption="User Information" resizable="false"/>
         
         <!-- actions within the page -->
-        <invoker type="extActions" action="changePassword"  caption="Reset Password" resizable="false" visibleWhen="#{mode=='read'}"/>
+        <invoker type="extActions" action="resetPassword"  caption="Reset Password" resizable="false" visibleWhen="#{mode=='read'}"/>
    </invokers>
    
    <code>
@@ -20,7 +20,7 @@
          
             def pwd = [:];
         
-            def changePassword() {
+            def resetPassword() {
                 return InvokerUtil.lookupOpener("user:resetpwd", [entity:entity]);
             }
         }
