@@ -1,8 +1,7 @@
 <workunit>
     
    <invokers>
-         <invoker type="bankaccount:formActions" 
-            caption="New Bank" immediate="true" action="create"/>
+         
 
        
          <invoker type="bank:create" caption="Bank" action="create"/>

@@ -1,8 +1,8 @@
 <!-- REQUISITION ISSUE SLIP -->
 <workunit>
     <invokers>
-       <invoker type="ris-close:AF:PURCHASE" caption="Receive Items" action="create" 
-        visibleWhen="#{entity.state == 'APPROVED'}" />
+       <invoker type="ris:formActions" caption="Receive Items" action="create" 
+        visibleWhen="#{entity?.txntype == 'AF:PURCHASE' &amp;&amp; entity?.state == 'APPROVED'}" />
     </invokers>
     
     <code>
@@ -28,7 +28,9 @@
             String title = "Purchase Receipt";
             def ris;
             boolean showSelected = false;
-            
+            boolean allowEdit = false;
+            boolean allowApprove = false;
+
             Map createEntity() {
                 ris = caller.entity;
                 def m = [objid:"AFRCT"+ new UID() ];
@@ -36,6 +38,23 @@
                 m.ris = ris;
                 return m;
             }
+            
+            void beforeSave(o) {
+                if( !entity.items )
+                    throw new Exception("Please add at least one item");
+            }
+            
+            void afterSave(o) {
+                ris.state = "CLOSED";
+            }
+            
+            def close() {
+                if( mode == "read" ) 
+                    return "_close:_close";
+                else    
+                    return "_close";
+            }
+
             
             def reqItemModel = [
                 fetchList: { o->

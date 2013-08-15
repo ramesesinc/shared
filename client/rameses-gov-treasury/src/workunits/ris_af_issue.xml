@@ -1,8 +1,8 @@
 <!-- REQUISITION ISSUE SLIP -->
 <workunit>
     <invokers>
-       <invoker type="ris-close:AF:ISSUE" caption="Issue Items" action="init" 
-        visibleWhen="#{entity.state == 'APPROVED'}" />
+       <invoker type="ris:formActions" caption="Issue Items" action="create" 
+        visibleWhen="#{entity?.txntype == 'AF:ISSUE' &amp;&amp; entity?.state == 'APPROVED'}" />
        
     </invokers>
     
@@ -33,8 +33,9 @@
             def ris;
             def selectedItem;
             boolean showSelected = false;
-            
-            
+            boolean allowEdit = false;
+            boolean allowApprove = false;
+
             Map createEntity() {
                 ris = caller.entity;
                 def m = [objid:"AFISS"+ new UID() ];
@@ -43,6 +44,22 @@
                 return m;
             }
 
+            void beforeSave(o) {
+                if( !entity.items )
+                    throw new Exception("Please add at least one item");
+            }
+            
+            void afterSave(o) {
+                ris.state = "CLOSED";
+            }
+            
+            def close() {
+                if( mode == "read" ) 
+                    return "_close:_close";
+                else    
+                    return "_close";
+            }
+            
             def reqItemModel = [
                 onColumnUpdate: { item, colname->
                    if( item.qty < item.qtyissued )
@@ -65,6 +82,9 @@
             ] as BasicListModel;
             
             void loadStock() {
+                if( ris.items.sum{it.qtyissued} == 0 )
+                    throw new Exception("Please specify qty to issue");
+
                 //load each item requested
                 entity.items = [];
                 ris.items.each {
