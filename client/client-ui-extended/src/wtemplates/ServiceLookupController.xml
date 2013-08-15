@@ -33,12 +33,13 @@
             if (entityName == null) {
                 entityName = controller?.workunit?.workunit?.properties?.entityName;
             } 
-            return entityName;
-        }         
+            return entityName; 
+        } 
         
         String getTag() {
             if (tag == null) {
                 tag = controller?.workunit?.workunit?.properties?.tag;
+                if (tag == null) tag = super.getTag();
             } 
             return tag; 
         } 
