@@ -78,7 +78,6 @@ public class SerialCashReceiptPage extends javax.swing.JPanel {
         xLookupField1.setHandler("lookupEntity");
         xLookupField1.setName("entity.payer");
         xLookupField1.setPreferredSize(new java.awt.Dimension(0, 19));
-        xLookupField1.setRequired(true);
         xFormPanel1.add(xLookupField1);
 
         xTextField2.setCaption("Paid By");
