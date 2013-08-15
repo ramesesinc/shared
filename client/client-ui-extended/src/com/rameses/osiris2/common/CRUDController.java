@@ -139,7 +139,7 @@ public class CRUDController
     public boolean isAllowApprove() { return true; } 
     public boolean isShowFormActions() { return true; } 
     
-    protected boolean isShowConfirmOnSave() { return false; }  
+    protected boolean isShowConfirmOnSave() { return true; }  
     protected boolean isShowNavigationBar() { return true; }
     
     public String getCreateFocusComponent() {  return "entity.code"; }    
@@ -256,9 +256,6 @@ public class CRUDController
     protected void afterCreate(Object data){}
     
     public final void init() { 
-        if (!isAllowCreate())
-            throw new IllegalStateException("PERMISSION DENIED! Invoking this method is not authorized."); 
-                        
         Map data = createEntity();  
         if (data.get("objid") == null) 
             data.put("objid", getPrefixId() + new java.rmi.server.UID());
@@ -277,14 +274,15 @@ public class CRUDController
         init();
     }
     
+    protected void beforeCancel(){}
     protected void afterCancel(){}
     
     public Object cancel() {
         if (MODE_EDIT.equals(this.mode)) {
+            if (!MsgBox.confirm("Changes will be discarded. Continue?")) return null; 
+            
+            beforeCancel();
             if (changeLog.hasChanges()) {
-                if (!MsgBox.confirm("Changes will be discarded. Continue?")) 
-                    return null; 
-
                 changeLog.undoAll(); 
                 changeLog.clear();
             }
@@ -298,7 +296,10 @@ public class CRUDController
         }
     }
     
+    protected void beforeClose(){} 
+    
     public Object close() {
+        beforeClose();
         this.mode = MODE_READ; 
         this.changeLog.clear(); 
         return "_close"; 
