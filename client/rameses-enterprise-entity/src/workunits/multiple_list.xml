@@ -1,0 +1,31 @@
+<workunit extends="wtemplates/ListController.xml">
+    <invokers>
+        <invoker folderid="/explorer/entity" caption="Multiple" permission="system" 
+            action="init" index="0" />
+   </invokers>
+   
+   <code>
+   <![CDATA[ 
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.osiris2.client.*;
+        import com.rameses.osiris2.common.*;
+
+        public class MultipleListController extends ListController {
+        
+            String serviceName = 'EntityService';
+            String entityName = 'multipleentity';
+            String entityType = 'MULTIPLE'; 
+            String title = 'Multiple Entities';            
+            
+            void init() { 
+                query.type = entityType;
+            }  
+            
+            void beforeGetColumns( Map params ) {
+                params.type = entityType; 
+            }             
+        } 
+   ]]>
+   </code>
+</workunit>

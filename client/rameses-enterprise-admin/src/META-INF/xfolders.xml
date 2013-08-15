@@ -1,3 +1,5 @@
 <folders>
-    <folder id="admin" caption="Administration"/>   
+    <folder id="explorer">
+        <folder id="admin" caption="Administration" index="2"/> 
+    </folder>    
 </folders>

@@ -69,14 +69,16 @@ public class CRUDController
     
     public final String getMode() { return mode; }
             
-    public Map getEntity() { return entity; }
-    
+    public Map getEntity() { return entity; }    
     public void setEntity(Map entity) {
         this.entity = entity;        
         if (entity != null && entity.get("state") == null) {
             entity.put("state", "DRAFT"); 
         } 
+        entityChanged(); 
     }
+    
+    protected void entityChanged(){} 
     
     public Object getService() 
     {

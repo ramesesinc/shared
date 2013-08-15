@@ -1,5 +1,0 @@
-<workunit>
-   <invokers>
-         <invoker type="individualentity:create" caption="Individual" target="popup"/>
-   </invokers>
-</workunit>

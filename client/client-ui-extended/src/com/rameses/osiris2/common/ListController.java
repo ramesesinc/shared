@@ -90,10 +90,38 @@ public abstract class ListController extends BasicListController implements Page
     
     public boolean isShowNavActions() { return true; } 
     public boolean isShowFormActions() { return true; } 
-    public boolean isAllowClose() { return true; } 
-    public boolean isAllowCreate() { return true; } 
-    public boolean isAllowOpen() { return true; } 
-    public boolean isAllowSearch() { return true; } 
+    
+    public boolean isAllowClose() { 
+        Map wuprops = getControllerProperties();
+        Object oval = wuprops.get("allowClose");
+        if (oval == null) return true; 
+        
+        return "true".equals(oval.toString()); 
+    } 
+    
+    public boolean isAllowCreate() { 
+        Map wuprops = getControllerProperties();
+        Object oval = wuprops.get("allowCreate");
+        if (oval == null) return true; 
+        
+        return "true".equals(oval.toString());     
+    } 
+    
+    public boolean isAllowOpen() { 
+        Map wuprops = getControllerProperties();
+        Object oval = wuprops.get("allowOpen");
+        if (oval == null) return true; 
+        
+        return "true".equals(oval.toString());     
+    } 
+    
+    public boolean isAllowSearch() { 
+        Map wuprops = getControllerProperties();
+        Object oval = wuprops.get("allowSearch");
+        if (oval == null) return true; 
+        
+        return "true".equals(oval.toString());         
+    } 
     
     // </editor-fold>
     
@@ -179,14 +207,14 @@ public abstract class ListController extends BasicListController implements Page
     }
     
     public List getFormActions() {
-        if (formActions == null) 
-        {
+        if (formActions == null) {
             if (!isShowFormActions()) return null;
             
             formActions = new ArrayList();
-            if (isAllowClose())
+            if (isAllowClose()) 
                 formActions.add(createAction("close", "Close", "images/toolbars/cancel.png", "ctrl C", 'c', null, true)); 
-            if (isAllowCreate())
+            
+            if (isAllowCreate()) 
                 formActions.add(createAction("create", "New", "images/toolbars/create.png", "ctrl N", 'n', null, true));       
             
             if (isAllowOpen()) { 

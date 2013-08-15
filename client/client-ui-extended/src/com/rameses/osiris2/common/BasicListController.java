@@ -1,8 +1,11 @@
 package com.rameses.osiris2.common;
 
+import com.rameses.common.PropertyResolver;
 import com.rameses.osiris2.client.InvokerFilter;
 import com.rameses.osiris2.client.InvokerUtil;
+import com.rameses.osiris2.client.WorkUnitUIController;
 import com.rameses.rcp.annotations.Binding;
+import com.rameses.rcp.annotations.Controller;
 import com.rameses.rcp.annotations.Invoker;
 import com.rameses.rcp.common.AbstractListDataProvider;
 import com.rameses.rcp.common.Action;
@@ -11,6 +14,7 @@ import com.rameses.rcp.common.MsgBox;
 import com.rameses.rcp.common.Opener;
 import com.rameses.rcp.common.PageListModel;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +26,9 @@ public abstract class BasicListController extends PageListModel
     @Binding
     private com.rameses.rcp.framework.Binding binding;
     
-
+    @Controller
+    protected WorkUnitUIController controller;
+    
     private Object selectedEntity;
     private List<Action> formActions;
     
@@ -123,5 +129,23 @@ public abstract class BasicListController extends PageListModel
     } 
         
     // </editor-fold>
-       
+    
+    // <editor-fold defaultstate="collapsed" desc=" helper methods ">      
+    
+    private Map wuprops;
+    
+    protected final Map getControllerProperties() {
+        try {
+            if (wuprops == null) {
+                PropertyResolver res = PropertyResolver.getInstance(); 
+                wuprops = (Map) res.getProperty(controller, "workunit.workunit.properties"); 
+            } 
+        } catch(Throwable t){;} 
+            
+        if (wuprops == null) wuprops = new HashMap();
+        
+        return wuprops;
+    }
+    
+    // </editor-fold>
 }
