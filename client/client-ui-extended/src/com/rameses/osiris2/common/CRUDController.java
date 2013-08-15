@@ -175,22 +175,16 @@ public class CRUDController
             formActions.add(createAction("close", "Close", "images/toolbars/cancel.png", "ctrl C", 'c', "#{mode=='read'}", true));  
             if (isAllowCreate())
                 formActions.add(createAction("init", "New", "images/toolbars/create.png", "ctrl N", 'n', "#{mode=='read'}", true));        
-            
             if (isAllowEdit())
-            {
                 formActions.add(createAction("edit", "Edit", "images/toolbars/edit.png", "ctrl E", 'e',  "#{mode=='read' && entity.state=='DRAFT'}", true)); 
-                if (isAllowDelete()) 
-                    formActions.add(createAction("delete", "Delete", "images/toolbars/trash.png", null, 'd', "#{mode=='read' && entity.state=='DRAFT'}", true)); 
-                if (isAllowApprove())
-                    formActions.add(createAction("approve", "Approve", "images/toolbars/approve.png", null, 'v', "#{mode=='read' && entity.state=='DRAFT'}", true)); 
-            }
+            if (isAllowDelete()) 
+                formActions.add(createAction("delete", "Delete", "images/toolbars/trash.png", null, 'd', "#{mode=='read' && entity.state=='DRAFT'}", true)); 
+            if (isAllowApprove())
+                formActions.add(createAction("approve", "Approve", "images/toolbars/approve.png", null, 'v', "#{mode=='read' && entity.state=='DRAFT'}", true)); 
             
-            if (isAllowCreate() || isAllowEdit())
-            {
-                formActions.add(createAction("cancel", "Cancel", "images/toolbars/cancel.png", "ctrl C", 'c', "#{mode!='read'}", true)); 
-                formActions.add(createAction("save", "Save", "images/toolbars/save.png", "ctrl S", 's', "#{mode!='read'}", false)); 
-                formActions.add(createAction("undo", "Undo", "images/toolbars/undo.png", "ctrl Z", 'u', "#{mode=='edit'}", true)); 
-            } 
+            formActions.add(createAction("cancel", "Cancel", "images/toolbars/cancel.png", "ctrl C", 'c', "#{mode!='read'}", true)); 
+            formActions.add(createAction("save", "Save", "images/toolbars/save.png", "ctrl S", 's', "#{mode!='read'}", false)); 
+            formActions.add(createAction("undo", "Undo", "images/toolbars/undo.png", "ctrl Z", 'u', "#{mode=='edit'}", true)); 
             
             List<Action> xactions = lookupActions("formActions");
             while (!xactions.isEmpty()) {
