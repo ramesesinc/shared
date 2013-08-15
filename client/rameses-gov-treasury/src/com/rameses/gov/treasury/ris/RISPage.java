@@ -87,8 +87,7 @@ public class RISPage extends javax.swing.JPanel {
             new com.rameses.rcp.common.Column("unit", "Unit", 50, 50, 50, false, true, true, false, null, new com.rameses.rcp.common.TextColumnHandler()).set("alignment","CENTER"),
             new com.rameses.rcp.common.Column("qty", "Qty Req.", 100, 100, 100, false, true, true, true, null, new com.rameses.rcp.common.IntegerColumnHandler(null, -1, -1)).set("alignment","CENTER"),
             new com.rameses.rcp.common.Column("qtyissued", "Qty Issued", 100, 100, 100, false, true, true, false, null, new com.rameses.rcp.common.IntegerColumnHandler(null, -1, -1)).set("alignment","CENTER"),
-            new com.rameses.rcp.common.Column("qtyreceived", "Qty Received", 100, 100, 100, false, true, true, false, null, new com.rameses.rcp.common.IntegerColumnHandler(null, -1, -1)).set("alignment","CENTER"),
-            new com.rameses.rcp.common.Column("remarks", "Remarks", 100, 0, 0, false, true, true, true, null, new com.rameses.rcp.common.TextColumnHandler())
+            new com.rameses.rcp.common.Column("qtyreceived", "Qty Received", 100, 100, 100, false, true, true, false, null, new com.rameses.rcp.common.IntegerColumnHandler(null, -1, -1)).set("alignment","CENTER")
         });
         xDataTable1.setHandler("itemModel");
         xDataTable1.setName("selectedItem");

@@ -17,6 +17,9 @@
         
         class  CloseAFIssueController extends CRUDController {
         
+            @Caller
+            def caller;
+
             @Service("AFIssueService")
             def  service;
 
@@ -24,11 +27,16 @@
             def  stockService;
             
             String title = "Issue Accountable Forms";
+            boolean showConfirmOnSave = true;
+            String confirmSaveMsg = "You are about to update the AF inventory. Continue?";            
+            
             def ris;
             def selectedItem;
             boolean showSelected = false;
             
+            
             Map createEntity() {
+                ris = caller.entity;
                 def m = [objid:"AFISS"+ new UID() ];
                 m.items = [];
                 m.ris = ris;

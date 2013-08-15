@@ -3,12 +3,24 @@
         <invoker type="formActions" action="_close" caption="Back" immediate="true" visibleWhen="#{!completed}" 
             icon="images/toolbars/cancel.png" mnemonic="c"/>
         <invoker type="formActions" action="post" caption="Save" visibleWhen="#{!completed}"
-            icon="images/toolbars/save.png" mnemonic="s" />
+            icon="images/toolbars/save.png" shortcut="ctrl S" />
         
-        <invoker type="formActions" action="_close:_close" caption="Quit" visibleWhen="#{completed}" mnemonic="n"/>
-        <invoker type="formActions" action="_close" caption="New" visibleWhen="#{completed}" mnemonic="n"/>
-        <invoker type="formActions" action="reprint" caption="Reprint" mnemonic="p" visibleWhen="#{completed}"/>
+        <invoker type="formActions" action="_close:_close" caption="Quit" visibleWhen="#{completed}" 
+            shortcut="ctrl Q"/>
+            
+        <invoker type="formActions" action="_close" caption="New" 
+            visibleWhen="#{completed}" shortcut="ctrl N"/>
+            
+        <invoker type="formActions" action="reprint" caption="Reprint" 
+            visibleWhen="#{completed}" shortcut="ctrl P"/>
+            
         <invoker type="formActions" action="void" caption="Void" visibleWhen="#{completed}"/>
+        
+        <!-- 
+        FOR TESTING VIEWER
+        <invoker type="formActions" action="_completed" caption="Test View" immediate="true"/>
+        <invoker type="formActions" action="_default" caption="Backi" immediate="true"/>
+        -->
     </invokers>
     
     <code class="com.rameses.enterprise.treasury.controllers.BasicCashReceipt"/>

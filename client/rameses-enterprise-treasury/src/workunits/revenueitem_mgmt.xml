@@ -1,6 +1,7 @@
-<workunit extends="wtemplates/ExplorerViewController.xml" serviceName="RevenueItemService"
-    context="revenueitem" defaultFileType="revenueitem">
+<workunit extends="wtemplates/ListController.xml" 
+    serviceName="RevenueItemService" entityName="revenueitem">
     <invokers>
-        <invoker folderid="/explorer/master/treasury" caption="Revenue Item" permission="system" index="1" action="init"/>
+        <invoker folderid="/explorer/master/treasury" caption="Revenue Item" 
+            permission="system" index="1"/>
    </invokers>
 </workunit>

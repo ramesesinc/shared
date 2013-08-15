@@ -9,6 +9,9 @@ import java.rmi.server.*;
 
 public abstract class RISController extends CRUDController {
 
+    boolean showConfirmOnSave = true;
+    String confirmSaveMsg = "You are about to save this entry. Please confirm.";
+
     Map createEntity() {
         def entity = [:];
         entity.items = [];

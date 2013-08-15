@@ -1,10 +1,10 @@
 <workunit>
     <invokers>
-        <invoker type="revenueitem:openitem" caption="Revenue Item" action="open"/>
-        <invoker type="revenueitem:additem" caption="Revenue Item" action="create"/>
+        <invoker type="revenueitem:open" caption="Revenue Item" action="open"/>
+        <invoker type="revenueitem:create" caption="Revenue Item" action="create"/>
         
         <invoker type="formActions" caption="Account Mapping" 
-            action="showSegments" visibleWhen="#{mode=='read'}"/>
+            action="showSegments" visibleWhen="#{entity.state=='APPROVED'}"/>
    </invokers>
    <code>
     <![CDATA[
@@ -14,16 +14,12 @@
     import com.rameses.osiris2.client.*;
     import com.rameses.common.*;
 
-    public class ItemAccountController extends CrudFileType {
+    public class ItemAccountController extends CRUDController {
     
         String serviceName  = "RevenueItemService";
         String entityName = "revenueitem";
         String title = "Revenue Item";
         String prefixId = "REVITEM";
-        
-        Map createEntity() {
-            return [state:node.item.objid];
-        }
         
         def showSegments() {
             return InvokerUtil.lookupOpener( "accountsegment:open", 

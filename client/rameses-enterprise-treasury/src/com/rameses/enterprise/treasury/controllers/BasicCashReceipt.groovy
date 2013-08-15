@@ -27,7 +27,12 @@ public class BasicCashReceipt extends AbstractCashReceipt {
             if(!MsgBox.confirm("You are about to remove this entry. Proceed?")) 
                 return false;
             entity.items.remove( o );
-            entity.amount = entity.items.sum{ it.amount };
+            if( entity.items ) {
+                entity.amount = entity.items.sum{ it.amount };
+            }
+            else {
+                entity.amount = 0;
+            }
             updateBalances();
             return true;
         }
