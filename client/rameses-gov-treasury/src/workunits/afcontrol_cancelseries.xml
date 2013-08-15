@@ -42,6 +42,6 @@
         ]]>
     </code>
     <pages>
-        <page template="com.rameses.gov.treasury.afcontrol.AFControlChangeMode"/>
+        <page template="com.rameses.gov.treasury.afcontrol.AFControlCancelSeries"/>
     </pages>
 </workunit>

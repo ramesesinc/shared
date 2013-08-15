@@ -11,6 +11,7 @@ public abstract class RISController extends CRUDController {
 
     boolean showConfirmOnSave = true;
     String confirmSaveMsg = "You are about to save this entry. Please confirm.";
+    String entityName = "ris";
 
     Map createEntity() {
         def entity = [:];

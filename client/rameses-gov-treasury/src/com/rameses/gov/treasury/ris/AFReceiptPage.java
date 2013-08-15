@@ -7,6 +7,7 @@
 package com.rameses.gov.treasury.ris;
 
 import com.rameses.osiris2.themes.FormPage;
+import com.rameses.rcp.ui.annotations.StyleSheet;
 import com.rameses.rcp.ui.annotations.Template;
 
 /**
@@ -14,6 +15,7 @@ import com.rameses.rcp.ui.annotations.Template;
  * @author  Elmo
  */
 @Template(FormPage.class)
+@StyleSheet
 public class AFReceiptPage extends javax.swing.JPanel {
     
     /** Creates new form AFReceiptPage */

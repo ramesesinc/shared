@@ -6,7 +6,7 @@ import com.rameses.rcp.annotations.*;
 import com.rameses.osiris2.client.*;
 import com.rameses.util.*;
 import java.rmi.server.*;
-
+com.rameses.gov.treasury.controllers
 public class AFRISController extends RISController {
 
     @Service("RISService")
@@ -36,7 +36,5 @@ public class AFRISController extends RISController {
         String s = "ris-close:" + entity.txntype;
         return InvokerUtil.lookupActions( s, [ris: entity ] );
     }
-
-    
 
 }

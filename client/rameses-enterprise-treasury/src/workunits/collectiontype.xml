@@ -30,14 +30,14 @@
                     buildHandlers();
                 },
                 "selectedHandler" : { o->
-                    entity.handler = o.name;
+                    entity.handler = o.properties.name;
                 }
             ]
             
             void afterOpen( def o ) {
                 selectedForm = formTypes.find{ it.formno == o.formno };
                 buildHandlers();
-                selectedHandler = handlers.find{ it.name == entity.handler };
+                selectedHandler = handlers.find{ it.properties.name == entity.handler };
             }
             
             def getFormTypes() {
@@ -45,19 +45,12 @@
             }
             
             void buildHandlers() {
-                handlers = InvokerUtil.lookupOpeners( "collectiontype:handler" ).collect {
-                    [ 
-                        name:it.properties.name,  
-                        caption: it.caption,
-                        formno: it.properties.formno,
-                        formtype:it.properties.formtype
-                    ]
-                }.findAll {
-                    if( it.formno ) {
-                        return (it.formno == selectedForm.formno);
+                handlers = InvokerUtil.lookupOpeners( "collectiontype:handler" ).findAll {
+                    if( it.properties.formno ) {
+                        return (it.properties.formno == selectedForm.formno);
                     }
-                    else if(it.formtype) {
-                        return (it.formtype == selectedForm.formtype);
+                    else if(it.properties.formtype) {
+                        return (it.properties.formtype == selectedForm.formtype);
                     }
                     return false;
                 };

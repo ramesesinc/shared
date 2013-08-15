@@ -1,0 +1,7 @@
+<workunit extends="wtemplates/ListController.xml" 
+    serviceName="BankService" entityName="bank">
+    <invokers>
+        <invoker type="bankaccount:formActions" caption="Bank List" 
+            immediate="true" target="popup"/>
+   </invokers>
+</workunit>
