@@ -57,8 +57,8 @@
     <Component class="com.rameses.rcp.control.XButton" name="xButton1">
       <Properties>
         <Property name="mnemonic" type="int" value="99"/>
-        <Property name="text" type="java.lang.String" value="Close"/>
         <Property name="name" type="java.lang.String" value="_close"/>
+        <Property name="text" type="java.lang.String" value="Close"/>
       </Properties>
     </Component>
     <Component class="com.rameses.rcp.control.XDataTable" name="xDataTable1">
@@ -78,8 +78,9 @@
     <Component class="com.rameses.rcp.control.XButton" name="xButton2">
       <Properties>
         <Property name="mnemonic" type="int" value="108"/>
-        <Property name="text" type="java.lang.String" value="Launch"/>
+        <Property name="disableWhen" type="java.lang.String" value="#{selectedItem == null}"/>
         <Property name="name" type="java.lang.String" value="launch"/>
+        <Property name="text" type="java.lang.String" value="Launch"/>
       </Properties>
     </Component>
   </SubComponents>

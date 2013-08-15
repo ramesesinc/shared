@@ -22,8 +22,8 @@ public class QuickLaunchListPage extends javax.swing.JPanel {
         xButton2 = new com.rameses.rcp.control.XButton();
 
         xButton1.setMnemonic('c');
-        xButton1.setText("Close");
         xButton1.setName("_close");
+        xButton1.setText("Close");
 
         xDataTable1.setHandler("listHandler");
         xDataTable1.setImmediate(true);
@@ -34,8 +34,9 @@ public class QuickLaunchListPage extends javax.swing.JPanel {
         xActionTextField1.setName("searchtext");
 
         xButton2.setMnemonic('l');
-        xButton2.setText("Launch");
+        xButton2.setDisableWhen("#{selectedItem == null}");
         xButton2.setName("launch");
+        xButton2.setText("Launch");
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
