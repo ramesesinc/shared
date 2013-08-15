@@ -1,0 +1,76 @@
+<workunit>
+    <invokers>
+         <invoker type="individualentity:create" caption="Individual" action="create" target="popup"/>
+         <invoker type="individualentity:open" caption="Individual" action="open" target="popup"/>
+    </invokers>
+    
+    <code>
+    <![CDATA[
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.osiris2.client.*;
+        import com.rameses.osiris2.common.*;
+        import java.rmi.server.UID;
+
+        public class IndividualEntityController extends CRUDController {
+        
+            String prefixId = 'INDI';         
+            String serviceName = 'EntityService'; 
+            String entityType = 'INDIVIDUAL';
+            String title = 'Individual Entity';
+            String createFocusComponent = 'entity.lastname';
+            String editFocusComponent = 'entity.lastname';
+            boolean allowDelete = false; 
+            boolean allowApprove = false; 
+            boolean showConfirmOnSave = false; 
+            
+            def genderList = [
+                [name:'M', caption:'Male'],
+                [name:'F', caption:'Female']
+            ];
+            
+            void beforeCreate( entity ) {
+                entity.type = entityType;
+                entity.contacts = [];
+            } 
+            
+            void entityChanged() { 
+                contactListHandler?.reload();  
+            } 
+            
+            def selectedContact;
+            def contactTypes = [
+                [key: 'MOBILE', value:'Mobile Phone'], 
+                [key: 'HOME', value:'Home Phone'], 
+                [key: 'WORK', value:'Work Phone'], 
+                [key: 'EMAIL', value:'Email'] 
+            ]; 
+            def contactListHandler = [
+                fetchList: {o-> 
+                    if (!entity) return null; 
+                    if (!entity.contacts) entity.contacts = [];
+                    
+                    return entity.contacts;
+                },
+                
+                onAddItem: {item-> 
+                    item.objid = 'CONT'+new UID();
+                    item.entityid = entity.objid; 
+                    entity.contacts.add(item); 
+                }, 
+                
+                onRemoveItem: {item-> 
+                    if (!MsgBox.confirm('Are you sure you want to remove this item?')) return false;
+                    
+                    entity.contacts.remove(item); 
+                    return true;
+                }                
+            ] as EditorListModel;
+        }        
+   ]]>
+   </code>
+   
+   <pages>
+       <page template="com.rameses.entity.ui.IndividualEntityPage"/>
+   </pages>   
+</workunit>
