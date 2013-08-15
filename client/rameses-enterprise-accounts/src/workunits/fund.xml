@@ -1,8 +1,8 @@
 <workunit>
         
     <invokers>
-         <invoker type="fund:openitem" action="open"/>
-         <invoker type="fund:additem" action="create"/>
+         <invoker type="fund:open" action="open"/>
+         <invoker type="fund:create" action="create"/>
    </invokers>
    
    <code>
@@ -16,6 +16,7 @@
         
             String serviceName = "FundService";
             String entityName = "fund";
+            String title = "Fund";
             String prefixId = "FUND";
             
             Map createEntity() {

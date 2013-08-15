@@ -1,0 +1,7 @@
+<workunit extends="wtemplates/ListController.xml" 
+    serviceName="RevenueItemService" entityName="revenueitem">
+    <invokers>
+        <invoker folderid="/explorer/master/account" caption="Revenue Item" 
+            permission="system" index="1"/>
+   </invokers>
+</workunit>

@@ -14,16 +14,23 @@
         import com.rameses.gov.treasury.controllers.*
         import java.rmi.server.*;
         
-        class  CloseAFPurchaseController  extends CRUDController {
+        class  CloseAFPurchaseController extends CRUDController {
+            
+            @Caller
+            def caller;
         
             @Service("AFReceiptService")
             def  service;
-        
+
+            boolean showConfirmOnSave = true;
+            String confirmSaveMsg = "You are about to update the AF inventory. Continue?";
+
             String title = "Purchase Receipt";
             def ris;
             boolean showSelected = false;
             
             Map createEntity() {
+                ris = caller.entity;
                 def m = [objid:"AFRCT"+ new UID() ];
                 m.items = [];
                 m.ris = ris;

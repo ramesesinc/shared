@@ -1,6 +1,6 @@
 <workunit extends="wtemplates/ExplorerViewController.xml" 
     serviceName="FundService" context="fund" defaultFileType="fund">
     <invokers>
-        <invoker folderid="/master/acct" caption="Funds" permission="system" index="1" action="init"/>
+        <invoker folderid="/explorer/master/account" caption="Funds" permission="system" index="1" action="init"/>
    </invokers>
 </workunit>

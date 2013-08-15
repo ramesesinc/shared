@@ -5,6 +5,7 @@ import com.rameses.rcp.common.*
 import com.rameses.osiris2.client.*
 import com.rameses.osiris2.reports.*;
 import com.rameses.osiris2.common.*
+import com.rameses.util.*;
         
 public abstract class AbstractCashReceipt {
         
@@ -146,8 +147,15 @@ public abstract class AbstractCashReceipt {
     
     void reprint() {
         MsgBox.alert( "requires approval" );
+        if(1==1) return;
         def handle = findReportOpener(entity);
         handle.viewReport();
         ReportUtil.print(handle.report,true);
     }
+
+    def getInfoHtml() {
+        return TemplateProvider.instance.getResult( "com/rameses/enterprise/treasury/cashreceipt/cashreceipt.gtpl", [entity:entity] );
+    }
+
+
 }

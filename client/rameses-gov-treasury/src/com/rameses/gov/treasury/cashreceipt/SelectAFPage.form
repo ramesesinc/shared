@@ -19,10 +19,6 @@
               <Component id="xLabel1" min="-2" pref="152" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
           </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <Component id="xButton1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-          </Group>
           <Component id="xDataTable1" alignment="0" pref="400" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
@@ -35,9 +31,7 @@
                   <Component id="xLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="xDataTable1" pref="228" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="xButton1" min="-2" max="-2" attributes="0"/>
+              <Component id="xDataTable1" pref="257" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -57,11 +51,6 @@
     <Component class="com.rameses.rcp.control.XLabel" name="xLabel1">
       <Properties>
         <Property name="expression" type="java.lang.String" value="AF No: #{formno}"/>
-      </Properties>
-    </Component>
-    <Component class="com.rameses.rcp.control.XButton" name="xButton1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Assign AF"/>
       </Properties>
     </Component>
   </SubComponents>

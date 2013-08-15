@@ -4,7 +4,7 @@
  * Created on February 27, 2011, 12:48 PM
  */
 
-package com.rameses.enterprise.treasury.bank;
+package com.rameses.enterprise.accounts;
 
 
 import com.rameses.osiris2.themes.FormPage;
@@ -17,10 +17,10 @@ import com.rameses.rcp.ui.annotations.Template;
  */
 @StyleSheet
 @Template(FormPage.class)
-public class BankAccountPage extends javax.swing.JPanel {
+public class BankPage extends javax.swing.JPanel {
     
     /** Creates new form AccountPage */
-    public BankAccountPage() {
+    public BankPage() {
         initComponents();
     }
     /** This method is called from within the constructor to
@@ -33,57 +33,36 @@ public class BankAccountPage extends javax.swing.JPanel {
         xFormPanel1 = new com.rameses.rcp.control.XFormPanel();
         xTextField1 = new com.rameses.rcp.control.XTextField();
         xTextField2 = new com.rameses.rcp.control.XTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        xTextArea1 = new com.rameses.rcp.control.XTextArea();
-        xComboBox1 = new com.rameses.rcp.control.XComboBox();
-        xComboBox2 = new com.rameses.rcp.control.XComboBox();
-        xLookupField1 = new com.rameses.rcp.control.XLookupField();
+        xTextField3 = new com.rameses.rcp.control.XTextField();
+        xTextField4 = new com.rameses.rcp.control.XTextField();
 
         setPreferredSize(new java.awt.Dimension(542, 498));
 
-        xTextField1.setCaption("Acct Code");
+        xFormPanel1.setCaptionWidth(120);
+        xTextField1.setCaption("Bank Code");
         xTextField1.setName("entity.code");
         xTextField1.setPreferredSize(new java.awt.Dimension(0, 19));
         xTextField1.setRequired(true);
         xTextField1.setSpaceChar('_');
         xFormPanel1.add(xTextField1);
 
-        xTextField2.setCaption("Acct Title");
-        xTextField2.setName("entity.title");
+        xTextField2.setCaption("Bank Name");
+        xTextField2.setName("entity.name");
         xTextField2.setPreferredSize(new java.awt.Dimension(0, 19));
         xTextField2.setRequired(true);
         xFormPanel1.add(xTextField2);
 
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(0, 42));
-        xTextArea1.setCaption("Description");
-        xTextArea1.setName("entity.description");
-        xTextArea1.setPreferredSize(new java.awt.Dimension(0, 40));
-        jScrollPane1.setViewportView(xTextArea1);
+        xTextField3.setCaption("Branch Name");
+        xTextField3.setName("entity.branchname");
+        xTextField3.setPreferredSize(new java.awt.Dimension(0, 19));
+        xTextField3.setRequired(true);
+        xFormPanel1.add(xTextField3);
 
-        xFormPanel1.add(jScrollPane1);
-
-        xComboBox1.setCaption("Acct Type");
-        xComboBox1.setItems("acctTypes");
-        xComboBox1.setName("entity.accttype");
-        xComboBox1.setPreferredSize(new java.awt.Dimension(120, 22));
-        xComboBox1.setRequired(true);
-        xFormPanel1.add(xComboBox1);
-
-        xComboBox2.setAllowNull(false);
-        xComboBox2.setCaption("Currency");
-        xComboBox2.setItems("currencyTypes");
-        xComboBox2.setName("entity.currency");
-        xComboBox2.setPreferredSize(new java.awt.Dimension(120, 22));
-        xComboBox2.setRequired(true);
-        xFormPanel1.add(xComboBox2);
-
-        xLookupField1.setCaption("Bank");
-        xLookupField1.setExpression("#{item.code} #{item.name}");
-        xLookupField1.setHandler("bank:lookup");
-        xLookupField1.setName("entity.bank");
-        xLookupField1.setPreferredSize(new java.awt.Dimension(0, 19));
-        xLookupField1.setRequired(true);
-        xFormPanel1.add(xLookupField1);
+        xTextField4.setCaption("Address");
+        xTextField4.setName("entity.address");
+        xTextField4.setPreferredSize(new java.awt.Dimension(0, 19));
+        xTextField4.setRequired(true);
+        xFormPanel1.add(xTextField4);
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
@@ -98,21 +77,18 @@ public class BankAccountPage extends javax.swing.JPanel {
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 185, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(302, Short.MAX_VALUE))
+                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 108, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(86, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane jScrollPane1;
-    private com.rameses.rcp.control.XComboBox xComboBox1;
-    private com.rameses.rcp.control.XComboBox xComboBox2;
     private com.rameses.rcp.control.XFormPanel xFormPanel1;
-    private com.rameses.rcp.control.XLookupField xLookupField1;
-    private com.rameses.rcp.control.XTextArea xTextArea1;
     private com.rameses.rcp.control.XTextField xTextField1;
     private com.rameses.rcp.control.XTextField xTextField2;
+    private com.rameses.rcp.control.XTextField xTextField3;
+    private com.rameses.rcp.control.XTextField xTextField4;
     // End of variables declaration//GEN-END:variables
     
 }

@@ -1,6 +1,6 @@
 <workunit extends="wtemplates/ExplorerViewController.xml" 
     serviceName="AccountService" context="account" defaultFileType="account">
     <invokers>
-        <invoker folderid="/master/acct" caption="Accounts" permission="system" index="1" action="init"/>
+        <invoker folderid="/explorer/master/account" caption="Chart of Accounts" permission="system" index="1" action="init"/>
    </invokers>
 </workunit>
