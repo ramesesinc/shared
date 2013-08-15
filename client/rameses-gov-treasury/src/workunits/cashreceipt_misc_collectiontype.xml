@@ -1,7 +1,7 @@
 <workunit extends="wtemplates/enterprise/treasury/BasicCashReceiptController.xml">
     <invokers>
         <invoker type="collectiontype:handler" caption="Miscellaneous" name="misc" 
-            formtype="serial" index="100" action="init"/>
+            formtype="serial" index="100" />
     </invokers>
     
     <code>
