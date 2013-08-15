@@ -2,7 +2,7 @@
     
    <invokers>
          <invoker folderid="/explorer/txn/treasury" caption="Cash Receipt" action="init" index="10"/>
-         <invoker type="formActions" caption="Next" action="runProcess"/>
+         <invoker type="formActions" caption="Next" action="runProcess" shortcut="ctrl N"/>
    </invokers>
    
    <code>
