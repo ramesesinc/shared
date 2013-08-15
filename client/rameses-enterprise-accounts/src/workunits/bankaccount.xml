@@ -38,7 +38,7 @@
    </code>
    
    <pages>
-       <page template="com.rameses.enterprise.treasury.bank.BankAccountPage" />
+       <page template="com.rameses.enterprise.accounts.BankAccountPage" />
    </pages>
    
 </workunit>

@@ -32,7 +32,7 @@
    </code>
    
    <pages>
-       <page template="com.rameses.enterprise.treasury.master.RevenueItemPage"/>
+       <page template="com.rameses.enterprise.accounts.RevenueItemPage"/>
    </pages>
    
 </workunit>
