@@ -309,6 +309,10 @@ public class CRUDController
     
     public void save(){
         try {
+            onbeforeSave();
+            Map data = getEntity();
+            beforeSave(data);
+            
             if (isShowConfirmOnSave()) {
                 String msg = getConfirmSaveMsg();
                 if (msg == null || msg.length() == 0) { 
@@ -317,18 +321,12 @@ public class CRUDController
                 if (!MsgBox.confirm(msg)) return;
             }
             
-            onbeforeSave();
-
             if (MODE_CREATE.equals(this.mode)) {
-                Map data = getEntity();
-                beforeSave(data);
                 data.put("createdby", OsirisContext.getEnv().get("USERID")); 
                 data = getServiceProxy().create(data); 
                 if (data != null) setEntity(data); 
             } 
             else if (MODE_EDIT.equals(this.mode)) {
-                Map data = getEntity();
-                beforeSave(data);
                 data.put("modifiedby", OsirisContext.getEnv().get("USERID")); 
                 data = getServiceProxy().update(data); 
                 if (data != null) setEntity(data); 
