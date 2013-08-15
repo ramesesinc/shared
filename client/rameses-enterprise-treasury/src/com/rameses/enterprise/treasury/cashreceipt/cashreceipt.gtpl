@@ -17,7 +17,7 @@
 <br>
 <br>
 <br>
-<table>
+<table width="300">
     <tr>
         <td>Receipt No</td>
         <td><b>${entity.receiptno} <font color=blue>${entity.txnmode}</font></b></td>
@@ -37,7 +37,7 @@
     <tr>
         <td colspan="2">
             <br>
-            ${entity.remarks}
+            ${ (entity.remarks)? entity.remarks: ''}
             </br>
         </td>
     </tr>
@@ -50,12 +50,14 @@
                     <th>Item code</th>
                     <th>Title</th>
                     <th>Amount</th>
+                    <th>Remarks</th>
                 </tr>
                 <%entity.items.each{ %>
                     <tr>
                         <td>${it?.item.code}</td>
                         <td>${it?.item.title}</td>
                         <td>${it?.amount}</td>
+                        <td>${  (it?.remarks) ? it.remarks : ''}</td>
                     </tr>
                 <%}%>
             </table>

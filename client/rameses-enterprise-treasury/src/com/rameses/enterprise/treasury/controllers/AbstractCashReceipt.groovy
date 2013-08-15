@@ -21,11 +21,7 @@ public abstract class AbstractCashReceipt {
     boolean completed = false;
     
     void init() {
-        entity.objid = "RCT"+new java.rmi.server.UID();
-        entity.items = [];
         title = entity.collectiontype.title;
-        clearAllPayments();
-        entity.amount = 0;
         completed = false;
     }
 
