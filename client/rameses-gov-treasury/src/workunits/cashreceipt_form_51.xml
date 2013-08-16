@@ -17,7 +17,7 @@
             def reportData;
             def parameters = [:];
             
-            
+            def reportPath = 'com/rameses/gov/treasury/cashreceipt/forms/'
             public Map getParameters() {
                 return parameters;
             }
@@ -25,12 +25,11 @@
                 return reportData;
             }
             public String getReportName() {
-                return "com/rameses/gov/treasury/cashreceipt/forms/form_51.jasper";
+                return reportPath + "form_51.jasper";
             }
-            
-            public SubReport[] getSubReports() {
+            public SubReport[] getSubReports(){
                 return [
-                    new SubReport("AF51Item", "com/rameses/gov/treasury/cashreceipt/forms/form_51item.jasper")
+                    new SubReport("AF51Item", reportPath + "form_51item.jasper")
                 ] as SubReport[];    
             }
         }
