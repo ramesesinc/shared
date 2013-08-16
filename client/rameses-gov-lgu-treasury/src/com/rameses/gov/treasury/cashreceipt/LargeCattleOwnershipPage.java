@@ -35,9 +35,6 @@ public class LargeCattleOwnershipPage extends javax.swing.JPanel {
         xNumberField4 = new com.rameses.rcp.control.XNumberField();
         xTextField4 = new com.rameses.rcp.control.XTextField();
         xTextField5 = new com.rameses.rcp.control.XTextField();
-        xSeparator1 = new com.rameses.rcp.control.XSeparator();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        xTextArea1 = new com.rameses.rcp.control.XTextArea();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -88,29 +85,6 @@ public class LargeCattleOwnershipPage extends javax.swing.JPanel {
         xTextField5.setPreferredSize(new java.awt.Dimension(0, 20));
         formPanel3.add(xTextField5);
 
-        xSeparator1.setPreferredSize(new java.awt.Dimension(0, 20));
-        org.jdesktop.layout.GroupLayout xSeparator1Layout = new org.jdesktop.layout.GroupLayout(xSeparator1);
-        xSeparator1.setLayout(xSeparator1Layout);
-        xSeparator1Layout.setHorizontalGroup(
-            xSeparator1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 540, Short.MAX_VALUE)
-        );
-        xSeparator1Layout.setVerticalGroup(
-            xSeparator1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 20, Short.MAX_VALUE)
-        );
-        formPanel3.add(xSeparator1);
-
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(0, 75));
-        xTextArea1.setCaption("Remarks");
-        xTextArea1.setCaptionWidth(170);
-        xTextArea1.setFont(new java.awt.Font("Arial", 0, 12));
-        xTextArea1.setName("entity.remarks");
-        xTextArea1.setPreferredSize(new java.awt.Dimension(229, 100));
-        jScrollPane1.setViewportView(xTextArea1);
-
-        formPanel3.add(jScrollPane1);
-
         org.jdesktop.layout.GroupLayout jPanel7Layout = new org.jdesktop.layout.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -134,11 +108,8 @@ public class LargeCattleOwnershipPage extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.rameses.rcp.util.FormPanel formPanel3;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JScrollPane jScrollPane1;
     private com.rameses.rcp.control.XComboBox xComboBox1;
     private com.rameses.rcp.control.XNumberField xNumberField4;
-    private com.rameses.rcp.control.XSeparator xSeparator1;
-    private com.rameses.rcp.control.XTextArea xTextArea1;
     private com.rameses.rcp.control.XTextField xTextField3;
     private com.rameses.rcp.control.XTextField xTextField4;
     private com.rameses.rcp.control.XTextField xTextField5;
