@@ -1,8 +1,5 @@
 <workunit extends="wtemplates/gov/treasury/BasicCashReceiptController.xml">
     <invokers>
-        <invoker type="collectiontype:handler" caption="Marriage License" 
-            name="marriage"  formno="54" formtype="serial" index="0"/>
-            
         <invoker type="cashreceipt:marriage" action="init" />
     </invokers>
     

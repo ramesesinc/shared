@@ -24,7 +24,7 @@
 	<import value="net.sf.jasperreports.engine.data.*" />
 
 	<parameter name="listSize" isForPrompting="false" class="java.lang.Integer">
-		<defaultValueExpression ><![CDATA[new Integer(0)]]></defaultValueExpression>
+		<defaultValueExpression ><![CDATA[new Integer(13)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="REMARKS" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="TOTAL" isForPrompting="false" class="java.math.BigDecimal"/>
@@ -48,7 +48,7 @@
 		</pageHeader>
 		<columnHeader>
 			<band height="20"  isSplitAllowed="true" >
-				<printWhenExpression><![CDATA[new Boolean($P{listSize}.intValue() > $P{RECEIPTITEMCOUNT}.intValue())]]></printWhenExpression>
+				<printWhenExpression><![CDATA[new Boolean($P{listSize}.intValue() > 13)]]></printWhenExpression>
 				<staticText>
 					<reportElement
 						mode="Transparent"
@@ -72,15 +72,15 @@
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="14"  isSplitAllowed="true" >
-				<printWhenExpression><![CDATA[new Boolean($P{listSize}.intValue() <= $P{RECEIPTITEMCOUNT}.intValue())]]></printWhenExpression>
+			<band height="16"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[new Boolean($P{listSize}.intValue() <= 13)]]></printWhenExpression>
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						mode="Transparent"
 						x="5"
 						y="0"
 						width="145"
-						height="14"
+						height="16"
 						forecolor="#000000"
 						backcolor="#FFFFFF"
 						key="textField-1"/>
@@ -96,7 +96,7 @@
 						x="150"
 						y="0"
 						width="37"
-						height="14"
+						height="16"
 						forecolor="#000000"
 						backcolor="#FFFFFF"
 						key="textField-2"/>
@@ -112,7 +112,7 @@
 						x="186"
 						y="0"
 						width="56"
-						height="14"
+						height="16"
 						forecolor="#000000"
 						backcolor="#FFFFFF"
 						key="textField-3"/>

@@ -49,6 +49,9 @@
 	<field name="voided" class="java.lang.Integer"/>
 	<field name="remarks" class="java.lang.String"/>
 	<field name="org.name" class="java.lang.String"/>
+	<field name="listSize" class="java.lang.Integer">
+		<fieldDescription><![CDATA[13]]></fieldDescription>
+	</field>
 
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -194,7 +197,7 @@
 						<subreportParameterExpression><![CDATA[$F{remarks}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter  name="listSize">
-						<subreportParameterExpression><![CDATA[$P{listSize}]]></subreportParameterExpression>
+						<subreportParameterExpression><![CDATA[$F{listSize}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter  name="RECEIPTITEMCOUNT">
 						<subreportParameterExpression><![CDATA[$P{RECEIPTITEMCOUNT}]]></subreportParameterExpression>
