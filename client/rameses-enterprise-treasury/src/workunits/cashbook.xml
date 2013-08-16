@@ -1,0 +1,58 @@
+<workunit>
+    
+   <invokers>
+         <invoker type="cashbook:open" caption="Cashbook" action="open"/>
+         <invoker type="cashbook:create" caption="Cashbook" action="create"/>
+   </invokers>
+   
+   <code>
+       <![CDATA[
+        import com.rameses.osiris2.common.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.osiris2.client.*;
+        import com.rameses.util.*;
+        
+        class CashBookController extends CRUDController {
+        
+            @Binding
+            def binding;
+        
+            @Service("CashBookService")
+            def service;
+        
+            String title = "Cash Book";
+            String prefixId = "CSHBK";
+            
+            def subAcctTypes = ["COLLECTOR", "TREASURER", "SUBCOLLECTOR", "CASHIER"];
+            
+            Map createEntity() {
+                return [subacct:[:], fund:[:]];
+            }
+            
+            void beforeSave(o) {
+                if( !entity.subacct )
+                    throw new Exception("Sub account is required");
+            }
+            
+            def getLookupSubAccounts() {
+                return InvokerUtil.lookupOpener( "collector:lookup", [:] );
+            }
+
+            @PropertyChangeListener
+            def listener = [
+                "entity.subacct" : { o->
+                    entity.subacct.name = o.lastname + " " + o.firstname;
+                    entity.title = entity.subacct.name;
+                }
+            ]
+            
+        }      
+       ]]>
+   </code>
+   
+   <pages>
+       <page template="com.rameses.enterprise.treasury.cashbook.CashBookPage" />
+   </pages>
+   
+</workunit>

@@ -34,6 +34,7 @@ public class RevenueItemPage extends javax.swing.JPanel {
         xTextField2 = new com.rameses.rcp.control.XTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         xTextArea1 = new com.rameses.rcp.control.XTextArea();
+        xLookupField2 = new com.rameses.rcp.control.XLookupField();
 
         setPreferredSize(new java.awt.Dimension(542, 498));
 
@@ -58,6 +59,14 @@ public class RevenueItemPage extends javax.swing.JPanel {
 
         xFormPanel1.add(jScrollPane1);
 
+        xLookupField2.setCaption("Fund");
+        xLookupField2.setExpression("#{item.code} #{item.title}");
+        xLookupField2.setHandler("fund:lookup");
+        xLookupField2.setName("entity.fund");
+        xLookupField2.setPreferredSize(new java.awt.Dimension(0, 19));
+        xLookupField2.setRequired(true);
+        xFormPanel1.add(xLookupField2);
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -72,7 +81,7 @@ public class RevenueItemPage extends javax.swing.JPanel {
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 126, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(361, Short.MAX_VALUE))
+                .addContainerGap(90, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     
@@ -80,6 +89,7 @@ public class RevenueItemPage extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
     private com.rameses.rcp.control.XFormPanel xFormPanel1;
+    private com.rameses.rcp.control.XLookupField xLookupField2;
     private com.rameses.rcp.control.XTextArea xTextArea1;
     private com.rameses.rcp.control.XTextField xTextField1;
     private com.rameses.rcp.control.XTextField xTextField2;

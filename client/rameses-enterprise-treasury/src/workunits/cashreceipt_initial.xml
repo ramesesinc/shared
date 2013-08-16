@@ -31,6 +31,8 @@
             def collectiontype;
             def modeOpener;
             def modeOpeners;
+            def collectionTypes;
+            
             
             def mode;
             
@@ -39,13 +41,14 @@
             }
             
             void init() {
-                formTypes = collectionTypeSvc.getAvailableFormTypes();    
+                collectionTypes = collectionTypeSvc.getCollectionTypes();    
+                formTypes = collectionTypes*.formno.unique();
                 modeOpeners = InvokerUtil.lookupOpeners( "cashreceipt:mode", [entity:[:]]);
                 if(modeOpeners.size()>0) modeOpener = modeOpeners.first();
             }
 
             def getCollectionTypes()  {
-                return collectionTypeSvc.getListByFormType( [formno:formno]  );
+                return collectionTypes.findAll{it.formno == formno };
             }
             
             def runProcess() {

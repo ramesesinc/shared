@@ -19,6 +19,8 @@
             def saveHandler;
             
             def doOk() {
+                if( check.amount <= 0 )
+                    throw new Exception("Amount must be greater than 0"); 
                 cashReceiptSvc.validateCheckDate( check.checkdate );
                 check.type = "CHECK";
                 check.particulars = check.checkno + " (" + check.bank + ") dated " + check.checkdate;

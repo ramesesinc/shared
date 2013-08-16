@@ -1,7 +1,7 @@
 <workunit>
     <invokers>
-        <invoker type="collector:openitem" action="open"/>
-        <invoker type="collector:additem" action="create"/>
+        <invoker type="collector:create" action="open"/>
+        <invoker type="collector:open" action="create"/>
     </invokers>
     <code class="com.rameses.admin.controller.UsergroupController"/>
       

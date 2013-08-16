@@ -1,11 +1,10 @@
 /*
- * AccountPage.java
+ * CashBook.java
  *
- * Created on February 27, 2011, 12:48 PM
+ * Created on August 16, 2013, 9:49 AM
  */
 
-package com.rameses.enterprise.accounts;
-
+package com.rameses.enterprise.treasury.cashbook;
 
 import com.rameses.osiris2.themes.FormPage;
 import com.rameses.rcp.ui.annotations.StyleSheet;
@@ -13,16 +12,17 @@ import com.rameses.rcp.ui.annotations.Template;
 
 /**
  *
- * @author  jzamss
+ * @author  Elmo
  */
-@StyleSheet
 @Template(FormPage.class)
-public class BankAccountPage extends javax.swing.JPanel {
+@StyleSheet
+public class CashBookPage extends javax.swing.JPanel {
     
-    /** Creates new form AccountPage */
-    public BankAccountPage() {
+    /** Creates new form CashBook */
+    public CashBookPage() {
         initComponents();
     }
+    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -32,67 +32,57 @@ public class BankAccountPage extends javax.swing.JPanel {
     private void initComponents() {
         xFormPanel1 = new com.rameses.rcp.control.XFormPanel();
         xTextField1 = new com.rameses.rcp.control.XTextField();
-        xTextField2 = new com.rameses.rcp.control.XTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         xTextArea1 = new com.rameses.rcp.control.XTextArea();
         xComboBox1 = new com.rameses.rcp.control.XComboBox();
         xLookupField1 = new com.rameses.rcp.control.XLookupField();
-        xComboBox2 = new com.rameses.rcp.control.XComboBox();
         xLookupField2 = new com.rameses.rcp.control.XLookupField();
+        xTextField2 = new com.rameses.rcp.control.XTextField();
 
-        setPreferredSize(new java.awt.Dimension(542, 498));
-
-        xTextField1.setCaption("Acct Code");
+        xFormPanel1.setCaptionWidth(150);
+        xFormPanel1.setPreferredSize(new java.awt.Dimension(0, 50));
+        xFormPanel1.setRequired(true);
+        xTextField1.setCaption("Code");
         xTextField1.setName("entity.code");
-        xTextField1.setPreferredSize(new java.awt.Dimension(0, 19));
+        xTextField1.setPreferredSize(new java.awt.Dimension(100, 19));
         xTextField1.setRequired(true);
-        xTextField1.setSpaceChar('_');
         xFormPanel1.add(xTextField1);
-
-        xTextField2.setCaption("Acct Title");
-        xTextField2.setName("entity.title");
-        xTextField2.setPreferredSize(new java.awt.Dimension(0, 19));
-        xTextField2.setRequired(true);
-        xFormPanel1.add(xTextField2);
 
         jScrollPane1.setPreferredSize(new java.awt.Dimension(0, 42));
         xTextArea1.setCaption("Description");
         xTextArea1.setName("entity.description");
-        xTextArea1.setPreferredSize(new java.awt.Dimension(0, 40));
         jScrollPane1.setViewportView(xTextArea1);
 
         xFormPanel1.add(jScrollPane1);
 
-        xComboBox1.setCaption("Acct Type");
-        xComboBox1.setItems("acctTypes");
-        xComboBox1.setName("entity.accttype");
-        xComboBox1.setPreferredSize(new java.awt.Dimension(120, 22));
+        xComboBox1.setCaption("Sub Account Type");
+        xComboBox1.setItems("subAcctTypes");
+        xComboBox1.setName("entity.type");
+        xComboBox1.setOpaque(false);
+        xComboBox1.setPreferredSize(new java.awt.Dimension(0, 22));
         xComboBox1.setRequired(true);
         xFormPanel1.add(xComboBox1);
 
-        xLookupField1.setCaption("Bank");
-        xLookupField1.setExpression("#{item.code} #{item.name}");
-        xLookupField1.setHandler("bank:lookup");
-        xLookupField1.setName("entity.bank");
+        xLookupField1.setCaption("Subacct Name");
+        xLookupField1.setExpression("#{item.name}");
+        xLookupField1.setHandler("lookupSubAccounts");
+        xLookupField1.setName("entity.subacct");
         xLookupField1.setPreferredSize(new java.awt.Dimension(0, 19));
-        xLookupField1.setRequired(true);
         xFormPanel1.add(xLookupField1);
 
-        xComboBox2.setAllowNull(false);
-        xComboBox2.setCaption("Currency");
-        xComboBox2.setItems("currencyTypes");
-        xComboBox2.setName("entity.currency");
-        xComboBox2.setPreferredSize(new java.awt.Dimension(120, 22));
-        xComboBox2.setRequired(true);
-        xFormPanel1.add(xComboBox2);
-
         xLookupField2.setCaption("Fund");
-        xLookupField2.setExpression("#{item.code} #{item.title}");
+        xLookupField2.setExpression("#{item.code} - #{item.title}");
         xLookupField2.setHandler("fund:lookup");
         xLookupField2.setName("entity.fund");
         xLookupField2.setPreferredSize(new java.awt.Dimension(0, 19));
         xLookupField2.setRequired(true);
         xFormPanel1.add(xLookupField2);
+
+        xTextField2.setCaption("Title");
+        xTextField2.setName("entity.title");
+        xTextField2.setPreferredSize(new java.awt.Dimension(100, 19));
+        xTextField2.setRequired(true);
+        xFormPanel1.add(xTextField2);
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
@@ -100,15 +90,15 @@ public class BankAccountPage extends javax.swing.JPanel {
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 381, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(151, Short.MAX_VALUE))
+                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 414, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(62, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .addContainerGap()
-                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 185, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(302, Short.MAX_VALUE))
+                .add(25, 25, 25)
+                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 148, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(140, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     
@@ -116,7 +106,6 @@ public class BankAccountPage extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
     private com.rameses.rcp.control.XComboBox xComboBox1;
-    private com.rameses.rcp.control.XComboBox xComboBox2;
     private com.rameses.rcp.control.XFormPanel xFormPanel1;
     private com.rameses.rcp.control.XLookupField xLookupField1;
     private com.rameses.rcp.control.XLookupField xLookupField2;

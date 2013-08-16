@@ -118,7 +118,12 @@ public abstract class AbstractCashReceipt {
     
         if(MsgBox.confirm("You are about to post this payment. Please ensure entries are correct")) {
             entity = service.post( entity );
-            print();
+            try {
+                print();
+            }
+            catch(e) {
+                MsgBox.alert("warning! no form handler found for.  " + entity.formno +". Printout is not handled" );
+            }
             completed = true;
             return "completed";
         }
@@ -126,13 +131,10 @@ public abstract class AbstractCashReceipt {
 
     def findReportOpener(def reportData) {
         //check fist if form handler exists.
-        try {
-            def o = InvokerUtil.lookupOpener( "cashreceipt-form:"+entity.formno, [reportData:reportData] );
-            return o.handle;
-        }
-        catch(e) {
-            MsgBox.alert("warning! no form handler found for.  " + entity.formno +". Printout will not be handled" );
-        }
+        def o = InvokerUtil.lookupOpener( "cashreceipt-form:"+entity.formno, [reportData:reportData] );
+        if(!o)
+            throw new Exception("Handler not found");
+        return o.handle;
     }
 
     void print() {

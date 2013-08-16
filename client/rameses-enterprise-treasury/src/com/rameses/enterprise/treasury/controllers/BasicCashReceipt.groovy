@@ -21,7 +21,10 @@ public class BasicCashReceipt extends AbstractCashReceipt {
             updateBalances();
         },
         onColumnUpdate: {o,name-> 
-
+            if(entity.items) {
+                entity.amount = entity.items.sum{ it.amount };
+                updateBalances();
+            }
         },
         onRemoveItem: { o->
             if(!MsgBox.confirm("You are about to remove this entry. Proceed?")) 
@@ -42,7 +45,16 @@ public class BasicCashReceipt extends AbstractCashReceipt {
     def selectedItem;
     def getLookupItems() {
         return InvokerUtil.lookupOpener("revenueitem:lookup",[
+            "query.txntype" : "cashreceipt",
             onselect:{ o->
+                if(!o.fund.objid) 
+                    throw new Exception("The item selected must be associated with a fund");
+
+                if(!o.cashbookid) 
+                    throw new Exception("There is no associated cashbook for this item. Please contact the treasury");
+
+                if( entity.items.find{ it.item.objid == o.objid }!=null )
+                    throw new Exception("This item has already been added");
                 selectedItem.item = o;
             }
         ]); 

@@ -31,6 +31,8 @@
             ]
             
             def doOk() {
+                if(cash<=0)
+                     throw new Exception("Cash amount must be greater than 0");
                 saveHandler( [cash:cash, change:change] );
                 return "_close";
             }

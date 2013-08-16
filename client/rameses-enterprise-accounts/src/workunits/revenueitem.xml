@@ -2,9 +2,7 @@
     <invokers>
         <invoker type="revenueitem:open" caption="Revenue Item" action="open"/>
         <invoker type="revenueitem:create" caption="Revenue Item" action="create"/>
-        
-        <invoker type="formActions" caption="Account Mapping" 
-            action="showSegments" visibleWhen="#{entity.state=='APPROVED'}"/>
+        <invoker type="formActions" caption="Account Mapping" action="showSegments" visibleWhen="#{entity.state=='APPROVED'}"/>
    </invokers>
    <code>
     <![CDATA[
@@ -14,9 +12,11 @@
     import com.rameses.osiris2.client.*;
     import com.rameses.common.*;
 
-    public class ItemAccountController extends CRUDController {
+    public class RevenueItemAccountController extends CRUDController {
     
-        String serviceName  = "RevenueItemService";
+        @Service("RevenueItemService")
+        def service;
+        
         String entityName = "revenueitem";
         String title = "Revenue Item";
         String prefixId = "REVITEM";
