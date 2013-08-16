@@ -45,6 +45,7 @@ public class MiscCashReceiptPage extends javax.swing.JPanel {
         xDataTable1.setIndex(10);
         xDataTable1.setName("selectedItem");
 
+        xButton1.setEnabled(false);
         xButton1.setName("addAccount");
         xButton1.setText("Add Account");
 

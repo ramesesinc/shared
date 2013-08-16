@@ -18,6 +18,14 @@
 <br>
 <br>
 <table width="300">
+    <%if(entity.voided){%>
+        <tr>
+            <td colspan="2">
+                <h1><font color=blue>VOID</font></h1>
+            </td>
+        </tr>
+    <%}%>
+
     <tr>
         <td>Receipt No</td>
         <td><b>${entity.receiptno} <font color=blue>${entity.txnmode}</font></b></td>
@@ -68,6 +76,7 @@
             <hr>
             <%if(entity.totalcash) {%>
                 Cash Paid: ${entity.totalcash} <br><br>
+                Cash Change: ${entity.cashchange} <br><br>
             <%}%>
         </td>
     </tr>
