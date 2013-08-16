@@ -14,7 +14,7 @@
 
     public class RevenueItemAccountController extends CRUDController {
     
-        @Service("RevenueItemService")
+        @Service("RevenueItemAccountService")
         def service;
         
         String entityName = "revenueitem";
