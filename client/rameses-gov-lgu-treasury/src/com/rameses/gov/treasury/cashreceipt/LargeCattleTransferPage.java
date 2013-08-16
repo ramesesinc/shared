@@ -77,7 +77,7 @@ public class LargeCattleTransferPage extends javax.swing.JPanel {
         xSeparator2.setLayout(xSeparator2Layout);
         xSeparator2Layout.setHorizontalGroup(
             xSeparator2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 584, Short.MAX_VALUE)
+            .add(0, 531, Short.MAX_VALUE)
         );
         xSeparator2Layout.setVerticalGroup(
             xSeparator2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -138,7 +138,7 @@ public class LargeCattleTransferPage extends javax.swing.JPanel {
         xSeparator3.setLayout(xSeparator3Layout);
         xSeparator3Layout.setHorizontalGroup(
             xSeparator3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 604, Short.MAX_VALUE)
+            .add(0, 551, Short.MAX_VALUE)
         );
         xSeparator3Layout.setVerticalGroup(
             xSeparator3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -192,7 +192,7 @@ public class LargeCattleTransferPage extends javax.swing.JPanel {
         xSeparator4.setLayout(xSeparator4Layout);
         xSeparator4Layout.setHorizontalGroup(
             xSeparator4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 454, Short.MAX_VALUE)
+            .add(0, 401, Short.MAX_VALUE)
         );
         xSeparator4Layout.setVerticalGroup(
             xSeparator4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -277,7 +277,7 @@ public class LargeCattleTransferPage extends javax.swing.JPanel {
             jPanel7Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(formPanel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 729, Short.MAX_VALUE)
+                .add(formPanel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 676, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
