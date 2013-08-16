@@ -2,14 +2,16 @@
     <invokers>
         <invoker type="user:create" action="init" caption="User Information" resizable="false"/>
         <invoker type="user:open" action="open" caption="User Information" resizable="false"/>
-        
-        <!-- actions within the page -->
-        <invoker type="extActions" action="resetPassword"  caption="Reset Password" resizable="false" visibleWhen="#{mode=='read'}"/>
-   </invokers>
-   
-   <code>
-        <![CDATA[
 
+        <!-- extended actions -->
+        <invoker type="extActions" caption="Reset Password" action="resetPassword"  
+            visibleWhen="#{mode=='read'}" resizable="false" /> 
+        <invoker type="extActions" caption="Add User Group" action="addUsergroup" 
+            visibleWhen="#{mode=='read'}"/>         
+    </invokers>
+   
+    <code>
+    <![CDATA[
         import com.rameses.rcp.annotations.*;
         import com.rameses.rcp.common.*;
         import com.rameses.osiris2.client.*;
@@ -22,6 +24,24 @@
         
             def resetPassword() {
                 return InvokerUtil.lookupOpener("user:resetpwd", [entity:entity]);
+            }
+            
+            def addUsergroup() { 
+                def params = [entity:entity, handler:{ 
+                    entity.usergroups = service.getUsergroups([objid: entity.objid]); 
+                    usergroupHandler.reload(); 
+                }]; 
+                return InvokerUtil.lookupOpener('user-usergroup:add', params); 
+            } 
+            
+            def usergroupHandler = [
+                fetchList: { 
+                    return entity?.usergroups; 
+                }
+            ] as BasicListModel;
+            
+            void entityChanged() {
+                usergroupHandler.reload(); 
             }
         }
         

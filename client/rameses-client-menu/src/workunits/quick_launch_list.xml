@@ -1,15 +1,12 @@
-<workunit>
-    
+<workunit>    
     <invokers>
         <invoker type="toolbar" caption="" tooltip="View all quick launcher keys" 
-                 target="popup" icon="images/list-view.jpg" index="-19"
-                 permission="system"
-                 action="init"/> 
+                 target="popup" icon="images/list-view.jpg" index="-19" 
+                 permission="system" action="init"/> 
     </invokers>
     
     <code>
-        <![CDATA[
-        
+    <![CDATA[        
         import com.rameses.rcp.common.*;
         import com.rameses.rcp.annotations.*;
         import com.rameses.util.*;
@@ -54,13 +51,11 @@
                     }
                     return list 
                 }
-            ] as SubListModel;
-
-            
+            ] as ScrollListModel;
         }
-        
-        ]]>
+    ]]>
     </code>
+    
     <pages>
         <page template="system.launcher.ui.QuickLaunchListPage" />
     </pages>
