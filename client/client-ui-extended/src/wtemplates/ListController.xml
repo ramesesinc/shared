@@ -12,9 +12,7 @@
 
     class DefaultListController extends ListController
     {
-        @Controller
-        def controller;
-        
+    
         private String serviceName;
         private String entityName;
         private String formTarget;

@@ -1,9 +1,9 @@
 <workunit extends="wtemplates/gov/treasury/BasicCashReceiptController.xml">
     <invokers>
-        <invoker type="collectiontype:handler" caption="Burial 1" 
-            name="burial" formno="58" formtype="serial" index="0" />
+        <invoker type="collectiontype:handler" caption="Marriage License" 
+            name="marriage"  formno="54" formtype="serial" index="0"/>
     </invokers>
-    
+
     <code>
         <![CDATA[    
         import com.rameses.rcp.annotations.*
@@ -12,13 +12,14 @@
         import com.rameses.osiris2.common.*
         import com.rameses.enterprise.treasury.controllers.*
         
-        class  BurialReceiptController {
-            @Caller
-            def caller;
-        
-            public def getEntity() {
-                return caller.entity;
+        class  MarriageLicenseCollectionTypeController {
+            @Caller 
+            def caller 
+            
+            def getEntity(){
+                return caller.entity
             }
+            
             
         }
         ]]>
@@ -26,7 +27,7 @@
     </code>
     
     <pages>
-        <page name="default" template="com.rameses.enterprise.treasury.collection.SpecialAccountCollectionHandler"/>
+        <page name="default" template="com.rameses.gov.treasury.cashreceipt.SpecialCollectionTypeHandler"/>
     </pages>
     
 </workunit>

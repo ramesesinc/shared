@@ -1,0 +1,32 @@
+<workunit>
+    <invokers>
+        <invoker type="user-usergroup-org:open" action="init"/>
+    </invokers>
+   
+    <code>
+    <![CDATA[
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.osiris2.client.*;
+        import com.rameses.osiris2.common.*;
+
+        public class UserGroupOrgController {
+            
+            def entity;
+
+            void init(){
+            }
+            
+            def getLookupOrg() {
+                return InvokerUtil.lookupOpener('org:lookup', [
+                    'query.orgclass': entity.orgclass 
+                ]); 
+            } 
+        }
+    ]]>
+    </code>
+    
+    <pages>
+        <page template="com.rameses.admin.user.UsergroupOrgPage"/>
+    </pages>
+</workunit>

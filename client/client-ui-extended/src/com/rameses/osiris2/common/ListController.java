@@ -31,10 +31,21 @@ public abstract class ListController extends BasicListController implements Page
     public String getTag() { return tag; } 
     public void setTag(String tag) { this.tag = tag; }    
     
-    public Map getQuery() { return query; }
-          
     public String getFormTarget() { return "popup"; }    
     
+    public int getRows() {
+        Map wuprops = getControllerProperties();
+        Object oval = wuprops.get("rows");
+        if (oval != null) {
+            try {
+                return Integer.parseInt(oval.toString()); 
+            } catch(Throwable t) {;}
+        }
+        return super.getRows(); 
+    }
+        
+    public Map getQuery() { return query; }
+            
     public Opener getQueryForm() 
     {
         if (isAllowSearch()) { 

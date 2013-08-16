@@ -1,6 +1,7 @@
 <workunit extends="wtemplates/gov/treasury/BasicCashReceiptController.xml">
     <invokers>
-        <invoker type="cashreceipt:lco" action="init" />
+        <invoker type="collectiontype:handler" caption="Burial" 
+            name="burial" formno="58" formtype="serial" index="0"/>
     </invokers>
     
     <code>
@@ -11,15 +12,22 @@
         import com.rameses.osiris2.common.*
         import com.rameses.enterprise.treasury.controllers.*
         
-        class  LaregCattleOwnershipReceiptController extends BasicCashReceipt {
-            def sexList = ["MALE", "FEMALE"];
+        class  BurialReceiptCollectionTypeController {
+            @Caller 
+            def caller 
+            
+            def getEntity(){
+                return caller.entity
+            }
+            
+            
         }
         ]]>
         
     </code>
     
     <pages>
-        <page name="default" template="com.rameses.gov.treasury.cashreceipt.LargeCattleOwnershipPage"/>
+        <page name="default" template="com.rameses.gov.treasury.cashreceipt.SpecialCollectionTypeHandler"/>
     </pages>
     
 </workunit>

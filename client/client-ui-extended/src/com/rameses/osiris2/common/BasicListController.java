@@ -132,7 +132,7 @@ public abstract class BasicListController extends PageListModel
     
     // <editor-fold defaultstate="collapsed" desc=" helper methods ">      
     
-    private Map wuprops;
+    private Map wuprops = null;
     
     protected final Map getControllerProperties() {
         try {
