@@ -27,6 +27,7 @@
             String title = "Cash Receipt";
 
             def formno;
+            def txnmode;
             def formTypes;
             def collectiontype;
             def modeOpener;
@@ -54,7 +55,8 @@
             def runProcess() {
                 try {
                     def entity = [:];
-                    entity.txnmode = modeOpener.caption;
+                    txnmode = modeOpener.caption;
+                    entity.txnmode = txnmode;
                     entity.formno = formno;
                     entity.collectiontype = collectiontype;
 
@@ -64,7 +66,7 @@
                 }
                 catch(Warning w) {
                     String m = "cashreceipt:"+w.message;
-                    return InvokerUtil.lookupOpener( m, [formno: formno ] );
+                    return InvokerUtil.lookupOpener( m, [formno: formno, txnmode:txnmode ] );
                 }
                 catch(e) {
                     throw e;

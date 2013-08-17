@@ -21,6 +21,7 @@
             def caller
             
             def formno;
+            def txnmode;
             def handler;
             def selectedItem;
         
@@ -39,7 +40,7 @@
                     ]
                 },
                 fetchList: { o->
-                    return svc.getOpenControlList( [af:formno] );
+                    return svc.getOpenControlList( [af:formno, txnmode:txnmode] );
                 }
             ] as BasicListModel;
             
