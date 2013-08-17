@@ -38,7 +38,7 @@ public class CashBookEntriesPage extends javax.swing.JPanel {
         xButton2 = new com.rameses.rcp.control.XButton();
         xButton3 = new com.rameses.rcp.control.XButton();
 
-        xLabel1.setExpression("#{entity.subacct.name}");
+        xLabel1.setExpression("#{entity.title}");
         xLabel1.setFont(new java.awt.Font("Tahoma", 1, 14));
 
         xDataTable1.setColumns(new com.rameses.rcp.common.Column[]{

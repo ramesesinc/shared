@@ -155,5 +155,12 @@ public abstract class AbstractCashReceipt {
         return TemplateProvider.instance.getResult( "com/rameses/enterprise/treasury/cashreceipt/cashreceipt.gtpl", [entity:entity] );
     }
 
-
+    def doVoid() {
+        return InvokerUtil.lookupOpener( "cashreceipt:void", [receipt:entity,
+            handler: { o->
+                entity.voided = true;
+                binding.refresh();
+            }
+        ]); 
+    }
 }
