@@ -4,7 +4,7 @@
  * Created on May 2, 2011, 3:01 PM
  */
 
-package etracs2.tc.liquidation;
+package com.rameses.gov.treasury.liquidation;
 
 /**
  *
