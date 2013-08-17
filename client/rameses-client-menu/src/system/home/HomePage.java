@@ -32,7 +32,7 @@ public class HomePage extends javax.swing.JPanel {
         xActionBar1.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         xActionBar1.setName("formActions");
         xActionBar1.setOpaque(false);
-        xActionBar1.setOrientation(com.rameses.rcp.constant.UIConstants.XFLOW);
+        xActionBar1.setOrientation("XFLOW");
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
@@ -45,7 +45,7 @@ public class HomePage extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .add(xActionBar1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
                 .addContainerGap())

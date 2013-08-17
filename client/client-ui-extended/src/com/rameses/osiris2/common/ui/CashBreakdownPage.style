@@ -1,0 +1,3 @@
+"listModel:item.*"[ item.qty != 0 ] {
+    background-color: yellow;
+}   

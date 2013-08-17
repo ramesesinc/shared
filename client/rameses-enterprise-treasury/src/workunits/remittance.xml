@@ -1,0 +1,76 @@
+<workunit>
+    
+   <invokers>
+         <invoker type="remittance:create" caption="Remittance" action="init"/>
+         <invoker type="quick_launcher" code="REM" caption="Remittance" action="init"/>
+         
+         <invoker type="formActions" caption="Next" name="doEntry" visibleWhen="#{state == 'initial'}" />
+         <invoker type="formActions" caption="Submit" name="submit" visibleWhen="#{state != 'initial'}" />
+   </invokers>
+   
+   <code>
+       <![CDATA[
+        import com.rameses.osiris2.common.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.rcp.annotations.*;
+        import java.rmi.server.*;
+        import com.rameses.osiris2.client.*;
+        import com.rameses.util.*;
+        
+        class RemittanceController {
+        
+            @Binding
+            def binding;
+        
+            def state = "initial";
+            
+            @Service("RemittanceService")
+            def service;
+        
+            String title = "Remittance";
+            def entity;
+            def cashBreakdown;
+            def breakdown  = 0.0;
+            
+            def init() {
+                entity = service.init();
+                state = "initial";
+                return "initial";
+            }
+            
+            def listModel = [
+                fetchList: { o->
+                    return entity.items;
+                }
+            ] as BasicListModel;
+            
+            def doEntry() {
+                state = "entry";
+                entity.cashbreakdown = [];
+                cashBreakdown = InvokerUtil.lookupOpener("cash:breakdown", [
+                    entries: entity.cashbreakdown, onupdate: { o->
+                        breakdown = o;
+                        binding.refresh("breakdown");
+                    }] );
+                return "default";
+            }
+            
+            void submit() {
+                if( breakdown != entity.totalcash )
+                    throw new Exception("Cash breakdown must equal total cash");
+            
+                if( MsgBox.confirm("You are about to submit this remittance. Please ensure the entries are correct")) {
+                    service.post( entity );
+                }
+            }
+            
+        }      
+       ]]>
+   </code>
+   
+   <pages>
+       <page name="initial" template="com.rameses.enterprise.treasury.remittance.RemittanceInitPage" />
+       <page name="default" template="com.rameses.enterprise.treasury.remittance.RemittancePage" />
+   </pages>
+   
+</workunit>
