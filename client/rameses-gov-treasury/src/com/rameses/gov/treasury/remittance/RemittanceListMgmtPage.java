@@ -4,7 +4,7 @@
  * Created on February 27, 2011, 12:48 PM
  */
 
-package etracs2.tc.remittance;
+package com.rameses.gov.treasury.remittance;
 
 import com.rameses.rcp.ui.annotations.StyleSheet;
 

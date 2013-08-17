@@ -4,7 +4,7 @@
  * Created on May 2, 2011, 3:41 PM
  */
 
-package etracs2.tc.liquidation;
+package com.rameses.gov.treasury.liquidation;
 
 import com.rameses.rcp.ui.annotations.StyleSheet;
 import java.math.BigDecimal;
