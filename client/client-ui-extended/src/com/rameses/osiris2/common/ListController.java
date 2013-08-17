@@ -19,6 +19,7 @@ public abstract class ListController extends BasicListController implements Page
     private List<Map> contextMenuActions;
     private Map query = new HashMap(); 
     private String tag;
+    private String formName;
     
     public abstract String getServiceName();
     
@@ -32,6 +33,16 @@ public abstract class ListController extends BasicListController implements Page
     public void setTag(String tag) { this.tag = tag; }    
     
     public String getFormTarget() { return "popup"; }    
+    
+    public String getFormName() { 
+        Map wuprops = getControllerProperties();
+        Object oval = wuprops.get("formName");
+        return (oval == null? this.formName: oval.toString()); 
+    } 
+    
+    public void setFormName(String formName) { 
+        this.formName = formName; 
+    }
     
     public int getRows() {
         Map wuprops = getControllerProperties();
