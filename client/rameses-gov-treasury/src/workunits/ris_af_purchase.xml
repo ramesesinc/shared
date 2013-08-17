@@ -96,6 +96,21 @@
                 return InvokerUtil.lookupOpener("report:riv", [risid:entity.ris.objid])
             }
             
+            
+            /*-------- REMOVE AF SUPPORT --------*/
+            def selectedAf;
+            
+            void removeAf(){
+                if (selectedAf && MsgBox.confirm('Remove selected accountable form item?')){
+                    entity.items.remove(selectedAf);
+                    def risItem = entity.ris.items.find{it.item.code == selectedAf.af};
+                    risItem.qtyreceived -= selectedAf.qty
+                    risItem.qtybalance += selectedAf.qty
+                    issuedItemModel.reload();
+                    reqItemModel.reload();
+                }
+            }
+            
         }
         ]]>
         
