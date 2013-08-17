@@ -1,0 +1,5 @@
+<workunit extends="wtemplates/ServiceLookupController.xml"  serviceName="CashBookSubAcctLookupService">
+    <invokers>
+        <invoker type="cashbook_subacct:lookup" caption="Lookup Sub Accounts" target="popup"/>
+    </invokers>
+</workunit>

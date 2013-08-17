@@ -21,7 +21,7 @@
     <%if(entity.voided){%>
         <tr>
             <td colspan="2">
-                <h1><font color=blue>VOID</font></h1>
+                <h1><font color=red>VOID</font></h1>
             </td>
         </tr>
     <%}%>

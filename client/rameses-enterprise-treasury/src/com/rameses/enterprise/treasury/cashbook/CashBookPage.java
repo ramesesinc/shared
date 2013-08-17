@@ -30,46 +30,26 @@ public class CashBookPage extends javax.swing.JPanel {
      */
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
     private void initComponents() {
+        jPanel1 = new javax.swing.JPanel();
         xFormPanel1 = new com.rameses.rcp.control.XFormPanel();
+        xLookupField2 = new com.rameses.rcp.control.XLookupField();
+        xLookupField1 = new com.rameses.rcp.control.XLookupField();
+        xLabel1 = new com.rameses.rcp.control.XLabel();
+        jPanel2 = new javax.swing.JPanel();
+        xFormPanel3 = new com.rameses.rcp.control.XFormPanel();
         xTextField1 = new com.rameses.rcp.control.XTextField();
+        xTextField2 = new com.rameses.rcp.control.XTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         xTextArea1 = new com.rameses.rcp.control.XTextArea();
-        xComboBox1 = new com.rameses.rcp.control.XComboBox();
-        xLookupField1 = new com.rameses.rcp.control.XLookupField();
-        xLookupField2 = new com.rameses.rcp.control.XLookupField();
-        xTextField2 = new com.rameses.rcp.control.XTextField();
+
+        setPreferredSize(new java.awt.Dimension(611, 380));
+        com.rameses.rcp.control.border.XTitledBorder xTitledBorder1 = new com.rameses.rcp.control.border.XTitledBorder();
+        xTitledBorder1.setTitle("Sub Account Info");
+        jPanel1.setBorder(xTitledBorder1);
 
         xFormPanel1.setCaptionWidth(150);
         xFormPanel1.setPreferredSize(new java.awt.Dimension(0, 50));
         xFormPanel1.setRequired(true);
-        xTextField1.setCaption("Code");
-        xTextField1.setName("entity.code");
-        xTextField1.setPreferredSize(new java.awt.Dimension(100, 19));
-        xTextField1.setRequired(true);
-        xFormPanel1.add(xTextField1);
-
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(0, 42));
-        xTextArea1.setCaption("Description");
-        xTextArea1.setName("entity.description");
-        jScrollPane1.setViewportView(xTextArea1);
-
-        xFormPanel1.add(jScrollPane1);
-
-        xComboBox1.setCaption("Sub Account Type");
-        xComboBox1.setItems("subAcctTypes");
-        xComboBox1.setName("entity.type");
-        xComboBox1.setOpaque(false);
-        xComboBox1.setPreferredSize(new java.awt.Dimension(0, 22));
-        xComboBox1.setRequired(true);
-        xFormPanel1.add(xComboBox1);
-
-        xLookupField1.setCaption("Subacct Name");
-        xLookupField1.setExpression("#{item.name}");
-        xLookupField1.setHandler("lookupSubAccounts");
-        xLookupField1.setName("entity.subacct");
-        xLookupField1.setPreferredSize(new java.awt.Dimension(0, 19));
-        xFormPanel1.add(xLookupField1);
-
         xLookupField2.setCaption("Fund");
         xLookupField2.setExpression("#{item.code} - #{item.title}");
         xLookupField2.setHandler("fund:lookup");
@@ -78,11 +58,77 @@ public class CashBookPage extends javax.swing.JPanel {
         xLookupField2.setRequired(true);
         xFormPanel1.add(xLookupField2);
 
-        xTextField2.setCaption("Title");
+        xLookupField1.setCaption("Subacct Name");
+        xLookupField1.setExpression("#{entity.subacct.name}");
+        xLookupField1.setHandler("lookupSubAccounts");
+        xLookupField1.setName("entity.subacct");
+        xLookupField1.setPreferredSize(new java.awt.Dimension(0, 19));
+        xLookupField1.setRequired(true);
+        xFormPanel1.add(xLookupField1);
+
+        xLabel1.setCaption("Sub Acct Type");
+        xLabel1.setExpression("#{entity.type}");
+        xLabel1.setPreferredSize(new java.awt.Dimension(0, 16));
+        xFormPanel1.add(xLabel1);
+
+        org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 404, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(175, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        com.rameses.rcp.control.border.XTitledBorder xTitledBorder2 = new com.rameses.rcp.control.border.XTitledBorder();
+        xTitledBorder2.setTitle("Sub Account Details");
+        jPanel2.setBorder(xTitledBorder2);
+
+        xFormPanel3.setCaptionWidth(150);
+        xTextField1.setCaption("Acct Code");
+        xTextField1.setName("entity.code");
+        xTextField1.setPreferredSize(new java.awt.Dimension(150, 19));
+        xTextField1.setRequired(true);
+        xFormPanel3.add(xTextField1);
+
+        xTextField2.setCaption("Acct Title");
+        xTextField2.setDepends(new String[] {"entity.fund", "entity.subacct"});
         xTextField2.setName("entity.title");
-        xTextField2.setPreferredSize(new java.awt.Dimension(100, 19));
+        xTextField2.setPreferredSize(new java.awt.Dimension(0, 19));
         xTextField2.setRequired(true);
-        xFormPanel1.add(xTextField2);
+        xFormPanel3.add(xTextField2);
+
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(0, 42));
+        xTextArea1.setCaption("Description");
+        xTextArea1.setName("entity.description");
+        jScrollPane1.setViewportView(xTextArea1);
+
+        xFormPanel3.add(jScrollPane1);
+
+        org.jdesktop.layout.GroupLayout jPanel2Layout = new org.jdesktop.layout.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .add(xFormPanel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 469, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(110, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .add(xFormPanel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 101, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(50, Short.MAX_VALUE))
+        );
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
@@ -90,23 +136,30 @@ public class CashBookPage extends javax.swing.JPanel {
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 414, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(62, Short.MAX_VALUE))
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .add(25, 25, 25)
-                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 148, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(140, Short.MAX_VALUE))
+                .addContainerGap()
+                .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(36, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private com.rameses.rcp.control.XComboBox xComboBox1;
     private com.rameses.rcp.control.XFormPanel xFormPanel1;
+    private com.rameses.rcp.control.XFormPanel xFormPanel3;
+    private com.rameses.rcp.control.XLabel xLabel1;
     private com.rameses.rcp.control.XLookupField xLookupField1;
     private com.rameses.rcp.control.XLookupField xLookupField2;
     private com.rameses.rcp.control.XTextArea xTextArea1;

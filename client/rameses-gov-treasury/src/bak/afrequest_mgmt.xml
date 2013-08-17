@@ -1,7 +1,0 @@
-<workunit extends="wtemplates/ExplorerViewController.xml" 
-    serviceName="AFRequisitionMgmtService" defaultFileType="afrequest">
-    <invokers>
-        <invoker folderid="/txnmgmt/treasury"
-            caption="AF Requisition" index="-5" action="init"/>
-    </invokers>
-</workunit>

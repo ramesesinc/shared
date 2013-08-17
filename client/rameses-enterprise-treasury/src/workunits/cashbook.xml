@@ -4,7 +4,7 @@
          <invoker type="cashbook:open" caption="Cashbook" action="open"/>
          <invoker type="cashbook:create" caption="Cashbook" action="create"/>
          
-         <invoker type="formActions" caption="Details" action="_details" visibleWhen="#{mode=='read'}"/>
+         <invoker type="formActions" caption="Details" action="_details" visibleWhen="#{mode=='read' &amp;&amp; entity.state=='APPROVED'}"/>
    </invokers>
    
    <code>
@@ -26,8 +26,6 @@
             String title = "Cash Book";
             String prefixId = "CSHBK";
             
-            def subAcctTypes = ["COLLECTOR", "TREASURER", "SUBCOLLECTOR", "CASHIER"];
-            
             Map createEntity() {
                 return [subacct:[:], fund:[:]];
             }
@@ -38,16 +36,29 @@
             }
             
             def getLookupSubAccounts() {
-                return InvokerUtil.lookupOpener( "collector:lookup", [:] );
+                return InvokerUtil.lookupOpener( "cashbook_subacct:lookup", [
+                    onselect : { o->
+                        entity.subacct.name = o.name;
+                        entity.subacct.objid = o.objid;
+                        entity.type = o.subaccttype;
+                        entity.title = entity.subacct.name + " - " + entity.fund?.title;
+                        binding.refresh("entity.type");
+                        binding.refresh("entity.title");
+                    }
+                ]);
             }
-
+            
             @PropertyChangeListener
             def listener = [
-                "entity.subacct" : { o->
-                    entity.subacct.name = o.lastname + " " + o.firstname;
-                    entity.title = entity.subacct.name;
+                "entity.fund" : {
+                    entity.title = (entity.subacct?.name) ? entity.subacct.name + " - " : '';
+                    entity.title += (entity.fund?.title) ? entity.fund.title : '';
                 }
-            ]
+            ];
+            
+            void entityChanged() {
+                listModel.reload();
+            }
             
             def listModel = [
                 fetchList: { o->
