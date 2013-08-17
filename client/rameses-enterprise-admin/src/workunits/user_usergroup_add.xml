@@ -1,6 +1,6 @@
 <workunit>
     <invokers>
-        <invoker type="user-usergroup:add" caption="Add User Group" action="init" target="popup" role="SYSADMIN"/>
+        <invoker type="user-usergroup:add" caption="Add User Group" action="init" target="popup"/>
         
         <invoker type="formActions" caption="Cancel" action="doCancel" shortcut="ctrl X" immediate="true"/>
         <invoker type="formActions" caption="Back" action="doShowDefault" mnemonic="b" immediate="true" visibleWhen="#{openerObject != null}"/>
