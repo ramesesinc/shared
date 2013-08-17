@@ -3,7 +3,6 @@
    <invokers>
          <invoker type="cashreceiptinfo:open" caption="Cash Receipt Info" action="open" />
          
-         <invoker type="formActions" caption="Void" action="doVoid"  />
          <invoker type="formActions" caption="Reprint" action="reprint"  />
    </invokers>
    
@@ -20,6 +19,8 @@
             @Service("CashReceiptQueryService")
             def service;
 
+            String entityName = "cashreceiptinfo";
+            
             boolean allowCreate = false;
             boolean allowEdit = false;
         
@@ -27,13 +28,6 @@
                 return TemplateProvider.instance.getResult( "com/rameses/enterprise/treasury/cashreceipt/cashreceipt.gtpl", [entity:entity] );
             }
             
-            void doVoid() {
-                MsgBox.alert( 'void ' );
-            }
-
-            void reprint() {
-                MsgBox.alert( 'reprint' );
-            }
 
         }      
        ]]>
