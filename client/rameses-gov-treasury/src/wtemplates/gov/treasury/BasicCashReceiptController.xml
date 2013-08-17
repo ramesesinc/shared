@@ -14,7 +14,7 @@
     <code class="com.rameses.enterprise.treasury.controllers.BasicCashReceipt"/>
 
     <pages>
-        <page name="completed" template="com.rameses.enterprise.treasury.cashreceipt.CashReceiptCompletedPage"/>
+        <page name="completed" template="com.rameses.enterprise.treasury.cashreceipt.CashReceiptInfoPage"/>
     </pages>
     
 </workunit>
