@@ -72,6 +72,7 @@ public class UserPage extends javax.swing.JPanel {
         xTextField4.setCaptionWidth(100);
         xTextField4.setName("entity.jobtitle");
         xTextField4.setPreferredSize(new java.awt.Dimension(300, 20));
+        xTextField4.setRequired(true);
         xFormPanel1.add(xTextField4);
 
         com.rameses.rcp.control.border.XTitledBorder xTitledBorder2 = new com.rameses.rcp.control.border.XTitledBorder();

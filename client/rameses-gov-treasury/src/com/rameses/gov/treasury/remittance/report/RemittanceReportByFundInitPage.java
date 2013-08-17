@@ -4,7 +4,7 @@
  * Created on May 28, 2011, 11:01 AM
  */
 
-package etracs2.tc.remittance.report;
+package com.rameses.gov.treasury.remittance.report;
 
 /**
  *

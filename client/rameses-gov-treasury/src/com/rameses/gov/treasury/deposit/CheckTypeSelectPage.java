@@ -4,7 +4,7 @@
  * Created on January 12, 2011, 4:41 PM
  */
 
-package etracs2.tc.deposit;
+package com.rameses.gov.treasury.deposit;
 
 import com.rameses.rcp.ui.annotations.StyleSheet;
 

@@ -4,7 +4,7 @@
  * Created on May 2, 2011, 3:01 PM
  */
 
-package etracs2.tc.remittance.subcollector;
+package com.rameses.gov.treasury.remittance.subcollector;
 
 import java.math.BigDecimal;
 

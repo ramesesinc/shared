@@ -4,7 +4,7 @@
  * Created on October 5, 2011, 5:29 PM
  */
 
-package etracs2.tc.deposit;
+package com.rameses.gov.treasury.deposit;
 
 import java.math.BigDecimal;
 
