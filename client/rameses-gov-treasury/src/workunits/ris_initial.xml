@@ -27,6 +27,7 @@
             }
             
             def process() {
+                if (!risType) throw new Exception('Requisition Type must be specified.')
                 risType.handle.create();
                 return risType;
             }

@@ -27,6 +27,7 @@
             def invoker;
 
             boolean showConfirmOnSave = true;
+            boolean allowCreate = false;
             
             
             public String getTxnType() {

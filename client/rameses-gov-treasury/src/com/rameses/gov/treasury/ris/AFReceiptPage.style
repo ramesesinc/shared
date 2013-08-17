@@ -2,6 +2,17 @@
     enabled: true;
 }
 
+
+"removeAf" [mode == 'create' && selectedAf != null]{
+    enabled:true;
+}
+
 "addItems"[mode!='create'] {
     enabled: false;
+}
+
+
+
+"removeAf" [mode != 'create' || selectedAf == null]{
+    enabled:false;
 }

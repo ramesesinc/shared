@@ -11,6 +11,7 @@
     entity.paymentitems << [ type:'CHECK', particulars: 'BANK', amount: 560.0 ];    
     entity.paymentitems << [ type:'CHECK', particulars: 'BANK', amount: 570.0 ];
     */
+    def df = new java.text.DecimalFormat("#,##0.00")
 %>
 
 <br>
@@ -64,7 +65,7 @@
                     <tr>
                         <td>${it?.item.code}</td>
                         <td>${it?.item.title}</td>
-                        <td>${it?.amount}</td>
+                        <td>${df.format(it?.amount)}</td>
                         <td>${  (it?.remarks) ? it.remarks : ''}</td>
                     </tr>
                 <%}%>
@@ -74,9 +75,16 @@
     <tr>
         <td colspan="2">
             <hr>
+                <b>AMOUNT : ${df.format(entity.amount)}<BR></b>
+           </hr>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <hr>
             <%if(entity.totalcash) {%>
-                Cash Paid: ${entity.totalcash} <br><br>
-                Cash Change: ${entity.cashchange} <br><br>
+                Cash Paid: ${df.format(entity.totalcash)} <br>
+                Cash Change: ${df.format(entity.cashchange)} <br>
             <%}%>
         </td>
     </tr>
@@ -88,15 +96,13 @@
                 <br>
                 <table>
                     <tr>
-                        <th>Type</th>
                         <th>Particulars</th>
                         <th>Amount</th>
                     </tr>
                     <%entity.paymentitems.each{ %>
                         <tr>
-                            <td>${it?.type}</td>
                             <td>${it?.particulars}</td>
-                            <td>${it?.amount}</td>
+                            <td>${df.format(it?.amount)}</td>
                         </tr>
                     <%}%>
                 </table>
