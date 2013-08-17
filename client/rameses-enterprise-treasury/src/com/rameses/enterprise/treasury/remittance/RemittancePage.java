@@ -45,6 +45,8 @@ public class RemittancePage extends javax.swing.JPanel {
         xButton4 = new com.rameses.rcp.control.XButton();
         jPanel4 = new javax.swing.JPanel();
         xSubFormPanel2 = new com.rameses.rcp.control.XSubFormPanel();
+        xFormPanel2 = new com.rameses.rcp.control.XFormPanel();
+        xDecimalField1 = new com.rameses.rcp.control.XDecimalField();
 
         xButton2.setMnemonic('d');
         xButton2.setText("Check Details");
@@ -150,19 +152,43 @@ public class RemittancePage extends javax.swing.JPanel {
         xButton4.setBounds(70, 220, 150, 23);
 
         jPanel1.add(jPanel3);
-        jPanel3.setBounds(10, 152, 312, 290);
-
-        jPanel4.setLayout(new java.awt.BorderLayout());
+        jPanel3.setBounds(10, 152, 312, 322);
 
         com.rameses.rcp.control.border.XTitledBorder xTitledBorder3 = new com.rameses.rcp.control.border.XTitledBorder();
         xTitledBorder3.setTitle("Cash Breakdown");
         jPanel4.setBorder(xTitledBorder3);
-        xSubFormPanel2.setDynamic(true);
-        xSubFormPanel2.setHandler("denominationOpener");
-        jPanel4.add(xSubFormPanel2, java.awt.BorderLayout.CENTER);
+        xSubFormPanel2.setHandler("cashBreakdown");
 
+        xFormPanel2.setCaptionWidth(160);
+        xDecimalField1.setCaption("Total Cash Breakdown");
+        xDecimalField1.setEnabled(false);
+        xDecimalField1.setFont(new java.awt.Font("Tahoma", 1, 12));
+        xDecimalField1.setName("breakdown");
+        xDecimalField1.setPreferredSize(new java.awt.Dimension(0, 19));
+        xFormPanel2.add(xDecimalField1);
+
+        org.jdesktop.layout.GroupLayout jPanel4Layout = new org.jdesktop.layout.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, xFormPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, xSubFormPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .add(xSubFormPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 212, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(xFormPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 39, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(28, Short.MAX_VALUE))
+        );
         jPanel1.add(jPanel4);
-        jPanel4.setBounds(328, 152, 324, 290);
+        jPanel4.setBounds(326, 154, 322, 320);
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
 
@@ -180,6 +206,8 @@ public class RemittancePage extends javax.swing.JPanel {
     private com.rameses.rcp.control.XButton xButton2;
     private com.rameses.rcp.control.XButton xButton3;
     private com.rameses.rcp.control.XButton xButton4;
+    private com.rameses.rcp.control.XDecimalField xDecimalField1;
+    private com.rameses.rcp.control.XFormPanel xFormPanel2;
     private com.rameses.rcp.control.XNumberField xNumberField10;
     private com.rameses.rcp.control.XNumberField xNumberField11;
     private com.rameses.rcp.control.XNumberField xNumberField9;

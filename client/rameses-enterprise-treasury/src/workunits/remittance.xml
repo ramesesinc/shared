@@ -2,6 +2,8 @@
     
    <invokers>
          <invoker type="remittance:create" caption="Remittance" action="init"/>
+         <invoker type="quick_launcher" code="REM" caption="Remittance" action="init"/>
+         
          <invoker type="formActions" caption="Next" name="doEntry" visibleWhen="#{state == 'initial'}" />
          <invoker type="formActions" caption="Submit" name="submit" visibleWhen="#{state != 'initial'}" />
    </invokers>
@@ -27,6 +29,8 @@
         
             String title = "Remittance";
             def entity;
+            def cashBreakdown;
+            def breakdown  = 0.0;
             
             def init() {
                 entity = service.init();
@@ -42,11 +46,19 @@
             
             def doEntry() {
                 state = "entry";
+                entity.cashbreakdown = [];
+                cashBreakdown = InvokerUtil.lookupOpener("cash:breakdown", [
+                    entries: entity.cashbreakdown, onupdate: { o->
+                        breakdown = o;
+                        binding.refresh("breakdown");
+                    }] );
                 return "default";
             }
             
             void submit() {
-                MsgBox.alert("submitting");
+                if( breakdown != entity.totalcash )
+                    throw new Exception("Cash breakdown must equal total cash");
+            
                 if( MsgBox.confirm("You are about to submit this remittance. Please ensure the entries are correct")) {
                     service.post( entity );
                 }
