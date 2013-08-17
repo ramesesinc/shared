@@ -1,5 +1,5 @@
-<workunit extends="wtemplates/ListController.xml" 
-    serviceName="AFControlMgmtService" entityName="afcontrol">
+<workunit extends="wtemplates/ListController.xml"  serviceName="AFControlMgmtService"
+    entityName="afcontrol" formName="afcontrol">
     <invokers>
         <invoker folderid="/explorer/txn/treasury" caption="AF Issuances" index="5"/>
     </invokers>
