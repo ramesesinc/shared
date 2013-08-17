@@ -3,6 +3,9 @@
     <invokers>
        <invoker type="ris:formActions" caption="Receive Items" action="create" 
         visibleWhen="#{entity?.txntype == 'AF:PURCHASE' &amp;&amp; entity?.state == 'APPROVED'}" />
+        
+        <invoker type="formActions"  action="viewRIS" caption="View RIS" visibleWhen="#{entity?.state == 'APPROVED' || entity?.state == 'CLOSED'}" />
+       <invoker type="formActions"  action="viewRIV" caption="View RIV" visibleWhen="#{entity?.state == 'APPROVED' || entity?.state == 'CLOSED'}" />
     </invokers>
     
     <code>
@@ -83,6 +86,14 @@
                         reqItemModel.reload();
                     }
                 ]);
+            }
+            
+            def viewRIS() {
+                return InvokerUtil.lookupOpener("report:ris", [risid:entity.ris.objid])
+            }
+            
+            def viewRIV() {
+                return InvokerUtil.lookupOpener("report:riv", [risid:entity.ris.objid])
             }
             
         }
