@@ -33,6 +33,7 @@
             boolean showSelected = false;
             boolean allowEdit = false;
             boolean allowApprove = false;
+            boolean allowCreate = false;
 
             Map createEntity() {
                 ris = caller.entity;

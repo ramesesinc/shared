@@ -6,10 +6,14 @@
 
 package com.rameses.gov.treasury.cashreceipt;
 
+import com.rameses.enterprise.treasury.cashreceipt.SerialCashReceiptPage;
+import com.rameses.rcp.ui.annotations.Template;
+
 /**
  *
  * @author  Elmo
  */
+@Template(value=SerialCashReceiptPage.class, target="content")
 public class MarriageLicensePage extends javax.swing.JPanel {
     
     /** Creates new form MarriageLicensePage */
@@ -237,7 +241,7 @@ public class MarriageLicensePage extends javax.swing.JPanel {
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .add(formPanel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 630, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
