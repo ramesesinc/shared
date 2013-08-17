@@ -14,7 +14,7 @@
         <invoker type="formActions" action="reprint" caption="Reprint" 
             visibleWhen="#{completed}" shortcut="ctrl P"/>
             
-        <invoker type="formActions" action="void" caption="Void" visibleWhen="#{completed}"/>
+        <invoker type="formActions" action="doVoid" immediate="true" caption="Void" visibleWhen="#{completed &amp;&amp; !entity.voided}" />
         
         <!-- 
         FOR TESTING VIEWER

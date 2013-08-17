@@ -1,7 +1,9 @@
 <workunit>
     
    <invokers>
-         <invoker type="cashreceiptinfo:formActions" caption="Void" action="open" target="popup"/>
+         <!-- hooks to cash receipt -->
+         <invoker type="cashreceiptinfo:formActions" caption="Void" action="open" target="popup" />
+         <invoker type="cashreceipt:void" caption="Void" action="create" target="popup"/>
          
          <invoker type="formActions" caption="Post" action="save"  />
    </invokers>
@@ -15,6 +17,8 @@
         import com.rameses.util.*;
         
         class CashReceiptVoidController {
+            @Binding
+            def binding;
         
             @Caller
             def caller;
@@ -26,9 +30,22 @@
             boolean allowEdit = false;
             
             def entity;
+            def receipt;
+            def handler;
+            
+            void create() {
+                if(receipt.voided) {
+                    throw new Exception("This transaction is already voided") 
+                }                
+                entity = [objid: "CRVOID"+ new java.rmi.server.UID() ];
+                entity.receipt = receipt;
+            }
             
             void open() {
-                def receipt = caller.entity;
+                receipt = caller.entity;
+                if(receipt.voided) {
+                    throw new Exception("This transaction is already voided") 
+                }                
                 entity = [objid: "CRVOID"+ new java.rmi.server.UID() ];
                 entity.receipt = receipt;
             }
@@ -36,6 +53,10 @@
             def doOk() {
                 if( MsgBox.confirm( "You are about to void this receipt. Please ensure you have the original receipt on hand. Continue?")) {
                     service.post( entity );
+                    if(handler) {
+                        receipt.voided = true;
+                        handler(receipt);
+                    }    
                     return "_close";
                 }
             }
