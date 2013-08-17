@@ -3,13 +3,14 @@ package system.explorer;
 import com.rameses.rcp.common.*;
 import com.rameses.rcp.annotations.*;
 import com.rameses.osiris2.client.*;
-
+import system.explorer.*;
 
 public abstract class AbstractTreeExplorer {
 
     def selection;
     def rootNode;
-    def defaultIcon = 'images/doc-view16.png';
+    //def defaultIcon = 'images/doc-view16.png';
+    def defaultIcon = 'images/tree/diamond.png';
 
     boolean rootVisible = true;
 
@@ -53,6 +54,12 @@ public abstract class AbstractTreeExplorer {
             loadChildren(node.item); 
             return node.item.children; 
         }, 
+        
+        initChildNode: {cnode, pnode-> 
+            if (pnode?.parent == null && cnode.icon == null) {
+                cnode.icon = 'images/pyramid.png';
+            } 
+        }, 
                 
         openLeaf: {node->
             def invoker = node?.item?.invoker;
@@ -64,5 +71,5 @@ public abstract class AbstractTreeExplorer {
         openFolder: {node->
             return null;
         }                
-    ] as TreeNodeModel;
+    ] as ExplorerTreeNodeModel;
 }
