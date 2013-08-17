@@ -6,6 +6,9 @@
 
 package com.rameses.gov.treasury.cashreceipt;
 
+import com.rameses.enterprise.treasury.cashreceipt.SerialCashReceiptPage;
+import com.rameses.rcp.ui.annotations.Template;
+
 /**
  *
  * @author  Elmo
