@@ -60,7 +60,8 @@
                     throw new Exception("Cash breakdown must equal total cash");
             
                 if( MsgBox.confirm("You are about to submit this remittance. Please ensure the entries are correct")) {
-                    service.post( entity );
+                    entity = service.post( entity );
+                    MsgBox.alert("Posting successful");
                 }
             }
             
