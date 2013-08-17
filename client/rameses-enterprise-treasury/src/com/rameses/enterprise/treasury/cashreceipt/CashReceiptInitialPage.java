@@ -43,6 +43,7 @@ public class CashReceiptInitialPage extends javax.swing.JPanel {
         xComboBox1.setItems("formTypes");
         xComboBox1.setName("formno");
         xComboBox1.setPreferredSize(new java.awt.Dimension(0, 22));
+        xComboBox1.setRequired(true);
         xFormPanel1.add(xComboBox1);
 
         xComboBox2.setCaption("Collection Type");
@@ -52,6 +53,7 @@ public class CashReceiptInitialPage extends javax.swing.JPanel {
         xComboBox2.setItems("collectionTypes");
         xComboBox2.setName("collectiontype");
         xComboBox2.setPreferredSize(new java.awt.Dimension(0, 22));
+        xComboBox2.setRequired(true);
         xFormPanel1.add(xComboBox2);
 
         xComboBox3.setCaption("Mode");
@@ -60,6 +62,7 @@ public class CashReceiptInitialPage extends javax.swing.JPanel {
         xComboBox3.setItems("modeOpeners");
         xComboBox3.setName("modeOpener");
         xComboBox3.setPreferredSize(new java.awt.Dimension(0, 22));
+        xComboBox3.setRequired(true);
         xFormPanel1.add(xComboBox3);
 
         xSubFormPanel1.setDepends(new String[] {"modeOpener"});
