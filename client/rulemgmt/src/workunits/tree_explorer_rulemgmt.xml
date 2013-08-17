@@ -1,6 +1,6 @@
 <workunit extends="wtemplates/FolderExplorerView.xml" root="/rules">
     <invokers>
-        <invoker folderid="/menu/mgmt" caption="Rules" action="init" 
-            permission="system" windowmode="explorer"/>
+        <invoker folderid="/explorer" caption="Rules" action="init" 
+            permission="system" windowmode="explorer" icon="images/gear.png"/>
     </invokers>
 </workunit>
