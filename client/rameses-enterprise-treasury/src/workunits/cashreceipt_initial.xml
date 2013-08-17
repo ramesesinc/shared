@@ -42,7 +42,7 @@
             
             void init() {
                 collectionTypes = collectionTypeSvc.getCollectionTypes();    
-                formTypes = collectionTypes*.formno.unique();
+                formTypes = collectionTypes*.formno.unique().sort();
                 modeOpeners = InvokerUtil.lookupOpeners( "cashreceipt:mode", [entity:[:]]);
                 if(modeOpeners.size()>0) modeOpener = modeOpeners.first();
             }
