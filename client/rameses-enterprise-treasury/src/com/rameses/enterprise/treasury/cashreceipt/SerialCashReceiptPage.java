@@ -76,6 +76,7 @@ public class SerialCashReceiptPage extends javax.swing.JPanel {
         xLookupField1.setCaption("Payer");
         xLookupField1.setExpression("#{item.name}");
         xLookupField1.setHandler("lookupEntity");
+        xLookupField1.setIndex(-10);
         xLookupField1.setName("entity.payer");
         xLookupField1.setPreferredSize(new java.awt.Dimension(0, 19));
         xFormPanel1.add(xLookupField1);
@@ -344,9 +345,45 @@ public class SerialCashReceiptPage extends javax.swing.JPanel {
         xTitledBorder2.setTitle("Checks and other non cash payment details");
         xDataTable1.setBorder(xTitledBorder2);
         xDataTable1.setColumns(new com.rameses.rcp.common.Column[]{
-            new com.rameses.rcp.common.Column("type", "Type", 80, 80, 80, false, true, true, false, null, new com.rameses.rcp.common.TextColumnHandler()),
-            new com.rameses.rcp.common.Column("particulars", "Particulars", 100, 0, 0, false, true, true, false, null, new com.rameses.rcp.common.TextColumnHandler()),
-            new com.rameses.rcp.common.Column("amount", "Amount", 100, 100, 100, false, true, true, false, null, new com.rameses.rcp.common.DecimalColumnHandler("#,##0.00", -1.0, -1.0, false))
+            new com.rameses.rcp.common.Column(new Object[]{
+                new Object[]{"name", "type"}
+                , new Object[]{"caption", "Type"}
+                , new Object[]{"width", 80}
+                , new Object[]{"minWidth", 80}
+                , new Object[]{"maxWidth", 80}
+                , new Object[]{"required", false}
+                , new Object[]{"resizable", true}
+                , new Object[]{"nullWhenEmpty", true}
+                , new Object[]{"editable", false}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
+                , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
+            }),
+            new com.rameses.rcp.common.Column(new Object[]{
+                new Object[]{"name", "particulars"}
+                , new Object[]{"caption", "Particulars"}
+                , new Object[]{"width", 100}
+                , new Object[]{"minWidth", 0}
+                , new Object[]{"maxWidth", 0}
+                , new Object[]{"required", false}
+                , new Object[]{"resizable", true}
+                , new Object[]{"nullWhenEmpty", true}
+                , new Object[]{"editable", false}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
+                , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
+            }),
+            new com.rameses.rcp.common.Column(new Object[]{
+                new Object[]{"name", "amount"}
+                , new Object[]{"caption", "Amount"}
+                , new Object[]{"width", 100}
+                , new Object[]{"minWidth", 100}
+                , new Object[]{"maxWidth", 100}
+                , new Object[]{"required", false}
+                , new Object[]{"resizable", true}
+                , new Object[]{"nullWhenEmpty", true}
+                , new Object[]{"editable", false}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.DecimalColumnHandler("#,##0.00", -1.0, -1.0, false)}
+                , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
+            })
         });
         xDataTable1.setHandler("paymentListModel");
 
