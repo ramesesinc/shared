@@ -1,0 +1,38 @@
+<workunit>
+    <invokers>
+        <invoker type="revenueitem:open" caption="Revenue Item" action="open"/>
+        <invoker type="revenueitem:create" caption="Revenue Item" action="create"/>
+        <invoker type="formActions" caption="Account Mapping" action="showSegments" visibleWhen="#{entity.state=='APPROVED'}"/>
+   </invokers>
+   <code>
+    <![CDATA[
+    import com.rameses.osiris2.common.*;
+    import com.rameses.rcp.common.*;
+    import com.rameses.rcp.annotations.*;
+    import com.rameses.osiris2.client.*;
+    import com.rameses.common.*;
+
+    public class RevenueItemAccountController extends CRUDController {
+    
+        @Service("RevenueItemAccountService")
+        def service;
+        
+        String entityName = "revenueitem";
+        String title = "Revenue Item";
+        String prefixId = "REVITEM";
+        
+        def showSegments() {
+            return InvokerUtil.lookupOpener( "accountsegment:open", 
+                [entity:entity, entityName: entityName] 
+            );
+        }
+        
+    }    
+    ]]>
+   </code>
+   
+   <pages>
+       <page template="com.rameses.enterprise.accounts.RevenueItemPage"/>
+   </pages>
+   
+</workunit>

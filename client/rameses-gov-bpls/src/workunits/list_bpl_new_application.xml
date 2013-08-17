@@ -1,0 +1,63 @@
+<workunit extends="wtemplates/ListController.xml">
+    
+    <invokers>
+        <invoker folderid="/explorer/txnmgmt/bpls/application"
+            caption="New Application" target="window" index="5"/>
+    </invokers>
+    
+    <code>
+    import com.rameses.rcp.annotations.*
+    import com.rameses.rcp.common.*
+    import com.rameses.osiris2.client.*
+    import com.rameses.osiris2.common.*;
+    
+    class ApplicationList extends BasicListController {
+    
+        public Opener open() {
+            return InvokerUtil.lookupOpener( "businessapplication:renew", [mode:"renew", entity: selectedEntity] );
+        }
+        
+        def docstate;
+        def docStates = [
+            [key:"DRAFT", value:"Draft"],
+            [key:"FOR_APPROVAL", value:"For Approval"],
+        ]
+        def queryForm = new Opener(outcome: "query");
+        
+        public String getTitle() {
+            return "New Applications";
+        }
+        
+        public Column[] getColumns() {
+            return [
+                new Column( name:'controlno', caption:"App No" ),
+                new Column( name:'title', caption:"Title" ),
+                new Column( name:'year', caption:"Year", type:"integer" ),
+            ] as Column[];
+        }
+        
+        def list = [
+            [controlno: "0001", title: "BP 0001", year: 2009, docstate:"DRAFT"],
+            [controlno: "0002", title: "BP 0002", year: 2008, docstate:"DRAFT"],
+            [controlno: "0003", title: "BP 0003", year: 2008, docstate:"FOR_APPROVAL"],
+        ];
+        
+        public List fetchList(Map o) {
+            if( docstate ) {
+               def xlist = list.findAll{ x-> x.docstate == docstate.key }
+                return xlist;
+            }
+            else {
+                return list;
+            }
+        }
+        
+        public void refreshList() {
+            super.load();
+        }
+    }
+    </code>
+    <pages>
+        <page name="query" template="etracs2.bpls.application.ApplicationListQueryPage"/>
+    </pages>
+</workunit>

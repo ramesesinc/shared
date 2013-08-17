@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<folders>
+    <folder id="menu">
+        <folder id="system" caption="System" index="-1"/>
+        <folder id="txn" caption="Transactions" index="5"/>
+        <folder id="help" caption="Help" index="9999"/>
+    </folder>
+    
+    <folder id="explorer" caption="Explorer">
+        <folder id="txn" caption="Transactions"/>
+        <folder id="master" caption="Master Data"/>
+        <folder id="setting" caption="Settings"/>
+    </folder>    
+        
+</folders>

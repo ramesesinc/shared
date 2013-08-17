@@ -1,0 +1,37 @@
+<folders>
+    <folder id="menu">
+        <folder id="txn" caption="Transactions" index="2">
+            <folder id="bpls" caption="Permit/Licensing"/>
+        </folder>    
+    </folder>
+    
+    <folder id="explorer">
+        <folder id="txn" caption="Transactions" index="0">
+        <folder id="bpls" caption="Permit/Licensing"/>
+    </folder>
+    
+    <folder id="master" caption="Master Management" index="1">
+        <folder id="bpls" caption="Permit/Licensing"/>
+    </folder>
+    
+    <folder id="txnmgmt" caption="Transaction Management" index="2">
+        <folder id="bpls" caption="Permit/Licensing">
+            <folder id="application" caption="Applications"/>
+            <folder id="business" caption="Business Listing"/>
+        </folder>    
+    </folder>
+    
+    <folder id="report" caption="Reports" index="4">
+        <folder id="bpls" caption="Permit/Licensing"/>
+    </folder>
+    
+    <folder id="rulemgmt" caption="Rule Management" index="3">        
+        <folder id="bpls" caption="Permit/Licensing"/>
+    </folder>
+
+    <folder id="setting" caption="Settings Management" index="5">
+            <folder id="bpls" caption="Permit/Licensing"/>
+        </folder>
+    </folder>
+    
+</folders>

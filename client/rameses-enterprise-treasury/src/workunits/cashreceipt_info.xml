@@ -1,0 +1,40 @@
+<workunit>
+    
+   <invokers>
+         <invoker type="cashreceiptinfo:open" caption="Cash Receipt Info" action="open" />
+         
+         <invoker type="formActions" caption="Reprint" action="reprint"  />
+   </invokers>
+   
+   <code>
+       <![CDATA[
+        import com.rameses.osiris2.common.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.osiris2.client.*;
+        import com.rameses.util.*;
+        
+        class CashBookController extends CRUDController {
+        
+            @Service("CashReceiptQueryService")
+            def service;
+
+            String entityName = "cashreceiptinfo";
+            
+            boolean allowCreate = false;
+            boolean allowEdit = false;
+        
+            def getInfoHtml() {
+                return TemplateProvider.instance.getResult( "com/rameses/enterprise/treasury/cashreceipt/cashreceipt.gtpl", [entity:entity] );
+            }
+            
+
+        }      
+       ]]>
+   </code>
+   
+   <pages>
+        <page template="com.rameses.enterprise.treasury.cashreceipt.CashReceiptInfoPage"/>
+   </pages>
+   
+</workunit>

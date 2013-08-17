@@ -1,0 +1,40 @@
+<workunit>
+    <invokers>
+        <invoker type="explorer:filetypes"/>
+    </invokers>
+    
+    <code>
+    <![CDATA[ 
+        import com.rameses.rcp.annotations.*
+        import com.rameses.rcp.common.*
+        import com.rameses.osiris2.client.*
+        import com.rameses.osiris2.common.*
+        
+        class SubFolderFileTypeController implements FileType {
+            
+            Node node;
+            String filetype = 'default';
+            String icon = 'images/tree/cube.png';
+            def item;
+            
+            
+            void setSelectedItem(Map item) {
+                this.item = item;
+                println 'selectedItem-> ' + item;
+            } 
+        
+            void open() {
+                println 'open-> ';
+            }
+            
+            void create() {
+                println 'create-> ';
+            } 
+        }
+    ]]> 
+    </code>
+    
+    <pages>
+        <page template="test.TestPage"/> 
+    </pages>
+</workunit>

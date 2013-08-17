@@ -1,0 +1,64 @@
+<workunit>
+    <invokers>
+        <invoker type="cashreceipt:select-afcontrol" caption="Select Accountable Form" target="popup"/>
+        <invoker type="cashreceipt-initial:formActions" caption="Select AF" target="popup" action="init"/>
+    </invokers>
+    
+    <code>
+        <![CDATA[    
+        import com.rameses.rcp.annotations.*
+        import com.rameses.rcp.common.*
+        import com.rameses.osiris2.client.*
+        import com.rameses.osiris2.common.*
+        import com.rameses.enterprise.treasury.cashreceipt.*
+        
+        class  SelectAFController  {
+            
+            @Service("AFControlService")
+            def svc;
+            
+            @Caller
+            def caller
+            
+            def formno;
+            def handler;
+            def selectedItem;
+        
+            void init() {
+                formno = caller.formno;
+                if(!formno)
+                    throw new Exception("Please select an accountable form first");
+            }
+            
+            def listModel = [
+                getColumnList: { o->
+                    return [
+                        [name:'startseries', caption:'Start Series'],
+                        [name:'endseries', caption:'End Series'],
+                        [name:'stub', caption:'Stub']
+                    ]
+                },
+                fetchList: { o->
+                    return svc.getOpenControlList( [af:formno] );
+                }
+            ] as BasicListModel;
+            
+            def doOk() {
+                svc.activateControl(selectedItem);
+                MsgBox.alert('Control activated');
+                return "_close";
+            }
+            
+            def doCancel() {
+                return "_close";
+            }
+        }
+        ]]>
+        
+    </code>
+    
+    <pages>
+        <page template="com.rameses.gov.treasury.cashreceipt.SelectAFPage"/>
+    </pages>
+    
+</workunit>

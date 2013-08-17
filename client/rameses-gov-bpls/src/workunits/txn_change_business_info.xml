@@ -1,0 +1,126 @@
+<workunit>
+    
+    <invokers>
+        <invoker folderid="/explorer/txn/bpls" caption="Change Business Info" 
+            action="start" target="window" index="9"/>
+    </invokers>
+    
+    <code>
+        <![CDATA[
+        import com.rameses.rcp.annotations.*
+        import com.rameses.rcp.common.*
+        import com.rameses.osiris2.client.*
+        import com.rameses.osiris2.common.*
+        import etracs2.bpls.application.*;
+        
+        class ChangeBusinessInfo extends AbstractSearchBplsApplication {
+           //this is sample implementation
+            public def findApplication(def o) {
+                def app = [lobs:[], infos:[] ];
+                app.txntype = "RENEW";
+                app.controlno = "BP001";
+                app.txnmode = "ONLINE";
+                app.iyear = 2013;
+                app.docstate = "DRAFT";
+                app.txndate = "2013-01-01";
+                app.permiteename ="NAZARENO, ELMO";
+                app.permiteeaddress ="CEBU CITY";
+                app.tradename ="RAMESES SYSTEMS INC.";
+                app.businessaddress = "CAPITOL, CEBU CITY";
+                return app;
+            }
+            
+            def editline = [:];
+            def changes = [];
+            
+            
+            void initAddress() {  
+                editline = changes.find{ o-> o.type == "CHANGE_ADDRESS"  };
+                if( !editline ) {
+                    editline = [oldvalue:application.businessaddress];
+                    editline.type = "CHANGE_ADDRESS";
+                    editline.fieldname = "businessaddress";
+                }    
+            }
+            
+            void updateChange() {
+                changes.remove( changes.find{o-> o.type == editline.type  } );
+                changes << editline;
+                application[editline.fieldname] = editline.newvalue;
+            }
+            
+            def selectedItem;
+            void revertChange() {
+                if(!selectedItem) return;
+                changes.remove(selectedItem);
+                application[selectedItem.fieldname] = editline.oldvalue;
+            }
+            
+            def listModel  = [
+                getColumns: {
+                    return [
+                        new Column(name:"type", caption:"Type"),
+                        new Column(name:"oldvalue", caption:"Old Value"),
+                        new Column(name:"newvalue", caption:"New Value"),
+                    ];
+                },
+                fetchList: { o->
+                    return changes;
+                }
+            ] as SubListModel;
+        }
+        ]]>
+    </code>    
+    
+   <pageflow>
+        <start>
+            <transition cond="#{application==null}" to="search"/>
+            <transition cond="#{application!=null}" to="view"/>
+        </start>
+        <page name="search" title="Search Business Application(Change Business Address)">
+            <transition to="end" caption="Close"/>
+            <transition to="view" caption="Next" immediate="false"/>
+        </page>
+        
+        <page name="view" title="Change Business Info">
+            <transition to="end" caption="Close"/>
+            <transition to="change_address" caption="Change Address" action="initAddress"/>
+            <transition to="change_orgtype" caption="Change OrgType"/>
+            <transition to="change_permitee" caption="Change Permitee"/>
+            <transition to="change_tradename" caption="Change Tradename"/>
+            <transition to="change_administrator" caption="Change Administrator"/>
+        </page>
+        
+        <page name="change_address" title="Change Address">
+            <transition to="view" caption="Cancel"/>
+            <transition to="view" name="u" caption="Update" action="updateChange"/>
+        </page>    
+        <page name="change_orgtype" title="Change Organization Type">
+            <transition to="view" caption="Cancel"/>
+            <transition to="view" name="u" caption="Update"/>
+        </page>    
+        <page name="change_permitee" title="Change Permitee">
+            <transition to="view" caption="Cancel"/>
+            <transition to="view" name="u" caption="Update"/>
+        </page>    
+        <page name="change_tradename" title="Change Tradename">
+            <transition to="view" caption="Cancel"/>
+            <transition to="view" name="u" caption="Update"/>
+        </page>    
+        <page name="change_administrator" title="Change Tradename">
+            <transition to="view" caption="Cancel"/>
+            <transition to="view" name="u" caption="Update"/>
+        </page>   
+        <end/>
+    </pageflow>
+    
+    <pages>
+        <page name="search" template="etracs2.bpls.application.SearchApplicationPage" />
+        <page name="view" template="etracs2.bpls.application.ViewChangesPage" />
+        <page name="change_address" template="etracs2.bpls.application.ChangeAddressPage" />
+        <page name="change_administrator" template="etracs2.bpls.application.ChangeAdministratorPage" />
+        <page name="change_permitee" template="etracs2.bpls.application.ChangePermiteePage" />
+        <page name="change_orgtype" template="etracs2.bpls.application.ChangeOrgtypePage" />
+        <page name="change_tradename" template="etracs2.bpls.application.ChangeTradenamePage" />
+    </pages>
+</workunit>

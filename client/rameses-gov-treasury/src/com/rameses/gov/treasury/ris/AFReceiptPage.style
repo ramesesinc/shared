@@ -1,0 +1,7 @@
+"addItems"[mode=='create'] {
+    enabled: true;
+}
+
+"addItems"[mode!='create'] {
+    enabled: false;
+}

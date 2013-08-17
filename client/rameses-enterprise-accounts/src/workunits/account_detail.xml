@@ -1,0 +1,35 @@
+<workunit>
+        
+    <invokers>
+         <invoker type="account-detail:open" caption="Account Detail" action="open"/>
+         <invoker type="account-detail:create" caption="Account Detail" action="create"/>
+   </invokers>
+   
+   <code>
+       <![CDATA[
+        import com.rameses.osiris2.common.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.osiris2.client.*;
+        
+        class AccountDetailController extends CRUDController {
+        
+            String serviceName = "AccountService";
+            String entityName = "account";
+            String title = "Account";
+            String prefixId = "ACCT";
+            def node;
+            
+            Map createEntity() {
+                return [parentid:node.objid,parentcode:node.code, type:'detail'];
+            }
+            
+        }      
+       ]]>
+   </code>
+   
+   <pages>
+       <page template="com.rameses.enterprise.accounts.AccountPage"/>
+   </pages>
+   
+</workunit>

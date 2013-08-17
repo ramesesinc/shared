@@ -1,0 +1,108 @@
+<workunit>
+    <invokers>
+         <invoker type="multipleentity:create" caption="Multiple" action="create" target="popup"/>
+         <invoker type="multipleentity:open" caption="Multiple" action="open" target="popup"/>
+    </invokers>
+    
+    <code>
+    <![CDATA[
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.osiris2.client.*;
+        import com.rameses.osiris2.common.*;
+        import java.rmi.server.UID;
+
+        public class MultipleEntityController extends CRUDController {
+        
+            @Binding
+            def binding;
+            
+            String serviceName = 'EntityService'; 
+            String entityType = 'MULTIPLE';
+            String prefixId = 'MULT'; 
+            String title = 'Multiple Entity';
+            String createFocusComponent = 'entity.name';
+            String editFocusComponent = 'entity.name';            
+            boolean allowDelete = false; 
+            boolean allowApprove = false; 
+            boolean showConfirmOnSave = false;
+                          
+            void beforeCreate( entity ) { 
+                entity.type = entityType; 
+                entity.members = [];
+            } 
+            
+            void entityChanged() { 
+                listHandler?.reload();  
+            }  
+            
+            def getLookupMember() {
+                return InvokerUtil.lookupOpener('entity:lookup', [tag:'create_multiple']); 
+            }             
+            
+            def selectedEntity;            
+            def listHandler = [
+                fetchList:{o-> 
+                    if (!entity) return null; 
+                    if (!entity.members) entity.members = [];
+                    
+                    return entity.members; 
+                },
+                
+                onColumnUpdate: {item,colname-> 
+                    if (colname == 'taxpayer') { 
+                        def o = entity.members.find{ it.taxpayer.objid == item.taxpayer.objid } 
+                        if (o) throw new Exception('This entity already exist in the list. Please select another one.'); 
+                    } 
+                },
+
+                onCommitItem: {item-> 
+                    rebuildNames();
+                    binding.refresh('entity.name');  
+                }, 
+                
+                onAddItem: {item-> 
+                    item.objid = 'MEM'+new UID();
+                    item.entityid = entity.objid; 
+                    entity.members.add(item); 
+                    rebuildNames();
+                    binding.refresh('entity.name');
+                }, 
+                
+                onRemoveItem: {item-> 
+                    if (!MsgBox.confirm('Are you sure you want to remove this item?')) return false;
+                    
+                    entity.members.remove(item); 
+                    rebuildNames(); 
+                    binding.refresh('entity.name'); 
+                    return true;
+                }
+            ] as EditorListModel;             
+
+            
+            void rebuildNames() {
+                def buffer = new StringBuffer();
+                def indexno = 0;
+                entity.members.each{
+                    if (buffer.length() > 0) buffer.append(' ');                         
+                    if (it.prefix) buffer.append(it.prefix + ' ');
+
+                    buffer.append(it.taxpayer.name); 
+
+                    if (it.suffix) buffer.append(' ' + it.suffix); 
+                    
+                    indexno++;
+                    it.itemno = indexno;
+                }
+                def oldfullname = entity.fullname; 
+                entity.fullname = buffer.toString();
+                if (entity.name == oldfullname) entity.name = entity.fullname;  
+            } 
+        }        
+   ]]>
+   </code>
+   
+   <pages>
+       <page template="com.rameses.entity.ui.MultipleEntityPage"/>
+   </pages>   
+</workunit>

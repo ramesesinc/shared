@@ -1,0 +1,45 @@
+<workunit>
+    
+   <invokers>
+         <invoker type="bankaccount:open" caption="Bank Account" action="open"/>
+         <invoker type="bankaccount:create" caption="New Bank Account" action="create"/>
+         
+         <invoker type="formActions" caption="Account Mapping" 
+         action="showMapping" visibleWhen="#{mode=='read'}"/>
+   </invokers>
+   
+   <code>
+       <![CDATA[
+        import com.rameses.osiris2.common.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.osiris2.client.*;
+        
+        class BankAccountController extends CRUDController {
+        
+            String serviceName = "BankAccountService";
+            String entityName = "bankaccount";
+
+            def acctTypes = ["CHECKING", "CURRENT"];
+            def currencyTypes = [ "PHP", "USD" ];
+            
+            Map createEntity() {
+                return [:];
+            }
+            
+            def showMapping() {
+                return InvokerUtil.lookupOpener("accountsegment:open", [
+                        entity:entity, entityName:entityName
+                    ] 
+                );
+            }
+            
+        }      
+       ]]>
+   </code>
+   
+   <pages>
+       <page template="com.rameses.enterprise.accounts.BankAccountPage" />
+   </pages>
+   
+</workunit>

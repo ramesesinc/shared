@@ -1,0 +1,10 @@
+<workunit>
+    <invokers>
+        <invoker type="org:create" caption="Org Information" action="create"/>
+        <invoker type="org:open" caption="Org Information" action="open"/>
+    </invokers>
+    <code class="com.rameses.admin.controller.OrgController"/>
+    <pages>
+        <page template="com.rameses.admin.org.OrgPage"/>
+    </pages>
+</workunit>

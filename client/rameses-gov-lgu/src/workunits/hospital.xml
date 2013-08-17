@@ -1,0 +1,44 @@
+<workunit>
+    <invokers>
+        <invoker type="hospital-folder:formActions" caption="New Hospital" action="create"/>
+        
+        <invoker type="hospital:open" caption="Hospital" action="open"/>
+        <invoker type="hospital:create" caption="Hospital" action="create"/>
+    </invokers>
+    <code>
+        <![CDATA[
+        import com.rameses.osiris2.common.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.osiris2.client.*;
+
+        public class HospitalOrgController extends CRUDController {
+        
+            //injected by the caller
+            def node, filetype;         
+        
+            String createFocusComponent = 'entity.name'; 
+            String editFocusComponent = 'entity.name'; 
+            
+            String serviceName = "OrgAdminService";
+            String entityName = "org";
+            String title = "Hospital";
+            
+            Map createEntity() {
+                def e = [
+                    orgclass: 'HOSPITAL', 
+                    parentid: node.objid,                 
+                    parentclass: node.orgclass 
+                ];
+                if ("${node.parentid}-${node.name}".toString() == node.objid) { 
+                    e.parentid = node.parentid; 
+                } 
+                return e;
+            }
+        }        
+    ]]>
+    </code>
+    <pages>
+        <page template="com.rameses.gov.lgu.ui.BarangayPage"/> 
+    </pages>
+</workunit>

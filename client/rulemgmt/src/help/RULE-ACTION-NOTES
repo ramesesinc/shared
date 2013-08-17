@@ -1,0 +1,33 @@
+
+
+Rule Actions:
+
+1. to plugin actions, create an entry in the server side under:
+   rulesets/<ruleset-name>/ui/actions
+
+   example: 
+   {
+        name: "ADD_TAX_FEE",
+	template: "add-tax-fee"
+	params: {
+	    lob: { datatype: "LOB", caption:"Line of Business", usevar:true },
+	    account: { datatype:'string', caption:'Account', editor: "selectbarangay"},
+	    amount: {datatype: "decimal", caption:"Value", expression:true }
+	}
+   }
+
+   where:
+      name = the name of the action
+      template = the template used to render the actual rule statement
+      params = parameters used for the action
+
+
+
+2. usevar means to use variables in the condition part.
+3. if editor is specified, it means you want to use a custom editor for the value. 
+    you must do the ff:
+
+    3.1. create an editor workunit type: "<name-of-editor>:actionparam-editor"
+    3.2. action param must have ruleEntity and actionParam variables. 
+
+

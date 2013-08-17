@@ -1,0 +1,33 @@
+<workunit extends="wtemplates/enterprise/treasury/BasicCashReceiptController.xml">
+    <invokers>
+        <invoker type="collectiontype:handler" caption="Miscellaneous" name="misc" 
+            formtype="serial" index="100" />
+    </invokers>
+    
+    <code>
+        <![CDATA[    
+        import com.rameses.rcp.annotations.*
+        import com.rameses.rcp.common.*
+        import com.rameses.osiris2.client.*
+        import com.rameses.osiris2.common.*
+        import com.rameses.enterprise.treasury.controllers.*
+        
+        class  MiscCashReceiptController {
+        
+            @Caller 
+            def caller;
+        
+            public def getEntity() {
+                return caller.entity;
+            }
+            
+        }
+        ]]>
+        
+    </code>
+    
+    <pages>
+        <page template="com.rameses.enterprise.treasury.collection.EmptyCollectionTypeHandler"/>
+    </pages>
+    
+</workunit>

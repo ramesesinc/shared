@@ -1,0 +1,96 @@
+<workunit>
+    <invokers>
+        <invoker type="valuerange:editor" target="popup" action="init"/>
+    </invokers>
+    <code>
+        <![CDATA[    
+
+        import com.rameses.rcp.annotations.*
+        import com.rameses.rcp.common.*
+        import com.rameses.osiris2.client.*
+        import com.rameses.osiris2.common.*
+        
+        class ValueRangeEditorController {
+        
+            @Binding
+            def binding;
+            
+            def selectedEntry;
+            def fromValue = 0;
+            
+            
+            //to be passed as parameter
+            def handler;
+            def vars;   
+            def var;    
+            def entries;
+            
+            void init() {
+                if(!entries) {
+                    entries = [];
+                } 
+                else {
+                    fromValue = entries.last()?.to;
+                }
+            }
+
+            def getFormulaOpener() {
+                return InvokerUtil.lookupOpener( "expression:editor", [vars: vars]);
+            }
+            
+            def listModel = [
+                onAddItem: { o->
+                    entries << o;
+                    fromValue = o.to;
+                },
+                getColumns: {
+                    return [
+                        new Column(name:"from", width:100, maxWidth:100, editable:false, caption:"From",typeHandler: new DecimalColumnHandler()),
+                        new Column(name:"to", width:100, maxWidth:100, editable:true, caption:"To", typeHandler: new DecimalColumnHandler()),
+                        new Column(name:"value", editable:true, caption:"Value Expression", 
+                            typeHandler: new OpenerColumnHandler( handler: "formulaOpener" ) )
+                    ] as Column[]
+                },
+                onColumnUpdate: {item, colName->
+                    if(colName == "to" && item.to < fromValue )
+                        throw new Exception("To must be greater than " + fromValue);
+                    if(!item.from) item.from = fromValue;
+                },
+                onRemoveItem: { o->
+                    if( o != entries.last() ) {
+                        throw new Exception("Removal not allowed");
+                    }    
+                    entries.remove(o);
+                    fromValue = entries.last()?.to;
+                },
+                fetchList: { o->
+                    return entries;
+                }
+            ] as EditorListModel;
+         
+            def doCancel() {
+                if(MsgBox.confirm('Discard changes?')) {
+                    return "_close";
+                }
+            }
+            
+            def doOk() {
+                if(!var) 
+                    throw new Exception("Please specify a variable");
+                if(!entries) 
+                    throw new Exception("Please indicate at least one entry");
+                def m = [var:var, entries:entries];
+                handler(m);
+                return "_close";
+            }
+        }
+        
+        ]]>
+        
+    </code>
+    
+    <pages>
+        <page template="com.rameses.osiris2.common.ui.TableRangeEditor"/>
+    </pages>
+    
+</workunit>

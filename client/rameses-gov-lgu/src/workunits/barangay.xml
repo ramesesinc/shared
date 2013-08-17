@@ -1,0 +1,50 @@
+<workunit>
+    <invokers>
+        <invoker type="barangay:open" caption="Barangay" action="open"/>
+        <invoker type="barangay:create" caption="Barangay" action="create"/>        
+    </invokers>
+    <code>
+        <![CDATA[
+        import com.rameses.osiris2.common.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.osiris2.client.*;
+
+        public class BarangayOrgController extends CRUDController {
+        
+            def node, filetype;
+
+            String createFocusComponent = 'entity.name'; 
+            String editFocusComponent = 'entity.name'; 
+            String serviceName = "OrgAdminService";
+            String entityName = "org";
+            String title = "Barangay";
+            
+            Map createEntity() {
+                def e = [
+                    orgclass: 'BARANGAY', 
+                    parentid:node.objid, 
+                    parentclass: node.orgclass 
+                ]; 
+                if ("${node.parentid}-${node.name}".toString() == node.objid) { 
+                    e.parentid = node.parentid; 
+                } 
+                resolveData(e);
+                return e;
+            } 
+            
+            void afterOpen(data) {
+                resolveData(data);
+            } 
+            
+            void resolveData(data) {
+                if (!data.captain) data.captain = [:];
+                if (!data.treasurer) data.treasurer = [:];            
+            } 
+        }        
+    ]]>
+    </code>
+    <pages>
+        <page template="com.rameses.gov.lgu.ui.BarangayPage"/> 
+    </pages>
+</workunit>

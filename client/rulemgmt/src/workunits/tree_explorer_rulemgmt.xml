@@ -1,0 +1,6 @@
+<workunit extends="wtemplates/FolderExplorerView.xml" root="/rules">
+    <invokers>
+        <invoker folderid="/explorer" caption="Rules" action="init" 
+            permission="system" windowmode="explorer" icon="images/gear.png"/>
+    </invokers>
+</workunit>

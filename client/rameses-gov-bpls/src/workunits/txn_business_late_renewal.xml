@@ -1,0 +1,82 @@
+<workunit>
+
+    <invokers>
+        <invoker type="bpls:laterenewal" action="start" target="self"/>        
+    </invokers>
+    
+    <code>
+        <![CDATA[    
+        import com.rameses.rcp.annotations.*
+        import com.rameses.rcp.common.*
+        import com.rameses.osiris2.client.*
+        import com.rameses.osiris2.common.*
+        import etracs2.bpls.application.*;
+        
+        class LateRenewalBusinessApplicationController extends AbstractBplsApplication {
+        
+            def counter = 0;
+            def isLastItem = false;
+            
+            def start() {
+                application = caller.application; 
+                super.start();
+            }
+            
+            void moveNext() {
+                application = lateRenewals[counter];
+                counter++;
+                isLastItem = (counter >= lateRenewals.size());
+            }
+            
+            void movePrev() {
+                application = lateRenewals[counter];
+                counter--;
+                isLastItem = (counter >= lateRenewals.size());
+                if( counter == 0 ) application = caller.application;
+            }
+            
+            def lateRenewals = [
+                [objid: "R1", controlno: "X111-1", iyear:2009, txnmode:"ONLINE", txntype:"LATE RENEWAL", doctype:"DRAFT"],
+                [objid: "R2", controlno: "X111-2", iyear:2010, txnmode:"ONLINE", txntype:"LATE RENEWAL", doctype:"DRAFT"],
+                [objid: "R3", controlno: "X111-3", iyear:2011, txnmode:"ONLINE", txntype:"LATE RENEWAL", doctype:"DRAFT"],
+                [objid: "R4", controlno: "X111-4", iyear:2012, txnmode:"ONLINE", txntype:"LATE RENEWAL", doctype:"DRAFT"],
+            ];
+            
+            def selectedLateRenewal;
+            def lateRenewalsList = [
+                getColumns: {
+                    return [
+                        new Column( name: "iyear", caption:"Year", type:"integer" )
+                    ] as Column[];
+                },
+                fetchList: { o->
+                    return lateRenewals;
+                }
+            ] as SubListModel;
+        }
+        ]]>
+    </code>
+    
+    <pageflow>
+         <start>
+            <transition to="list"/>
+        </start>
+        <page name="list" title="Late Renewals for Processing">
+            <transition to="end" caption="Back" tag="reset"/>
+            <transition to="view" caption="Next" action="moveNext"/>
+        </page>
+        <page name="view" title="View Late Renewal Application">
+           <transition to="list" name="backlist" caption="BackA" visibleWhen="#{counter &lt;= 1}" action="movePrev"/>
+           <transition to="view" name="back" caption="BackB" visibleWhen="#{counter &gt; 1}" action="movePrev"/>
+           <transition to="view" name="next" caption="Next" visibleWhen="#{isLastItem==false}" action="moveNext"/>
+           <transition to="end" caption="Finish" visibleWhen="#{isLastItem==true}" tag="proceed"/>
+       </page>    
+        <end/>
+    </pageflow>
+    
+    <pages>
+        <page name="list" template="etracs2.bpls.application.ViewLateRenewalPage" />
+        <page name="view" template="etracs2.bpls.application.ViewAssessmentPage" />
+    </pages>
+    
+</workunit>

@@ -1,0 +1,50 @@
+<workunit>
+    <invokers>
+        <invoker type="actionvaluehandler:object" />
+    </invokers>
+    
+    <code>
+        <![CDATA[    
+
+        import com.rameses.rcp.annotations.*
+        import com.rameses.rcp.common.*
+        import com.rameses.osiris2.client.*
+        import com.rameses.osiris2.common.*
+        import com.rameses.common.*;
+        
+        class ObjectValueHandler{        
+        
+            @Binding
+            def binding;
+            
+            def handler;
+            def itemKey;
+            def itemLabel;
+            
+            def actionParam;
+            
+            def getValueText() {
+                actionParam.valueText;
+            }
+            
+            def edit() {
+                return InvokerUtil.lookupOpener(handler, [ 
+                    onselect: {o->
+                        actionParam.value = (itemKey) ? o[itemKey] : o; 
+                        actionParam.valueText = (itemLabel) ? o[itemLabel] : o; 
+                        binding.refresh();
+                    }
+                ]);
+            }
+            
+        }
+        
+        ]]>
+        
+    </code>
+    
+    <pages>
+        <page template="com.rameses.rules.actions.ui.ValueHandler"/>
+    </pages>
+    
+</workunit>

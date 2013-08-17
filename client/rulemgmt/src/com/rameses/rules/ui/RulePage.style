@@ -1,0 +1,37 @@
+"rule.*"[ mode == 'read' ] {
+    editable : false;
+    enabled: false;
+}
+
+"rule.*"[ mode != 'read' ] {
+    editable : true;
+    enabled: true;
+}
+
+"rule.rulename"[ mode != 'create' ] {
+    editable : false;
+}
+
+"add(Condition|Action)"[ mode != 'read'] {
+    enabled: true;
+}
+
+"add(Condition|Action)"[ mode == 'read'] {
+    enabled: false;
+}
+
+"(edit|remove)Condition"[ mode != 'read' && (selectedCondition)] {
+    enabled: true;
+}
+
+"(edit|remove)Condition"[ mode == 'read' || (!selectedCondition)] {
+    enabled: false;
+}
+
+"(edit|remove)Action"[ mode != 'read' && (selectedAction)] {
+    enabled: true;
+}
+
+"(edit|remove)Action"[ mode == 'read' || (!selectedAction)] {
+    enabled: false;
+}

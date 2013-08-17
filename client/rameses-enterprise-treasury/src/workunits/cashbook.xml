@@ -1,0 +1,102 @@
+<workunit>
+    
+   <invokers>
+         <invoker type="cashbook:open" caption="Cashbook" action="open"/>
+         <invoker type="cashbook:create" caption="Cashbook" action="create"/>
+         
+         <invoker type="formActions" caption="Details" action="_details" visibleWhen="#{mode=='read' &amp;&amp; entity.state=='APPROVED'}"/>
+   </invokers>
+   
+   <code>
+       <![CDATA[
+        import com.rameses.osiris2.common.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.osiris2.client.*;
+        import com.rameses.util.*;
+        
+        class CashBookController extends CRUDController {
+        
+            @Binding
+            def binding;
+        
+            @Service("CashBookService")
+            def service;
+        
+            String title = "Cash Book";
+            String prefixId = "CSHBK";
+            def page;
+            
+            Map createEntity() {
+                return [subacct:[:], fund:[:]];
+            }
+            
+            void beforeSave(o) {
+                if( !entity.subacct )
+                    throw new Exception("Sub account is required");
+            }
+            
+            def getLookupSubAccounts() {
+                return InvokerUtil.lookupOpener( "cashbook_subacct:lookup", [
+                    onselect : { o->
+                        entity.subacct.name = o.name;
+                        entity.subacct.objid = o.objid;
+                        entity.type = o.subaccttype;
+                        entity.title = entity.subacct.name + " - " + entity.fund?.title;
+                        binding.refresh("entity.type");
+                        binding.refresh("entity.title");
+                    }
+                ]);
+            }
+            
+            @PropertyChangeListener
+            def listener = [
+                "entity.fund" : {
+                    entity.title = (entity.subacct?.name) ? entity.subacct.name + " - " : '';
+                    entity.title += (entity.fund?.title) ? entity.fund.title : '';
+                }
+            ];
+            
+            void entityChanged() {
+                page = null;
+                listModel.reload();
+            }
+            
+            
+            def listModel = [
+                fetchList: { o->
+                    if(!page) page = entity.currentpageno;
+                    return service.getEntries( [objid: entity.objid, page: page ] );
+                }
+            
+            ] as BasicListModel;
+            
+            
+            void nextPage() {
+                page+=1; 
+                if(page>entity.currentpageno) {
+                    page = entity.currentpageno;
+                    throw new Exception("End of page");
+                }
+                listModel.reload();
+            }
+            
+            void prevPage() {
+                page-=1;
+                if(page<1) {
+                    page = 1;
+                    throw new Exception("Beginning of page");
+                }
+                listModel.reload();
+            }
+            
+        }      
+       ]]>
+   </code>
+   
+   <pages>
+       <page template="com.rameses.enterprise.treasury.cashbook.CashBookPage" />
+       <page name="details" template="com.rameses.enterprise.treasury.cashbook.CashBookEntriesPage" />
+   </pages>
+   
+</workunit>

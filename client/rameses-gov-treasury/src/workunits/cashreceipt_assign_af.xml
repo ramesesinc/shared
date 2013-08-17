@@ -1,0 +1,50 @@
+<workunit>
+    <invokers>
+       <invoker type="cashreceipt-initial:formActions" 
+        caption="Assign AF" target="popup" action="init" index="100"/>
+    </invokers>
+    
+    <code>
+        <![CDATA[    
+        import com.rameses.rcp.annotations.*
+        import com.rameses.rcp.common.*
+        import com.rameses.osiris2.client.*
+        import com.rameses.osiris2.common.*
+        import com.rameses.enterprise.treasury.cashreceipt.*
+        
+        class  AssignAFController  {
+            
+            @Service("AFControlService")
+            def svc;
+            
+            @Caller
+            def caller
+            
+            void init() {
+            
+            }
+            
+            def listModel = [
+                getColumnList: { o->
+                    return [
+                        [name:'startseries', caption:'Start Series'],
+                        [name:'endseries', caption:'End Series'],
+                        [name:'stub', caption:'Stub'],
+                        [name:'assignee.name', caption:'Assigned To'],
+                    ]
+                },
+                fetchList: { o->
+                    return [];
+                    //return svc.getOpenControlList( [af:formno] );
+                }
+            ] as BasicListModel;
+        }
+        ]]>
+        
+    </code>
+    
+    <pages>
+        <page template="com.rameses.gov.treasury.cashreceipt.AFAssigneePage"/>
+    </pages>
+    
+</workunit>

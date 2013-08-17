@@ -1,0 +1,56 @@
+<workunit>
+    <invokers>
+        <invoker type="municipality-folder:formActions" caption="New Municipality" action="create"/> 
+        
+        <invoker type="municipality:open"   caption="Municipality" action="open"/>
+        <invoker type="municipality:create" caption="Municipality" action="create"/>        
+        <invoker type="municipality:edit" caption="Municipality" action="open"/>         
+    </invokers>
+   <code>
+        <![CDATA[
+        import com.rameses.osiris2.common.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.osiris2.client.*;
+
+        public class MunicipalityOrgController extends CRUDController {
+        
+            //injected by the caller
+            def node, filetype; 
+            
+            String createFocusComponent = 'entity.name'; 
+            String editFocusComponent = 'entity.name'; 
+            
+            String serviceName = "OrgAdminService";
+            String entityName = "org";
+            String title = "Municipality";
+            
+            Map createEntity() {
+                def e = [
+                    orgclass: 'MUNICIPALITY',                
+                    parentclass: node.orgclass, 
+                    parentid: node.objid                    
+                ];
+                if ("${node.parentid}-${node.name}".toString() == node.objid) { 
+                    e.parentid = node.parentid; 
+                } 
+                resolveData(e);
+                return e;
+            }
+            
+            void afterOpen(data) {
+                resolveData(data);
+            }    
+            
+            void resolveData(data) {
+                if (!data.mayor) data.mayor = [:];
+                if (!data.assessor) data.assessor = [:];
+                if (!data.treasurer) data.treasurer = [:];            
+            } 
+        } 
+         ]]>
+    </code>
+    <pages>
+        <page template="com.rameses.gov.lgu.ui.MunicipalityPage"/> 
+    </pages>
+</workunit>
