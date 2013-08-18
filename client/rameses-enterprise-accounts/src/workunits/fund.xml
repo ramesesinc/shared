@@ -18,6 +18,7 @@
             String entityName = "fund";
             String title = "Fund";
             String prefixId = "FUND";
+            boolean allowCreate = false;
             
             Map createEntity() {
                 return [parentid:node.item.objid];

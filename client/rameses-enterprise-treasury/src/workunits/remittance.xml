@@ -81,6 +81,12 @@
                 }
             }
             
+            
+            def viewOtherPayments(){
+                return InvokerUtil.lookupOpener('remittance:noncash', [remittanceid:entity.objid])
+            }
+            
+            
         }      
        ]]>
    </code>

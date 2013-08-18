@@ -2,6 +2,6 @@
     serviceName="RevenueItemAccountService" entityName="revenueitem">
     <invokers>
         <invoker folderid="/explorer/master/account" caption="Revenue Items" 
-            permission="system" index="1"  role="TREASURY_DATAMGMT"/>
+            index="1"  role="ACCOUNT_DATAMGMT"/>
    </invokers>
 </workunit>

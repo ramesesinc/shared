@@ -7,13 +7,12 @@
 package com.rameses.enterprise.treasury.remittance;
 
 import com.rameses.osiris2.themes.FormPage;
+import com.rameses.rcp.ui.annotations.StyleSheet;
 import com.rameses.rcp.ui.annotations.Template;
 
-/**
- *
- * @author  alvin
- */
+
 @Template(FormPage.class)
+@StyleSheet()
 public class RemittancePage extends javax.swing.JPanel {
     
     /** Creates new form RemittancePage */
@@ -138,16 +137,16 @@ public class RemittancePage extends javax.swing.JPanel {
         xButton1.setBounds(70, 160, 150, 23);
 
         xButton3.setMnemonic('f');
-        xButton3.setText("Accountable Forms");
         xButton3.setFont(new java.awt.Font("Arial", 1, 12));
         xButton3.setName("viewAccountableForms");
+        xButton3.setText("Accountable Forms");
         jPanel3.add(xButton3);
         xButton3.setBounds(70, 190, 150, 23);
 
         xButton4.setMnemonic('r');
-        xButton4.setText("View Receipts");
         xButton4.setFont(new java.awt.Font("Arial", 1, 12));
         xButton4.setName("viewReceipts");
+        xButton4.setText("View Receipts");
         jPanel3.add(xButton4);
         xButton4.setBounds(70, 220, 150, 23);
 
