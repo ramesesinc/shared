@@ -2,12 +2,14 @@
     
    <invokers>
          <invoker type="remittance:create" caption="Remittance" action="init"/>
-         <invoker type="remittance:open" caption="Remittance (Open)" action="init"/>
          <invoker type="quick_launcher" code="REM" caption="Remittance" action="open"/>
+         <invoker type="remittance:open" caption="Remittance (Open)" action="open"/>
          
-         <invoker type="formActions" caption="Next" name="doEntry" visibleWhen="#{state == 'initial'}" />
-         <invoker type="formActions" caption="Submit" name="submit" visibleWhen="#{state != 'initial'}" />
-   </invokers>
+         <invoker type="formActions" caption="Close" name="_close"  />
+         <invoker type="formActions" caption="Next" name="doEntry" visibleWhen="#{state == 'initial' &amp;&amp; mode=='create'}" />
+         <invoker type="formActions" caption="Submit" name="submit" visibleWhen="#{state != 'initial' &amp;&amp; mode=='create'}" />
+
+     </invokers>
    
    <code>
        <![CDATA[
@@ -32,22 +34,31 @@
             def entity;
             def cashBreakdown;
             def breakdown  = 0.0;
+            def mode = 'create';
+            def listModel;
             
             def init() {
-                entity = service.init();
                 state = "initial";
+                entity = service.init();
+                listModel = [
+                    fetchList: { o->
+                        return entity.items;
+                    }
+                ] as EditorListModel;
                 return "initial";
             }
             
             void open(){
-                
+                mode = "open";
+                entity = service.open(entity);
+                listModel = [
+                    fetchList: { o->
+                        return entity.items;
+                    }
+                ] as BasicListModel;
+                breakdown = entity.totalcash;
+                cashBreakdown = InvokerUtil.lookupOpener("cash:breakdown", [entries: entity.cashbreakdown] );    
             }
-            
-            def listModel = [
-                fetchList: { o->
-                    return entity.items;
-                }
-            ] as BasicListModel;
             
             def doEntry() {
                 state = "entry";
