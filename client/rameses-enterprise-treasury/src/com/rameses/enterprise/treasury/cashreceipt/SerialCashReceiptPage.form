@@ -117,7 +117,7 @@
                 <Property name="caption" type="java.lang.String" value="Payer"/>
                 <Property name="expression" type="java.lang.String" value="#{item.name}"/>
                 <Property name="handler" type="java.lang.String" value="lookupEntity"/>
-                <Property name="index" type="int" value="-10"/>
+                <Property name="index" type="int" value="-1000"/>
                 <Property name="name" type="java.lang.String" value="entity.payer"/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[0, 19]"/>
@@ -430,7 +430,7 @@
             </Property>
             <Property name="enabled" type="boolean" value="false"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="Tahoma" size="18" style="1"/>
             </Property>
             <Property name="name" type="java.lang.String" value="entity.totalcredit"/>
           </Properties>
@@ -448,7 +448,7 @@
             </Property>
             <Property name="enabled" type="boolean" value="false"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="Tahoma" size="18" style="1"/>
             </Property>
             <Property name="name" type="java.lang.String" value="entity.totalnoncash"/>
           </Properties>
@@ -466,7 +466,7 @@
             </Property>
             <Property name="enabled" type="boolean" value="false"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="Tahoma" size="18" style="1"/>
             </Property>
             <Property name="name" type="java.lang.String" value="entity.totalcash"/>
           </Properties>
@@ -484,7 +484,7 @@
             </Property>
             <Property name="enabled" type="boolean" value="false"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="Tahoma" size="18" style="1"/>
             </Property>
             <Property name="name" type="java.lang.String" value="entity.amount"/>
           </Properties>
@@ -513,7 +513,7 @@
             </Property>
             <Property name="enabled" type="boolean" value="false"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="Tahoma" size="18" style="1"/>
             </Property>
             <Property name="name" type="java.lang.String" value="entity.cashchange"/>
           </Properties>
@@ -531,7 +531,7 @@
             </Property>
             <Property name="enabled" type="boolean" value="false"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="Tahoma" size="18" style="1"/>
             </Property>
             <Property name="name" type="java.lang.String" value="entity.balancedue"/>
           </Properties>

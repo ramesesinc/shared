@@ -76,7 +76,7 @@ public class SerialCashReceiptPage extends javax.swing.JPanel {
         xLookupField1.setCaption("Payer");
         xLookupField1.setExpression("#{item.name}");
         xLookupField1.setHandler("lookupEntity");
-        xLookupField1.setIndex(-10);
+        xLookupField1.setIndex(-1000);
         xLookupField1.setName("entity.payer");
         xLookupField1.setPreferredSize(new java.awt.Dimension(0, 19));
         xFormPanel1.add(xLookupField1);
@@ -204,28 +204,28 @@ public class SerialCashReceiptPage extends javax.swing.JPanel {
         xDecimalField2.setBackground(new java.awt.Color(204, 204, 255));
         xDecimalField2.setDepends(new String[] {"cash"});
         xDecimalField2.setEnabled(false);
-        xDecimalField2.setFont(new java.awt.Font("Tahoma", 0, 14));
+        xDecimalField2.setFont(new java.awt.Font("Tahoma", 1, 18));
         xDecimalField2.setName("entity.totalcredit");
 
         xDecimalField3.setEditable(false);
         xDecimalField3.setBackground(new java.awt.Color(204, 204, 255));
         xDecimalField3.setDepends(new String[] {"cash"});
         xDecimalField3.setEnabled(false);
-        xDecimalField3.setFont(new java.awt.Font("Tahoma", 0, 14));
+        xDecimalField3.setFont(new java.awt.Font("Tahoma", 1, 18));
         xDecimalField3.setName("entity.totalnoncash");
 
         xDecimalField4.setEditable(false);
         xDecimalField4.setBackground(new java.awt.Color(204, 204, 255));
         xDecimalField4.setDepends(new String[] {"cash"});
         xDecimalField4.setEnabled(false);
-        xDecimalField4.setFont(new java.awt.Font("Tahoma", 0, 14));
+        xDecimalField4.setFont(new java.awt.Font("Tahoma", 1, 18));
         xDecimalField4.setName("entity.totalcash");
 
         xDecimalField5.setEditable(false);
         xDecimalField5.setBackground(new java.awt.Color(204, 204, 255));
         xDecimalField5.setDepends(new String[] {"cash"});
         xDecimalField5.setEnabled(false);
-        xDecimalField5.setFont(new java.awt.Font("Tahoma", 0, 14));
+        xDecimalField5.setFont(new java.awt.Font("Tahoma", 1, 18));
         xDecimalField5.setName("entity.amount");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12));
@@ -236,14 +236,14 @@ public class SerialCashReceiptPage extends javax.swing.JPanel {
         xDecimalField6.setBackground(new java.awt.Color(204, 204, 255));
         xDecimalField6.setDepends(new String[] {"cash"});
         xDecimalField6.setEnabled(false);
-        xDecimalField6.setFont(new java.awt.Font("Tahoma", 0, 14));
+        xDecimalField6.setFont(new java.awt.Font("Tahoma", 1, 18));
         xDecimalField6.setName("entity.cashchange");
 
         xDecimalField7.setEditable(false);
         xDecimalField7.setBackground(new java.awt.Color(204, 204, 255));
         xDecimalField7.setDepends(new String[] {"cash"});
         xDecimalField7.setEnabled(false);
-        xDecimalField7.setFont(new java.awt.Font("Tahoma", 0, 14));
+        xDecimalField7.setFont(new java.awt.Font("Tahoma", 1, 18));
         xDecimalField7.setName("entity.balancedue");
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 12));
