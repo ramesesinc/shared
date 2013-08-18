@@ -29,7 +29,6 @@
             boolean showConfirmOnSave = true;
             boolean allowCreate = false;
             
-            
             public String getTxnType() {
                 return invoker.properties.txntype;
             }

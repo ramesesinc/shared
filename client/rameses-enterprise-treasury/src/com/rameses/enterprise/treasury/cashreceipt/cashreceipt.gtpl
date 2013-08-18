@@ -96,6 +96,7 @@
                 <br>
                 <table>
                     <tr>
+                        <th>Type</th>
                         <th>Particulars</th>
                         <th>Amount</th>
                     </tr>

@@ -2,7 +2,6 @@
     enabled: true;
 }
 
-
 "removeAf" [mode == 'create' && selectedAf != null]{
     enabled:true;
 }
