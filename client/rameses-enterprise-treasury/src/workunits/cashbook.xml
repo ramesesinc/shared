@@ -2,7 +2,7 @@
     
    <invokers>
          <invoker type="cashbook:open" caption="Cashbook" action="open"/>
-         <invoker type="cashbook:create" caption="Cashbook" action="create"/>
+         <invoker type="cashbook:create" caption="Cashbook" action="create" role="TREASURY_DATAMGMT" permission="cashbook.create"/>
          
          <invoker type="formActions" caption="Details" action="_details" visibleWhen="#{mode=='read' &amp;&amp; entity.state=='APPROVED'}"/>
    </invokers>
@@ -26,6 +26,7 @@
             String title = "Cash Book";
             String prefixId = "CSHBK";
             def page;
+            boolean allowCreate = false;
             
             Map createEntity() {
                 return [subacct:[:], fund:[:]];
