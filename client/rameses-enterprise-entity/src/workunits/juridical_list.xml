@@ -1,6 +1,6 @@
 <workunit extends="wtemplates/ListController.xml">
     <invokers>
-        <invoker folderid="/explorer/master/entity" caption="Juridical" action="init" permission="system"/>            
+        <invoker folderid="/explorer/master/entity" caption="Juridical" action="init" permission="system"/>  
    </invokers>
    
    <code>

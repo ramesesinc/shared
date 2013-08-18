@@ -1,0 +1,11 @@
+"cashBreakdown:item.*" [ mode == 'open' ] {
+    enabled: false;
+}
+
+"cashBreakdown:item.qty" [ mode == 'create' ] {
+    enabled: true;
+}
+
+"viewAccountableForms|viewReceipts" [true == true]{
+    visible:false;
+}   

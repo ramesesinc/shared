@@ -1,0 +1,91 @@
+<workunit>
+    
+   <invokers>
+         <invoker type="liquidation:create" caption="Liquidation" action="init"/>
+         <invoker type="quick_launcher" code="LIQ" caption="Liquidation" action="open"/>
+         
+         <invoker type="liquidation:open" caption="Liquidation (Open)" action="open"/>
+         
+         <invoker type="formActions" caption="Close" name="_close"  />
+         <invoker type="formActions" caption="Next" name="start" visibleWhen="#{state == 'initial' &amp;&amp; mode=='create'}" />
+         <invoker type="formActions" caption="Submit" name="submit" visibleWhen="#{state != 'initial' &amp;&amp; mode=='create'}" />
+
+     </invokers>
+   
+   <code>
+       <![CDATA[
+        import com.rameses.osiris2.common.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.rcp.annotations.*;
+        import java.rmi.server.*;
+        import com.rameses.osiris2.client.*;
+        import com.rameses.util.*;
+        
+        class LiquidationController {
+        
+            @Binding
+            def binding;
+        
+            def state = "initial";
+            
+            @Service("LiquidationService")
+            def service;
+        
+            String title = "Liquidation";
+            def entity;
+            def cashBreakdown;
+            def breakdown  = 0.0;
+            def mode = 'create';
+            def listModel;
+            def selectedItem;
+            
+            def init() {
+                state = "initial";
+                entity = service.init();
+                return "initial";
+            }
+            
+            def start() {
+                state = "processing";
+                entity.cashbreakdown = [];
+                cashBreakdown = InvokerUtil.lookupOpener("cash:breakdown", [
+                    entries: entity.cashbreakdown, onupdate: { o->
+                        breakdown = o;
+                        binding.refresh("breakdown");
+                    }] );
+                return "default";
+            }
+            
+            void open(){
+                throw new Exception("Not yet implemented");
+            }
+            
+            void submit() {
+                if( breakdown != entity.totalcash )
+                    throw new Exception("Cash breakdown must equal total cash");
+                if( MsgBox.confirm("You are about to submit this liquidation. Please ensure the entries are correct")) {
+                    entity = service.post( entity );
+                    state = "completed";
+                    MsgBox.alert("Posting successful");
+                }
+            }
+            
+            def remittancesModel = [
+                fetchList: { o->return entity.remittances; }
+            ] as BasicListModel;
+            
+            def fundSummaryModel = [
+                fetchList: { o->return entity.fundsummary; }
+            ] as EditorListModel;
+            
+            
+        }      
+       ]]>
+   </code>
+   
+   <pages>
+       <page name="initial" template="com.rameses.enterprise.treasury.liquidation.LiquidationInitPage" />
+       <page name="default" template="com.rameses.enterprise.treasury.liquidation.LiquidationProcessPage" />
+   </pages>
+   
+</workunit>

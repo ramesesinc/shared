@@ -1,5 +1,5 @@
 <workunit extends="wtemplates/ServiceLookupController.xml"  serviceName="CashierLookupService">
     <invokers>
-        <invoker type="cashier:lookup" caption="Lookup Liquidating Officer" target="popup"/>
+        <invoker type="cashier:lookup" caption="Lookup Cashier" target="popup"/>
     </invokers>
 </workunit>
