@@ -4,10 +4,11 @@
          <invoker type="remittance:create" caption="Remittance" action="init"/>
          <invoker type="quick_launcher" code="REM" caption="Remittance" action="open"/>
          <invoker type="remittance:open" caption="Remittance (Open)" action="open"/>
-         
+
          <invoker type="formActions" caption="Close" name="_close"  />
          <invoker type="formActions" caption="Next" name="doEntry" visibleWhen="#{state == 'initial' &amp;&amp; mode=='create'}" />
-         <invoker type="formActions" caption="Submit" name="submit" visibleWhen="#{state != 'initial' &amp;&amp; mode=='create'}" />
+         <invoker type="formActions" caption="Submit" name="submit" visibleWhen="#{state == 'entry' &amp;&amp; mode=='create'}" />
+         <invoker type="formActions" caption="View RCD" name="viewRCD" visibleWhen="#{state == 'saved' || mode=='open'}" />
 
      </invokers>
    
@@ -77,15 +78,18 @@
             
                 if( MsgBox.confirm("You are about to submit this remittance. Please ensure the entries are correct")) {
                     entity = service.post( entity );
+                    state = 'saved'
                     MsgBox.alert("Posting successful");
                 }
             }
             
+            def viewRCD() {
+                return InvokerUtil.lookupOpener("remittance:rcd")
+            }
             
             def viewOtherPayments(){
                 return InvokerUtil.lookupOpener('remittance:noncash', [remittanceid:entity.objid])
             }
-            
             
         }      
        ]]>
