@@ -237,6 +237,7 @@ is divided into following sections:
         <ant target="jar" inheritall="false" antfile="${project.osiris2-client-themes}/build.xml"/>
         <ant target="jar" inheritall="false" antfile="${project.rameses-client-ui}/build.xml"/>
     </target>
+
     <target name="-pre-pre-compile" depends="init,deps-jar">
         <mkdir dir="${build.classes.dir}"/>
     </target>
@@ -535,6 +536,7 @@ is divided into following sections:
         <ant target="clean" inheritall="false" antfile="${project.osiris2-client-themes}/build.xml"/>
         <ant target="clean" inheritall="false" antfile="${project.rameses-client-ui}/build.xml"/>
     </target>
+
     <target name="-do-clean" depends="init">
         <delete dir="${build.dir}"/>
         <delete dir="${dist.dir}"/>

@@ -96,11 +96,13 @@
                 <br>
                 <table>
                     <tr>
+                        <th>Type</th>
                         <th>Particulars</th>
                         <th>Amount</th>
                     </tr>
                     <%entity.paymentitems.each{ %>
                         <tr>
+                            <td>${it?.type}</td>
                             <td>${it?.particulars}</td>
                             <td>${df.format(it?.amount)}</td>
                         </tr>

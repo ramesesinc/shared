@@ -229,7 +229,6 @@ public class AFReceiptPage extends javax.swing.JPanel {
         xButton2.setText("Remove Item");
         jPanel2.add(xButton2);
         xButton2.setBounds(118, 194, 98, 23);
-
         jPanel1.setLayout(null);
 
         com.rameses.rcp.control.border.XTitledBorder xTitledBorder3 = new com.rameses.rcp.control.border.XTitledBorder();

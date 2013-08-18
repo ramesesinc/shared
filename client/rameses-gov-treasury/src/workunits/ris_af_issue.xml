@@ -114,8 +114,7 @@
             
             def viewRIV() {
                 return InvokerUtil.lookupOpener("report:riv", [risid:entity.ris.objid])
-            }
-            
+            }            
         }
         ]]>
         
