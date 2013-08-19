@@ -1,15 +1,14 @@
 <workunit>
     
    <invokers>
-         <invoker type="liquidation:create" caption="Liquidation" action="init"/>
-         <invoker type="quick_launcher" code="LIQ" caption="Liquidation" action="open"/>
+         <invoker type="liquidation:create" caption="Liquidation" action="init" target="window"/>
+         <invoker type="quick_launcher" code="LIQ" caption="Liquidation" action="open" target="window"/>
          
-         <invoker type="liquidation:open" caption="Liquidation (Open)" action="open"/>
+         <invoker type="liquidation:open" caption="Liquidation (Open)" action="open" target="window"/>
          
          <invoker type="formActions" caption="Close" name="_close"  />
-         <invoker type="formActions" caption="Next" name="start" visibleWhen="#{state == 'initial' &amp;&amp; mode=='create'}" />
-         <invoker type="formActions" caption="Submit" name="submit" visibleWhen="#{state != 'initial' &amp;&amp; mode=='create'}" />
-
+         <invoker type="formActions" caption="Next" name="start" visibleWhen="#{state == 'initial'}" />
+         <invoker type="formActions" caption="Submit" name="submit" visibleWhen="#{state == 'processing'}" />
      </invokers>
    
    <code>
@@ -56,8 +55,10 @@
                 return "default";
             }
             
-            void open(){
-                throw new Exception("Not yet implemented");
+            def open(){
+                state = "completed";
+                entity = service.open( entity );
+                return "view";
             }
             
             void submit() {
@@ -86,6 +87,8 @@
    <pages>
        <page name="initial" template="com.rameses.enterprise.treasury.liquidation.LiquidationInitPage" />
        <page name="default" template="com.rameses.enterprise.treasury.liquidation.LiquidationProcessPage" />
+       <page name="view" template="com.rameses.enterprise.treasury.liquidation.LiquidationPage" />
+
    </pages>
    
 </workunit>

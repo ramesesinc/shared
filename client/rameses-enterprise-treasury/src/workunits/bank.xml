@@ -1,9 +1,6 @@
 <workunit>
     
    <invokers>
-         
-
-       
          <invoker type="bank:create" caption="Bank" action="create"/>
          <invoker type="bank:open" caption="Bank" action="open"/>
    </invokers>
@@ -25,7 +22,7 @@
    </code>
    
    <pages>
-       <page template="com.rameses.enterprise.accounts.BankPage" />
+       <page template="com.rameses.enterprise.treasury.bank.BankPage" />
    </pages>
    
 </workunit>

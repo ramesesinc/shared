@@ -4,7 +4,7 @@
  * Created on February 27, 2011, 12:48 PM
  */
 
-package com.rameses.enterprise.accounts;
+package com.rameses.enterprise.treasury.bank;
 
 
 import com.rameses.osiris2.themes.FormPage;
