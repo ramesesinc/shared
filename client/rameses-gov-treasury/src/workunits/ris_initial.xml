@@ -1,8 +1,11 @@
 <!-- REQUISITION ISSUE SLIP -->
 <workunit>
     <invokers>
-        
-       <invoker folderid="/txn/treasury" caption="Req.Issue Slip (RIS)" action="init" index="0"/>
+       <invoker folderid="/menu/txn/treasury" caption="New RIS"  action="init" target="window" role="AFO"/>
+       <invoker folderid="/menu/txn/treasury" caption="New RIS"  action="init" target="window" role="COLLECTOR"/>
+       
+       <invoker type="quick_launcher" code="RIS" caption="New RIS"  action="init" target="window" role="AFO"/>
+       <invoker type="quick_launcher" code="RIS" caption="New RIS"  action="init" target="window" role="COLLECTOR"/>
        
        <invoker type="ris:create" caption="New RIS"  action="init" target="window" />
        <invoker type="formActions" caption="Next" action="process" />
