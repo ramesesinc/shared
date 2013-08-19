@@ -6,8 +6,8 @@
         <!-- extended actions -->
         <invoker type="extActions" caption="Reset Password" action="resetPassword"  
             visibleWhen="#{mode=='read'}" resizable="false" /> 
-        <invoker type="extActions" caption="Add User Group" action="addUsergroup" 
-            visibleWhen="#{mode=='read'}"/>         
+        <invoker type="extActions" caption="User Group" action="openUsergroupMgmt" 
+            visibleWhen="#{mode=='read'}"/> 
     </invokers>
    
     <code>
@@ -43,6 +43,17 @@
             void entityChanged() {
                 usergroupHandler.reload(); 
             }
+            
+            def openUsergroupMgmt() {
+                def params = [
+                    entity:entity, 
+                    handler:{ 
+                        entity.usergroups = service.getUsergroups([objid: entity.objid]); 
+                        usergroupHandler.reload(); 
+                    }
+                ];             
+                return InvokerUtil.lookupOpener('user-usergroupmgmt:open', params); 
+            } 
         }
         
        ]]>

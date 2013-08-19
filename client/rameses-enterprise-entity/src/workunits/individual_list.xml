@@ -1,7 +1,6 @@
 <workunit extends="wtemplates/ListController.xml">
     <invokers>
-        <invoker folderid="/explorer/entity" caption="Individuals" role="ENTITY_ENCODER"
-            action="init" index="0" />
+        <invoker folderid="/explorer/master/entity" caption="Individual" action="init" permission="system"/>
    </invokers>
    
    <code>
