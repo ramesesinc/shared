@@ -1,6 +1,0 @@
-<workunit extends="wtemplates/ListController.xml" serviceName="BankDepositService" entityName="deposit">
-    <invokers>
-        <invoker folderid="/explorer/txn/treasury" caption="Bank Deposits" index="50"  role="CASHIER"/>
-        <invoker type="home.action" caption="Bank Deposits" index="50"  role="CASHIER" target="window" />
-    </invokers>
-</workunit>

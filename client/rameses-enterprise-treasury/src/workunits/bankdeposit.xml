@@ -1,0 +1,79 @@
+<workunit>
+    
+   <invokers>
+         <invoker type="bankdeposit:create" caption="Bank Deposit" action="init"/>
+         <invoker type="quick_launcher" code="BNKD" caption="Bank Deposits" action="open"/>
+         
+         <invoker type="bankdeposit:open" caption="Bank Deposit (Open)" action="open"/>
+         
+         <invoker type="formActions" caption="Close" name="_close"  />
+         <invoker type="formActions" caption="Next" name="start" visibleWhen="#{state == 'initial' &amp;&amp; mode=='create'}" />
+         <invoker type="formActions" caption="Submit" name="submit" visibleWhen="#{state != 'initial' &amp;&amp; mode=='create'}" />
+     </invokers>
+   
+   <code>
+       <![CDATA[
+        import com.rameses.osiris2.common.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.rcp.annotations.*;
+        import java.rmi.server.*;
+        import com.rameses.osiris2.client.*;
+        import com.rameses.util.*;
+        
+        class BankDepositController {
+        
+            @Binding
+            def binding;
+        
+            def state = "initial";
+            
+            @Service("BankDepositService")
+            def service;
+        
+            String title = "Bank Deposit";
+            def entity;
+            
+            def mode = 'create';
+            
+            def init() {
+                state = "initial";
+                entity = service.init();
+                return "initial";
+            }
+            
+            def start() {
+                state = "processing";
+                return "default";
+            }
+            
+            void open(){
+                throw new Exception("Not yet implemented");
+            }
+            
+            def liquidationListModel = [
+                fetchList: { o->return entity.liquidations; }
+            ] as BasicListModel;
+            
+            def fundSummaryModel = [
+                fetchList: { o->return entity.fundsummary; }
+            ] as BasicListModel;
+            
+
+            void submit() {
+                if( MsgBox.confirm("You are about to submit this deposit. Please ensure the entries are correct")) {
+                    entity = service.post( entity );
+                    state = "completed";
+                    MsgBox.alert("Posting successful");
+                }
+            }
+            
+        }      
+       ]]>
+   </code>
+   
+   <pages>
+       <page name="initial" template="com.rameses.enterprise.treasury.bankdeposit.BankDepositInitPage" />
+       <page name="default" template="com.rameses.enterprise.treasury.bankdeposit.BankDepositProcessPage" />
+   </pages>
+   
+</workunit>
