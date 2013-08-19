@@ -1,7 +1,8 @@
 <workunit>
     <invokers>
-        <invoker type="user-usergroup-org:open" action="init"/>
-    </invokers>
+        <invoker type="user-usergroup-orgclass:create" action="create"/>
+        <invoker type="user-usergroup-orgclass:open" action="open"/>
+    </invokers> 
    
     <code>
     <![CDATA[
@@ -12,15 +13,23 @@
 
         public class UserGroupOrgController {
             
-            def entity;
+            def entity = [:];
+            def securitygroups = [];
 
-            void init(){
+            void create(){
+            }
+            
+            void open() {
             }
             
             def getLookupOrg() {
-                return InvokerUtil.lookupOpener('org:lookup', [
+                return InvokerUtil.lookupOpener('org:lookup', [ 
                     'query.orgclass': entity.orgclass 
                 ]); 
+            } 
+            
+            def showPermissions() {
+                
             } 
         }
     ]]>
