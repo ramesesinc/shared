@@ -91,6 +91,7 @@ public class UsergroupOrgPage extends javax.swing.JPanel {
         xButton1.setName("showPermissions");
         xButton1.setShowCaption(false);
         xButton1.setText("...");
+        xButton1.setVisible(false);
         xFormPanel2.add(xButton1);
 
         xFormPanel1.add(xFormPanel2);

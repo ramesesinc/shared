@@ -147,6 +147,7 @@
                     <Property name="name" type="java.lang.String" value="showPermissions"/>
                     <Property name="showCaption" type="boolean" value="false"/>
                     <Property name="text" type="java.lang.String" value="..."/>
+                    <Property name="visible" type="boolean" value="false"/>
                   </Properties>
                 </Component>
               </SubComponents>
