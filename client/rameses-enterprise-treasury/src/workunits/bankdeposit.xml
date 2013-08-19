@@ -2,6 +2,7 @@
     
    <invokers>
          <invoker type="bankdeposit:create" caption="Bank Deposit" action="init" target="window"/>
+         <invoker folderid="/menu/txn/treasury" caption="Bank Deposit" action="init" target="window" role="CASHIER" />
          <invoker type="quick_launcher" code="BNKD" caption="Bank Deposits" action="open" target="window"/>
          <invoker type="bankdeposit:open" caption="Bank Deposit (Open)" action="open" target="window"/>
          
