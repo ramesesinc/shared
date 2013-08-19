@@ -13,12 +13,15 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jPanel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="10" pref="10" max="10" attributes="0"/>
+                      <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <Component id="xFormPanel1" alignment="0" min="-2" pref="357" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="683" max="32767" attributes="0"/>
+              <EmptySpace pref="718" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -29,7 +32,7 @@
               <Component id="xFormPanel1" min="-2" pref="37" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="196" max="32767" attributes="0"/>
+              <EmptySpace pref="301" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -66,10 +69,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="xFormPanel2" alignment="0" pref="293" max="32767" attributes="1"/>
-                      <Component id="xButton1" alignment="0" min="-2" max="-2" attributes="1"/>
-                  </Group>
+                  <Component id="xFormPanel2" pref="293" max="32767" attributes="1"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -78,9 +78,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Component id="xFormPanel2" min="-2" pref="67" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                  <Component id="xButton1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="155" max="32767" attributes="0"/>
+                  <EmptySpace pref="87" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -123,16 +121,6 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="com.rameses.rcp.control.XButton" name="xButton1">
-          <Properties>
-            <Property name="mnemonic" type="int" value="111"/>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Arial" size="12" style="1"/>
-            </Property>
-            <Property name="name" type="java.lang.String" value="viewOtherPayments"/>
-            <Property name="text" type="java.lang.String" value="Non-Cash Payments"/>
-          </Properties>
-        </Component>
       </SubComponents>
     </Container>
   </SubComponents>
