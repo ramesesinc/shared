@@ -71,6 +71,9 @@ public abstract class LookupController extends LookupModel
             String stag = getTag();
             if (stag != null) params.put("_tag", stag);
             
+            Map qry = getQuery();
+            if (qry != null) params.putAll(qry); 
+            
             return getService().getList(params); 
         } else {
             return new ArrayList(); 

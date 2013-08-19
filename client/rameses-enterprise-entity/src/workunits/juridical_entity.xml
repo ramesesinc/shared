@@ -1,7 +1,7 @@
 <workunit>
     <invokers>
-         <invoker type="juridicalentity:create" caption="Juridical" action="create" target="popup"/>
-         <invoker type="juridicalentity:open" caption="Juridical" action="open" target="popup"/>
+         <invoker type="juridicalentity:create" caption="Juridical" action="create" target="popup" permission="system"/>
+         <invoker type="juridicalentity:open" caption="Juridical" action="open" target="popup" permission="system"/>
     </invokers>
     
     <code>
