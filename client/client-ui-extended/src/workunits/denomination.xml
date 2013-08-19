@@ -16,10 +16,12 @@
             @Binding
             def binding;
         
+            def allowEdit = true;
+            
             def entries;
             
             def handler;
-            def selection;
+            def selectedItem;
             def mode;
             def onupdate;
             def totalBreakdown = 0;
