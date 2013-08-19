@@ -2,9 +2,9 @@
 <workunit>
     <invokers>
        <invoker type="ris:types" caption="Issuance AF" txntype="AF:ISSUE" role="AFO" />
+       <invoker type="ris:types" caption="Issuance AF" txntype="AF:ISSUE" role="COLLECTOR" />
        <invoker type="ris:types" caption="Sale AF" txntype="AF:SALE" role="AFO" />
        <invoker type="ris:types" caption="Purchase AF" txntype="AF:PURCHASE" role="AFO" />
-       <invoker type="ris:types" caption="Purchase AF" txntype="AF:PURCHASE" role="COLLECTOR" />
        
        <invoker type="ris:open" action="open" caption="RIS AF" target="window"/>
     </invokers>
