@@ -1,5 +1,7 @@
 <folders>
     <folder id="explorer">
-        <folder id="entity" caption="Entities" index="5"/> 
+        <folder id="master">
+            <folder id="entity" caption="Entities"/>     
+        </folder>        
     </folder> 
 </folders>

@@ -20,6 +20,7 @@
         String entityName = "revenueitem";
         String title = "Revenue Item";
         String prefixId = "REVITEM";
+        boolean showConfirmOnSave = false;
         
         def showSegments() {
             return InvokerUtil.lookupOpener( "accountsegment:open", 

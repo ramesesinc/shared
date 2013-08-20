@@ -1,8 +1,9 @@
 <workunit>
     
    <invokers>
-         <invoker type="home.action" caption="Cash Receipts" action="init" index="1" role="COLLECTOR" target="window"/>
-         <invoker folderid="/menu/txn/treasury" caption="Cash Receipts" action="init" index="10" role="COLLECTOR"/>
+         <invoker type="home.action" caption="Cash Receipt" action="init" index="1" role="COLLECTOR" target="window"/>
+         <invoker type="quick_launcher" code="RCT" caption="Cash Receipt" action="init" index="1" role="COLLECTOR" target="window"/>
+         <invoker folderid="/menu/txn/treasury" caption="Cash Receipt" action="init" index="10" role="COLLECTOR"/>
          <invoker type="formActions" caption="Next" action="runProcess" shortcut="ctrl N"/>
    </invokers>
    

@@ -3,9 +3,8 @@
    <invokers>
          <invoker type="bankaccount:open" caption="Bank Account" action="open"/>
          <invoker type="bankaccount:create" caption="New Bank Account" action="create"/>
-         
-         <invoker type="formActions" caption="Account Mapping" 
-         action="showMapping" visibleWhen="#{mode=='read'}"/>
+         <invoker type="formActions" caption="Details" action="showDetails" visibleWhen="#{mode=='read'}"/>
+         <invoker type="formActions" caption="Account Mapping" action="showMapping" visibleWhen="#{mode=='read'}"/>
    </invokers>
    
    <code>
@@ -34,12 +33,18 @@
                 );
             }
             
+            def showDetails() {
+                return InvokerUtil.lookupOpener("account:detail", 
+                    [entity:entity, service:service] 
+                );
+            }
+            
         }      
        ]]>
    </code>
    
    <pages>
-       <page template="com.rameses.enterprise.accounts.BankAccountPage" />
+       <page template="com.rameses.enterprise.treasury.bank.BankAccountPage" />
    </pages>
    
 </workunit>

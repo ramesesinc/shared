@@ -1,0 +1,117 @@
+<workunit>
+    
+   <invokers>
+         <invoker type="bankdeposit:entry" caption="Bank Deposit" action="init" target="popup"/>
+     </invokers>
+   
+   <code>
+       <![CDATA[
+        import com.rameses.osiris2.common.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.rcp.annotations.*;
+        import java.rmi.server.*;
+        import com.rameses.osiris2.client.*;
+        import com.rameses.util.*;
+        
+        class BankDepositEntryController {
+        
+            @Binding 
+            def binding;
+        
+            def entity;
+            def selectedFund;
+            
+            def undepositedChecks;
+            
+            def handler;
+            
+            def cashBreakdown;
+            def selectedCheck;
+            def total = 0;
+            
+            void init() {
+                entity = [amount:selectedFund.balance,totalcash:0, totalnoncash:0, amount:0];
+                entity.fund = selectedFund.fund;
+                entity.checks = [];
+                entity.cashbreakdown = [];
+                entity.amount = selectedFund.balance;
+                cashBreakdown = InvokerUtil.lookupOpener("cash:breakdown", 
+                  [ entries: entity.cashbreakdown,
+                    onupdate: { o->
+                        entity.totalcash = o;
+                        total = entity.totalcash+entity.totalnoncash;
+                        binding.refresh("entity.totalcash|total");
+                    }
+                   ]
+                );
+            }
+            
+            def getLookupBankAccount() {
+                return InvokerUtil.lookupOpener( "bankaccount:lookup", 
+                    ["query.fundid": entity.fund.objid]
+               );
+            }
+            
+            def addCheck() {
+                return InvokerUtil.lookupOpener( "undepositedcheck:lookup", 
+                    [
+                        undepositedChecks: undepositedChecks,
+                        onselect: { arr->
+                            arr.each {
+                                entity.checks << it;
+                                undepositedChecks.remove(it);
+                            }
+                            entity.totalnoncash = entity.checks.sum{it.amount};
+                            total = entity.totalcash+entity.totalnoncash;
+                            checkModel.reload();
+                            binding.refresh("entity.totalnoncash|total");
+                        }
+                    ]
+               );
+            }
+            
+            void removeCheck() {
+                if(!selectedCheck) return;
+                entity.checks.remove( selectedCheck );
+                undepositedChecks << selectedCheck;
+                if( entity.checks ) {
+                    entity.totalnoncash = entity.checks.sum{it.amount};
+                }
+                else {
+                    entity.totalnoncash = 0;
+                }
+                total = entity.totalcash+entity.totalnoncash;
+                checkModel.reload();
+                binding.refresh("entity.totalnoncash|total");
+            }
+            
+            def doOk() {
+                if(entity.amount > selectedFund.balance) 
+                    throw new Exception("Amount to deposit should not exceed balance");
+                if( entity.amount != total)
+                    throw new Exception("Total cash and non cash must be equal amount to deposit");
+                if(handler) {
+                    handler( entity );
+                }    
+                return "_close";
+            }
+            
+            def doCancel() {
+                return "_close";
+            }
+            
+            def checkModel = [
+                fetchList : { o->
+                    return entity.checks;
+                }
+            ] as BasicListModel;
+            
+        }      
+       ]]>
+   </code>
+   
+   <pages>
+       <page template="com.rameses.enterprise.treasury.bankdeposit.BankDepositEntryPage" />
+   </pages>
+   
+</workunit>

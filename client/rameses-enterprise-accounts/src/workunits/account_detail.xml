@@ -23,7 +23,6 @@
             Map createEntity() {
                 return [parentid:node.objid,parentcode:node.code, type:'detail'];
             }
-            
         }      
        ]]>
    </code>
