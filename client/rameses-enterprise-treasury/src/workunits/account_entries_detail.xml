@@ -1,8 +1,7 @@
 <workunit>
     
    <invokers>
-         <invoker type="account:detail" action="init"/>
-         <invoker type="formActions" caption="Close" action="_close"/> 
+         <invoker type="account:detail" />
    </invokers>
    
    <code>
@@ -23,6 +22,12 @@
             void init() {
                 page = entity.currentpageno;
                 title = entity.title;
+                println "title is " + title ;
+            }
+            
+            void reload( e ) {
+                entity = e;
+                init();
             }
             
             def listModel = [
@@ -50,8 +55,6 @@
                 }
                 listModel.reload();
            }
-            
-            
         }      
        ]]>
    </code>

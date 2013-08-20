@@ -3,8 +3,8 @@
    <invokers>
          <invoker type="bankaccount:open" caption="Bank Account" action="open"/>
          <invoker type="bankaccount:create" caption="New Bank Account" action="create"/>
-         <invoker type="formActions" caption="Details" action="showDetails" visibleWhen="#{mode=='read'}"/>
-         <invoker type="formActions" caption="Account Mapping" action="showMapping" visibleWhen="#{mode=='read'}"/>
+         <invoker type="formActions" caption="Details" action="showDetails" visibleWhen="#{mode=='read' &amp;&amp; page == 'default' }"/>
+         <invoker type="formActions" caption="Back" action="viewMain" visibleWhen="#{page=='details'}"/>
    </invokers>
    
    <code>
@@ -15,28 +15,39 @@
         import com.rameses.osiris2.client.*;
         
         class BankAccountController extends CRUDController {
+            @Binding
+            def binding;
         
-            String serviceName = "BankAccountService";
+            @Service("BankAccountService")
+            def service;
+            
             String entityName = "bankaccount";
-
             def acctTypes = ["CHECKING", "CURRENT"];
             def currencyTypes = [ "PHP", "USD" ];
+            
+            def detailHandler = InvokerUtil.lookupOpener("account:detail");
+            def page = "default";
             
             Map createEntity() {
                 return [:];
             }
             
-            def showMapping() {
-                return InvokerUtil.lookupOpener("accountsegment:open", [
-                        entity:entity, entityName:entityName
-                    ] 
-                );
+            void entityChanged() {
+                if(page!='details') return;
+                detailHandler.handle.reload( entity );
             }
             
             def showDetails() {
-                return InvokerUtil.lookupOpener("account:detail", 
-                    [entity:entity, service:service] 
-                );
+                detailHandler.handle.service = service;
+                detailHandler.handle.entity = entity;
+                detailHandler.handle.init();
+                page = "details";
+                return page;
+            }
+            
+            def viewMain() {
+                page = "default";
+                return page;
             }
             
         }      
@@ -45,6 +56,7 @@
    
    <pages>
        <page template="com.rameses.enterprise.treasury.bank.BankAccountPage" />
+       <page name="details" template="com.rameses.enterprise.treasury.bank.BankAccountDetailsPage" />
    </pages>
    
 </workunit>
