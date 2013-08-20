@@ -1,0 +1,77 @@
+<workunit>
+    
+   <invokers>
+         <invoker type="home.action" caption="Cash Ticket" action="init" index="1" role="COLLECTOR" target="window"/>
+         <invoker type="quick_launcher" code="CT" caption="Cash Ticket" action="init" index="1" role="COLLECTOR" target="window"/>
+         <invoker folderid="/menu/txn/treasury" caption="Cash Ticket" action="init" index="10" role="COLLECTOR"/>
+         <invoker type="formActions" caption="Next" action="start" shortcut="ctrl N"/>
+   </invokers>
+   
+   <code>
+       <![CDATA[
+        import com.rameses.osiris2.common.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.osiris2.client.*;
+        import com.rameses.util.*;
+        
+        class CashTikcetInitialController  {
+        
+            @Binding
+            def binding;
+        
+            @Service("CashTicketService")
+            def cashTicketSvc;
+        
+            @Service("CollectionTypeService")
+            def collectionTypeSvc;
+            
+            String title = "Cash Tickets";
+
+            def formno;
+            def txnmode;
+            def formTypes;
+            def collectiontype;
+            def collectionTypes;
+            
+            def getExtActions() {
+                return InvokerUtil.lookupActions( "cashticket-initial:formActions" );
+            }
+            
+            void init() {
+                collectionTypes = collectionTypeSvc.getCollectionTypes();    
+                formTypes = collectionTypes*.formno.unique().sort();
+            }
+
+            def getCollectionTypes()  {
+                return collectionTypes.findAll{it.formno == formno };
+            }
+            
+            def start() {
+                try {
+                    def entity = [:];
+                    entity.txnmode = txnmode;
+                    entity.formno = formno;
+                    entity.collectiontype = collectiontype;
+
+                    //call init first
+                    entity = cashTicketSvc.init( entity );
+                    return InvokerUtil.lookupOpener("cashticket:"+collectiontype.handler,[entity: entity]);
+                }
+                catch(Warning w) {
+                    String m = "cashticket:"+w.message;
+                    return InvokerUtil.lookupOpener( m, [formno: formno, txnmode:txnmode ] );
+                }
+                catch(e) {
+                    throw e;
+                }
+            }
+        }      
+       ]]>
+   </code>
+   
+   <pages>
+       <page template="com.rameses.gov.treasury.cashticket.CashTicketInitialPage" />
+   </pages>
+   
+</workunit>
