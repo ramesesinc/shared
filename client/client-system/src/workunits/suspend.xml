@@ -1,7 +1,8 @@
 <workunit>
     <invokers>
         <invoker type="system:suspend" action="init" caption="Suspend" target="popup"/>
-        <invoker folderid="/menu/system"  action="init" caption="Suspend ... " index="17000" separator="before" target="popup" permission="system"/>
+
+        <invoker folderid="/menu/system"  action="init" caption="Suspend ... " index="17000" separator="before"     target="popup" permission="system" icon="images/suspend.png"/>
     </invokers>
     
     <code>

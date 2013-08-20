@@ -1,10 +1,10 @@
 <workunit>
     
    <invokers>
-         <invoker type="home.action" caption="Cash Receipt" action="init" index="1" role="COLLECTOR" target="window"/>
-         <invoker type="quick_launcher" code="RCT" caption="Cash Receipt" action="init" index="1" role="COLLECTOR" target="window"/>
-         <invoker folderid="/menu/txn/treasury" caption="Cash Receipt" action="init" index="10" role="COLLECTOR"/>
-         <invoker type="formActions" caption="Next" action="runProcess" shortcut="ctrl N"/>
+         <invoker type="home.action" caption="Cash Ticket" action="init" index="1" role="COLLECTOR" target="window"/>
+         <invoker type="quick_launcher" code="CT" caption="Cash Ticket" action="init" index="1" role="COLLECTOR" target="window"/>
+         <invoker folderid="/menu/txn/treasury" caption="Cash Ticket" action="init" index="10" role="COLLECTOR"/>
+         <invoker type="formActions" caption="Next" action="start" shortcut="ctrl N"/>
    </invokers>
    
    <code>
@@ -15,53 +15,39 @@
         import com.rameses.osiris2.client.*;
         import com.rameses.util.*;
         
-        class CashReceiptInitialController  {
+        class CashTikcetInitialController  {
         
             @Binding
             def binding;
         
-            @Service("CashReceiptService")
-            def cashReceiptSvc;
+            @Service("CashTicketService")
+            def cashTicketSvc;
         
             @Service("CollectionTypeService")
             def collectionTypeSvc;
             
-            String title = "Cash Receipts";
+            String title = "Cash Tickets";
 
             def formno;
             def txnmode;
             def formTypes;
             def collectiontype;
-            def modeOpener;
-            def modeOpeners;
             def collectionTypes;
             
             def getExtActions() {
-                return InvokerUtil.lookupActions( "cashreceipt-initial:formActions" );
+                return InvokerUtil.lookupActions( "cashticket-initial:formActions" );
             }
             
             void init() {
                 collectionTypes = collectionTypeSvc.getCollectionTypes();    
                 formTypes = collectionTypes*.formno.unique().sort();
-                modeOpeners = InvokerUtil.lookupOpeners( "cashreceipt:mode", [entity:[:]]);
-                if(modeOpeners.size()>0) {
-                    modeOpener = modeOpeners.first();
-                    txnmode = modeOpener.caption;
-                }    
             }
 
             def getCollectionTypes()  {
                 return collectionTypes.findAll{it.formno == formno };
             }
             
-            @PropertyChangeListener
-            def listener = [
-                "modeOpener" : { o->
-                    txnmode = o.caption;
-                }
-            ]
-            
-            def runProcess() {
+            def start() {
                 try {
                     def entity = [:];
                     entity.txnmode = txnmode;
@@ -69,11 +55,11 @@
                     entity.collectiontype = collectiontype;
 
                     //call init first
-                    entity = cashReceiptSvc.init( entity );
-                    return InvokerUtil.lookupOpener("cashreceipt:"+collectiontype.handler,[entity: entity]);
+                    entity = cashTicketSvc.init( entity );
+                    return InvokerUtil.lookupOpener("cashticket:"+collectiontype.handler,[entity: entity]);
                 }
                 catch(Warning w) {
-                    String m = "cashreceipt:"+w.message;
+                    String m = "cashticket:"+w.message;
                     return InvokerUtil.lookupOpener( m, [formno: formno, txnmode:txnmode ] );
                 }
                 catch(e) {
@@ -85,7 +71,7 @@
    </code>
    
    <pages>
-       <page template="com.rameses.enterprise.treasury.cashreceipt.CashReceiptInitialPage" />
+       <page template="com.rameses.gov.treasury.cashticket.CashTicketInitialPage" />
    </pages>
    
 </workunit>

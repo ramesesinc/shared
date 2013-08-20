@@ -40,6 +40,8 @@ public class ExplorerViewListController extends ListController implements Explor
     private List<Action> nodeActions = new ArrayList();
     private Object extendedParams;
     
+    private boolean _showQueryForm = false;
+    
     public ExplorerViewListController() {
     }
         
@@ -57,11 +59,14 @@ public class ExplorerViewListController extends ListController implements Explor
     public String getEntityName() {
         throw new IllegalStateException("Please specify an entityName");
     }
-    
-    public Opener getQueryForm() { return null; }    
+        
     public List getFormActions() { return formActions; }  
     public List getNodeActions() { return nodeActions; } 
     public int getRows() { return 20; } 
+    
+    public boolean isQueryFormVisible() { 
+        return _showQueryForm; 
+    }
     
     // </editor-fold>
     
@@ -85,7 +90,13 @@ public class ExplorerViewListController extends ListController implements Explor
     }
         
     public void updateView() { 
-        buildActions();
+        Node node = getNode();
+        String nodeName = (node == null? null: node.getPropertyString("name")); 
+        _showQueryForm = "search".equals(nodeName+""); 
+        
+        getQuery().clear(); 
+        
+        buildActions(); 
         Binding binding = getBinding();
         if (binding != null) {
             binding.refresh("formActions");
@@ -101,7 +112,7 @@ public class ExplorerViewListController extends ListController implements Explor
         for (Node cnode: cnodes) {
             String cfiletype = cnode.getPropertyString("filetype")+"";
             if (cfiletype.equalsIgnoreCase(filetype)) return cnode;
-        }
+        } 
         return null; 
     }
     
@@ -111,13 +122,7 @@ public class ExplorerViewListController extends ListController implements Explor
         
         Node node = getNode();
         if (node == null) return;
-        
-//        String childnodes = node.getPropertyString("childnodes");
-//        if (childnodes != null && childnodes.trim().length() > 0) {
-//            childnodes = childnodes.trim();
-//            node.loadItems(); 
-//        }
-        
+                
         String filetype = node.getPropertyString("filetype");
         //load node actions
         if (filetype != null) {
@@ -218,6 +223,19 @@ public class ExplorerViewListController extends ListController implements Explor
             } 
         } 
     } 
+    
+    private void buildActionsForSearchNode() {
+        formActions.clear();
+        nodeActions.clear();
+        
+        Node node = getNode();
+        if (node == null) return;
+        
+        String dfiletype = (parentController==null? null: parentController.getDefaultFileType()); 
+        if (dfiletype == null || dfiletype.length() == 0) return;
+                
+        formActions.add(createAction("reload", "Refresh", "images/toolbars/refresh.png", "ctrl R", 'r', null, true));         
+    }     
     
     // </editor-fold>
         

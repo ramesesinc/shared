@@ -14,6 +14,5 @@
         <folder id="report" caption="Report">
             <folder id="treasury" caption="Treasury"/>
         </folder>
-    </folder>
-   
+    </folder>   
 </folders>
