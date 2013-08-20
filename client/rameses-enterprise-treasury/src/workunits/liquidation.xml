@@ -9,6 +9,10 @@
          <invoker type="formActions" caption="Close" name="_close"  />
          <invoker type="formActions" caption="Next" name="start" visibleWhen="#{state == 'initial'}" />
          <invoker type="formActions" caption="Submit" name="submit" visibleWhen="#{state == 'processing'}" />
+         <invoker type="formActions" caption="View RCD" name="viewRCD" visibleWhen="#{state == 'completed'}" />
+
+         
+
      </invokers>
    
    <code>
@@ -73,6 +77,10 @@
                     state = "completed";
                     MsgBox.alert("Posting successful");
                 }
+            }
+            
+            def viewRCD() {
+                return InvokerUtil.lookupOpener("liquidation:rcd", [liquidationid:entity.objid])
             }
             
             def remittancesModel = [
