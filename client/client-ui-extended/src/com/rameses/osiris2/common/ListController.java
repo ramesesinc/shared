@@ -20,6 +20,7 @@ public abstract class ListController extends BasicListController implements Page
     private Map query = new HashMap(); 
     private String tag;
     private String formName;
+    private int defaultRowSize = 20;
     
     public abstract String getServiceName();
     
@@ -52,7 +53,7 @@ public abstract class ListController extends BasicListController implements Page
                 return Integer.parseInt(oval.toString()); 
             } catch(Throwable t) {;}
         }
-        return super.getRows(); 
+        return defaultRowSize; 
     }
         
     public Map getQuery() { return query; }
