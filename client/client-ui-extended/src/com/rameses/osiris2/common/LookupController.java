@@ -43,6 +43,13 @@ public abstract class LookupController extends LookupModel
     private Object onselect;
     private Object onempty;
     private String tag;
+    private Object callerHandler;
+    
+    // this is injected by the caller for notification
+    public Object getHandler() { return callerHandler; } 
+    public void setHandler(Object handler) {
+        this.callerHandler = handler; 
+    }
     
     public String getTag() { return tag; } 
     public void setTag(String tag) { this.tag = tag; }
@@ -193,9 +200,14 @@ public abstract class LookupController extends LookupModel
     
     private class LookupSelectorImpl implements LookupSelector
     {
+        LookupController root = LookupController.this;
+        
         public void select(Object o) {
-            invokeCallbackHandler(getOnselect(), o);
-        }
+            invokeCallbackHandler(root.getOnselect(), o);
+                        
+            Object callerHandler = root.getHandler();
+            if (callerHandler != null) invokeCallbackHandler(callerHandler, o);
+        } 
 
         public void cancelSelection() {
         }

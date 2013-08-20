@@ -1,7 +1,7 @@
 <workunit>
     <invokers>
         <invoker folderid="/menu/system" caption="Change Password" target="popup" 
-            permission="system" resizable="false"/> 
+            permission="system" resizable="false" icon="images/password.png"/> 
     </invokers>
     
     <code>
