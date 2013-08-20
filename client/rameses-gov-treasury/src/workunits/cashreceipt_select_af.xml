@@ -27,6 +27,7 @@
         
             void init() {
                 formno = caller.formno;
+                txnmode = caller.txnmode;
                 if(!formno)
                     throw new Exception("Please select an accountable form first");
             }

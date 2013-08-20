@@ -58,6 +58,10 @@
             def open(){
                 state = "completed";
                 entity = service.open( entity );
+                cashBreakdown = InvokerUtil.lookupOpener("cash:breakdown", [
+                    entries: entity.cashbreakdown,
+                    allowEdit : false,
+                    ] );
                 return "view";
             }
             
@@ -87,7 +91,7 @@
    <pages>
        <page name="initial" template="com.rameses.enterprise.treasury.liquidation.LiquidationInitPage" />
        <page name="default" template="com.rameses.enterprise.treasury.liquidation.LiquidationProcessPage" />
-       <page name="view" template="com.rameses.enterprise.treasury.liquidation.LiquidationPage" />
+       <page name="view" template="com.rameses.enterprise.treasury.liquidation.LiquidationViewPage" />
 
    </pages>
    

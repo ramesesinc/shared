@@ -14,10 +14,10 @@ import com.rameses.rcp.ui.annotations.Template;
  * @author  Elmo
  */
 @Template(FormPage.class)
-public class BankDepositInitPage extends javax.swing.JPanel {
+public class BankDepositViewPage extends javax.swing.JPanel {
     
     /** Creates new form LiquidationInitPage1 */
-    public BankDepositInitPage() {
+    public BankDepositViewPage() {
         initComponents();
     }
     
@@ -28,85 +28,12 @@ public class BankDepositInitPage extends javax.swing.JPanel {
      */
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
     private void initComponents() {
-        xDataTable1 = new com.rameses.rcp.control.XDataTable();
-        xDataTable2 = new com.rameses.rcp.control.XDataTable();
+        xDataTable3 = new com.rameses.rcp.control.XDataTable();
 
         com.rameses.rcp.control.border.XTitledBorder xTitledBorder1 = new com.rameses.rcp.control.border.XTitledBorder();
-        xTitledBorder1.setTitle("Undeposited liquidation");
-        xDataTable1.setBorder(xTitledBorder1);
-        xDataTable1.setColumns(new com.rameses.rcp.common.Column[]{
-            new com.rameses.rcp.common.Column(new Object[]{
-                new Object[]{"name", "liquidationno"}
-                , new Object[]{"caption", "Liq. Ref No"}
-                , new Object[]{"width", 120}
-                , new Object[]{"minWidth", 0}
-                , new Object[]{"maxWidth", 0}
-                , new Object[]{"required", false}
-                , new Object[]{"resizable", true}
-                , new Object[]{"nullWhenEmpty", true}
-                , new Object[]{"editable", false}
-                , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
-                , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
-            }),
-            new com.rameses.rcp.common.Column(new Object[]{
-                new Object[]{"name", "liquidationdate"}
-                , new Object[]{"caption", "Date"}
-                , new Object[]{"width", 120}
-                , new Object[]{"minWidth", 0}
-                , new Object[]{"maxWidth", 0}
-                , new Object[]{"required", false}
-                , new Object[]{"resizable", true}
-                , new Object[]{"nullWhenEmpty", true}
-                , new Object[]{"editable", false}
-                , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
-                , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
-            }),
-            new com.rameses.rcp.common.Column(new Object[]{
-                new Object[]{"name", "liquidatingofficer.name"}
-                , new Object[]{"caption", "Liquidating Officer"}
-                , new Object[]{"width", 250}
-                , new Object[]{"minWidth", 0}
-                , new Object[]{"maxWidth", 0}
-                , new Object[]{"required", false}
-                , new Object[]{"resizable", true}
-                , new Object[]{"nullWhenEmpty", true}
-                , new Object[]{"editable", false}
-                , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
-                , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
-            }),
-            new com.rameses.rcp.common.Column(new Object[]{
-                new Object[]{"name", "fund.title"}
-                , new Object[]{"caption", "Fund"}
-                , new Object[]{"width", 100}
-                , new Object[]{"minWidth", 0}
-                , new Object[]{"maxWidth", 0}
-                , new Object[]{"required", false}
-                , new Object[]{"resizable", true}
-                , new Object[]{"nullWhenEmpty", true}
-                , new Object[]{"editable", false}
-                , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
-                , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
-            }),
-            new com.rameses.rcp.common.Column(new Object[]{
-                new Object[]{"name", "amount"}
-                , new Object[]{"caption", "Amount"}
-                , new Object[]{"width", 100}
-                , new Object[]{"minWidth", 0}
-                , new Object[]{"maxWidth", 0}
-                , new Object[]{"required", false}
-                , new Object[]{"resizable", true}
-                , new Object[]{"nullWhenEmpty", true}
-                , new Object[]{"editable", false}
-                , new Object[]{"typeHandler", new com.rameses.rcp.common.DecimalColumnHandler("#,##0.00", -1.0, -1.0, false)}
-                , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
-            })
-        });
-        xDataTable1.setHandler("liquidationListModel");
-
-        com.rameses.rcp.control.border.XTitledBorder xTitledBorder2 = new com.rameses.rcp.control.border.XTitledBorder();
-        xTitledBorder2.setTitle("Summary By Fund");
-        xDataTable2.setBorder(xTitledBorder2);
-        xDataTable2.setColumns(new com.rameses.rcp.common.Column[]{
+        xTitledBorder1.setTitle("Deposit Summary");
+        xDataTable3.setBorder(xTitledBorder1);
+        xDataTable3.setColumns(new com.rameses.rcp.common.Column[]{
             new com.rameses.rcp.common.Column(new Object[]{
                 new Object[]{"name", "fund.title"}
                 , new Object[]{"caption", "Fund Title"}
@@ -121,6 +48,58 @@ public class BankDepositInitPage extends javax.swing.JPanel {
                 , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
             }),
             new com.rameses.rcp.common.Column(new Object[]{
+                new Object[]{"name", "bankaccount.code"}
+                , new Object[]{"caption", "Bank Acct Code"}
+                , new Object[]{"width", 100}
+                , new Object[]{"minWidth", 0}
+                , new Object[]{"maxWidth", 0}
+                , new Object[]{"required", false}
+                , new Object[]{"resizable", true}
+                , new Object[]{"nullWhenEmpty", true}
+                , new Object[]{"editable", false}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
+                , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
+            }),
+            new com.rameses.rcp.common.Column(new Object[]{
+                new Object[]{"name", "bankaccount.title"}
+                , new Object[]{"caption", "Bank Acct Title"}
+                , new Object[]{"width", 250}
+                , new Object[]{"minWidth", 0}
+                , new Object[]{"maxWidth", 0}
+                , new Object[]{"required", false}
+                , new Object[]{"resizable", true}
+                , new Object[]{"nullWhenEmpty", true}
+                , new Object[]{"editable", false}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
+                , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
+            }),
+            new com.rameses.rcp.common.Column(new Object[]{
+                new Object[]{"name", "totalcash"}
+                , new Object[]{"caption", "Total Cash"}
+                , new Object[]{"width", 100}
+                , new Object[]{"minWidth", 0}
+                , new Object[]{"maxWidth", 0}
+                , new Object[]{"required", false}
+                , new Object[]{"resizable", true}
+                , new Object[]{"nullWhenEmpty", true}
+                , new Object[]{"editable", false}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.DecimalColumnHandler("#,##0.00", -1.0, -1.0, false)}
+                , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
+            }),
+            new com.rameses.rcp.common.Column(new Object[]{
+                new Object[]{"name", "totalnoncash"}
+                , new Object[]{"caption", "Total non cash"}
+                , new Object[]{"width", 100}
+                , new Object[]{"minWidth", 0}
+                , new Object[]{"maxWidth", 0}
+                , new Object[]{"required", false}
+                , new Object[]{"resizable", true}
+                , new Object[]{"nullWhenEmpty", true}
+                , new Object[]{"editable", false}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.DecimalColumnHandler("#,##0.00", -1.0, -1.0, false)}
+                , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
+            }),
+            new com.rameses.rcp.common.Column(new Object[]{
                 new Object[]{"name", "amount"}
                 , new Object[]{"caption", "Amount"}
                 , new Object[]{"width", 100}
@@ -134,8 +113,10 @@ public class BankDepositInitPage extends javax.swing.JPanel {
                 , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
             })
         });
-        xDataTable2.setHandler("fundSummaryModel");
-        xDataTable2.setName("");
+        xDataTable3.setDepends(new String[] {"showSelected", "selectedFund"});
+        xDataTable3.setDynamic(true);
+        xDataTable3.setHandler("depositModel");
+        xDataTable3.setName("selectedDeposit");
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
@@ -143,26 +124,21 @@ public class BankDepositInitPage extends javax.swing.JPanel {
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(xDataTable1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 825, Short.MAX_VALUE)
-                    .add(xDataTable2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 387, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .add(xDataTable3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 783, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(xDataTable1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(xDataTable2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                .add(xDataTable3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.rameses.rcp.control.XDataTable xDataTable1;
-    private com.rameses.rcp.control.XDataTable xDataTable2;
+    private com.rameses.rcp.control.XDataTable xDataTable3;
     // End of variables declaration//GEN-END:variables
     
 }

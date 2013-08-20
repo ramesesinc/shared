@@ -2,10 +2,11 @@
     
    <invokers>
          <invoker type="bankdeposit:create" caption="Bank Deposit" action="init" target="window"/>
+         <invoker folderid="/menu/txn/treasury" caption="Bank Deposit" action="init" target="window" role="CASHIER" />
          <invoker type="quick_launcher" code="BNKD" caption="Bank Deposits" action="open" target="window"/>
          <invoker type="bankdeposit:open" caption="Bank Deposit (Open)" action="open" target="window"/>
          
-         <invoker type="formActions" caption="Close" name="_close"  />
+         <invoker type="formActions" caption="Close" name="_close"  icon="images/toolbars/cancel.png"/>
          <invoker type="formActions" caption="Next" name="start" visibleWhen="#{state == 'initial'}" />
          <invoker type="formActions" caption="Submit" name="submit" visibleWhen="#{state == 'processing'}" />
      </invokers>
@@ -50,8 +51,11 @@
                 return "default";
             }
             
-            void open(){
-                throw new Exception("Not yet implemented");
+            def open(){
+                state = 'open'
+                title = 'Bank Deposit Summary'
+                entity = service.open(entity)
+                return 'view'
             }
             
             def liquidationListModel = [
@@ -125,6 +129,7 @@
    <pages>
        <page name="initial" template="com.rameses.enterprise.treasury.bankdeposit.BankDepositInitPage" />
        <page name="default" template="com.rameses.enterprise.treasury.bankdeposit.BankDepositProcessPage" />
+       <page name="view" template="com.rameses.enterprise.treasury.bankdeposit.BankDepositViewPage" />
    </pages>
    
 </workunit>

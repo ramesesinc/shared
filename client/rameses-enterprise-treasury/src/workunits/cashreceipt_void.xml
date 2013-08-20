@@ -2,9 +2,8 @@
     
    <invokers>
          <!-- hooks to cash receipt -->
-         <invoker type="cashreceiptinfo:formActions" caption="Void" action="open" target="popup" />
+         <invoker type="cashreceiptinfo:formActions" caption="Void" action="open" target="popup" visibleWhen="#{!entity.remitted &amp;&amp; !entity.voided}"/>
          <invoker type="cashreceipt:void" caption="Void" action="create" target="popup"/>
-         
          <invoker type="formActions" caption="Post" action="save"  />
    </invokers>
    
