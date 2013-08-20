@@ -39,7 +39,7 @@ public class AccountEntriesPage extends javax.swing.JPanel {
             new com.rameses.rcp.common.Column("lineno", ".", 50, 50, 50, false, false, true, false, null, new com.rameses.rcp.common.TextColumnHandler()),
             new com.rameses.rcp.common.Column("refno", "Ref No", 80, 80, 80, false, true, true, false, null, new com.rameses.rcp.common.TextColumnHandler()),
             new com.rameses.rcp.common.Column("refdate", "Ref Date", 80, 80, 80, false, true, true, false, null, new com.rameses.rcp.common.TextColumnHandler()).set("alignment","CENTER"),
-            new com.rameses.rcp.common.Column("reftype", "Ref Type", 80, 80, 80, false, true, true, false, null, new com.rameses.rcp.common.TextColumnHandler()).set("alignment","CENTER"),
+            new com.rameses.rcp.common.Column("reftype", "Ref Type", 100, 80, 120, false, true, true, false, null, new com.rameses.rcp.common.TextColumnHandler()).set("alignment","LEFT"),
             new com.rameses.rcp.common.Column("particulars", "Particulars", 100, 0, 0, false, true, true, false, null, new com.rameses.rcp.common.TextColumnHandler()),
             new com.rameses.rcp.common.Column("dr", "Dr", 80, 80, 80, false, true, true, false, null, new com.rameses.rcp.common.DecimalColumnHandler("#,##0.00", -1.0, -1.0, false)),
             new com.rameses.rcp.common.Column("cr", "Cr", 80, 80, 80, false, true, true, false, null, new com.rameses.rcp.common.DecimalColumnHandler("#,##0.00", -1.0, -1.0, false)),

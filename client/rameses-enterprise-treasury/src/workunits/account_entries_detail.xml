@@ -22,17 +22,17 @@
             void init() {
                 page = entity.currentpageno;
                 title = entity.title;
-                println "title is " + title ;
             }
             
             void reload( e ) {
                 entity = e;
                 init();
+                listModel.reload();
             }
             
             def listModel = [
                 fetchList: { o->
-                    if(!page) page = entity.currentpageno;
+                    if (!page) page = entity.currentpageno;
                     return service.getEntries( [objid: entity.objid, page: page ] );
                 }
             

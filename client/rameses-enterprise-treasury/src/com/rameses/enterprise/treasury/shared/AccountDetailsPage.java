@@ -4,7 +4,7 @@
  * Created on February 27, 2011, 12:48 PM
  */
 
-package com.rameses.enterprise.treasury.bank;
+package com.rameses.enterprise.treasury.shared;
 
 
 import com.rameses.osiris2.themes.FormPage;
@@ -17,10 +17,10 @@ import com.rameses.rcp.ui.annotations.Template;
  */
 @StyleSheet
 @Template(FormPage.class)
-public class BankAccountDetailsPage extends javax.swing.JPanel {
+public class AccountDetailsPage extends javax.swing.JPanel {
     
     /** Creates new form AccountPage */
-    public BankAccountDetailsPage() {
+    public AccountDetailsPage() {
         initComponents();
     }
     /** This method is called from within the constructor to
@@ -35,8 +35,8 @@ public class BankAccountDetailsPage extends javax.swing.JPanel {
         setLayout(new java.awt.BorderLayout());
 
         setPreferredSize(new java.awt.Dimension(542, 498));
-        xSubFormPanel1.setDynamic(true);
         xSubFormPanel1.setHandler("detailHandler");
+        xSubFormPanel1.setName("subform");
         org.jdesktop.layout.GroupLayout xSubFormPanel1Layout = new org.jdesktop.layout.GroupLayout(xSubFormPanel1);
         xSubFormPanel1.setLayout(xSubFormPanel1Layout);
         xSubFormPanel1Layout.setHorizontalGroup(

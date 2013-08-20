@@ -56,7 +56,7 @@
    
    <pages>
        <page template="com.rameses.enterprise.treasury.bank.BankAccountPage" />
-       <page name="details" template="com.rameses.enterprise.treasury.bank.BankAccountDetailsPage" />
+       <page name="details" template="com.rameses.enterprise.treasury.shared.AccountDetailsPage" />
    </pages>
    
 </workunit>

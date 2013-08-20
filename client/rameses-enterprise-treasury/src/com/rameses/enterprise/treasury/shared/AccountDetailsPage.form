@@ -19,8 +19,8 @@
   <SubComponents>
     <Container class="com.rameses.rcp.control.XSubFormPanel" name="xSubFormPanel1">
       <Properties>
-        <Property name="dynamic" type="boolean" value="true"/>
         <Property name="handler" type="java.lang.String" value="detailHandler"/>
+        <Property name="name" type="java.lang.String" value="subform"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
