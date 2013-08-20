@@ -1,0 +1,35 @@
+<workunit>
+        
+    <invokers>
+         <invoker type="sreaccount-group:open" caption="Account Group" action="open"/>
+         <invoker type="sreaccount-group:create" caption="Account Group" action="create"/>
+   </invokers>
+   
+   <code>
+       <![CDATA[
+        import com.rameses.osiris2.common.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.osiris2.client.*;
+        
+        class SREAccountGroupController extends CRUDController {
+        
+            String serviceName = "SREAccountService";
+            String entityName = "sreaccount";
+            String title = "SRE Account";
+            String prefixId = "SRE";
+            def node;
+            
+            Map createEntity() {
+                return [parentid:node.objid,parentcode:node.code, type:'group'];
+            }
+            
+        }      
+       ]]>
+   </code>
+   
+   <pages>
+       <page template="com.rameses.gov.treasury.accounts.SREAccountPage"/>
+   </pages>
+   
+</workunit>
