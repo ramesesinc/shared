@@ -36,9 +36,6 @@
             def modeOpeners;
             def collectionTypes;
             
-            
-            def mode;
-            
             def getExtActions() {
                 return InvokerUtil.lookupActions( "cashreceipt-initial:formActions" );
             }
@@ -47,17 +44,26 @@
                 collectionTypes = collectionTypeSvc.getCollectionTypes();    
                 formTypes = collectionTypes*.formno.unique().sort();
                 modeOpeners = InvokerUtil.lookupOpeners( "cashreceipt:mode", [entity:[:]]);
-                if(modeOpeners.size()>0) modeOpener = modeOpeners.first();
+                if(modeOpeners.size()>0) {
+                    modeOpener = modeOpeners.first();
+                    txnmode = modeOpener.caption;
+                }    
             }
 
             def getCollectionTypes()  {
                 return collectionTypes.findAll{it.formno == formno };
             }
             
+            @PropertyChangeListener
+            def listener = [
+                "modeOpener" : { o->
+                    txnmode = o.caption;
+                }
+            ]
+            
             def runProcess() {
                 try {
                     def entity = [:];
-                    txnmode = modeOpener.caption;
                     entity.txnmode = txnmode;
                     entity.formno = formno;
                     entity.collectiontype = collectiontype;
