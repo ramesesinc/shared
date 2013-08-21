@@ -1,5 +1,6 @@
 package com.rameses.osiris2.common;
 
+import com.rameses.common.PropertyResolver;
 import com.rameses.rcp.annotations.Binding;
 import com.rameses.rcp.annotations.ChangeLog;
 import com.rameses.rcp.annotations.Invoker;
@@ -34,6 +35,19 @@ public class FormController {
     
     public Object getEntity() { return entity; } 
     public void setEntity(Object entity) { this.entity = entity; }
+    
+    // <editor-fold defaultstate="collapsed" desc=" helper/override methods "> 
+    
+    public void initOpenerHandle(Object handle) {
+        try {
+            if (handle != null) { 
+                Object o = getEntity();
+                PropertyResolver.getInstance().setProperty(handle, "entity", o); 
+            }
+        } catch(Throwable t){;} 
+    }
+    
+    // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc=" ChangeLog support "> 
     
