@@ -36,7 +36,7 @@
 
 	<field name="receiptno" class="java.lang.String"/>
 	<field name="amountinwords" class="java.lang.String"/>
-	<field name="receiptdate" class="java.sql.Timestamp"/>
+	<field name="receiptdate" class="java.util.Date"/>
 	<field name="collector.name" class="java.lang.String"/>
 	<field name="amount" class="java.math.BigDecimal"/>
 	<field name="items" class="java.lang.Object"/>
@@ -78,7 +78,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None" lineSpacing="Single">
 						<font fontName="Tahoma" pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" pdfEncoding ="Cp1252" isStrikeThrough="false" />
 					</textElement>
-				<textFieldExpression   class="java.sql.Timestamp"><![CDATA[$F{receiptdate}]]></textFieldExpression>
+				<textFieldExpression   class="java.util.Date"><![CDATA[$F{receiptdate}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement

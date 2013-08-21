@@ -12,11 +12,12 @@
         import com.rameses.rcp.common.*;
         import com.rameses.rcp.annotations.*;
         import com.rameses.osiris2.client.*;
+        import com.rameses.osiris2.reports.*;
         import com.rameses.util.*;
         
-        class CashBookController extends CRUDController {
+        class CashReceiptController extends CRUDController {
         
-            @Service("CashReceiptQueryService")
+            @Service("CashReceiptService")
             def service;
 
             String entityName = "cashreceiptinfo";
@@ -28,7 +29,17 @@
                 return TemplateProvider.instance.getResult( "com/rameses/enterprise/treasury/cashreceipt/cashreceipt.gtpl", [entity:entity] );
             }
             
+            void reprint() {
+                //check fist if form handler exists.
+                def o = InvokerUtil.lookupOpener( "cashreceipt-form:"+entity.formno, [reportData:entity] );
+                if(!o)
+                    throw new Exception("Handler not found");
+                def handle = o.handle;
+                handle.viewReport();
+                ReportUtil.print(handle.report,true);
+            }
 
+                
         }      
        ]]>
    </code>
