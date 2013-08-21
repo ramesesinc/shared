@@ -122,6 +122,7 @@ public abstract class AbstractCashReceipt {
                 print();
             }
             catch(e) {
+                e.printStackTrace();
                 MsgBox.alert("warning! no form handler found for.  " + entity.formno +". Printout is not handled" );
             }
             completed = true;
@@ -144,11 +145,8 @@ public abstract class AbstractCashReceipt {
     }
     
     void reprint() {
-        MsgBox.alert( "requires approval" );
-        if(1==1) return;
-        def handle = findReportOpener(entity);
-        handle.viewReport();
-        ReportUtil.print(handle.report,true);
+        MsgBox.alert("check first if allow reprint");
+        print();
     }
 
     def getInfoHtml() {

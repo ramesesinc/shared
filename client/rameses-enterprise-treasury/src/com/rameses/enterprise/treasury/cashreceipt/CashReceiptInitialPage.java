@@ -41,17 +41,17 @@ public class CashReceiptInitialPage extends javax.swing.JPanel {
         xFormPanel1.setCaptionWidth(150);
         xComboBox1.setCaption("Acct Form No");
         xComboBox1.setItems("formTypes");
-        xComboBox1.setName("formno");
+        xComboBox1.setName("entity.formno");
         xComboBox1.setPreferredSize(new java.awt.Dimension(0, 22));
         xComboBox1.setRequired(true);
         xFormPanel1.add(xComboBox1);
 
         xComboBox2.setCaption("Collection Type");
-        xComboBox2.setDepends(new String[] {"formno"});
+        xComboBox2.setDepends(new String[] {"entity.formno"});
         xComboBox2.setDynamic(true);
         xComboBox2.setExpression("#{item.title}");
         xComboBox2.setItems("collectionTypes");
-        xComboBox2.setName("collectiontype");
+        xComboBox2.setName("entity.collectiontype");
         xComboBox2.setPreferredSize(new java.awt.Dimension(0, 22));
         xComboBox2.setRequired(true);
         xFormPanel1.add(xComboBox2);

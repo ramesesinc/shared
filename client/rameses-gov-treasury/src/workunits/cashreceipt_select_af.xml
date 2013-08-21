@@ -17,18 +17,12 @@
             @Service("AFControlService")
             def svc;
             
-            @Caller
-            def caller
-            
-            def formno;
-            def txnmode;
             def handler;
             def selectedItem;
-        
+            def entity;
+            
             void init() {
-                formno = caller.formno;
-                txnmode = caller.txnmode;
-                if(!formno)
+                if(!entity.formno)
                     throw new Exception("Please select an accountable form first");
             }
             
@@ -41,7 +35,7 @@
                     ]
                 },
                 fetchList: { o->
-                    return svc.getOpenControlList( [af:formno, txnmode:txnmode] );
+                    return svc.getOpenControlList( [af:entity.formno, txnmode:entity.txnmode] );
                 }
             ] as BasicListModel;
             

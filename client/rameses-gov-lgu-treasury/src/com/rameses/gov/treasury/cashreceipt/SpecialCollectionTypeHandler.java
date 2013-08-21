@@ -6,10 +6,13 @@
 
 package com.rameses.gov.treasury.cashreceipt;
 
+import com.rameses.rcp.ui.annotations.StyleSheet;
+
 /**
  *
  * @author  Rameses
  */
+@StyleSheet
 public class SpecialCollectionTypeHandler extends javax.swing.JPanel {
     
     /** Creates new form CollectionSettingHandlerPage */

@@ -20,6 +20,8 @@
             @Caller
             def caller
             
+            def entity;
+            
             void init() {
             
             }
