@@ -69,7 +69,7 @@
                 }
                 catch(Warning w) {
                     String m = "cashreceipt:"+w.message;
-                    return InvokerUtil.lookupOpener( m, [formno: entity.formno, txnmode: entity.txnmode ] );
+                    return InvokerUtil.lookupOpener( m, [entity:entity] );
                 }
                 catch(e) {
                     throw e;
