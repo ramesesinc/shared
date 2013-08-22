@@ -11,7 +11,6 @@ package com.rameses.osiris2.common;
 
 import com.rameses.common.MethodResolver;
 import com.rameses.rcp.annotations.FormTitle;
-import com.rameses.rcp.common.BasicListModel;
 import com.rameses.rcp.common.Column;
 import java.util.ArrayList;
 import java.util.HashMap;

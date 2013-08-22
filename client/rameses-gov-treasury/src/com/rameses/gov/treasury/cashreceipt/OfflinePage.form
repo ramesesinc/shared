@@ -42,8 +42,8 @@
     </Component>
     <Component class="com.rameses.rcp.control.XDateField" name="xDateField1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="xDateField1"/>
-        <Property name="caption" type="java.lang.String" value="Transaction Date"/>
+        <Property name="caption" type="java.lang.String" value="Receipt Date"/>
+        <Property name="name" type="java.lang.String" value="entity.receiptdate"/>
         <Property name="required" type="boolean" value="true"/>
       </Properties>
     </Component>

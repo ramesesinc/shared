@@ -1,6 +1,6 @@
 <workunit>
     <invokers>
-        <invoker type="collectiontype:handler" caption="Miscellaneous" name="misc" formtype="serial" index="100" />
+        <invoker type="collectiontype:handler" caption="Cash Ticket" name="cashticket" formtype="nonserial" index="100" />
     </invokers>
     
     <code>
@@ -11,7 +11,7 @@
         import com.rameses.osiris2.common.*
         import com.rameses.enterprise.treasury.controllers.*
         
-        class  MiscCashReceiptController {
+        class  CashTicketHandlerController {
         
             @Caller 
             def caller;
@@ -26,7 +26,7 @@
     </code>
     
     <pages>
-        <page template="com.rameses.enterprise.treasury.collection.EmptyCollectionTypeHandler"/>
+        <page template="com.rameses.gov.treasury.cashticket.CashTicketHandler"/>
     </pages>
     
 </workunit>

@@ -29,8 +29,8 @@ public class OfflinePage extends javax.swing.JPanel {
 
         jLabel1.setText("Enter Transaction Date");
 
-        xDateField1.setText("xDateField1");
-        xDateField1.setCaption("Transaction Date");
+        xDateField1.setCaption("Receipt Date");
+        xDateField1.setName("entity.receiptdate");
         xDateField1.setRequired(true);
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
