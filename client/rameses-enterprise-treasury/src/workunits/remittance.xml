@@ -2,7 +2,7 @@
     
    <invokers>
          <invoker type="remittance:create" caption="Remittance" action="init" target="window"/>
-         <invoker type="quick_launcher" code="REM" caption="Remittance" action="open" target="window"/>
+         <invoker type="quick_launcher" code="REM" caption="Remittance" action="init" target="window"/>
          <invoker type="remittance:open" caption="Remittance (Open)" action="open" target="window"/>
 
          <invoker type="formActions" caption="Close" name="_close"  />
@@ -44,7 +44,8 @@
             def init() {
                 mode = "initial";
                 entity = service.init();
-                return "initial";
+                println 'return initial';
+                return "initial"; 
             }
             
              def start() {

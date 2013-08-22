@@ -22,6 +22,7 @@
             def service;
             
             String entityName = "bankaccount";
+            boolean showConfirmOnSave = false;
             def acctTypes = ["CHECKING", "CURRENT"];
             def currencyTypes = [ "PHP", "USD" ];
             

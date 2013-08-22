@@ -1,4 +1,4 @@
-<workunit>
+<workunit extends="wtemplates/enterprise/treasury/BasicCashReceiptController.xml">
     <invokers>
         <invoker type="cashreceipt:cashticket" action="init" />
     </invokers>
@@ -13,13 +13,15 @@
         
         class  CashTicketReceiptController extends BasicCashReceipt {
             
+            String title = "Cash Ticket " ;
+        
         }
         ]]>
         
     </code>
     
     <pages>
-        <page template="com.rameses.enterprise.treasury.cashreceipt.MiscCashReceiptPage"/>
+        <page template="com.rameses.gov.treasury.cashticket.CashTicketReceiptPage"/>
     </pages>
     
 </workunit>

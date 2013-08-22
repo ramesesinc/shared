@@ -1,0 +1,9 @@
+
+
+ALTER TABLE city ADD COLUMN address VARCHAR(100);
+ALTER TABLE province ADD COLUMN address VARCHAR(100);
+ALTER TABLE municipality ADD COLUMN address VARCHAR(100);
+
+ALTER TABLE city ADD COLUMN fullname VARCHAR(50);
+ALTER TABLE province ADD COLUMN fullname VARCHAR(50);
+ALTER TABLE municipality ADD COLUMN fullname VARCHAR(50);

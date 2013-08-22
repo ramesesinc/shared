@@ -59,7 +59,7 @@ public class RemittancePage extends javax.swing.JPanel {
         jPanel2.setLayout(null);
 
         com.rameses.rcp.control.border.XTitledBorder xTitledBorder1 = new com.rameses.rcp.control.border.XTitledBorder();
-        xTitledBorder1.setTitle("Remittance Info");
+        xTitledBorder1.setTitle("Remittance Information");
         jPanel2.setBorder(xTitledBorder1);
 
         xTextField2.setCaption("Ref  No.");
@@ -93,10 +93,58 @@ public class RemittancePage extends javax.swing.JPanel {
         formPanel3.setBounds(10, 20, 606, 80);
 
         xDataTable1.setColumns(new com.rameses.rcp.common.Column[]{
-            new com.rameses.rcp.common.Column("checkno", "Check No", 80, 0, 80, false, false, true, false, null, new com.rameses.rcp.common.TextColumnHandler()),
-            new com.rameses.rcp.common.Column("particulars", "Particulars", 100, 0, 0, false, true, true, false, null, new com.rameses.rcp.common.TextColumnHandler()),
-            new com.rameses.rcp.common.Column("amount", "Amount", 80, 0, 80, false, false, true, false, null, new com.rameses.rcp.common.DecimalColumnHandler("#,##0.00", -1.0, -1.0, false)),
-            new com.rameses.rcp.common.Column("voided", "Void", 30, 30, 30, false, false, true, false, null, new com.rameses.rcp.common.CheckBoxColumnHandler(java.lang.Integer.class, 1, 0))
+            new com.rameses.rcp.common.Column(new Object[]{
+                new Object[]{"name", "checkno"}
+                , new Object[]{"caption", "Check No"}
+                , new Object[]{"width", 80}
+                , new Object[]{"minWidth", 0}
+                , new Object[]{"maxWidth", 80}
+                , new Object[]{"required", false}
+                , new Object[]{"resizable", false}
+                , new Object[]{"nullWhenEmpty", true}
+                , new Object[]{"editable", false}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
+                , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
+            }),
+            new com.rameses.rcp.common.Column(new Object[]{
+                new Object[]{"name", "particulars"}
+                , new Object[]{"caption", "Particulars"}
+                , new Object[]{"width", 100}
+                , new Object[]{"minWidth", 0}
+                , new Object[]{"maxWidth", 0}
+                , new Object[]{"required", false}
+                , new Object[]{"resizable", true}
+                , new Object[]{"nullWhenEmpty", true}
+                , new Object[]{"editable", false}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
+                , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
+            }),
+            new com.rameses.rcp.common.Column(new Object[]{
+                new Object[]{"name", "amount"}
+                , new Object[]{"caption", "Amount"}
+                , new Object[]{"width", 80}
+                , new Object[]{"minWidth", 0}
+                , new Object[]{"maxWidth", 80}
+                , new Object[]{"required", false}
+                , new Object[]{"resizable", false}
+                , new Object[]{"nullWhenEmpty", true}
+                , new Object[]{"editable", false}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.DecimalColumnHandler("#,##0.00", -1.0, -1.0, false)}
+                , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
+            }),
+            new com.rameses.rcp.common.Column(new Object[]{
+                new Object[]{"name", "voided"}
+                , new Object[]{"caption", "Void"}
+                , new Object[]{"width", 30}
+                , new Object[]{"minWidth", 30}
+                , new Object[]{"maxWidth", 30}
+                , new Object[]{"required", false}
+                , new Object[]{"resizable", false}
+                , new Object[]{"nullWhenEmpty", true}
+                , new Object[]{"editable", false}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.CheckBoxColumnHandler(java.lang.Integer.class, 1, 0)}
+                , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
+            })
         });
         xDataTable1.setHandler("checkModel");
         xDataTable1.setName("selectedCheck");
@@ -185,7 +233,7 @@ public class RemittancePage extends javax.swing.JPanel {
                     .add(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .add(jPanel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)

@@ -19,6 +19,7 @@ public abstract class AbstractCashReceipt {
    
     String title;
     boolean completed = false;
+
     
     void init() {
         title = entity.collectiontype.title;
@@ -119,7 +120,9 @@ public abstract class AbstractCashReceipt {
         if(MsgBox.confirm("You are about to post this payment. Please ensure entries are correct")) {
             entity = service.post( entity );
             try {
-                print();
+                if(entity.txnmode.equalsIgnoreCase("ONLINE")) {
+                    print();
+                }    
             }
             catch(e) {
                 e.printStackTrace();
