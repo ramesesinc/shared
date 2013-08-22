@@ -4,7 +4,8 @@
          <invoker type="cashbook:open" caption="Cashbook" action="open"/>
          <invoker type="cashbook:create" caption="Cashbook" action="create" role="TREASURY_DATAMGMT" permission="cashbook.create"/>
          
-         <invoker type="formActions" caption="Details" action="_details" visibleWhen="#{mode=='read' &amp;&amp; entity.state=='APPROVED'}"/>
+         <invoker type="formActions" caption="Details" action="showDetails" visibleWhen="#{page=='default' &amp;&amp; entity.state=='APPROVED'}"/>
+         <invoker type="formActions" caption="Back" action="viewMain" visibleWhen="#{page=='details'}"/>
    </invokers>
    
    <code>
@@ -25,8 +26,9 @@
         
             String title = "Cash Book";
             String prefixId = "CSHBK";
-            def page;
             boolean allowCreate = false;
+            def detailHandler = InvokerUtil.lookupOpener("account:detail");
+            def page = "default";
             
             Map createEntity() {
                 return [subacct:[:], fund:[:]];
@@ -59,36 +61,21 @@
             ];
             
             void entityChanged() {
-                page = null;
-                listModel.reload();
+                if(page!='details') return;
+                detailHandler.handle.reload( entity );
             }
             
-            
-            def listModel = [
-                fetchList: { o->
-                    if(!page) page = entity.currentpageno;
-                    return service.getEntries( [objid: entity.objid, page: page ] );
-                }
-            
-            ] as BasicListModel;
-            
-            
-            void nextPage() {
-                page+=1; 
-                if(page>entity.currentpageno) {
-                    page = entity.currentpageno;
-                    throw new Exception("End of page");
-                }
-                listModel.reload();
+            def showDetails() {
+                detailHandler.handle.service = service;
+                detailHandler.handle.entity = entity;
+                detailHandler.handle.init();
+                page = "details";
+                return page;
             }
             
-            void prevPage() {
-                page-=1;
-                if(page<1) {
-                    page = 1;
-                    throw new Exception("Beginning of page");
-                }
-                listModel.reload();
+            def viewMain() {
+                page = "default";
+                return page;
             }
             
         }      
@@ -97,7 +84,7 @@
    
    <pages>
        <page template="com.rameses.enterprise.treasury.cashbook.CashBookPage" />
-       <page name="details" template="com.rameses.enterprise.treasury.cashbook.CashBookEntriesPage" />
+       <page name="details" template="com.rameses.enterprise.treasury.shared.AccountDetailsPage" />
    </pages>
    
 </workunit>

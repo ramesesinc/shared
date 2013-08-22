@@ -1,14 +1,13 @@
 <workunit>
     
    <invokers>
-         <invoker type="remittance:create" caption="Remittance" action="init"/>
-         <invoker type="quick_launcher" code="REM" caption="Remittance" action="open"/>
-         <invoker type="remittance:open" caption="Remittance (Open)" action="open"/>
+         <invoker type="remittance:create" caption="Remittance" action="init" target="window"/>
+         <invoker type="quick_launcher" code="REM" caption="Remittance" action="open" target="window"/>
+         <invoker type="remittance:open" caption="Remittance (Open)" action="open" target="window"/>
 
          <invoker type="formActions" caption="Close" name="_close"  />
-         <invoker type="formActions" caption="Next" name="doEntry" visibleWhen="#{state == 'initial' &amp;&amp; mode=='create'}" />
-         <invoker type="formActions" caption="Submit" name="submit" visibleWhen="#{state == 'entry' &amp;&amp; mode=='create'}" />
-         <invoker type="formActions" caption="View RCD" name="viewRCD" visibleWhen="#{state == 'saved' || mode=='open'}" />
+         <invoker type="formActions" caption="Next" name="start" visibleWhen="#{mode == 'initial'}" />
+         <invoker type="formActions" caption="Submit" name="submit" visibleWhen="#{mode == 'create' }" />
 
      </invokers>
    
@@ -25,52 +24,62 @@
         
             @Binding
             def binding;
-        
-            def state = "initial";
             
             @Service("RemittanceService")
             def service;
         
             String title = "Remittance";
+            
             def entity;
             def cashBreakdown;
-            def breakdown  = 0.0;
-            def mode = 'create';
-            def listModel;
+            def mode = 'initial';
+            
+            def total = 0.0;
+            def breakdown = 0.0;
+            
+            def getExtActions() {
+                return InvokerUtil.lookupActions( "remittance:formActions", [entity:entity] );
+            }
             
             def init() {
-                state = "initial";
+                mode = "initial";
                 entity = service.init();
-                listModel = [
-                    fetchList: { o->
-                        return entity.items;
-                    }
-                ] as EditorListModel;
                 return "initial";
             }
             
-            void open(){
-                mode = "open";
-                entity = service.open(entity);
-                listModel = [
-                    fetchList: { o->
-                        return entity.items;
-                    }
-                ] as BasicListModel;
-                breakdown = entity.totalcash;
-                cashBreakdown = InvokerUtil.lookupOpener("cash:breakdown", [entries: entity.cashbreakdown] );    
-            }
-            
-            def doEntry() {
-                state = "entry";
+             def start() {
+                mode = "create";
                 entity.cashbreakdown = [];
                 cashBreakdown = InvokerUtil.lookupOpener("cash:breakdown", [
                     entries: entity.cashbreakdown, onupdate: { o->
                         breakdown = o;
-                        binding.refresh("breakdown");
+                        total = entity.totalnoncash+breakdown;
+                        binding.refresh("breakdown|total");
                     }] );
                 return "default";
             }
+            
+            void open(){
+                mode = "read";
+                entity = service.open(entity);
+                cashBreakdown = InvokerUtil.lookupOpener("cash:breakdown", [entries: entity.cashbreakdown] );    
+                total = entity.totalcash + entity.totalnoncash;
+                breakdown = entity.cashbreakdown.sum{it.amount};
+            }
+            
+            def listModel = [
+                fetchList: { o->
+                    return entity.items;
+                }
+            ] as BasicListModel;
+            
+            def checkModel = [
+                fetchList: {
+                    return entity.checks;
+                }
+            ] as BasicListModel;
+            
+           
             
             void submit() {
                 if( breakdown != entity.totalcash )
@@ -78,17 +87,9 @@
             
                 if( MsgBox.confirm("You are about to submit this remittance. Please ensure the entries are correct")) {
                     entity = service.post( entity );
-                    state = 'saved'
+                    mode = 'read'
                     MsgBox.alert("Posting successful");
                 }
-            }
-            
-            def viewRCD() {
-                return InvokerUtil.lookupOpener("remittance:rcd")
-            }
-            
-            def viewOtherPayments(){
-                return InvokerUtil.lookupOpener('remittance:noncash', [remittanceid:entity.objid])
             }
             
         }      

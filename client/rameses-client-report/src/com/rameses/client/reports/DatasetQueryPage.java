@@ -7,7 +7,6 @@
 package com.rameses.client.reports;
 
 import com.rameses.osiris2.themes.FormPage;
-import com.rameses.rcp.common.BasicListModel;
 import com.rameses.rcp.ui.annotations.Template;
 
 /**

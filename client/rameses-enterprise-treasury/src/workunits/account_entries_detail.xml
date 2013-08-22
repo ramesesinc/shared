@@ -1,8 +1,7 @@
 <workunit>
     
    <invokers>
-         <invoker type="account:detail" action="init"/>
-         <invoker type="formActions" caption="Close" action="_close"/> 
+         <invoker type="account:detail" />
    </invokers>
    
    <code>
@@ -25,9 +24,15 @@
                 title = entity.title;
             }
             
+            void reload( e ) {
+                entity = e;
+                init();
+                listModel.reload();
+            }
+            
             def listModel = [
                 fetchList: { o->
-                    if(!page) page = entity.currentpageno;
+                    if (!page) page = entity.currentpageno;
                     return service.getEntries( [objid: entity.objid, page: page ] );
                 }
             
@@ -50,8 +55,6 @@
                 }
                 listModel.reload();
            }
-            
-            
         }      
        ]]>
    </code>

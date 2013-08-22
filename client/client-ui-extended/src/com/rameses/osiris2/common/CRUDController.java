@@ -1,4 +1,5 @@
 package com.rameses.osiris2.common;
+
 import com.rameses.common.MethodResolver;
 import com.rameses.osiris2.client.InvokerFilter;
 import com.rameses.osiris2.client.InvokerProxy;
@@ -438,7 +439,7 @@ public class CRUDController
             Object data = lm.getSelectedEntity(); 
             if (data == null) return;
             
-            setEntity((Map) data); 
+            this.entity = (Map) data;
             open(); 
             
             if (binding != null) binding.refresh(); 
@@ -452,8 +453,8 @@ public class CRUDController
             
             Object data = lm.getSelectedEntity(); 
             if (data == null) return;
-            
-            setEntity((Map) data); 
+
+            this.entity = (Map) data;
             open();          
             
             if (binding != null) binding.refresh(); 

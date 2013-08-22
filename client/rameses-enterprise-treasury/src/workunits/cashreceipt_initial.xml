@@ -28,47 +28,48 @@
             
             String title = "Cash Receipts";
 
-            def formno;
-            def txnmode;
             def formTypes;
             def collectiontype;
             def modeOpener;
             def modeOpeners;
             def collectionTypes;
             
-            
-            def mode;
+            def entity = [:];
             
             def getExtActions() {
-                return InvokerUtil.lookupActions( "cashreceipt-initial:formActions" );
+                return InvokerUtil.lookupActions( "cashreceipt-initial:formActions", [entity:entity] );
             }
             
             void init() {
                 collectionTypes = collectionTypeSvc.getCollectionTypes();    
                 formTypes = collectionTypes*.formno.unique().sort();
-                modeOpeners = InvokerUtil.lookupOpeners( "cashreceipt:mode", [entity:[:]]);
-                if(modeOpeners.size()>0) modeOpener = modeOpeners.first();
+                modeOpeners = InvokerUtil.lookupOpeners( "cashreceipt:mode", [entity:entity]);
+                if(modeOpeners.size()>0) {
+                    modeOpener = modeOpeners.first();
+                    entity.txnmode = modeOpener.caption;
+                }    
             }
 
             def getCollectionTypes()  {
-                return collectionTypes.findAll{it.formno == formno };
+                return collectionTypes.findAll{it.formno == entity.formno };
             }
+            
+            @PropertyChangeListener
+            def listener = [
+                "modeOpener" : { o->
+                    entity.txnmode = o.caption;
+                }
+            ]
             
             def runProcess() {
                 try {
-                    def entity = [:];
-                    txnmode = modeOpener.caption;
-                    entity.txnmode = txnmode;
-                    entity.formno = formno;
-                    entity.collectiontype = collectiontype;
-
                     //call init first
-                    entity = cashReceiptSvc.init( entity );
-                    return InvokerUtil.lookupOpener("cashreceipt:"+collectiontype.handler,[entity: entity]);
+                    def newRecord = cashReceiptSvc.init( entity );
+                    return InvokerUtil.lookupOpener("cashreceipt:"+entity.collectiontype.handler,[entity: newRecord]);
                 }
                 catch(Warning w) {
                     String m = "cashreceipt:"+w.message;
-                    return InvokerUtil.lookupOpener( m, [formno: formno, txnmode:txnmode ] );
+                    return InvokerUtil.lookupOpener( m, [entity:entity] );
                 }
                 catch(e) {
                     throw e;

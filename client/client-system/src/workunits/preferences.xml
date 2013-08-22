@@ -1,9 +1,10 @@
 <workunit>
     
     <invokers>
-        <invoker folderid="/menu/system" caption="Preferences" action="init" index="2" target="popup"/>
-        <invoker type="quick_launcher" code="syspref" 
-                 caption="Preferences" desc="System Preferences" 
+        <invoker folderid="/menu/system" caption="Preferences" action="init" index="2" target="popup" 
+            icon="images/settings.png"/>
+
+        <invoker type="quick_launcher" code="syspref" caption="Preferences" desc="System Preferences" 
                  action="init" target="popup"/>
     </invokers>
     

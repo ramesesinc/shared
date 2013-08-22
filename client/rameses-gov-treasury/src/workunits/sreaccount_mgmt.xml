@@ -1,0 +1,7 @@
+<workunit extends="wtemplates/ExplorerViewController.xml" 
+    serviceName="SREAccountService" context="sreaccount" defaultFileType="sreaccount">
+    <invokers>
+        <invoker folderid="/explorer/master/account" caption="SRE Accounts" 
+            action="init" role="TREASURY_DATAMGMT" index="1"/>
+   </invokers>
+</workunit>
