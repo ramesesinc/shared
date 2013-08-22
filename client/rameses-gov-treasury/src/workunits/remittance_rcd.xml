@@ -1,6 +1,6 @@
 <workunit>
     <invokers>
-       <invoker type="remittance:formActions" caption="View RCD" action="viewReport" visibleWhen="#{mode == 'read'}" target="self"/>
+       <invoker type="remittance:formActions" caption="View RCD" action="viewReport" visibleWhen="#{mode == 'read'}" target="self" index="1"/>
        <invoker type="formActions" caption="Back" action="_close"/>
     </invokers>
     
@@ -22,6 +22,9 @@
             @Service("RemittanceReportService")
             def svc
             
+            @Service("ReportParameterService")
+            def paramsvc
+            
             def entity;
             def reportdata;
             def reportPath = "com/rameses/gov/treasury/remittance/report/rcd/"
@@ -36,7 +39,7 @@
             def report = [
                 getReportName : { return reportPath + 'rcd_main.jasper' },
                 getReportData : { return reportdata }, 
-                getParameters : { return [:] },
+                getParameters : { return paramsvc.getStandardParameter() },
                 getSubReports : {
                     return [ 
                         new SubReport("CollectionType", reportPath + "collectiontype.jasper"),
