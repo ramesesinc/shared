@@ -57,14 +57,16 @@
                     [
                         undepositedChecks: undepositedChecks,
                         onselect: { arr->
-                            arr.each {
-                                entity.checks << it;
-                                undepositedChecks.remove(it);
+                            if (arr) {
+                                arr.each {
+                                    entity.checks << it;
+                                    undepositedChecks.remove(it);
+                                }
+                                entity.totalnoncash = entity.checks.sum{it.amount};
+                                total = entity.totalcash+entity.totalnoncash;
+                                checkModel.reload();
+                                binding.refresh("entity.totalnoncash|total");
                             }
-                            entity.totalnoncash = entity.checks.sum{it.amount};
-                            total = entity.totalcash+entity.totalnoncash;
-                            checkModel.reload();
-                            binding.refresh("entity.totalnoncash|total");
                         }
                     ]
                );
