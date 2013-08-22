@@ -30,7 +30,7 @@
             def total = 0;
             
             void init() {
-                entity = [amount:selectedFund.balance,totalcash:0, totalnoncash:0, amount:0];
+                entity = [amount:selectedFund.balance,totalcash:0.0, totalnoncash:0.0, amount:0.0];
                 entity.fund = selectedFund.fund;
                 entity.checks = [];
                 entity.cashbreakdown = [];
@@ -62,7 +62,7 @@
                                     entity.checks << it;
                                     undepositedChecks.remove(it);
                                 }
-                                entity.totalnoncash = entity.checks.sum{it.amount};
+                                entity.totalnoncash = entity.checks.amount.sum();
                                 total = entity.totalcash+entity.totalnoncash;
                                 checkModel.reload();
                                 binding.refresh("entity.totalnoncash|total");
@@ -88,10 +88,12 @@
             }
             
             def doOk() {
+                if (!entity.bankaccount) 
+                    throw new Exception('Bank Account is required.');
                 if(entity.amount > selectedFund.balance) 
                     throw new Exception("Amount to deposit should not exceed balance");
                 if( entity.amount != total)
-                    throw new Exception("Total cash and non cash must be equal amount to deposit");
+                    throw new Exception("Total cash and non cash must equal amount to deposit");
                 if(handler) {
                     handler( entity );
                 }    
