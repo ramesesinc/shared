@@ -7,9 +7,9 @@
          <invoker type="liquidation:open" caption="Liquidation (Open)" action="open" target="window"/>
          
          <invoker type="formActions" caption="Close" name="_close"  />
-         <invoker type="formActions" caption="Next" name="start" visibleWhen="#{state == 'initial'}" />
-         <invoker type="formActions" caption="Submit" name="submit" visibleWhen="#{state == 'processing'}" />
-         <invoker type="formActions" caption="View RCD" name="viewRCD" visibleWhen="#{state == 'completed'}" />
+         <invoker type="formActions" caption="Next" name="start" visibleWhen="#{mode == 'initial'}" />
+         <invoker type="formActions" caption="Submit" name="submit" visibleWhen="#{mode == 'create'}" />
+         <invoker type="formActions" caption="View RCD" name="viewRCD" visibleWhen="#{mode == 'read'}" />
      </invokers>
    
    <code>
