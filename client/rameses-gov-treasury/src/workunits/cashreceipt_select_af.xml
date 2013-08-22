@@ -20,6 +20,7 @@
             def handler;
             def selectedItem;
             def entity;
+            def list;
             
             void init() {
                 if(!entity.formno)
@@ -27,20 +28,16 @@
             }
             
             def listModel = [
-                getColumnList: { o->
-                    return [
-                        [name:'startseries', caption:'Start Series'],
-                        [name:'endseries', caption:'End Series'],
-                        [name:'stub', caption:'Stub']
-                    ]
-                },
                 fetchList: { o->
-                    return svc.getOpenControlList( [af:entity.formno, txnmode:entity.txnmode] );
+                    list = svc.getOpenControlList( [af:entity.formno, txnmode:entity.txnmode] );
+                    return list;
                 }
             ] as BasicListModel;
             
             def doOk() {
-                svc.activateControl(selectedItem);
+                //find also the current actives.
+                def old = list.find{ it.active == 1 };
+                svc.activateControl([objid:selectedItem.objid, oldid:old?.objid]);
                 MsgBox.alert('Control activated');
                 return "_close";
             }

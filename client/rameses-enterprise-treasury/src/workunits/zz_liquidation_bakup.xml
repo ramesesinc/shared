@@ -1,15 +1,16 @@
 <workunit>
     
    <invokers>
+       <!--
          <invoker type="liquidation:create" caption="Liquidation" action="init" target="window"/>
          <invoker type="quick_launcher" code="LIQ" caption="Liquidation" action="open" target="window"/>
          
          <invoker type="liquidation:open" caption="Liquidation (Open)" action="open" target="window"/>
          
          <invoker type="formActions" caption="Close" name="_close"  />
-         <invoker type="formActions" caption="Next" name="start" visibleWhen="#{mode == 'initial'}" />
-         <invoker type="formActions" caption="Back" name="back" visibleWhen="#{mode == 'create'}" />         
-         <invoker type="formActions" caption="Submit" name="submit" visibleWhen="#{mode == 'create'}" />
+         <invoker type="formActions" caption="Next" name="start" visibleWhen="#{state == 'initial'}" />
+         <invoker type="formActions" caption="Submit" name="submit" visibleWhen="#{state == 'processing'}" />
+         -->
      </invokers>
    
    <code>
@@ -26,53 +27,44 @@
             @Binding
             def binding;
         
+            def state = "initial";
+            
             @Service("LiquidationService")
             def service;
         
             String title = "Liquidation";
             def entity;
             def cashBreakdown;
-            def mode = 'initial';
+            def breakdown  = 0.0;
+            def mode = 'create';
             def listModel;
             def selectedItem;
-            def selectedCheck;
-            
-            def total = 0.0;
-            def breakdown = 0.0;
-            
-            def getExtActions() {
-                return InvokerUtil.lookupActions( "liquidation:formActions", [entity:entity] );
-            }
             
             def init() {
-                mode = "initial";
+                state = "initial";
                 entity = service.init();
                 return "initial";
             }
             
-            def back() {
-                mode = "initial";
-                return "initial";
-            }
-            
             def start() {
-                mode = "create";
+                state = "processing";
                 entity.cashbreakdown = [];
                 cashBreakdown = InvokerUtil.lookupOpener("cash:breakdown", [
                     entries: entity.cashbreakdown, onupdate: { o->
                         breakdown = o;
-                        total = entity.totalnoncash+breakdown;
-                        binding.refresh("breakdown|total");
+                        binding.refresh("breakdown");
                     }] );
                 return "default";
             }
             
             def open(){
-                mode = "read";
-                entity = service.open(entity);
-                cashBreakdown = InvokerUtil.lookupOpener("cash:breakdown", [entries: entity.cashbreakdown] );    
-                total = entity.totalcash + entity.totalnoncash;
-                breakdown = entity.cashbreakdown.sum{it.amount};
+                state = "completed";
+                entity = service.open( entity );
+                cashBreakdown = InvokerUtil.lookupOpener("cash:breakdown", [
+                    entries: entity.cashbreakdown,
+                    allowEdit : false,
+                    ] );
+                return "view";
             }
             
             void submit() {
@@ -80,7 +72,7 @@
                     throw new Exception("Cash breakdown must equal total cash");
                 if( MsgBox.confirm("You are about to submit this liquidation. Please ensure the entries are correct")) {
                     entity = service.post( entity );
-                    mode = "read";
+                    state = "completed";
                     MsgBox.alert("Posting successful");
                 }
             }
@@ -93,11 +85,6 @@
                 fetchList: { o->return entity.fundsummary; }
             ] as EditorListModel;
             
-            def checkModel = [
-                fetchList: {
-                    return entity.checks;
-                }
-            ] as BasicListModel;
             
         }      
        ]]>
@@ -105,7 +92,9 @@
    
    <pages>
        <page name="initial" template="com.rameses.enterprise.treasury.liquidation.LiquidationInitPage" />
-       <page name="default" template="com.rameses.enterprise.treasury.liquidation.LiquidationPage" />
+       <page name="default" template="com.rameses.enterprise.treasury.liquidation.LiquidationProcessPage" />
+       <page name="view" template="com.rameses.enterprise.treasury.liquidation.LiquidationViewPage" />
+
    </pages>
    
 </workunit>

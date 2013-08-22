@@ -33,14 +33,16 @@ public class CapturePage extends javax.swing.JPanel {
 
         jLabel1.setText("Enter Transaction Date");
 
-        xDateField1.setText("xDateField1");
         xDateField1.setCaption("Transaction Date");
+        xDateField1.setName("entity.receiptdate");
         xDateField1.setRequired(true);
 
         jLabel2.setText("Enter Collector ");
 
-        xLookupField1.setText("xLookupField1");
         xLookupField1.setCaption("Collector");
+        xLookupField1.setExpression("#{item.name}");
+        xLookupField1.setHandler("collector:lookup");
+        xLookupField1.setName("entity.collector");
         xLookupField1.setRequired(true);
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
