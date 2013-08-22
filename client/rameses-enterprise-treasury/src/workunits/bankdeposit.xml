@@ -119,7 +119,9 @@
                     service.post( entity );
                     state = "completed";
                     MsgBox.alert("Posting successful");
+                    return 'view';
                 }
+                return null;
             }
             
         }      
