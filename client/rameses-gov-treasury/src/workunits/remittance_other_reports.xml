@@ -1,0 +1,48 @@
+<workunit>
+    <invokers>
+       <invoker type="remittance:formActions" caption="Other Reports" action="init" visibleWhen="#{mode == 'read'}" target="self" index="2"/>
+       
+       <invoker type="formActions" caption="Back" action="_close"/>
+       <invoker type="formActions" caption="View" action="viewReport"/>
+    </invokers>
+    
+    <code>
+        <![CDATA[    
+        import com.rameses.osiris2.common.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.rcp.annotations.*;
+        import java.rmi.server.*;
+        import com.rameses.osiris2.client.*;
+        import com.rameses.util.*;
+        import com.rameses.osiris2.reports.*;
+        
+        class RemittanceOtherReportController {
+        
+            @Binding
+            def binding;
+        
+            def reportlist;
+            def selectedreport
+            
+            def entity
+            
+            
+            void init() {
+                reportlist =  InvokerUtil.lookupOpeners("remittance:otherreports", [entity: entity] )
+            }
+            
+            def viewReport() {
+                if( ! selectedreport) return null;
+                
+                return selectedreport
+            }
+            
+        }      
+       ]]>
+    </code>
+    
+   <pages>
+       <page template="com.rameses.gov.treasury.remittance.report.OtherReportPage" />
+   </pages>
+   
+</workunit>
