@@ -44,7 +44,8 @@
             def init() {
                 mode = "initial";
                 entity = service.init();
-                return "initial";
+                println 'return initial';
+                return "initial"; 
             }
             
              def start() {

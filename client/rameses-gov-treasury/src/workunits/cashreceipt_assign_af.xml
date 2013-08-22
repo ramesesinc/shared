@@ -23,21 +23,12 @@
             def entity;
             
             void init() {
-            
+                
             }
             
             def listModel = [
-                getColumnList: { o->
-                    return [
-                        [name:'startseries', caption:'Start Series'],
-                        [name:'endseries', caption:'End Series'],
-                        [name:'stub', caption:'Stub'],
-                        [name:'assignee.name', caption:'Assigned To'],
-                    ]
-                },
                 fetchList: { o->
-                    return [];
-                    //return svc.getOpenControlList( [af:formno] );
+                    return svc.getOpenControlList( [af:entity.formno, entity.txnmode, type:'assign'] );
                 }
             ] as BasicListModel;
         }
