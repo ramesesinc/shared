@@ -108,7 +108,7 @@ public class ExplorerViewController {
     public Opener getOpenerObject() { return openerObject; } 
     
     public boolean isRootVisible() { return false; } 
-    public boolean isAllowSearch() { return true; }     
+    public boolean isAllowSearch() { return true; }  
     public String getIcon() { return null; }
     
     // </editor-fold>     

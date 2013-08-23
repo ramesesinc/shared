@@ -11,6 +11,12 @@
 
     class DefaultExplorerViewController extends ExplorerViewController
     {
+        boolean isAllowSearch() {
+            def ov = workunitProperties.allowSearch;
+            if (ov == 'false') return false; 
+            else if (ov == 'true') return true;
+            else return super.isAllowSearch(); 
+        } 
     }  
     </code>    
 </workunit>
