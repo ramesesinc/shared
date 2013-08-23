@@ -1,7 +1,7 @@
 <workunit>
     
    <invokers>
-         <invoker type="liquidation:reports" caption="Liquidation (RCD) " action="init"/>
+         <invoker type="liquidation:reports" caption="Report on Collection and Deposits (RCD)" action="init" index="1" target="self"/>
    </invokers>
    
    <code>
@@ -21,6 +21,9 @@
         
             @Service("LiquidationReportService")
             def svc
+            
+            @Service("ReportParameterService")
+            def paramsvc
             
             String title = "Liquidation RCD";
             
@@ -46,7 +49,7 @@
             def report = [
                 getReportName : { return reportPath + 'main.jasper' },
                 getReportData : { return reportdata }, 
-                getParameters : { return [:] },
+                getParameters : { return paramsvc.getStandardParameter() },
                 getSubReports : {
                     return [ 
                         new SubReport("remittances", reportPath + "remittances.jasper"),
