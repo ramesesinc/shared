@@ -1,6 +1,6 @@
 <workunit>
     <invokers>
-       <invoker type="remittance:otherreports" caption="Remittance Report By Fund" action="init" target="self"/>
+       <invoker type="remittance:reports" caption="Remittance Report By Fund" action="init" target="self"/>
        
        <invoker type="formActions" caption="Back" action="back" mnemonic="b"/>
        <invoker type="formActions" action="viewReport" caption="View" visibleWhen="#{mode == 'init'}" mnemonic="v"/>

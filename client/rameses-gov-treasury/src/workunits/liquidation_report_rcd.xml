@@ -1,9 +1,7 @@
 <workunit>
     
    <invokers>
-         <invoker type="liquidation:rcd" caption="Liquidation (RCD) " action="init"/>
-        
-         <invoker type="formActions" caption="Back" action="_close" />
+         <invoker type="liquidation:reports" caption="Liquidation (RCD) " action="init"/>
    </invokers>
    
    <code>
@@ -24,23 +22,23 @@
             @Service("LiquidationReportService")
             def svc
             
+            String title = "Liquidation RCD";
+            
             def reportdata;
-            def reportPath = "com/rameses/enterprise/treasury/liquidation/report/rcd/"
+            def reportPath = "com/rameses/gov/treasury/liquidation/report/rcd/"
             def liquidationid
             def fundlist 
             def fund 
+            def entity;
             
             void init() {
-                fundlist = svc.getFundlist(liquidationid) 
-                setFund( fundlist[0] )
+                fundlist = svc.getFundlist( entity.objid ); 
+                setFund( fundlist[0] );
             }
-            
-            
             
             void setFund(def fund ){
                 this.fund = fund 
-                
-                reportdata = svc.getRCDReportData( [ liquidationid:liquidationid, fundname:this.fund.fundid ] )
+                reportdata = svc.getRCDReportData( [ liquidationid:entity.objid, fundname:this.fund.fundid ] )
                 report.viewReport();
                 if( binding) binding.refresh()
             }

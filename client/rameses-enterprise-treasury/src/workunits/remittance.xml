@@ -8,6 +8,9 @@
          <invoker type="formActions" caption="Close" name="_close"  />
          <invoker type="formActions" caption="Next" name="start" visibleWhen="#{mode == 'initial'}" />
          <invoker type="formActions" caption="Submit" name="submit" visibleWhen="#{mode == 'create' }" />
+         
+         <invoker type="formActions" caption="Reports" name="popupReports"   
+            visibleWhen="#{mode == 'read' }" category="remittance:reports" />
 
      </invokers>
    
@@ -39,6 +42,15 @@
             
             def getExtActions() {
                 return InvokerUtil.lookupActions( "remittance:formActions", [entity:entity] );
+            }
+            
+            def popupReports(def inv) {
+                def popupMenu = new PopupMenuOpener();
+                def list = InvokerUtil.lookupOpeners( inv.properties.category, [entity:entity] );
+                list.each{
+                    popupMenu.add( it );
+                }
+                return popupMenu;
             }
             
             def init() {

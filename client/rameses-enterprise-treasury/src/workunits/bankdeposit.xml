@@ -9,6 +9,10 @@
          <invoker type="formActions" caption="Close" name="_close"  icon="images/toolbars/cancel.png"/>
          <invoker type="formActions" caption="Next" name="start" visibleWhen="#{state == 'initial'}" />
          <invoker type="formActions" caption="Submit" name="submit" visibleWhen="#{state == 'processing'}" />
+         
+         
+         <invoker type="formActions" caption="Reports" name="popupReports"   
+            visibleWhen="#{mode == 'read' }" category="bankdeposit:reports" />
      </invokers>
    
    <code>
@@ -40,6 +44,19 @@
             def selectedFund;
             def selectedDeposit;
             
+            def getExtActions() {
+                return InvokerUtil.lookupActions( "bankdeposit:formActions", [entity:entity] );
+            }
+            
+            def popupReports(def inv) {
+                def popupMenu = new PopupMenuOpener();
+                def list = InvokerUtil.lookupOpeners( inv.properties.category, [entity:entity] );
+                list.each{
+                    popupMenu.add( it );
+                }
+                return popupMenu;
+            }
+            
             def init() {
                 state = "initial";
                 entity = service.init();
@@ -53,8 +70,9 @@
             
             def open(){
                 state = 'open'
+                mode = "read";
                 title = 'Bank Deposit Summary'
-                entity = service.open(entity)
+                entity = service.open(entity);
                 return 'view'
             }
             
@@ -118,6 +136,7 @@
                     //entity = service.post( entity );
                     service.post( entity );
                     state = "completed";
+                    mode = "read";
                     MsgBox.alert("Posting successful");
                     return 'view';
                 }

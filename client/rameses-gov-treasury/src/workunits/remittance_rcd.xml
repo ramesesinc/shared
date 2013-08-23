@@ -1,8 +1,8 @@
 <workunit>
     <invokers>
-       <invoker type="remittance:formActions" caption="View RCD" action="viewReport" visibleWhen="#{mode == 'read'}" target="self" index="1"/>
-       <invoker type="formActions" caption="Back" action="_close"/>
-    </invokers>
+       <invoker type="remittance:reports" caption="Report on Collection and Deposits (RCD)" 
+        action="viewReport"  target="self" index="-1"/>
+   </invokers>
     
     <code>
         <![CDATA[    
@@ -58,6 +58,7 @@
     
    <pages>
        <page template="com.rameses.enterprise.treasury.report.PreviewPage" />
+       
    </pages>
    
 </workunit>
