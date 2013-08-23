@@ -115,11 +115,16 @@ public abstract class BasicListController extends PageListModel
     }
     
     protected final List<Action> lookupActions(String type) { 
-        List<Action> actions = InvokerUtil.lookupActions(type, new InvokerFilter() {
-            public boolean accept(com.rameses.osiris2.Invoker o) { 
-                return o.getWorkunitid().equals(invoker.getWorkunitid()); 
-            }
-        }); 
+        List<Action> actions = new ArrayList(); 
+        try { 
+            actions = InvokerUtil.lookupActions(type, new InvokerFilter() {
+                public boolean accept(com.rameses.osiris2.Invoker o) { 
+                    return o.getWorkunitid().equals(invoker.getWorkunitid()); 
+                }
+            }); 
+        } catch(Throwable t) {
+            System.out.println("[WARN] error lookup actions caused by " + t.getMessage());
+        } 
         
         for (int i=0; i<actions.size(); i++) {
             Action newAction = actions.get(i).clone();
