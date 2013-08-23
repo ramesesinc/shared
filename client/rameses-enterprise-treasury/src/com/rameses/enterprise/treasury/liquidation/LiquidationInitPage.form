@@ -106,6 +106,10 @@
             <Component class="com.rameses.rcp.control.XDecimalField" name="xDecimalField1">
               <Properties>
                 <Property name="caption" type="java.lang.String" value="Total Cash"/>
+                <Property name="enabled" type="boolean" value="false"/>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Arial" size="12" style="1"/>
+                </Property>
                 <Property name="name" type="java.lang.String" value="entity.totalcash"/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[0, 19]"/>
@@ -115,6 +119,10 @@
             <Component class="com.rameses.rcp.control.XDecimalField" name="xDecimalField2">
               <Properties>
                 <Property name="caption" type="java.lang.String" value="Total Noncash"/>
+                <Property name="enabled" type="boolean" value="false"/>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Arial" size="12" style="1"/>
+                </Property>
                 <Property name="name" type="java.lang.String" value="entity.totalnoncash"/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[0, 19]"/>
@@ -124,6 +132,10 @@
             <Component class="com.rameses.rcp.control.XDecimalField" name="xDecimalField3">
               <Properties>
                 <Property name="caption" type="java.lang.String" value="Amount"/>
+                <Property name="enabled" type="boolean" value="false"/>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Arial" size="12" style="1"/>
+                </Property>
                 <Property name="name" type="java.lang.String" value="entity.amount"/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[0, 19]"/>

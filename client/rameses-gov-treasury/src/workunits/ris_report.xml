@@ -27,6 +27,9 @@
             @Service("RISReportService")
             def svc
             
+            @Service("ReportParameterService")
+            def paramsvc
+            
             def risid 
             def reportData;
             def reportPath = "com/rameses/gov/treasury/ris/report/"
@@ -52,7 +55,7 @@
             def report = [
                 getReportName : { return reportname },
                 getReportData : { return  reportData },
-                getParameters : { return [:] },
+                getParameters : { return paramsvc.getStandardParameter() },
                 getSubReports : {return [ subreport ] as SubReport[];    }
             ] as ReportModel
            

@@ -6,10 +6,14 @@
 
 package com.rameses.gov.treasury.remittance.report;
 
+import com.rameses.osiris2.themes.FormPage;
+import com.rameses.rcp.ui.annotations.Template;
+
 /**
  *
  * @author  user
  */
+@Template(FormPage.class)
 public class RemittanceReportByCollectionTypeInitPage extends javax.swing.JPanel {
     
     /**
@@ -26,23 +30,21 @@ public class RemittanceReportByCollectionTypeInitPage extends javax.swing.JPanel
      */
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
     private void initComponents() {
-        xActionBar1 = new com.rameses.rcp.control.XActionBar();
         formPanel1 = new com.rameses.rcp.util.FormPanel();
         xComboBox1 = new com.rameses.rcp.control.XComboBox();
 
         setLayout(new java.awt.BorderLayout());
 
-        xActionBar1.setName("formActions");
-        add(xActionBar1, java.awt.BorderLayout.NORTH);
-
         com.rameses.rcp.control.border.XTitledBorder xTitledBorder1 = new com.rameses.rcp.control.border.XTitledBorder();
         xTitledBorder1.setTitle("Remittance Report by Collection Type Initial page");
         formPanel1.setBorder(xTitledBorder1);
         xComboBox1.setCaption("Collection Type");
-        xComboBox1.setCaptionWidth(120);
-        xComboBox1.setExpression("#{name}");
+        xComboBox1.setCaptionWidth(110);
+        xComboBox1.setDynamic(true);
+        xComboBox1.setExpression("#{item.title}");
         xComboBox1.setItems("collectionTypeList");
         xComboBox1.setName("selectedcollectiontype");
+        xComboBox1.setPreferredSize(new java.awt.Dimension(250, 20));
         formPanel1.add(xComboBox1);
 
         add(formPanel1, java.awt.BorderLayout.CENTER);
@@ -52,7 +54,6 @@ public class RemittanceReportByCollectionTypeInitPage extends javax.swing.JPanel
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.rameses.rcp.util.FormPanel formPanel1;
-    private com.rameses.rcp.control.XActionBar xActionBar1;
     private com.rameses.rcp.control.XComboBox xComboBox1;
     // End of variables declaration//GEN-END:variables
     
