@@ -135,7 +135,7 @@ public class ExplorerViewerController {
                     if (a.getIcon() != null && a.getIcon().length() > 0) 
                         node.setIcon(a.getIcon());
                 } catch(Throwable t) {
-                    System.out.println("[WARN] initChildNodes: " + t.getMessage());
+                    System.out.println("[WARN] error init child nodes caused by " + t.getMessage());
                 }
             }
         }
@@ -179,7 +179,7 @@ public class ExplorerViewerController {
                     }
                 } 
                 catch(Throwable t) {
-                    System.out.println("[WARN] " + t.getMessage()); 
+                    System.out.println("[WARN] error caused by " + t.getMessage()); 
                 }
                 
                 if (opener == null) { 

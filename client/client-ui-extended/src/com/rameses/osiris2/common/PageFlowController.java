@@ -22,6 +22,7 @@ import com.rameses.rcp.annotations.Invoker;
 import com.rameses.rcp.common.Action;
 import com.rameses.rcp.common.MsgBox;
 import com.rameses.rcp.common.StyleRule;
+import com.rameses.rcp.util.ControlSupport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,8 +118,12 @@ public class PageFlowController
             
             Object bean = workunit.getWorkunit().getController();
             Object o = ExpressionResolver.getInstance().eval( openerName,bean );            
-            if( o instanceof String ) {
-                return InvokerUtil.lookupOpener((String)o);
+            if (o instanceof String) { 
+                try { 
+                    return InvokerUtil.lookupOpener((String)o); 
+                } catch(Throwable t) {
+                    System.out.println("[WARN] error lookup actions caused by " + t.getMessage());
+                }
             }
             return o;
         }
@@ -147,12 +152,17 @@ public class PageFlowController
     } 
     
     protected final List<Action> lookupActions(String type)
-    {
-        List<Action> actions = InvokerUtil.lookupActions(type, new InvokerFilter() {
-            public boolean accept(com.rameses.osiris2.Invoker o) { 
-                return o.getWorkunitid().equals(invoker.getWorkunitid()); 
-            }
-        }); 
+    {        
+        List<Action> actions = new ArrayList();
+        try { 
+            actions = InvokerUtil.lookupActions(type, new InvokerFilter() {
+                public boolean accept(com.rameses.osiris2.Invoker o) { 
+                    return o.getWorkunitid().equals(invoker.getWorkunitid()); 
+                }
+            }); 
+        } catch(Throwable t) {
+            System.out.println("[WARN] error lookup actions caused by " + t.getMessage());
+        }
         
         for (int i=0; i<actions.size(); i++) 
         {
@@ -171,25 +181,31 @@ public class PageFlowController
     public List<Action> getActions() {
         List<Action> actions = new ArrayList();
         List<Transition> transitions = workunit.getWorkunit().getTransitions();
-        for(Transition t: transitions) {
+        for (Transition t: transitions) {
+            String domain = t.getDomain();
+            if (domain == null) domain = workunit.getWorkunit().getModule().getDomain();
+            
+            boolean permitted = ControlSupport.isPermitted(domain, t.getRole(), t.getPermission()); 
+            if (!permitted) continue; 
+            
             String tname = t.getName();
-            if(tname==null) tname = t.getTo();
+            if (tname == null) tname = t.getTo();
+            
             TransitionAction a = new TransitionAction(tname);
             String caption = (String)t.getProperties().get("title");
             String tag = (String)t.getProperties().get("tag");
-            if(caption==null) caption = (String)t.getProperties().get("caption");
-            if(caption==null) caption = tname;
+            if (caption == null) caption = (String)t.getProperties().get("caption");
+            if (caption == null) caption = tname; 
+            
             String visibleWhen = (String)t.getProperties().get("visibleWhen");
             String icon = (String) t.getProperties().get("icon");
             a.setCaption( caption );
             a.setTooltip( caption );
-            a.setPermission(t.getPermission());
-            a.setRole(t.getRole());
             a.setTag(tag);
-            if(icon!=null) {
+            if (icon != null) { 
                 a.setIcon( icon );
             }
-            if(visibleWhen!=null) {
+            if (visibleWhen != null) {
                 a.setVisibleWhen(visibleWhen);
             }
             a.setConfirm( t.getConfirm() );
@@ -202,9 +218,9 @@ public class PageFlowController
                 }
             } catch(Exception ign){;}
             a.setImmediate( immediate );
-            String domain = t.getDomain();
-            if(domain==null)domain = workunit.getWorkunit().getModule().getDomain();
             a.setDomain(domain);
+            a.setRole(t.getRole());
+            a.setPermission(t.getPermission());            
             a.setShowCaption(true);
             actions.add(a );
         }

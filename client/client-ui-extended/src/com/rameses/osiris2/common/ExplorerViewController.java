@@ -200,7 +200,7 @@ public class ExplorerViewController {
             
             if (defaultViewOpener == null) {
                 String name = "explorer-view-handler";   
-                defaultViewOpener = InvokerUtil.lookupOpener(name, new HashMap());
+                defaultViewOpener = InvokerUtil.lookupOpener(name, new HashMap()); 
             }
             
             System.out.println("openNode-> " + node.getItem());            

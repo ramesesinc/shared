@@ -5,6 +5,7 @@ import com.rameses.osiris2.client.InvokerUtil;
 import com.rameses.rcp.common.Action;
 import com.rameses.rcp.common.Column;
 import com.rameses.rcp.common.ListItem;
+import com.rameses.rcp.common.MsgBox;
 import com.rameses.rcp.common.Opener;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -158,12 +159,21 @@ public abstract class ListController extends BasicListController implements Page
         Map params = createOpenerParams();
         if (!onCreate(params)) return null; 
         
-        Opener o = InvokerUtil.lookupOpener(getEntityName()+":create", params);
-        String target = o.getTarget()+"";
-        if (!target.matches("window|popup|process|_window|_popup|_process")) { 
-            o.setTarget(getFormTarget()); 
+        Opener opener = null; 
+        try { 
+            opener = InvokerUtil.lookupOpener(getEntityName()+":create", params);
+        } catch(Throwable t) {
+            System.out.println("[WARN] error lookup opener caused by " + t.getMessage());
+            MsgBox.alert("No access privilege for this item. Please contact your administrator.");
         } 
-        return o;
+        
+        if (opener == null) return null;
+        
+        String target = opener.getTarget()+"";
+        if (!target.matches("window|popup|process|_window|_popup|_process")) { 
+            opener.setTarget(getFormTarget()); 
+        } 
+        return opener;
     }
     
     public Object open() throws Exception 
@@ -182,12 +192,21 @@ public abstract class ListController extends BasicListController implements Page
         params.put("entity", data); 
         if (!onOpen(params)) return null; 
         
-        Opener o = InvokerUtil.lookupOpener(filetype+":open", params);
-        String target = o.getTarget()+"";
+        Opener opener = null; 
+        try {
+            opener = InvokerUtil.lookupOpener(filetype+":open", params);
+        } catch(Throwable t) {
+            System.out.println("[WARN] error lookup opener caused by " + t.getMessage());
+            MsgBox.alert("No access privilege for this item. Please contact your administrator.");            
+        }
+        
+        if (opener == null) return null;
+        
+        String target = opener.getTarget()+"";
         if (!target.matches("window|popup|process|_window|_popup|_process")) { 
-            o.setTarget(getFormTarget()); 
+            opener.setTarget(getFormTarget()); 
         } 
-        return o;
+        return opener;
     }    
     
     public Object close() {

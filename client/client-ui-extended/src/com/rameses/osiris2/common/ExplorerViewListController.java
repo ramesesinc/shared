@@ -377,7 +377,8 @@ public class ExplorerViewListController extends ListController implements Explor
             return null; 
         }
         
-        PopupMenuOpener opener = new PopupMenuOpener();        
+        PopupMenuOpener opener = new PopupMenuOpener();  
+        opener.setExecuteOnSingleResult(true); 
         for (Invoker invoker: list) {
             Map map = createOpenerParams();
             map.put("node", node.getItem());
@@ -436,6 +437,7 @@ public class ExplorerViewListController extends ListController implements Explor
             try { 
                 return InvokerUtil.lookup(invokerType);
             } catch(Throwable t) {
+                System.out.println("[WARN] error lookup '"+invokerType+"' caused by " + t.getMessage());
                 return new ArrayList(); 
             }   
         }
