@@ -1,7 +1,0 @@
-<workunit extends="wtemplates/ExplorerViewController.xml" 
-    serviceName="TestExplorerService" defaultFileType="default">
-        
-    <invokers>
-        <invoker folderid="/menu/txn" caption="Test Explorer" action="init"/>
-    </invokers>
-</workunit>
