@@ -28,9 +28,17 @@
             
             def listModel = [
                 fetchList: { o->
-                    return svc.getOpenControlList( [af:entity.formno, entity.txnmode, type:'assign'] );
+                    return svc.getListForAssignment( [af:entity.formno, txnmode: entity.txnmode] );
+                }, 
+                onColumnUpdate: { o,colname->
+                    svc.assignSubcollector( o );
                 }
-            ] as BasicListModel;
+            ] as EditorListModel;
+            
+            def doClose() {
+                return "_close";
+            }
+            
         }
         ]]>
         
