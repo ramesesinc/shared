@@ -1,7 +1,8 @@
 <workunit>
     
    <invokers>
-         <invoker type="liquidation:reports" caption="Report on Collection and Deposits (RCD)" action="init" index="1" target="self"/>
+         <invoker type="liquidation:reports" caption="Liquidation Report By Fund " action="init" index="2" target="self"/>
+         
    </invokers>
    
    <code>
@@ -14,7 +15,7 @@
         import com.rameses.util.*;
         import com.rameses.osiris2.reports.*;
         
-        class LiquidationRCDReportController {
+        class LiquidationReportByFundController {
         
             @Binding
             def binding;
@@ -25,11 +26,10 @@
             @Service("ReportParameterService")
             def paramsvc
             
-            String title = "Liquidation RCD";
+            String title = "Liquidation Report By Fund";
             
             def reportdata;
-            def reportPath = "com/rameses/gov/treasury/liquidation/report/rcd/"
-            def liquidationid
+            def reportPath = "com/rameses/gov/treasury/liquidation/reports/"
             def fundlist 
             def fund 
             def entity;
@@ -41,23 +41,19 @@
             
             void setFund(def fund ){
                 this.fund = fund 
-                reportdata = svc.getRCDReportData( [ liquidationid:entity.objid, fundname:this.fund.fundid ] )
+                
+                reportdata = svc.getReportByFund( [ liquidationid:entity.objid, fundname:this.fund.fundid ])
                 report.viewReport();
                 if( binding) binding.refresh()
             }
             
             def report = [
-                getReportName : { return reportPath + 'main.jasper' },
-                getReportData : { return reportdata }, 
+                getReportName : { return reportPath + 'reportbyfund.jasper' },
+                getReportData : { return [reportdata] }, 
                 getParameters : { return paramsvc.getStandardParameter() },
                 getSubReports : {
                     return [ 
-                        new SubReport("remittances", reportPath + "remittances.jasper"),
-                        new SubReport("collectionsummary", reportPath + "collectionsummary.jasper"),
-                        new SubReport("reportaforms", reportPath + "reportaforms.jasper"),
-                        new SubReport("reportnsaforms", reportPath + "reportnsaforms.jasper"),
-                        new SubReport("reportnonserialsummary", reportPath + "reportnonserialsummary.jasper"),
-                        new SubReport("otherpayments", reportPath + "otherpayments.jasper"),
+                        new SubReport("LiquidationReportBItem", reportPath + "reportbyfunditem.jasper"),
                     ] as SubReport[];    
                  }
             ] as ReportModel
@@ -67,7 +63,7 @@
    </code>
    
    <pages>
-       <page template="com.rameses.enterprise.treasury.report.PreviewByFundPage" />
+       <page template="com.rameses.gov.treasury.liquidation.reports.LiquidationReportByFund" />
    </pages>
    
 </workunit>
