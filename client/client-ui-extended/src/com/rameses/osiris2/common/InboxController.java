@@ -316,29 +316,20 @@ public class InboxController extends ListController {
     }    
     
     public Opener create() throws Exception {
-        return null;  
-//        Node node = getSelectedNode(); 
-//        if (node == null) return null; 
-//        
-//        List<Invoker> list = node.getPropertyList("Invoker.createlist");
-//        if (list == null || list.isEmpty()) {
-//            System.out.println("No available file type handler"); 
-//            return null; 
-//        }
-//        
-//        PopupMenuOpener opener = new PopupMenuOpener();  
-//        opener.setExecuteOnSingleResult(true); 
-//        for (Invoker invoker: list) {
-//            Map map = createOpenerParams();
-//            map.put("node", node.getItem());
-//            
-//            Object fileTypeObject = invoker.getProperties().get("Node.fileTypeObject"); 
-//            if (fileTypeObject != null) map.put("filetype", fileTypeObject); 
-//            
-//            opener.add(actionsProvider.toOpener(invoker, map, node));
-//        }
-//        return opener;        
-    }    
+        Node node = getSelectedNode(); 
+        if (node == null) return null; 
+        
+        List<Invoker> list = node.getPropertyList("Invoker.createlist");
+        if (list == null || list.isEmpty()) {
+            System.out.println("No available file type handler"); 
+            return null; 
+        }
+        
+        Map map = createOpenerParams();
+        map.put("node", node.getItem());
+        Invoker invoker = list.get(0);             
+        return actionsProvider.toOpener(invoker, map, node);
+    } 
 
     private StringBuffer footerInfo;
     
@@ -402,81 +393,50 @@ public class InboxController extends ListController {
         Node node = getSelectedNode();
         if (node == null) return;
                 
-        String filetype = helper.getFiletype(node, getDefaultFileType());         
-//        if (isAllowCreate()) { 
-//            List<Invoker> list = node.getPropertyList("Invoker.createlist"); 
-//            if (list == null) {
-//                list = new ArrayList();                 
-//                if (!children.isEmpty()) {
-//                    for (Object o: children) {
-//                        if (!(o instanceof Map)) continue;
-//                        
-//                        Map citem = (Map) o;
-//                        String cfiletype = helper.getFiletype(citem); 
-//                        if (cfiletype == null || cfiletype.length() == 0) continue;
-//                        
-//                        String invtype = cfiletype.toLowerCase() + ":create";
-//                        Invoker invoker = actionsProvider.getInvoker(node, invtype); 
-//                        if (invoker != null) {
-//                            invoker = invoker.clone(); 
-//                            invoker.getProperties().put("Node.fileTypeObject", citem);
-//                            
-//                            String scaption = helper.getString(citem, "caption");
-//                            if (scaption != null) invoker.setCaption(scaption);
-//                            
-//                            list.add(invoker);
-//                        }
-//                    }
-//                }                
-//                node.setProperty("Invoker.createlist", list);
-//            } 
-//            
-//            if (!list.isEmpty()) { 
-//                Action a = createAction("create", "New", "images/toolbars/create.png", "ctrl N", 'n', null, true); 
-//                formActions.add(a); 
-//            }
-//        }   
+        String filetype = helper.getFiletype(node); 
+        if (filetype == null || filetype.length() == 0) 
+            filetype = getDefaultFileType();
+            
+        if (isAllowCreate() && filetype != null && filetype.length() > 0) { 
+            List<Invoker> list = node.getPropertyList("Invoker.createlist"); 
+            if (list == null) {
+                list = new ArrayList();                 
+                String invtype = filetype.toLowerCase() + ":create";
+                Invoker invoker = actionsProvider.getInvoker(node, invtype); 
+                if (invoker != null) list.add(invoker);
+                
+                node.setProperty("Invoker.createlist", list);
+            } 
+            
+            if (!list.isEmpty()) { 
+                Action a = createAction("create", "New", "images/toolbars/create.png", "ctrl N", 'n', null, true); 
+                formActions.add(a); 
+            }
+        }   
         
-//        if (isAllowOpen()) { 
-//            List<Invoker> list = node.getPropertyList("Invoker.openlist"); 
-//            if (list == null) {
-//                list = new ArrayList();
-//                if (!children.isEmpty()) {
-//                    for (Object o: children) {
-//                        if (!(o instanceof Map)) continue;
-//                        
-//                        Map citem = (Map) o;
-//                        String cfiletype = helper.getFiletype(citem); 
-//                        if (cfiletype == null || cfiletype.trim().length() == 0) continue;
-//                        
-//                        String invtype = cfiletype.toLowerCase() + ":open";
-//                        Invoker invoker = actionsProvider.getInvoker(node, invtype); 
-//                        if (invoker != null) {
-//                            invoker = invoker.clone(); 
-//                            invoker.getProperties().put("Node.fileTypeObject", citem);
-//                            
-//                            String scaption = helper.getString(citem, "caption");
-//                            if (scaption != null) invoker.setCaption(scaption);
-//                            
-//                            list.add(invoker);
-//                        }
-//                    }
-//                } 
-//                node.setProperty("Invoker.openlist", list); 
-//            } 
-//            
-//            Action a = createAction("open", "Open", "images/toolbars/open.png", "ctrl O", 'o', "#{selectedEntity != null && openButtonVisible==true}", true); 
-//            a.getProperties().put("depends", "selectedEntity"); 
-//            formActions.add(a); 
-//        }
+        if (isAllowOpen() && filetype != null && filetype.length() > 0) { 
+            List<Invoker> list = node.getPropertyList("Invoker.openlist"); 
+            if (list == null) {
+                list = new ArrayList();
+                String invtype = filetype.toLowerCase() + ":open";
+                Invoker invoker = actionsProvider.getInvoker(node, invtype); 
+                if (invoker != null) list.add(invoker);
+                
+                node.setProperty("Invoker.openlist", list); 
+            } 
+            
+            Action a = createAction("open", "Open", "images/toolbars/open.png", "ctrl O", 'o', "#{selectedEntity != null && openButtonVisible==true}", true); 
+            a.getProperties().put("depends", "selectedEntity"); 
+            formActions.add(a); 
+        }
         
         formActions.add(createAction("reload", "Refresh", "images/toolbars/refresh.png", "ctrl R", 'r', null, true)); 
         
         //load extended actions for the node
         List<Invoker> list = node.getPropertyList("Invoker.formActions"); 
         if (list == null && filetype != null) {
-            String invtype = filetype.toLowerCase() + ":formActions";
-            list = actionsProvider.getInvokers(node, invtype);
+            String invtype = filetype.toLowerCase() + ":" + node.getPropertyString("name");
+            list = actionsProvider.getInvokers(node, invtype.toLowerCase()+":formActions");
             node.setProperty("Invoker.formActions", list);
         } 
         if (list != null && !list.isEmpty()) {
@@ -604,8 +564,19 @@ public class InboxController extends ListController {
             if (filetype == null || filetype.length() == 0) 
                 filetype = getString(data, "_filetype"); 
             
-            return filetype; 
+            return filetype.toLowerCase(); 
         }
+        
+        private String getFiletype(Node node) {
+            if (node == null) return null;
+            
+            String filetype = node.getPropertyString("filetype");
+            if (filetype == null || filetype.length() == 0) 
+                filetype = node.getPropertyString("_filetype");
+            if (filetype == null || filetype.length() == 0) return null;
+                
+            return filetype.toLowerCase(); 
+        }         
         
         private String getFiletype(Node node, String defaultFiletype) {
             if (node == null) return null;
