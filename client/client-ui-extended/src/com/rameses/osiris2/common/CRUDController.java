@@ -169,6 +169,8 @@ public class CRUDController
         
     // <editor-fold defaultstate="collapsed" desc=" Form / Navigation Actions "> 
     
+    public boolean isAllowSave() { return true; } 
+    
     public List getFormActions() {
         if (formActions == null) 
         {
@@ -186,7 +188,7 @@ public class CRUDController
                 formActions.add(createAction("approve", "Approve", "images/toolbars/approve.png", null, 'v', "#{mode=='read' && entity.state=='DRAFT'}", true)); 
             
             formActions.add(createAction("cancel", "Cancel", "images/toolbars/cancel.png", "ctrl C", 'c', "#{mode!='read'}", true)); 
-            formActions.add(createAction("save", "Save", "images/toolbars/save.png", "ctrl S", 's', "#{mode!='read'}", false)); 
+            formActions.add(createAction("save", "Save", "images/toolbars/save.png", "ctrl S", 's', "#{mode!='read' && allowSave==true}", false)); 
             formActions.add(createAction("undo", "Undo", "images/toolbars/undo.png", "ctrl Z", 'u', "#{mode=='edit'}", true)); 
             
             List<Action> xactions = lookupActions("formActions");
