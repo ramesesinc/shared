@@ -6,10 +6,14 @@
 
 package com.rameses.gov.treasury.cashreceipt;
 
+import com.rameses.enterprise.treasury.cashreceipt.SerialCashReceiptPage;
+import com.rameses.rcp.ui.annotations.Template;
+
 /**
  *
  * @author  Elmo
  */
+@Template(value=SerialCashReceiptPage.class, target="content")
 public class SlaughterPermitPage extends javax.swing.JPanel {
     
     /** Creates new form SlaughterPermitPage */
@@ -41,8 +45,8 @@ public class SlaughterPermitPage extends javax.swing.JPanel {
         xLookupField1.setCaption("Account Title");
         xLookupField1.setCaptionWidth(180);
         xLookupField1.setCellPadding(new java.awt.Insets(10, 0, 0, 0));
-        xLookupField1.setExpression("#{accttitle}");
-        xLookupField1.setHandler("lookupAccount");
+        xLookupField1.setExpression("#{item.account.title}");
+        xLookupField1.setHandler("revenueitem:lookup");
         xLookupField1.setName("account");
         xLookupField1.setPreferredSize(new java.awt.Dimension(0, 19));
         xLookupField1.setRequired(true);
