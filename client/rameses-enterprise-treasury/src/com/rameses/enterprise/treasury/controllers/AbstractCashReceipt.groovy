@@ -33,6 +33,7 @@ public abstract class AbstractCashReceipt {
         entity.cashchange = 0;
         entity.totalcredit = 0;
         entity.paymentitems = [];
+        paymentListModel.reload();
     }
 
     public void updateBalances() {
