@@ -1,7 +1,7 @@
 <workunit>
     <pages>
         <page template="com.rameses.osiris2.themes.InboxPage"/>
-        <page template="com.rameses.osiris2.themes.DefaultQueryFormPanel" name="queryform"/>
+        <page template="com.rameses.osiris2.themes.InboxSearchPage" name="queryform"/>
     </pages>
     
     <code>
