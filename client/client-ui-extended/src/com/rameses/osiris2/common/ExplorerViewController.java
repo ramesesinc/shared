@@ -50,12 +50,19 @@ public class ExplorerViewController {
     private Opener defaultViewOpener; 
     
     public ExplorerViewController() {
-    }
+        try {
+            openerObject = InvokerUtil.lookupOpener("explorer-view-intro", new HashMap()); 
+        } catch(Throwable t){;} 
+    } 
     
     public void init(){
     } 
     
     // <editor-fold defaultstate="collapsed" desc=" Getters/Settters ">
+    
+    public String getTitle() { 
+        return (invoker == null? null: invoker.getCaption()); 
+    } 
     
     public String getContext() { 
         if (context == null) {
