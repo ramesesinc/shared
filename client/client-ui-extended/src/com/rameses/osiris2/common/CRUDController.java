@@ -274,8 +274,9 @@ public class CRUDController
     }
     
     //this is to support elmo's crud implementation
-    public final void create() {
-        init();
+    public Object create() {
+        init(); 
+        return null; 
     }
     
     protected void beforeCancel(){}
@@ -364,7 +365,7 @@ public class CRUDController
     protected void beforeOpen(Object params) {} 
     protected void afterOpen(Object data) {} 
     
-    public void open() {
+    public Object open() {
         if (!isAllowOpen())
             throw new IllegalStateException("PERMISSION DENIED! Invoking this method is not authorized."); 
         
@@ -380,27 +381,29 @@ public class CRUDController
         setEntity(data); 
         mode = MODE_READ; 
         afterOpen(data); 
+        return null; 
     }
     
     protected void beforeEdit(Object data) {} 
     protected void afterEdit(Object data) {} 
     
-    public void edit() {
+    public Object edit() {
         if (!isAllowEdit())
             throw new IllegalStateException("PERMISSION DENIED! Invoking this method is not authorized."); 
         
         Object data = getEntity();
-        beforeEdit(data);        
+        beforeEdit(data); 
         this.mode = MODE_EDIT; 
         afterEdit(data); 
         focusComponent(getEditFocusComponent()); 
-    }
+        return null; 
+    } 
     
     public void undo() {
         changeLog.undo(); 
     }    
     
-    public void approve() {
+    public Object approve() {
         String msg = getConfirmApproveMsg();
         if (msg == null || msg.length() == 0) {
             msg = "You are about to approve this document. Continue?";
@@ -411,7 +414,8 @@ public class CRUDController
             getServiceProxy().approve(data); 
             data.put("state", "APPROVED");
         } 
-    }
+        return null; 
+    } 
     
     protected void beforeDelete(Object data){}
     protected void afterDelete(Object data) {}
