@@ -65,7 +65,7 @@
     </code>
     
     <pages>
-        <page template="com.rameses.gov.treasury.ris.report.PreviewPage"/>
+        <page template="com.rameses.gov.treasury.report.PreviewPage"/>
     </pages>
     
 </workunit>

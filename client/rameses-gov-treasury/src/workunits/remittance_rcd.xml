@@ -32,7 +32,7 @@
             String title = "Remittance RCD";
             
             void viewReport() {
-                reportdata = svc.getRCDReportData( entity.objid)
+                reportdata = svc.getRCDReportData( entity )
                 report.viewReport();
             }
             
@@ -57,7 +57,7 @@
     </code>
     
    <pages>
-       <page template="com.rameses.enterprise.treasury.report.PreviewPage" />
+       <page template="com.rameses.gov.treasury.report.PreviewPage" />
        
    </pages>
    

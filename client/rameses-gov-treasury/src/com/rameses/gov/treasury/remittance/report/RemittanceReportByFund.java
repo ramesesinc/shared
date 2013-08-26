@@ -1,10 +1,10 @@
 /*
- * LiquidationReportByFund.java
+ * RemittanceReportByFund.java
  *
  * Created on August 23, 2013, 11:30 PM
  */
 
-package com.rameses.gov.treasury.liquidation.reports;
+package com.rameses.gov.treasury.remittance.report;
 
 import com.rameses.osiris2.themes.FormPage;
 import com.rameses.rcp.ui.annotations.Template;
@@ -14,10 +14,10 @@ import com.rameses.rcp.ui.annotations.Template;
  * @author  arnel
  */
 @Template(FormPage.class)
-public class LiquidationReportByFund extends javax.swing.JPanel {
+public class RemittanceReportByFund extends javax.swing.JPanel {
     
     /** Creates new form tPreviewPage */
-    public LiquidationReportByFund() {
+    public RemittanceReportByFund() {
         initComponents();
     }
     
@@ -53,15 +53,13 @@ public class LiquidationReportByFund extends javax.swing.JPanel {
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         formPanel1.setPadding(new java.awt.Insets(5, 5, 8, 5));
-        xComboBox1.setAllowNull(false);
         xComboBox1.setCaption("Fund");
         xComboBox1.setCaptionWidth(60);
         xComboBox1.setDynamic(true);
-        xComboBox1.setExpression("#{item.fundname}");
+        xComboBox1.setExpression("#{item.title}");
         xComboBox1.setItems("fundlist");
         xComboBox1.setName("fund");
         xComboBox1.setPreferredSize(new java.awt.Dimension(170, 20));
-        xComboBox1.setRequired(true);
         formPanel1.add(xComboBox1);
 
         jPanel1.add(formPanel1, java.awt.BorderLayout.SOUTH);
