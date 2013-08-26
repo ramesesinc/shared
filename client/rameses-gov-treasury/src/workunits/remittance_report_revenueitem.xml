@@ -1,9 +1,6 @@
 <workunit>
     <invokers>
-        <invoker type="remittance:reports" caption="Remittance Report By Revenue Item" action="init" target="self"/>
-       
-       <invoker type="formActions" caption="Back" action="back" mnemonic="b"/>
-       <invoker type="formActions" action="viewReport" caption="View" visibleWhen="#{mode == 'init'}" mnemonic="v"/>
+        <invoker type="remittance:reports" caption="Remittance Report By Revenue Item" action="init" target="self" index="5"/>
     </invokers>
     
     <code>
@@ -26,12 +23,9 @@
             
             @Service("ReportParameterService")
             def paramsvc
-            
-            @Service("FundService")
-            def fundsvc
-            
-            def selectedfund
-            def fundList
+           
+            def fund
+            def fundlist
              
             def entity;
             def reportdata;
@@ -41,34 +35,31 @@
             String title = "Remittance Report By Revenue Item";
             
             void init() {
-                mode = 'init'
-                fundList = fundsvc.getList( [:] )
+                fundlist = svc.getFundlist( entity.objid )
+                fund = [:]
+                viewReport();
             }
             
-            def viewReport() {
-                reportdata = svc.generateReportByRevenueItem( entity, selectedfund)
+            void setFund( def fund) {
+                this.fund = fund;
+                
+                viewReport() 
+                binding.refresh() 
+            }
+            
+            void viewReport() {
+                reportdata = svc.generateReportByRevenueItem( entity, fund)
                 report.viewReport();
-                mode = 'view'
-                return 'preview'
             }
-            
-            def back() {
-               if(mode == 'view') {
-                    mode = 'init'
-                    return 'default'
-               }
-               
-               return '_close';
-            }
-            
+       
             def report = [
                 getReportName : { return reportPath + 'reportbyrevenueitem.jasper' },
                 getReportData : { return reportdata }, 
                 getParameters : { 
                     def params = paramsvc.getStandardParameter() 
                     params.SUBTITLE = 'SUMMARY OF COLLECTION'
-                    if (selectedfund) {
-                        params.SUBTITLE = params.SUBTITLE + ' BY ' + selectedfund.title + ' FUND ' ;
+                    if (fund) {
+                        params.SUBTITLE = params.SUBTITLE + ' BY ' + fund.title + ' FUND ' ;
                     }
                     return params;
                 },
@@ -84,8 +75,7 @@
     </code>
     
    <pages>
-       <page template="com.rameses.gov.treasury.remittance.report.RemittanceReportByFundInitPage" />
-       <page name="preview" template="com.rameses.enterprise.treasury.report.PreviewPage" />
+       <page template="com.rameses.gov.treasury.remittance.report.RemittanceReportByFund" />
    </pages>
    
 </workunit>

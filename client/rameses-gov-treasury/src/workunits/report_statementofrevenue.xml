@@ -1,0 +1,55 @@
+<workunit extends="wtemplates/gov/treasury/ReportController.xml" >
+    <invokers>
+        <invoker folderid="/menu/report/treasury" action="init" caption="Statement of Revenue" target="window" index="3" 
+            role="TREASURY_REPORT" />
+    </invokers>
+    <code>
+
+<![CDATA[
+
+import com.rameses.rcp.common.*;
+import com.rameses.rcp.annotations.*;
+import com.rameses.osiris2.client.*;
+import com.rameses.osiris2.reports.*;
+
+
+class StatementOfRevenueController extends com.rameses.gov.treasury.report.ReportController
+{
+    @Service('StatementOfRevenueService') 
+    def svc
+    
+    String title = 'Statement of Revenue'
+    String reportpath = 'com/rameses/gov/treasury/report/statementofrevenue/'
+    String reportName = reportpath + 'statementofrevenue.jasper'
+    
+    def data
+    def getReportData(){
+        data = svc.generateReport(entity);
+        return data.reportdata
+    }
+    
+    def formControl = [
+        getFormControls: {
+            return [
+                new FormControl( "combo", [caption:'Chart Type', name:'entity.charttype', items:'charttypes', required:true, immediate:true]),
+                new FormControl( "integer", [caption:'Year', name:'entity.year', required:true, preferredSize:'100,19']),
+                new FormControl( "combo", [caption:'Quarter', name:'entity.qtr', items:'quarters', required:true, immediate:true, preferredSize:'100,19']),
+                new FormControl( "combo", [caption:'Month', name:'entity.month', items:'monthsByQtr', depends:'entity.qtr', expression:'#{item.name}', dynamic:true, preferredSize:'100,19']),
+            ]    
+        },
+   ] as FormPanelModel;
+   
+   
+   Map getParameters(){
+        return [TITLE:data.title, PERIOD:data.period]
+    }
+    
+    def getCharttypes(){
+        return ['SRE', 'NGAS']
+    }
+}
+
+]]>        
+        
+    </code>
+</workunit>

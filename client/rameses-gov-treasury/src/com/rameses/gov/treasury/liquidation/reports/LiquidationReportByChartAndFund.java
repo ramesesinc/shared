@@ -60,7 +60,7 @@ public class LiquidationReportByChartAndFund extends javax.swing.JPanel {
         xComboBox1.setCaptionWidth(60);
         xComboBox1.setDynamic(true);
         xComboBox1.setImmediate(true);
-        xComboBox1.setItems("chartList");
+        xComboBox1.setItems("chartlist");
         xComboBox1.setName("chart");
         xComboBox1.setPreferredSize(new java.awt.Dimension(150, 22));
         xComboBox1.setRequired(true);
@@ -73,7 +73,7 @@ public class LiquidationReportByChartAndFund extends javax.swing.JPanel {
         xComboBox2.setDynamic(true);
         xComboBox2.setExpression("#{item.fundname}");
         xComboBox2.setImmediate(true);
-        xComboBox2.setItems("fundList");
+        xComboBox2.setItems("fundlist");
         xComboBox2.setName("fund");
         xComboBox2.setPreferredSize(new java.awt.Dimension(170, 20));
         xComboBox2.setRequired(true);

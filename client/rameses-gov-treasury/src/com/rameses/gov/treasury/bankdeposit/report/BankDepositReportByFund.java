@@ -1,19 +1,23 @@
 /*
- * tPreviewPage.java
+ * BankDepositReportByFund.java
  *
- * Created on January 13, 2011, 3:09 PM
+ * Created on August 23, 2013, 11:30 PM
  */
 
-package com.rameses.gov.treasury.ris.report;
+package com.rameses.gov.treasury.bankdeposit.report;
 
 import com.rameses.osiris2.themes.FormPage;
 import com.rameses.rcp.ui.annotations.Template;
 
+/**
+ *
+ * @author  arnel
+ */
 @Template(FormPage.class)
-public class PreviewPage extends javax.swing.JPanel {
+public class BankDepositReportByFund extends javax.swing.JPanel {
     
     /** Creates new form tPreviewPage */
-    public PreviewPage() {
+    public BankDepositReportByFund() {
         initComponents();
     }
     
@@ -25,27 +29,54 @@ public class PreviewPage extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
     private void initComponents() {
         xReportPanel1 = new com.rameses.osiris2.reports.ui.XReportPanel();
+        jPanel1 = new javax.swing.JPanel();
+        formPanel1 = new com.rameses.rcp.util.FormPanel();
+        xComboBox1 = new com.rameses.rcp.control.XComboBox();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setLayout(new java.awt.BorderLayout());
 
-        setPreferredSize(new java.awt.Dimension(771, 439));
+        xReportPanel1.setDepends(new String[] {"fund"});
         xReportPanel1.setName("report");
         org.jdesktop.layout.GroupLayout xReportPanel1Layout = new org.jdesktop.layout.GroupLayout(xReportPanel1);
         xReportPanel1.setLayout(xReportPanel1Layout);
         xReportPanel1Layout.setHorizontalGroup(
             xReportPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 771, Short.MAX_VALUE)
+            .add(0, 604, Short.MAX_VALUE)
         );
         xReportPanel1Layout.setVerticalGroup(
             xReportPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 439, Short.MAX_VALUE)
+            .add(0, 332, Short.MAX_VALUE)
         );
         add(xReportPanel1, java.awt.BorderLayout.CENTER);
+
+        jPanel1.setLayout(new java.awt.BorderLayout());
+
+        formPanel1.setPadding(new java.awt.Insets(5, 5, 8, 5));
+        xComboBox1.setAllowNull(false);
+        xComboBox1.setCaption("Fund");
+        xComboBox1.setCaptionWidth(60);
+        xComboBox1.setDynamic(true);
+        xComboBox1.setExpression("#{item.title}");
+        xComboBox1.setItems("fundlist");
+        xComboBox1.setName("fund");
+        xComboBox1.setPreferredSize(new java.awt.Dimension(170, 20));
+        formPanel1.add(xComboBox1);
+
+        jPanel1.add(formPanel1, java.awt.BorderLayout.SOUTH);
+
+        jPanel1.add(jSeparator1, java.awt.BorderLayout.CENTER);
+
+        add(jPanel1, java.awt.BorderLayout.NORTH);
 
     }// </editor-fold>//GEN-END:initComponents
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.rameses.rcp.util.FormPanel formPanel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JSeparator jSeparator1;
+    private com.rameses.rcp.control.XComboBox xComboBox1;
     private com.rameses.osiris2.reports.ui.XReportPanel xReportPanel1;
     // End of variables declaration//GEN-END:variables
     
