@@ -1,6 +1,6 @@
 <workunit>
     <invokers>
-       <invoker type="remittance:reports" caption="Remittance Report By Collection Type" action="init" target="self" index="2"/>
+       <invoker type="remittance:reports" caption="Remittance Report By Fund (Detailed)" action="init" target="self" index="4"/>
     </invokers>
     
     <code>
@@ -13,7 +13,7 @@
         import com.rameses.util.*;
         import com.rameses.osiris2.reports.*;
         
-        class RemittanceCollectionTypeReportController {
+        class RemittanceFundDetailedReportController {
         
             @Binding
             def binding;
@@ -24,50 +24,48 @@
             @Service("ReportParameterService")
             def paramsvc
             
-            def collectiontypelist
-            def collectiontype
-            
+            def fund
+            def fundlist
+             
             def entity;
             def reportdata;
             def reportPath = "com/rameses/gov/treasury/remittance/report/"
-            def mode = 'init'
-            
-            String title = "Remittance Report By Collection Type";
+          
+            String title = "Remittance Report By Fund (Detailed)";
             
             void init() {
-                collectiontypelist = svc.getCollectiontypelist( entity.objid) 
-                collectiontype = [:]
-                viewReport()
-            }
-            
-            void setCollectiontype( def collectiontype) {
-                this.collectiontype = collectiontype;
-                
+                fundlist = svc.getFundlist( entity.objid )
+                fund = [:]
                 viewReport();
-                binding.refresh()
             }
             
+            void setFund( def fund) {
+                this.fund = fund;
+                
+                viewReport() 
+                binding.refresh() 
+            }
             
-            def viewReport() {
-                reportdata = svc.generateReportByCollectionType( entity, collectiontype)
+            void viewReport() {
+                reportdata = svc.generateDetailedReportByFund( entity, fund )
                 report.viewReport();
             }
             
-            
             def report = [
-                getReportName : { return reportPath + 'reportbycollectiontype.jasper' },
+                getReportName : { return reportPath + 'detailedreportbyfund.jasper' },
                 getReportData : { return reportdata }, 
                 getParameters : { 
                     def params = paramsvc.getStandardParameter() 
                     params.SUBTITLE = 'SUMMARY OF COLLECTION'
-                    if (collectiontype)
-                        params.SUBTITLE = params.SUBTITLE + ' (' + collectiontype.title + ')';
+                    if (fund) {
+                        params.SUBTITLE = params.SUBTITLE + ' BY ' + fund.title + ' FUND ' ;
+                    }
                     return params;
-                    
                 },
                 getSubReports : {
                     return [ 
-                        new SubReport("ReportBItem", reportPath + "reportbycollectiontypeitem.jasper"),
+                        new SubReport("ReportDDetailedSerial", reportPath + "detailedreportbyfundnonserial.jasper"),
+                        new SubReport("ReportDDetailedNonSerial", reportPath + "detailedreportbyfundserial.jasper"),
                     ] as SubReport[];    
                  }
             ] as ReportModel
@@ -77,7 +75,7 @@
     </code>
     
    <pages>
-       <page template="com.rameses.gov.treasury.remittance.report.RemittanceReportByCollectionType" />
+       <page template="com.rameses.gov.treasury.remittance.report.RemittanceReportByFund" />
    </pages>
    
 </workunit>
