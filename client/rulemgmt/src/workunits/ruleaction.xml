@@ -1,7 +1,7 @@
 <workunit>
     
     <invokers>
-        <invoker type="ruleaction:open" action="open" caption="Edit Rule Action" target="popup" />
+        <invoker type="ruleaction:edit" action="open" caption="Edit Rule Action" target="popup" />
         <invoker type="ruleaction:create" action="create" caption="Create Rule Action" target="popup"/>
     </invokers>
 
