@@ -53,19 +53,21 @@
             }
             
             void open() {
-                if(rule.conditions==null) rule.conditions = [];
-                if(rule.actions==null) rule.actions = [];
+                initRule(rule);
                 mode='read';
             }
             
             void edit() {
+                initRule(rule); 
                 mode = 'edit';
             }
             
             def cancelsave() {
                 if(MsgBox.confirm("Changes will be discarded. Continue?")) {
                     if( mode =="create" ) return "_close";
+                    
                     rule = ruleMgmtSvc.open(rule);
+                    initRule(rule);
                     mode = 'read';
                     return null;
                 }
@@ -74,10 +76,10 @@
             void save() {
                 if(mode == "create") {
                     rule = ruleMgmtSvc.create(rule);
-                }
-                else {
+                } else {
                     rule = ruleMgmtSvc.update(rule);
                 }
+                initRule(rule);
                 mode = 'read';
             }
             
@@ -143,6 +145,7 @@
                      actionList: ruleMgmt.actions,
                      varList: RuleUtil.getVars( rule, -1 ),
                      saveHandler:{ o->
+                        o.text = ActionUtil.buildText(o); 
                         rule.actions << o;
                         binding.refresh();
                      }
@@ -155,6 +158,7 @@
                       action:selectedAction,
                       varList: RuleUtil.getVars( rule, -1 ),
                       saveHandler:{ o->
+                        o.text = ActionUtil.buildText(o); 
                         selectedAction.putAll( o );
                         binding.refresh();
                     }
@@ -164,6 +168,14 @@
             void removeAction() {
                 rule.actions.remove( selectedAction );
             }
+            
+            void initRule( o ) {
+                if (o.conditions == null) o.conditions = [];
+                if (o.actions == null) o.actions = [];
+                
+                o.actions.each { it.text = ActionUtil.buildText(it) }
+            } 
+            
             
             @Service("RuleTestService")
             def tester;
