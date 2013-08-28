@@ -83,10 +83,11 @@ class RuleMgmtService {
 	}
 	
 	@ProxyMethod
-	public void remove( def o ) {
-		def rule = open( o.objid )
-		if( ! rule ) return // probably deleted already 
-		if( rule.docstate != DRAFT_STATE ) throw new Exception('Only rules in Draft state can be deleted.')
+	public void removeEntity( params ) {
+		def rule = open( params );
+		if ( ! rule ) return // probably deleted already 
+
+		if ( rule.docstate != DRAFT_STATE ) throw new Exception('Only rules in Draft state can be deleted.')
 		em.delete(SCHEMA_NAME, rule)
 	}
 	
