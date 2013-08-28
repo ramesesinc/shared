@@ -15,7 +15,6 @@ import com.rameses.osiris2.Invoker;
 import com.rameses.osiris2.client.InvokerProxy;
 import com.rameses.osiris2.client.InvokerUtil;
 import com.rameses.rcp.common.Action;
-import com.rameses.rcp.common.ListItemStatus;
 import com.rameses.rcp.common.MsgBox;
 import com.rameses.rcp.common.Node;
 import com.rameses.rcp.common.Opener;
@@ -135,7 +134,7 @@ public class InboxController extends ListController {
     public String getIcon() { return null; }
     
     public String getListTitle() {
-        Node node = getSelectedNode(); 
+        Node node = getSelectedOpenNode();
         String s = (node == null? null: node.getCaption()); 
         return (s == null? " ": s); 
     }
@@ -172,7 +171,11 @@ public class InboxController extends ListController {
     // </editor-fold>  
     
     // <editor-fold defaultstate="collapsed" desc=" TreeNodeModel helper and utilities ">
-      
+    
+    private Node _selectedOpenNode;
+    
+    public final Node getSelectedOpenNode() { return _selectedOpenNode; } 
+    
     private class TreeNodeModelImpl extends TreeNodeModel 
     {
         InboxController root = InboxController.this;
@@ -242,6 +245,7 @@ public class InboxController extends ListController {
             if (node == null) return null;
 
             System.out.println("openNode-> " + node.getItem());  
+            _selectedOpenNode = node; 
             updateView();
             return null; 
         }
@@ -396,32 +400,6 @@ public class InboxController extends ListController {
         System.out.println("No available file type handler"); 
         return null; 
     } 
-
-    private StringBuffer footerInfo;
-    
-    protected void dataChanged(Object stat) {
-        footerInfo = new StringBuffer();
-        if (stat instanceof ListItemStatus) {
-            ListItemStatus lis = (ListItemStatus)stat;
-            System.out.println("pageindex="+lis.getPageIndex() + ", pagecount="+lis.getPageCount());
-//            int pagecount = lis.getPageCount()-1;
-//            int totalrows = Math.max(pagecount,0) * getRows(); 
-//            if (lis.isIsLastPage()) {
-//                totalrows -= Math.max(getRows(), 0); 
-//                totalrows += getDataListSize(); 
-//            }
-//            
-//            footerInfo.append( totalrows ); 
-//            footerInfo.append(" Record(s)    ");
-            footerInfo.append("Page  " + lis.getPageIndex() + "  of  ");
-            if (lis.isIsLastPage()) 
-                footerInfo.append(lis.getPageCount()); 
-            else 
-                footerInfo.append("?");            
-        }
-    }
-    
-    public Object getFooterInfo() { return ""; }
     
     // </editor-fold>
     
@@ -444,8 +422,8 @@ public class InboxController extends ListController {
         getQuery().clear(); 
         
         buildActions(); 
-        Binding obinding = getBinding();
-        if (obinding != null) obinding.refresh("formActions"); 
+        Binding obinding = (Binding) getNodeModel().getBinding(); 
+        if (obinding != null) obinding.refresh("selectedOpenNode|formActions"); 
         
         if (isDynamicColumns())
             reloadAll(); 
