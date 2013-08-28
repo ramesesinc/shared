@@ -37,9 +37,12 @@
             }
             
             def open() {
-                if(action.params==null) action.params = [:];
-                selectedAction = actionList.find{ it.name == action.name };                
-                return selectAction();
+                if (action.params == null) action.params = [:];
+                
+                selectedAction = actionList.find{ it.name == action.name };  
+                def opener = selectAction();
+                opener.target = 'popup';
+                return opener;      
             }
 
             def selectAction() {

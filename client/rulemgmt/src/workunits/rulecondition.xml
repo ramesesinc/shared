@@ -39,7 +39,9 @@
                 if (!selectedFact) 
                     throw new Exception("'"+condition.name+"' rule fact not found"); 
                     
-                return selectFact();
+                def opener = selectFact();
+                opener.target = 'popup';
+                return opener;
             }
 
             def selectFact() {  

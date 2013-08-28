@@ -1,7 +1,7 @@
 <workunit>
     
     <invokers>
-        <invoker type="actionhandler:basic" action="init" width="500"/>
+        <invoker type="actionhandler:basic" action="init" caption="Edit Rule Action"/>
     </invokers>
 
     <!--
