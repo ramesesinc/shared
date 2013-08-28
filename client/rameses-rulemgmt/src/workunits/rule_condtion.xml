@@ -1,0 +1,86 @@
+<workunit>
+    <invokers>
+        <invoker type="rulecondition:create" caption="Rule Condition" action="create" target="popup"/>
+        <invoker type="rulecondition:open" caption="Rule Condition" action="open" target="popup"/>
+        
+        <invoker type="formActions" caption="Back" action="doBack" mnemonic="b" visibleWhen="#{initPageShown==false &amp;&amp; mode=='create'}"/>
+        <invoker type="formActions" caption="Next" action="doNext" mnemonic="n" visibleWhen="#{initPageShown==true}"/> 
+    </invokers>
+   
+    <code>
+    <![CDATA[
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.osiris2.client.*;
+        import com.rameses.osiris2.common.*;
+
+        class RuleFactController {
+
+            //feed by the caller 
+            def service, entity, handler;
+            
+            def condition = [:];
+        
+            String title = "Rule Condition";
+            boolean initPageShown = false;
+            String mode;
+         
+            def create() { 
+                initPageShown = true;
+                mode = 'create';
+                condition = [:];
+                return 'selectionpage';
+            }
+            
+            void open() {
+                initPageShow = false; 
+                mode = 'open';
+            } 
+            
+            def selectedRulefact;
+            def rulefacts;            
+            def rulefactHandler = [
+                fetchList: { 
+                    if (rulefacts == null) {
+                        def params = [
+                            rulesetid: entity.rulesetid, 
+                            rulegroupid: entity.rulegroupid
+                        ];
+                        rulefacts = service.getRulefacts(params); 
+                    }
+                    return rulefacts;
+                } 
+            ] as BasicListModel;
+            
+            def openerHandler;
+            def doNext() {
+                if (!selectedRulefact) 
+                    throw new Exception('Please select a rule fact');
+                
+                condition.rulefact = service.getRulefact([name: selectedRulefact.name]); 
+                def params = [ 
+                    condition: condition, 
+                    rulefact: condition.rulefact 
+                ]; 
+                if (selectedRulefact.handler) 
+                    openerHandler = InvokerUtil.lookupOpener(selectedRulefact.handler+':create', params);
+                else 
+                    openerHandler = InvokerUtil.lookupOpener('default-rulecondition-handler:create', params);
+                 
+                initPageShown = false;    
+                return 'default';
+            } 
+            
+            def doBack() {
+                initPageShown = true;
+                return 'selectionpage';
+            } 
+        }
+   ]]>
+   </code>
+   
+   <pages>
+       <page template="com.rameses.rules.ui.RuleConditionHandlerPage"/> 
+       <page template="com.rameses.rules.ui.RuleFactSelectionPage" name="selectionpage"/>
+   </pages>
+</workunit>

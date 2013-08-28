@@ -1,8 +1,5 @@
 <workunit extends="wtemplates/gov/treasury/BasicCashReceiptController.xml">
     <invokers>
-        <invoker type="collectiontype:handler" caption="Slaughter Permit" 
-            name="slaughter" formno="57" formtype="serial" index="0"/>
-            
         <invoker type="cashreceipt:slaughter" action="init" />
     </invokers>
     
@@ -15,9 +12,7 @@
         import com.rameses.enterprise.treasury.controllers.*
         
         class  SlaughterPermitController extends BasicCashReceipt {
-            void init() {
-                super.init();
-            }
+            
         }
         ]]>
         
