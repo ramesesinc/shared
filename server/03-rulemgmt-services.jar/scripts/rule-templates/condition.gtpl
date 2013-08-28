@@ -23,10 +23,10 @@ condition.constraints.eachWithIndex { con, i->
 			if( dtype == "string") {
 				print "'" + con.value + "'";
 			}	
-			else if( dtype == "decimal" ) {
+			else if( dtype == "decimal" && con.usevar == false ) {
 				print decFormatter.format(con.value);
 			}
-			else if( dtype == "integer" ) {
+			else if( dtype == "integer" && con.usevar == false) {
 				print intFormatter.format(con.value);
 			}
 			else {
