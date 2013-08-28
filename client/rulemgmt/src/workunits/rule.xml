@@ -7,6 +7,7 @@
         <!-- actions -->
         <invoker type="formActions" action="create" caption="New" visibleWhen="#{mode=='read'}" />
         <invoker type="formActions" action="edit" caption="Edit"  visibleWhen="#{mode=='read'} &amp;&amp; rule.docstate != 'DEPLOYED'"/>
+        <invoker type="formActions" action="delete" caption="Delete"  visibleWhen="#{deleteButtonVisible == true}"/>
         <invoker type="formActions" action="deploy" caption="Deploy"  visibleWhen="#{mode=='read' &amp;&amp; rule.docstate == 'DRAFT'}"/>
         <invoker type="formActions" action="undeploy" caption="Undeploy"  visibleWhen="#{rule.docstate == 'DEPLOYED'}"/>
         <invoker type="formActions" action="supersede" caption="Supersede"  visibleWhen="#{rule.docstate == 'DEPLOYED'}"/>
@@ -32,6 +33,7 @@
             @Service("RuleMgmtService")
             def ruleMgmtSvc;
             
+            def ruleMgmtListHandler;
             def ruleMgmt;
             def rule;
             def mode;
@@ -61,6 +63,18 @@
                 initRule(rule); 
                 mode = 'edit';
             }
+            
+            boolean isDeleteButtonVisible() {
+                return (mode == 'read' && rule?.docstate != 'DEPLOYED');
+            } 
+            
+            def delete() {
+                if (!MsgBox.confirm('You are about to delete this record. Continue?')) return;
+                
+                ruleMgmtSvc.removeEntity(rule); 
+                ruleMgmtListHandler?.reload();
+                return '_close';
+            } 
             
             def cancelsave() {
                 if(MsgBox.confirm("Changes will be discarded. Continue?")) {
