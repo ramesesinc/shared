@@ -33,7 +33,7 @@
             public void execute() {
                 //OsirisContext.env.LOCALE_TIME = DateUtil.add(  OsirisContext.env.LOCALE_TIME, "2s" );
                 OsirisContext.env.LOCALE_TIME = new java.util.Date();
-                controller.binding.refresh("time");
+                //controller.binding.refresh("time");
             }
         }
     </code>
