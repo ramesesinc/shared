@@ -1,0 +1,57 @@
+<workunit>
+    <invokers>
+        <invoker type="remittance:reports" caption="Remittance Report By Cash Ticket" action="init" target="self" index="7"/>
+    </invokers>
+    
+    <code>
+        <![CDATA[    
+        import com.rameses.osiris2.common.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.rcp.annotations.*;
+        import java.rmi.server.*;
+        import com.rameses.osiris2.client.*;
+        import com.rameses.util.*;
+        import com.rameses.osiris2.reports.*;
+        
+        class RemittanceCashTicketReportController {
+        
+            @Binding
+            def binding;
+        
+            @Service("RemittanceReportService")
+            def svc
+            
+            @Service("ReportParameterService")
+            def paramsvc
+
+            def entity;
+            def reportdata;
+            def reportPath = "com/rameses/gov/treasury/remittance/report/"
+            
+            String title = "Remittance Report By Cash Ticket";
+            
+            void init() {
+                reportdata = svc.generateReportByCashTicket( entity )
+                report.viewReport();
+            }
+            
+            def report = [
+                getReportName : { return reportPath + 'cashticketreport.jasper' },
+                getReportData : { return reportdata }, 
+                getParameters : { return paramsvc.getStandardParameter()  },
+                getSubReports : {
+                    return [ 
+                        new SubReport("ReportCashTicketSummary", reportPath + "cashticketreportsummary.jasper"),
+                    ] as SubReport[];    
+                 }
+            ] as ReportModel
+            
+        }      
+       ]]>
+    </code>
+    
+   <pages>
+       <page template="com.rameses.gov.treasury.report.PreviewPage" />
+   </pages>
+   
+</workunit>

@@ -33,9 +33,15 @@
             }
             
             def open() {
-                if(!condition.constraints) condition.constraints = [];
-                selectedFact = factList.find{ it.name == condition.factname };
-                return selectFact();
+                if (!condition.constraints) condition.constraints = [];
+                
+                selectedFact = factList.find{ it.name == condition.name; };
+                if (!selectedFact) 
+                    throw new Exception("'"+condition.name+"' rule fact not found"); 
+                    
+                def opener = selectFact();
+                opener.target = 'popup';
+                return opener;
             }
 
             def selectFact() {  

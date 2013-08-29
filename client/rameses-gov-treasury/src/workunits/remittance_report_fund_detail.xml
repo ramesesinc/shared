@@ -1,0 +1,81 @@
+<workunit>
+    <invokers>
+       <invoker type="remittance:reports" caption="Remittance Report By Fund (Detailed)" action="init" target="self" index="4"/>
+    </invokers>
+    
+    <code>
+        <![CDATA[    
+        import com.rameses.osiris2.common.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.rcp.annotations.*;
+        import java.rmi.server.*;
+        import com.rameses.osiris2.client.*;
+        import com.rameses.util.*;
+        import com.rameses.osiris2.reports.*;
+        
+        class RemittanceFundDetailedReportController {
+        
+            @Binding
+            def binding;
+        
+            @Service("RemittanceReportService")
+            def svc
+            
+            @Service("ReportParameterService")
+            def paramsvc
+            
+            def fund
+            def fundlist
+             
+            def entity;
+            def reportdata;
+            def reportPath = "com/rameses/gov/treasury/remittance/report/"
+          
+            String title = "Remittance Report By Fund (Detailed)";
+            
+            void init() {
+                fundlist = svc.getFundlist( entity.objid )
+                fund = [:]
+                viewReport();
+            }
+            
+            void setFund( def fund) {
+                this.fund = fund;
+                
+                viewReport() 
+                binding.refresh() 
+            }
+            
+            void viewReport() {
+                reportdata = svc.generateDetailedReportByFund( entity, fund )
+                report.viewReport();
+            }
+            
+            def report = [
+                getReportName : { return reportPath + 'detailedreportbyfund.jasper' },
+                getReportData : { return reportdata }, 
+                getParameters : { 
+                    def params = paramsvc.getStandardParameter() 
+                    params.SUBTITLE = 'SUMMARY OF COLLECTION'
+                    if (fund) {
+                        params.SUBTITLE = params.SUBTITLE + ' BY ' + fund.title + ' FUND ' ;
+                    }
+                    return params;
+                },
+                getSubReports : {
+                    return [ 
+                        new SubReport("ReportDDetailedSerial", reportPath + "detailedreportbyfundnonserial.jasper"),
+                        new SubReport("ReportDDetailedNonSerial", reportPath + "detailedreportbyfundserial.jasper"),
+                    ] as SubReport[];    
+                 }
+            ] as ReportModel
+            
+        }      
+       ]]>
+    </code>
+    
+   <pages>
+       <page template="com.rameses.gov.treasury.remittance.report.RemittanceReportByFund" />
+   </pages>
+   
+</workunit>

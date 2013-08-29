@@ -1,10 +1,7 @@
 <workunit>
     <invokers>
-        <invoker type="remittance:reports" caption="Remittance Summary of Collection By SRE" action="viewSRE" target="self"/>
-        <invoker type="remittance:reports" caption="Remittance Summary of Collection By NGAS" action="viewNGAS" target="self"/>
-        
-       <invoker type="formActions" caption="Back" action="_close" mnemonic="b" />
-      
+        <invoker type="remittance:reports" caption="Remittance Summary of Collection By SRE" action="viewSRE" target="self" index="9"/>
+        <invoker type="remittance:reports" caption="Remittance Summary of Collection By NGAS" action="viewNGAS" target="self" index="10"/>
     </invokers>
     
     <code>
@@ -66,7 +63,7 @@
     </code>
     
    <pages>
-       <page template="com.rameses.enterprise.treasury.report.PreviewPage" />
+       <page template="com.rameses.gov.treasury.report.PreviewPage" />
    </pages>
    
 </workunit>

@@ -1,5 +1,5 @@
 <workunit extends="wtemplates/ListController.xml" serviceName="RulesetDevService" entityName="ruleset" formTarget="window">
     <invokers>
-        <invoker folderid="/rules" caption="Rule Development" />
+        <invoker folderid="/rules" caption="Rule Development" role="XRULE_AUTHOR"/>
     </invokers>
 </workunit>

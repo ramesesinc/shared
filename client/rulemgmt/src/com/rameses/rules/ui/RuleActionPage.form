@@ -17,7 +17,6 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="xFormPanel1" alignment="0" pref="450" max="32767" attributes="0"/>
                   <Component id="jLabel1" alignment="0" min="-2" pref="135" max="-2" attributes="0"/>
-                  <Component id="xButton1" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -30,8 +29,7 @@
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="xFormPanel1" pref="352" max="32767" attributes="0"/>
-              <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
-              <Component id="xButton1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -39,6 +37,9 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="11" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Rule Action Page"/>
       </Properties>
     </Component>
@@ -49,11 +50,5 @@
         <Property name="name" type="java.lang.String" value="formParams"/>
       </Properties>
     </Container>
-    <Component class="com.rameses.rcp.control.XButton" name="xButton1">
-      <Properties>
-        <Property name="name" type="java.lang.String" value="viewAction"/>
-        <Property name="text" type="java.lang.String" value="View Action"/>
-      </Properties>
-    </Component>
   </SubComponents>
 </Form>

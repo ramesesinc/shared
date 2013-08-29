@@ -1,6 +1,7 @@
 <workunit>
     <invokers>
          <invoker type="multipleentity:create" caption="Multiple" action="create" target="popup" permission="system"/>
+         <invoker type="quick_launcher" code="TP03" caption="Multiple" action="create" target="popup" permission="system"/>
          <invoker type="multipleentity:open" caption="Multiple" action="open" target="popup" permission="system"/>
     </invokers>
     
