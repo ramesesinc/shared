@@ -42,7 +42,7 @@
                     params.onselect = { val->
                         def list = val.collect{ [key: it[itemKey], value:it[itemValue] ]};
                         constraint.valueText = list*.value.join(",");
-                        constraint.value = list;
+                        constraint.value = '"' + list*.key.join("|") + '"';
                         binding.refresh();
                     } ; 
                 }
