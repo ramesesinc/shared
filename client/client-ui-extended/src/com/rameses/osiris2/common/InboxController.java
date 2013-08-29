@@ -46,9 +46,12 @@ public class InboxController extends ListController {
     private Helper helper; 
     private Object itemStat;
     
+    private Invoker defaultCreateInvoker;
+    private Invoker defaultOpenInvoker;
+    
     public InboxController() {
         actionsProvider = new ActionsProvider(); 
-        helper = new Helper();                
+        helper = new Helper(); 
         formActions = new ArrayList(); 
         init();        
     }
@@ -131,10 +134,42 @@ public class InboxController extends ListController {
     public boolean isRootVisible() { return false; } 
     public String getIcon() { return null; }
     
+    public String getListTitle() {
+        Node node = getSelectedNode(); 
+        String s = (node == null? null: node.getCaption()); 
+        return (s == null? " ": s); 
+    }
+    
     public Object getItemStat() { return itemStat; } 
     public void setItemStat(Object itemStat) { this.itemStat = itemStat; }
+    
+    public List getDefaultFormActions() {
+        String filetype = getDefaultFileType();
+        if (filetype == null || filetype.length() == 0) return null; 
+
+        List<Action> defaultActions = new ArrayList();
+        if (isAllowCreate() && filetype != null && filetype.length() > 0) { 
+            String invtype = filetype.toLowerCase() + ":create";
+            defaultCreateInvoker = actionsProvider.getInvoker(null, invtype); 
+            if (defaultCreateInvoker != null) {
+                Action a = createAction("create", "New", "images/toolbars/create.png", "ctrl N", 'n', null, true); 
+                defaultActions.add(a); 
+            }
+        }   
+        
+        if (isAllowOpen() && filetype != null && filetype.length() > 0) { 
+            String invtype = filetype.toLowerCase() + ":open";
+            defaultOpenInvoker = actionsProvider.getInvoker(null, invtype); 
+            if (defaultOpenInvoker != null) {
+                Action a = createAction("open", "Open", "images/toolbars/open.png", "ctrl O", 'o', "#{selectedEntity != null && openButtonVisible==true}", true); 
+                a.getProperties().put("depends", "selectedEntity"); 
+                defaultActions.add(a); 
+            }
+        } 
+        return defaultActions; 
+    }
       
-    // </editor-fold>     
+    // </editor-fold>  
     
     // <editor-fold defaultstate="collapsed" desc=" TreeNodeModel helper and utilities ">
       
@@ -229,6 +264,7 @@ public class InboxController extends ListController {
         if (item instanceof Map) {
             String filetype = helper.getFiletype((Map)item);
             if (filetype != null && filetype.length() > 0) return true; 
+            if (defaultOpenInvoker != null) return true;
         }
         
         return false; 
@@ -253,12 +289,21 @@ public class InboxController extends ListController {
     } 
     
     public Object open() throws Exception {
-        Node node = getSelectedNode();
-        if (node == null) return null;
-        
         Map item = (Map) getSelectedEntity(); 
         if (item == null) return null;
-                
+
+        Node node = getSelectedNode();
+        if (node == null) {
+            if (defaultOpenInvoker != null) { 
+                Map map = createOpenerParams(); 
+                map.put("node", null); 
+                map.put("entity", item); 
+                return actionsProvider.toOpener(defaultOpenInvoker, map, node); 
+            } else {
+                return null; 
+            }
+        }
+        
         /*
          *  if the selected item has a filetype, then use this as our primary handler 
          */
@@ -289,6 +334,13 @@ public class InboxController extends ListController {
             return actionsProvider.toOpener(list.get(0), map, node); 
         }
         
+        if (defaultOpenInvoker != null) {
+            Map map = createOpenerParams();
+            map.put("node", node.getItem());
+            map.put("entity", item); 
+            return actionsProvider.toOpener(defaultOpenInvoker, map, node);             
+        }
+        
         /*
          *  use the default file type handler if there is...
          */
@@ -317,18 +369,32 @@ public class InboxController extends ListController {
     
     public Opener create() throws Exception {
         Node node = getSelectedNode(); 
-        if (node == null) return null; 
-        
-        List<Invoker> list = node.getPropertyList("Invoker.createlist");
-        if (list == null || list.isEmpty()) {
-            System.out.println("No available file type handler"); 
-            return null; 
+        if (node == null) {        
+            if (defaultCreateInvoker != null) {
+                Map map = createOpenerParams();
+                map.put("node", null);
+                return actionsProvider.toOpener(defaultCreateInvoker, map, node);            
+            } else {
+                return null; 
+            }
         }
         
-        Map map = createOpenerParams();
-        map.put("node", node.getItem());
-        Invoker invoker = list.get(0);             
-        return actionsProvider.toOpener(invoker, map, node);
+        List<Invoker> list = node.getPropertyList("Invoker.createlist");
+        if (list != null && !list.isEmpty()) {
+            Map map = createOpenerParams();
+            map.put("node", node.getItem());
+            Invoker invoker = list.get(0);             
+            return actionsProvider.toOpener(invoker, map, node);
+        }
+        
+        if (defaultCreateInvoker != null) {
+            Map map = createOpenerParams();
+            map.put("node", node.getItem());
+            return actionsProvider.toOpener(defaultCreateInvoker, map, node);            
+        }
+        
+        System.out.println("No available file type handler"); 
+        return null; 
     } 
 
     private StringBuffer footerInfo;
@@ -397,38 +463,38 @@ public class InboxController extends ListController {
         if (filetype == null || filetype.length() == 0) 
             filetype = getDefaultFileType();
             
-        if (isAllowCreate() && filetype != null && filetype.length() > 0) { 
-            List<Invoker> list = node.getPropertyList("Invoker.createlist"); 
-            if (list == null) {
-                list = new ArrayList();                 
-                String invtype = filetype.toLowerCase() + ":create";
-                Invoker invoker = actionsProvider.getInvoker(node, invtype); 
-                if (invoker != null) list.add(invoker);
-                
-                node.setProperty("Invoker.createlist", list);
-            } 
-            
-            if (!list.isEmpty()) { 
-                Action a = createAction("create", "New", "images/toolbars/create.png", "ctrl N", 'n', null, true); 
-                formActions.add(a); 
-            }
-        }   
-        
-        if (isAllowOpen() && filetype != null && filetype.length() > 0) { 
-            List<Invoker> list = node.getPropertyList("Invoker.openlist"); 
-            if (list == null) {
-                list = new ArrayList();
-                String invtype = filetype.toLowerCase() + ":open";
-                Invoker invoker = actionsProvider.getInvoker(node, invtype); 
-                if (invoker != null) list.add(invoker);
-                
-                node.setProperty("Invoker.openlist", list); 
-            } 
-            
-            Action a = createAction("open", "Open", "images/toolbars/open.png", "ctrl O", 'o', "#{selectedEntity != null && openButtonVisible==true}", true); 
-            a.getProperties().put("depends", "selectedEntity"); 
-            formActions.add(a); 
-        }
+//        if (isAllowCreate() && filetype != null && filetype.length() > 0) { 
+//            List<Invoker> list = node.getPropertyList("Invoker.createlist"); 
+//            if (list == null) {
+//                list = new ArrayList();                 
+//                String invtype = filetype.toLowerCase() + ":create";
+//                Invoker invoker = actionsProvider.getInvoker(node, invtype); 
+//                if (invoker != null) list.add(invoker);
+//                
+//                node.setProperty("Invoker.createlist", list);
+//            } 
+//            
+//            if (!list.isEmpty()) { 
+//                Action a = createAction("create", "New", "images/toolbars/create.png", "ctrl N", 'n', null, true); 
+//                formActions.add(a); 
+//            }
+//        }   
+//        
+//        if (isAllowOpen() && filetype != null && filetype.length() > 0) { 
+//            List<Invoker> list = node.getPropertyList("Invoker.openlist"); 
+//            if (list == null) {
+//                list = new ArrayList();
+//                String invtype = filetype.toLowerCase() + ":open";
+//                Invoker invoker = actionsProvider.getInvoker(node, invtype); 
+//                if (invoker != null) list.add(invoker);
+//                
+//                node.setProperty("Invoker.openlist", list); 
+//            } 
+//            
+//            Action a = createAction("open", "Open", "images/toolbars/open.png", "ctrl O", 'o', "#{selectedEntity != null && openButtonVisible==true}", true); 
+//            a.getProperties().put("depends", "selectedEntity"); 
+//            formActions.add(a); 
+//        }
         
         formActions.add(createAction("reload", "Refresh", "images/toolbars/refresh.png", "ctrl R", 'r', null, true)); 
         
