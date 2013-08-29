@@ -325,6 +325,19 @@
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$F{paytype}]]></textFieldExpression>
 				</textField>
+				<staticText>
+					<reportElement
+						x="48"
+						y="686"
+						width="130"
+						height="23"
+						key="staticText-1"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[Form 1. etarcs version 2.5]]></text>
+				</staticText>
 			</band>
 		</title>
 		<pageHeader>
