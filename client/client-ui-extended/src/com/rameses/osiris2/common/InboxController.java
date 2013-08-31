@@ -466,38 +466,38 @@ public class InboxController extends ListController {
         if (filetype == null || filetype.length() == 0) 
             filetype = getDefaultFileType();
             
-//        if (isAllowCreate() && filetype != null && filetype.length() > 0) { 
-//            List<Invoker> list = node.getPropertyList("Invoker.createlist"); 
-//            if (list == null) {
-//                list = new ArrayList();                 
-//                String invtype = filetype.toLowerCase() + ":create";
-//                Invoker invoker = actionsProvider.getInvoker(node, invtype); 
-//                if (invoker != null) list.add(invoker);
-//                
-//                node.setProperty("Invoker.createlist", list);
-//            } 
-//            
-//            if (!list.isEmpty()) { 
-//                Action a = createAction("create", "New", "images/toolbars/create.png", "ctrl N", 'n', null, true); 
-//                formActions.add(a); 
-//            }
-//        }   
-//        
-//        if (isAllowOpen() && filetype != null && filetype.length() > 0) { 
-//            List<Invoker> list = node.getPropertyList("Invoker.openlist"); 
-//            if (list == null) {
-//                list = new ArrayList();
-//                String invtype = filetype.toLowerCase() + ":open";
-//                Invoker invoker = actionsProvider.getInvoker(node, invtype); 
-//                if (invoker != null) list.add(invoker);
-//                
-//                node.setProperty("Invoker.openlist", list); 
-//            } 
-//            
-//            Action a = createAction("open", "Open", "images/toolbars/open.png", "ctrl O", 'o', "#{selectedEntity != null && openButtonVisible==true}", true); 
-//            a.getProperties().put("depends", "selectedEntity"); 
-//            formActions.add(a); 
-//        }
+        if (isAllowCreate() && filetype != null && filetype.length() > 0) { 
+            List<Invoker> list = node.getPropertyList("Invoker.createlist"); 
+            if (list == null) { 
+                list = new ArrayList(); 
+                String invtype = filetype.toLowerCase() + ":create";
+                Invoker invoker = actionsProvider.getInvoker(node, invtype); 
+                if (invoker != null) list.add(invoker);
+                
+                node.setProperty("Invoker.createlist", list);
+            } 
+            
+            if (!list.isEmpty()) { 
+                Action a = createAction("create", "New", "images/toolbars/create.png", "ctrl N", 'n', null, true); 
+                formActions.add(a); 
+            }
+        }   
+        
+        if (isAllowOpen() && filetype != null && filetype.length() > 0) { 
+            List<Invoker> list = node.getPropertyList("Invoker.openlist"); 
+            if (list == null) {
+                list = new ArrayList();
+                String invtype = filetype.toLowerCase() + ":open";
+                Invoker invoker = actionsProvider.getInvoker(node, invtype); 
+                if (invoker != null) list.add(invoker);
+                
+                node.setProperty("Invoker.openlist", list); 
+            } 
+            
+            Action a = createAction("open", "Open", "images/toolbars/open.png", "ctrl O", 'o', "#{selectedEntity != null && openButtonVisible==true}", true); 
+            a.getProperties().put("depends", "selectedEntity"); 
+            formActions.add(a); 
+        }
         
         formActions.add(createAction("reload", "Refresh", "images/toolbars/refresh.png", "ctrl R", 'r', null, true)); 
         
@@ -632,8 +632,10 @@ public class InboxController extends ListController {
             String filetype = getString(data, "filetype"); 
             if (filetype == null || filetype.length() == 0) 
                 filetype = getString(data, "_filetype"); 
-            
-            return filetype.toLowerCase(); 
+            if (filetype == null || filetype.length() == 0) 
+                return null; 
+            else 
+                return filetype.toLowerCase(); 
         }
         
         private String getFiletype(Node node) {
@@ -642,10 +644,11 @@ public class InboxController extends ListController {
             String filetype = node.getPropertyString("filetype");
             if (filetype == null || filetype.length() == 0) 
                 filetype = node.getPropertyString("_filetype");
-            if (filetype == null || filetype.length() == 0) return null;
-                
-            return filetype.toLowerCase(); 
-        }         
+            if (filetype == null || filetype.length() == 0) 
+                return null;
+            else 
+                return filetype.toLowerCase(); 
+        }   
         
         private String getFiletype(Node node, String defaultFiletype) {
             if (node == null) return null;
@@ -655,9 +658,10 @@ public class InboxController extends ListController {
                 filetype = node.getPropertyString("_filetype");
             if (filetype == null || filetype.length() == 0) 
                 filetype = defaultFiletype; 
-            if (filetype == null || filetype.length() == 0) return null; 
-            
-            return filetype + ":" + node.getPropertyString("name"); 
+            if (filetype == null || filetype.length() == 0) 
+                return null; 
+            else 
+                return filetype + ":" + node.getPropertyString("name"); 
         } 
     }
     
