@@ -317,12 +317,14 @@ public class CRUDController
     
     protected void beforeSave(Object data){}
     protected void afterSave(Object data){}
-    
+    protected void afterSaveCreate(Object newData){}    
+    protected void afterSaveUpdate(Object newData, Object oldData){}
+        
     public void save(){
         try {
             onbeforeSave();
-            Map data = getEntity();
-            beforeSave(data);
+            Map oldData = getEntity();
+            beforeSave(oldData);
             
             if (isShowConfirmOnSave()) {
                 String msg = getConfirmSaveMsg();
@@ -332,20 +334,26 @@ public class CRUDController
                 if (!MsgBox.confirm(msg)) return;
             }
             
+            Map newData = null;
             if (MODE_CREATE.equals(this.mode)) {
-                data.put("createdby", OsirisContext.getEnv().get("USERID")); 
-                data = getServiceProxy().create(data); 
-                if (data != null) setEntity(data); 
+                oldData.put("createdby", OsirisContext.getEnv().get("USERID")); 
+                newData = getServiceProxy().create(oldData); 
+                if (newData != null) setEntity(newData); 
             } 
             else if (MODE_EDIT.equals(this.mode)) {
-                data.put("modifiedby", OsirisContext.getEnv().get("USERID")); 
-                data = getServiceProxy().update(data); 
-                if (data != null) setEntity(data); 
+                oldData.put("modifiedby", OsirisContext.getEnv().get("USERID")); 
+                newData = getServiceProxy().update(oldData); 
+                if (newData != null) setEntity(newData); 
             } 
 
             String oldmode = this.mode;
             this.mode = MODE_READ; 
             this.changeLog.clear();
+            
+            if (MODE_CREATE.equals(oldmode))
+                afterSaveCreate(newData);
+            else if (MODE_EDIT.equals(oldmode)) 
+                afterSaveUpdate(newData, oldData);
             
             afterSave(getEntity()); 
             
