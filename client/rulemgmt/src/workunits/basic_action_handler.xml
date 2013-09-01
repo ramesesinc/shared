@@ -64,6 +64,7 @@
                                 opener = "object";
                             }    
                             props.actionParam = action.params[p.name];
+                            props.actionSchema = p;
                             props.vars = varList;
                             props.handlerObject = InvokerUtil.lookupOpener("actionvaluehandler:"+opener, props);
                             list <<  new FormControl("subform", props );                 

@@ -15,6 +15,7 @@ import com.rameses.osiris2.Invoker;
 import com.rameses.osiris2.client.InvokerProxy;
 import com.rameses.osiris2.client.InvokerUtil;
 import com.rameses.rcp.common.Action;
+import com.rameses.rcp.common.ListItemStatus;
 import com.rameses.rcp.common.MsgBox;
 import com.rameses.rcp.common.Node;
 import com.rameses.rcp.common.Opener;
@@ -399,6 +400,30 @@ public class InboxController extends ListController {
         
         System.out.println("No available file type handler"); 
         return null; 
+    } 
+
+    private StringBuffer footerInfo;
+    
+    protected void dataChanged(Object stat) {
+        footerInfo = new StringBuffer();
+        if (stat instanceof ListItemStatus) {
+            ListItemStatus lis = (ListItemStatus)stat;
+//            System.out.println("pageindex="+lis.getPageIndex() + ", pagecount="+lis.getPageCount());
+//            int pagecount = lis.getPageCount()-1;
+//            int totalrows = Math.max(pagecount,0) * getRows(); 
+//            if (lis.isIsLastPage()) {
+//                totalrows -= Math.max(getRows(), 0); 
+//                totalrows += getDataListSize(); 
+//            }
+//            
+//            footerInfo.append( totalrows ); 
+//            footerInfo.append(" Record(s)    ");
+//            footerInfo.append("Page  " + lis.getPageIndex() + "  of  ");
+//            if (lis.isIsLastPage()) 
+//                footerInfo.append(lis.getPageCount()); 
+//            else 
+//                footerInfo.append("?");            
+        }
     } 
     
     // </editor-fold>

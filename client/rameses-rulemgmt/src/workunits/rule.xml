@@ -17,7 +17,7 @@
 
             String prefixId = "RULE";
         
-            @Service('RuleMgmtService') 
+            @Service('XRuleMgmtService') 
             def service;
             def node;
 

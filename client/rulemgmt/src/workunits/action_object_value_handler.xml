@@ -1,6 +1,6 @@
 <workunit>
     <invokers>
-        <invoker type="actionvaluehandler:object" />
+        <invoker type="actionvaluehandler:object" action="init"/>
     </invokers>
     
     <code>
@@ -20,18 +20,27 @@
             def handler;
             def itemKey;
             def itemLabel;
-            
             def actionParam;
+            def actionSchema;
             
             def getValueText() {
                 actionParam.valueText;
             }
             
+            void init() {
+            } 
+            
             def edit() {
                 return InvokerUtil.lookupOpener(handler, [ 
                     onselect: {o->
                         actionParam.value = (itemKey) ? o[itemKey] : o; 
-                        actionParam.valueText = (itemLabel) ? o[itemLabel] : o; 
+                        if (actionSchema?.expression) {
+                            def exprRes = ExpressionResolver.getInstance();
+                            def exprBean = [item: o];
+                            actionParam.valueText = exprRes.evalString(actionSchema.expression, exprBean); 
+                        } else { 
+                            actionParam.valueText = (itemLabel) ? o[itemLabel] : o; 
+                        }
                         binding.refresh();
                     }
                 ]);

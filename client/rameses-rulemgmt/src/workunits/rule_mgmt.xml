@@ -1,4 +1,4 @@
-<workunit extends="wtemplates/ExplorerViewController.xml" serviceName="RuleMgmtService" 
+<workunit extends="wtemplates/ExplorerViewController.xml" serviceName="XRuleMgmtService" 
     context="rule" allowSearch="false">
     <invokers>
         <invoker folderid="/explorer" caption="Rules" permission="system" action="init"/>

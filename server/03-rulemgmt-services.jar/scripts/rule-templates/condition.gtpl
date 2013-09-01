@@ -33,7 +33,7 @@ condition.constraints.eachWithIndex { con, i->
 				print intFormatter.format(con.value);
 			}
 			else {
-				print con.value;
+				print '"'+con.value+'"';
 			}
 		}
 	}	

@@ -30,6 +30,10 @@
             }
             
             void reprint() {
+                if( MsgBox.prompt("Please enter security code")!="etracs"){
+                    return;
+                }
+
                 //check fist if form handler exists.
                 def o = InvokerUtil.lookupOpener( "cashreceipt-form:"+entity.formno, [reportData:entity] );
                 if(!o)
