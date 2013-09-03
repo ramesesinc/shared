@@ -204,14 +204,19 @@ public class CRUDController
         if (navActions == null) 
         {
             navActions = new ArrayList();
-            if (isShowNavigationBar())
-            {
-                navActions.add(createAction("moveBackRecord", "Move to previous record", "images/toolbars/arrow_up.png", null, '\u0000', "#{mode=='read'}", true));  
-                navActions.add(createAction("moveNextRecord", "Move to next record", "images/toolbars/arrow_down.png", null, '\u0000', "#{mode=='read'}", true));  
+            if (isShowNavigationBar()) { 
+                navActions.add(createAction("moveBackRecord", "Move to previous record", "images/toolbars/arrow_up.png", null, '\u0000', "#{navButtonVisible==true}", true));  
+                navActions.add(createAction("moveNextRecord", "Move to next record", "images/toolbars/arrow_down.png", null, '\u0000', "#{navButtonVisible==true}", true));  
             }
         }
         return navActions;
     } 
+    
+    public boolean isNavButtonVisible() {
+        if (!MODE_READ.equals(getMode())) return false; 
+        
+        return (getListModelHandler() instanceof PageListModelHandler); 
+    }
     
     public List getExtActions() 
     {
