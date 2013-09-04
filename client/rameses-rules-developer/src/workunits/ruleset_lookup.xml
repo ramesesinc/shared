@@ -1,5 +1,0 @@
-<workunit extends="wtemplates/ServiceLookupController.xml" serviceName="RuleSetLookupService">
-    <invokers>
-        <invoker type="ruleset:lookup" caption="Lookup RuleSet" width="350" height="350"/>
-    </invokers>
-</workunit>
