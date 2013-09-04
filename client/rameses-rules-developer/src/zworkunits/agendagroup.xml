@@ -1,0 +1,60 @@
+<workunit>
+    <invokers>
+        <invoker type="agendagroup:create" caption="New agendagroup" action="create" target="popup"/>
+        <invoker type="agendagroup:open" caption="Open agendagroup"  action="open" target="popup"/>
+        
+        <invoker type="formActions" caption="Save" action="saveNew" visibleWhen="#{mode=='create'}"/>
+        <invoker type="formActions" caption="Save" action="saveUpdate" visibleWhen="#{mode=='edit'}"/>
+        
+    </invokers>
+    
+    <code>
+        <![CDATA[    
+
+        import com.rameses.rcp.annotations.*
+        import com.rameses.rcp.common.*
+        import com.rameses.osiris2.client.*
+        import com.rameses.osiris2.common.*
+        
+        class  AgendaGroupDevController  {
+            
+            @Service("AgendaGroupDevService")
+            def devSvc;
+        
+            @Caller
+            def caller;
+            
+            def entity;
+            def title = "agendagroup";
+            def mode = "create";
+            
+            void open() {
+                entity = devSvc.open( entity );
+                mode = "edit";
+            }
+            
+            void create() {
+                entity = [:];
+                entity.ruleset = caller.query.ruleset;
+            }
+
+            void saveNew() {
+                entity = devSvc.create(entity);
+                mode = "read";
+            }
+            
+            void saveUpdate() {
+                entity = devSvc.update(entity);
+                mode = "read";
+            }
+
+        }
+        
+        
+        ]]>
+        
+    </code>
+    <pages>
+        <page template="com.rameses.rules.dev.AgendaGroupPage"/>
+    </pages>
+</workunit>

@@ -1,5 +1,5 @@
 /*
- * RuleSetPage.java
+ * RuleGroupPage.java
  *
  * Created on August 24, 2013, 11:09 AM
  */
@@ -13,10 +13,11 @@ import com.rameses.rcp.ui.annotations.Template;
  *
  * @author  wflores
  */
+@StyleSheet
 @Template(com.rameses.osiris2.themes.FormPage.class)
-public class RuleSetPage extends javax.swing.JPanel {
+public class RuleGroupPage extends javax.swing.JPanel {
     
-    public RuleSetPage() {
+    public RuleGroupPage() {
         initComponents();
     }
     
@@ -29,16 +30,22 @@ public class RuleSetPage extends javax.swing.JPanel {
     private void initComponents() {
         jPanel1 = new javax.swing.JPanel();
         xFormPanel1 = new com.rameses.rcp.control.XFormPanel();
+        xTextField3 = new com.rameses.rcp.control.XTextField();
         xTextField1 = new com.rameses.rcp.control.XTextField();
         xTextField2 = new com.rameses.rcp.control.XTextField();
-        xTextField3 = new com.rameses.rcp.control.XTextField();
-        xTextField4 = new com.rameses.rcp.control.XTextField();
-        xTextField5 = new com.rameses.rcp.control.XTextField();
-        xTabbedPane1 = new com.rameses.rcp.control.XTabbedPane();
+        xIntegerField1 = new com.rameses.rcp.control.XIntegerField();
 
         com.rameses.rcp.control.border.XTitledBorder xTitledBorder1 = new com.rameses.rcp.control.border.XTitledBorder();
         xTitledBorder1.setTitle(" General Information ");
         jPanel1.setBorder(xTitledBorder1);
+
+        xTextField3.setCaption("Rule Set");
+        xTextField3.setCaptionWidth(100);
+        xTextField3.setEnabled(false);
+        xTextField3.setName("ruleset.title");
+        xTextField3.setPreferredSize(new java.awt.Dimension(300, 20));
+        xTextField3.setTextCase(com.rameses.rcp.constant.TextCase.NONE);
+        xFormPanel1.add(xTextField3);
 
         xTextField1.setCaption("Name");
         xTextField1.setCaptionWidth(100);
@@ -58,28 +65,11 @@ public class RuleSetPage extends javax.swing.JPanel {
         xTextField2.setTextCase(com.rameses.rcp.constant.TextCase.NONE);
         xFormPanel1.add(xTextField2);
 
-        xTextField3.setCaption("Package");
-        xTextField3.setCaptionWidth(100);
-        xTextField3.setName("entity.package");
-        xTextField3.setPreferredSize(new java.awt.Dimension(300, 20));
-        xTextField3.setSpaceChar('.');
-        xTextField3.setTextCase(com.rameses.rcp.constant.TextCase.NONE);
-        xFormPanel1.add(xTextField3);
-
-        xTextField4.setCaption("Domain");
-        xTextField4.setCaptionWidth(100);
-        xTextField4.setCellPadding(new java.awt.Insets(10, 0, 0, 0));
-        xTextField4.setName("entity.domain");
-        xTextField4.setPreferredSize(new java.awt.Dimension(300, 20));
-        xTextField4.setSpaceChar('_');
-        xFormPanel1.add(xTextField4);
-
-        xTextField5.setCaption("Role");
-        xTextField5.setCaptionWidth(100);
-        xTextField5.setName("entity.role");
-        xTextField5.setPreferredSize(new java.awt.Dimension(300, 20));
-        xTextField5.setSpaceChar('_');
-        xFormPanel1.add(xTextField5);
+        xIntegerField1.setCaption("Sort Order");
+        xIntegerField1.setCaptionWidth(100);
+        xIntegerField1.setName("entity.sortorder");
+        xIntegerField1.setPreferredSize(new java.awt.Dimension(100, 20));
+        xFormPanel1.add(xIntegerField1);
 
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -88,37 +78,31 @@ public class RuleSetPage extends javax.swing.JPanel {
             .add(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 427, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 129, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 159, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        xTabbedPane1.setName("tabHandler");
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+            .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, xTabbedPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(xTabbedPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(40, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     
@@ -126,12 +110,10 @@ public class RuleSetPage extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private com.rameses.rcp.control.XFormPanel xFormPanel1;
-    private com.rameses.rcp.control.XTabbedPane xTabbedPane1;
+    private com.rameses.rcp.control.XIntegerField xIntegerField1;
     private com.rameses.rcp.control.XTextField xTextField1;
     private com.rameses.rcp.control.XTextField xTextField2;
     private com.rameses.rcp.control.XTextField xTextField3;
-    private com.rameses.rcp.control.XTextField xTextField4;
-    private com.rameses.rcp.control.XTextField xTextField5;
     // End of variables declaration//GEN-END:variables
     
 }

@@ -1,0 +1,6 @@
+<workunit extends="wtemplates/ListController.xml" serviceName="RuleActionDevService" 
+    entityName="ruleactiondef" formTarget="popup">
+    <invokers>
+        <invoker type="ruleelement:list" caption="Actions" index="3"/>
+    </invokers>
+</workunit>

@@ -1,0 +1,75 @@
+<workunit>
+    <invokers>
+        <invoker type="ruleset:plugins" permission="system" caption=" Rule Facts   " index="-9"/>
+    </invokers>
+   
+    <code>
+    <![CDATA[
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.osiris2.client.*;
+        import com.rameses.osiris2.common.*;
+
+        public class RuleFactsController 
+        {
+            //feed by the caller 
+            def entity = [:];
+        
+            @Service('RuleFactService') 
+            def service;
+            
+            def selectedRulefact;
+            def rulefactHandler = [
+                fetchList: { 
+                    if (entity.rulefacts == null) 
+                        entity.rulefacts = service.getList([ruleset: entity.name]); 
+                        
+                    return entity.rulefacts; 
+                }, 
+                onRemoveItem: {
+                    return removeRulefactImpl();  
+                },
+                getOpenerParams: {
+                    return [
+                        rulefactHandler: rulefactHandler, 
+                        closeAfterSave: true, 
+                        ruleset: entity, 
+                        rulefact: selectedRulefact 
+                    ];
+                } 
+            ] as BasicListModel;
+
+            def removeRulefact() {
+                removeRulefactImpl();
+                rulefactHandler.reload();
+            }
+            
+            def addRulefact() {
+                def params = [
+                    rulefactHandler: rulefactHandler, 
+                    closeAfterSave: true, 
+                    ruleset: entity 
+                ];
+                def opener = InvokerUtil.lookupOpener('rulefact:create', params); 
+                if (opener) opener.target = 'popup';
+                
+                return opener;
+            } 
+                        
+            private boolean removeRulefactImpl() {
+                if (MsgBox.confirm('You are about to remove the selected item. Continue?')) {
+                    service.removeEntity(selectedRulefact); 
+                    entity.rulefacts.remove(selectedRulefact);
+                    return true;                     
+                } else {
+                    return false; 
+                } 
+            } 
+        }
+   ]]>
+   </code>
+   
+   <pages>
+       <page template="com.rameses.rules.dev.RuleFactsPage"/>
+   </pages>
+</workunit>

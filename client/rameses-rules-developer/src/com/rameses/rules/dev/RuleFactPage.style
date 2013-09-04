@@ -1,0 +1,6 @@
+"entity.rulesettitle" [1 == 1] { 
+    enabled: false;
+}
+"entity.name" [mode != 'create'] {
+    enabled: false; 
+} 

@@ -1,63 +1,44 @@
 <workunit>
     <invokers>
-        <invoker type="ruleset:create" caption="New ruleset" action="create" target="window"/>
-        <invoker type="ruleset:open" caption="Open ruleset"  action="open" target="window"/>
-        
-        <invoker type="formActions" caption="Save" action="saveNew" visibleWhen="#{mode=='create'}"/>
+        <invoker type="ruleset:create" action="create" caption="Rule Set Information"/>
+        <invoker type="ruleset:open" action="open" caption="Rule Set Information"/>
     </invokers>
-    
+   
     <code>
-        <![CDATA[    
+    <![CDATA[
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.osiris2.client.*;
+        import com.rameses.osiris2.common.*;
 
-        import com.rameses.rcp.annotations.*
-        import com.rameses.rcp.common.*
-        import com.rameses.osiris2.client.*
-        import com.rameses.osiris2.common.*
+        public class RuleSetController extends CRUDController {
         
-        class  RulesetDevController  {
+            String prefixId = 'RSET';
+            String createFocusComponent = 'entity.name'; 
+            String editFocusComponent = 'entity.title'; 
+            boolean allowApprove = false; 
             
-            @Service("RulesetDevService")
-            def devSvc;
-        
-            def entity;
-            def title = "Ruleset";
-            def mode = "create";
+            @Service('RuleSetService')  
+            def service;
+                     
+            def tabHandler = [
+                getOpeners: { 
+                    return tabHandler.lookupOpeners('ruleset:plugins', [:]); 
+                },
+                
+                getOpenerParams: {
+                    return [entity: entity];
+                } 
+            ] as TabbedPaneModel 
             
-            def ruleElements;
-            def ruleElement;
-            
-            void open() {
-                ruleElements = InvokerUtil.lookupOpeners("ruleelement:list",["query.ruleset":entity.name]);
-                if(ruleElements) ruleElement = ruleElements[0];
-                entity = devSvc.open( entity );
-                mode = "edit";
-            }
-            
-            def create() {
-                entity = [:];
-                return "initial"
-            }
-
-            def saveNew() {
-                entity = devSvc.create(entity);
-                mode = "read";
-                ruleElements = InvokerUtil.lookupOpeners("ruleelement:list",["query.ruleset":entity.name]);
-                return "default";
-            }
-            
-            void saveUpdate() {
-                entity = devSvc.update(entity);
-                mode = "read";
-            }
-
+            void entityChanged() {
+                tabHandler.reload(); 
+            } 
         }
-        
-        
-        ]]>
-        
-    </code>
-    <pages>
-        <page name="initial" template="com.rameses.rules.dev.RulesetInitialPage"/>
-        <page template="com.rameses.rules.dev.RulesetPage"/>
-    </pages>
+   ]]>
+   </code>
+   
+   <pages>
+       <page template="com.rameses.rules.dev.RuleSetPage"/>
+   </pages>
 </workunit>
