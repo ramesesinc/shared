@@ -1,5 +1,0 @@
-<workunit extends="wtemplates/ListController.xml" serviceName="AgendaGroupDevService" entityName="agendagroup" formTarget="popup">
-    <invokers>
-        <invoker type="ruleelement:list" caption="Agenda Groups" index="1"/>
-    </invokers>
-</workunit>
