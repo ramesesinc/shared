@@ -1,0 +1,7 @@
+<workunit extends="wtemplates/InboxController.xml" serviceName="DevRuleFactService" 
+    context="devrulefact" defaultFileType="devrulefact">
+        
+    <invokers>
+        <invoker folderid="/explorer/rulesetting" caption="Rule Facts" permission="system" index="100"/>
+   </invokers>
+</workunit>

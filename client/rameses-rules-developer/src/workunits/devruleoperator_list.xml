@@ -1,0 +1,7 @@
+<workunit extends="wtemplates/InboxDocController.xml" 
+    serviceName="DevRuleOperatorService" defaultFileType="devruleoperator" allowSearch="false">
+        
+    <invokers>
+        <invoker folderid="/explorer/setting" caption="Rule Field Operators" permission="system" index="100"/>
+   </invokers>
+</workunit>

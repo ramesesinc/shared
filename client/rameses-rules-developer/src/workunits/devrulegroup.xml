@@ -1,0 +1,62 @@
+<workunit>
+    <invokers>
+        <invoker type="devrulegroup:create" action="create" caption="Rule Group Information"/>
+        <invoker type="devrulegroup:open" action="open" caption="Rule Group Information"/>
+    </invokers>
+   
+    <code>
+    <![CDATA[
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.osiris2.client.*;
+        import com.rameses.osiris2.common.*;
+
+        public class DevRuleGroupController extends CRUDController 
+        {        
+            //feed by the caller
+            def rulegroupHandler, ruleset, rulegroup;
+        
+            String prefixId = 'RGRP';
+            String createFocusComponent = 'entity.name'; 
+            String editFocusComponent = 'entity.title'; 
+            boolean allowApprove = false; 
+            boolean closeAfterSave = false;
+            
+            @Service('DevRuleGroupService')  
+            def service;
+            
+            void afterCreate( data ) {
+                data.ruleset = ruleset?.name;
+                data.sortorder = 0;
+            } 
+            
+            void beforeSave( data ) { 
+                if (!data.ruleset) throw new Exception('Please specify ruleset');  
+            } 
+             
+            void afterSaveCreate(newData) {
+                if (ruleset) { 
+                    newData._filetype = 'devrulegroup'; 
+                    ruleset.rulegroups << newData; 
+                } 
+            } 
+            
+            void afterSaveUpdate(newData, oldData) {
+                if (ruleset) { 
+                    newData._filetype = 'devrulegroup'; 
+                    rulegroup?.clear();
+                    rulegroup?.putAll(newData);
+                } 
+            } 
+            
+            void afterSave( data ) {
+                if (ruleset) rulegroupHandler?.reload();
+                if (closeAfterSave == true) binding.fireNavigation('_close');
+            } 
+        }
+   ]]>
+   </code>
+   <pages>
+       <page template="com.rameses.rules.dev.RuleGroupPage"/>
+   </pages>
+</workunit>

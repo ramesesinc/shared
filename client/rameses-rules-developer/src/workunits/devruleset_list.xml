@@ -1,0 +1,7 @@
+<workunit extends="wtemplates/ListController.xml" 
+    serviceName="DevRuleSetService" entityName="devruleset" allowSearch="false">
+        
+    <invokers>
+        <invoker folderid="/explorer/setting" caption="Rule Sets" permission="system" index="100"/>
+   </invokers>
+</workunit>
