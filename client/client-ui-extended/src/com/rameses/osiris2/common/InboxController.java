@@ -480,7 +480,7 @@ public class InboxController extends ListController {
                 
                 list = new ArrayList(); 
                 for (String filetype: filetypes) {
-                    String invtype = filetype + ":create";
+                    String invtype = filetype + ":open";
                     list.addAll(actionsProvider.getInvokers(node, invtype)); 
                 }                
                 node.setProperty("Invoker.openlist", list); 
