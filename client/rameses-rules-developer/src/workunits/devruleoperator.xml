@@ -44,15 +44,19 @@
                 inboxHandler?.clearView(); 
             }             
             
-            def symbols;            
             def selectedSymbol;
             def symbolListHandler = [
                 fetchList: { 
-                    if (symbols == null) {
-                        symbols = service.getSymbols([operator: entity.name]);
-                    } 
-                    return symbols; 
-                } 
+                    return service.getSymbols([operator: entity.name]);
+                }, 
+                
+                getOpenerParams: {
+                    return [
+                        symbolListHandler: symbolListHandler, 
+                        operator: entity, 
+                        entity: entity 
+                    ];
+                }                 
             ] as BasicListModel; 
             
             def addSymbol() {
@@ -63,7 +67,14 @@
                 return InvokerUtil.lookupOpener('devruleoperator-item:create', params); 
             } 
             
-            def refreshSymbols() {
+            void removeSymbol() {
+                if (selectedSymbol) {
+                    service.removeSymbol(selectedSymbol);
+                    refreshSymbols(); 
+                } 
+            }
+            
+            void refreshSymbols() {
                 symbolListHandler.reload(); 
             } 
         } 
