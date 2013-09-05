@@ -1,0 +1,86 @@
+<workunit>
+    <invokers>
+        <invoker type="devruleoperator:formActions" caption="New Operator" action="create"/>
+        
+        <invoker type="devruleoperator:create" caption="Rule Operator Information" action="create" target="popup"/>
+        <invoker type="devruleoperator:open" caption="Rule Operator Information" action="open" target="popup"/>
+    </invokers>
+   
+    <code>
+    <![CDATA[
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.osiris2.client.*;
+        import com.rameses.osiris2.common.*;
+
+        public class DevRuleOperatorController extends CRUDController 
+        { 
+            //feed by the caller
+            def inboxHandler, node; 
+            
+            String title = 'Field Operator'; 
+            String prefixId = 'ROPT';
+            String createFocusComponent = 'entity.name'; 
+            String editFocusComponent = 'entity.description'; 
+            boolean allowApprove = false; 
+        
+            @Service('DevRuleOperatorService') 
+            def service;             
+            
+            void afterSaveCreate(data) {
+                inboxHandler?.reloadTreeModel();
+            } 
+            
+            void afterSaveUpdate(data) { 
+                data.caption = data.description;
+                inboxHandler?.update(data); 
+            } 
+            
+            void afterDelete(data) { 
+                inboxHandler?.remove(); 
+            } 
+            
+            void onClosing() {
+                inboxHandler?.clearView(); 
+            }             
+            
+            def selectedSymbol;
+            def symbolListHandler = [
+                fetchList: { 
+                    return service.getSymbols([operator: entity.name]);
+                }, 
+                
+                getOpenerParams: {
+                    return [
+                        symbolListHandler: symbolListHandler, 
+                        operator: entity, 
+                        entity: entity 
+                    ];
+                }                 
+            ] as BasicListModel; 
+            
+            def addSymbol() {
+                def params = [
+                    symbolListHandler: symbolListHandler, 
+                    operator: entity 
+                ];
+                return InvokerUtil.lookupOpener('devruleoperator-item:create', params); 
+            } 
+            
+            void removeSymbol() {
+                if (selectedSymbol) {
+                    service.removeSymbol(selectedSymbol);
+                    refreshSymbols(); 
+                } 
+            }
+            
+            void refreshSymbols() {
+                symbolListHandler.reload(); 
+            } 
+        } 
+   ]]>
+   </code>
+   <pages>
+       <page template="com.rameses.rules.dev.RuleOperatorPage"/>
+   </pages>
+</workunit>

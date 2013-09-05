@@ -49,7 +49,11 @@
             
             public def open() {
                 def rule = ruleMgmtSvc.open(selectedItem);
-                return InvokerUtil.lookupOpener( "rule:open", [rule:rule, ruleMgmt:ruleMgmt] );
+                return InvokerUtil.lookupOpener( "rule:open", [
+                    ruleMgmtListHandler: listHandler, 
+                    ruleMgmt: ruleMgmt, 
+                    rule: rule                     
+                ]);
             }
             
             def listHandler = [

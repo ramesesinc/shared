@@ -1,9 +1,6 @@
 <workunit>
     <invokers>
-       <invoker type="remittance:reports" caption="Remittance Report By Collection Type" action="init" target="self"/>
-       
-       <invoker type="formActions" caption="Back" action="back" mnemonic="b"/>
-       <invoker type="formActions" action="viewReport" caption="View" visibleWhen="#{mode == 'init'}" mnemonic="v"/>
+       <invoker type="remittance:reports" caption="Remittance Report By Collection Type" action="init" target="self" index="2"/>
     </invokers>
     
     <code>
@@ -27,11 +24,8 @@
             @Service("ReportParameterService")
             def paramsvc
             
-            @Service("CollectionTypeService")
-            def collectiontypesvc
-            
-            def collectionTypeList
-            def selectedcollectiontype
+            def collectiontypelist
+            def collectiontype
             
             def entity;
             def reportdata;
@@ -41,25 +35,24 @@
             String title = "Remittance Report By Collection Type";
             
             void init() {
-                mode = 'init'
-                collectionTypeList = collectiontypesvc.getCollectionTypes()
+                collectiontypelist = svc.getCollectiontypelist( entity.objid) 
+                collectiontype = [:]
+                viewReport()
             }
+            
+            void setCollectiontype( def collectiontype) {
+                this.collectiontype = collectiontype;
+                
+                viewReport();
+                binding.refresh()
+            }
+            
             
             def viewReport() {
-                reportdata = svc.generateReportByCollectionType( entity, selectedcollectiontype)
+                reportdata = svc.generateReportByCollectionType( entity, collectiontype)
                 report.viewReport();
-                mode = 'view'
-                return 'preview'
             }
             
-            def back() {
-               if(mode == 'view') {
-                    mode = 'init'
-                    return 'default'
-               }
-               
-               return '_close';
-            }
             
             def report = [
                 getReportName : { return reportPath + 'reportbycollectiontype.jasper' },
@@ -67,8 +60,8 @@
                 getParameters : { 
                     def params = paramsvc.getStandardParameter() 
                     params.SUBTITLE = 'SUMMARY OF COLLECTION'
-                    if (selectedcollectiontype)
-                        params.SUBTITLE = params.SUBTITLE + ' (' + selectedcollectiontype.name + ')';
+                    if (collectiontype)
+                        params.SUBTITLE = params.SUBTITLE + ' (' + collectiontype.title + ')';
                     return params;
                     
                 },
@@ -84,8 +77,7 @@
     </code>
     
    <pages>
-       <page template="com.rameses.gov.treasury.remittance.report.RemittanceReportByCollectionTypeInitPage" />
-       <page name="preview" template="com.rameses.enterprise.treasury.report.PreviewPage" />
+       <page template="com.rameses.gov.treasury.remittance.report.RemittanceReportByCollectionType" />
    </pages>
    
 </workunit>

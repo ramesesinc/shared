@@ -1,6 +1,7 @@
 <workunit>
     <invokers>
         <invoker type="individualentity:create" caption="Individual" action="create" target="popup" permission="system"/>
+        <invoker type="quick_launcher" code="TP01" caption="Individual" action="create" target="popup" permission="system"/>
          <invoker type="individualentity:open" caption="Individual" action="open" target="popup" permission="system"/>
     </invokers>
     

@@ -1,0 +1,56 @@
+<workunit>
+    <invokers>
+        <invoker type="remittance:reports" caption="Abstract of Real Property Tax Collection" action="init" target="self" index="11"/>
+    </invokers>
+    
+    <code>
+        <![CDATA[    
+        import com.rameses.osiris2.common.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.rcp.annotations.*;
+        import java.rmi.server.*;
+        import com.rameses.osiris2.client.*;
+        import com.rameses.util.*;
+        import com.rameses.osiris2.reports.*;
+        
+        class RemittanceReportAbstractRPTCController {
+        
+            @Binding
+            def binding;
+        
+            @Service("RemittanceReportService")
+            def svc
+            
+            @Service("ReportParameterService")
+            def paramsvc
+            
+            def entity;
+            def reportdata;
+            def reportPath = "com/rameses/gov/treasury/remittance/report/"
+            
+            String title = "Abstract of Real Property Tax Collection";
+            
+            void init() {
+                 reportdata = svc.generateAbstractOfRPTCollection( entity )
+                 report.viewReport()
+            }
+            
+            def report = [
+                getReportName : { return reportPath + 'abstractrptcollection.jasper' },
+                getReportData : { return reportdata.items }, 
+                getParameters : { 
+                    def params = paramsvc.getStandardParameter()  
+                    params.putAll( reportdata.header )
+                    return params;    
+                }
+            ] as ReportModel
+            
+        }      
+       ]]>
+    </code>
+    
+   <pages>
+       <page template="com.rameses.gov.treasury.report.PreviewPage" />
+   </pages>
+   
+</workunit>

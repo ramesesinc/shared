@@ -1,22 +1,22 @@
 /*
- * RulesetPage.java
+ * RuleFactPage.java
  *
- * Created on July 25, 2013, 11:03 AM
+ * Created on August 24, 2013, 11:09 AM
  */
 
 package com.rameses.rules.dev;
 
-import com.rameses.osiris2.themes.FormPage;
+import com.rameses.rcp.ui.annotations.StyleSheet;
 import com.rameses.rcp.ui.annotations.Template;
 
 /**
  *
- * @author  Elmo
+ * @author  wflores
  */
-@Template(value=FormPage.class)
+@StyleSheet 
+@Template(com.rameses.osiris2.themes.FormPage.class)
 public class RuleFactPage extends javax.swing.JPanel {
     
-    /** Creates new form RulesetPage */
     public RuleFactPage() {
         initComponents();
     }
@@ -28,42 +28,80 @@ public class RuleFactPage extends javax.swing.JPanel {
      */
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
     private void initComponents() {
+        jPanel1 = new javax.swing.JPanel();
         xFormPanel1 = new com.rameses.rcp.control.XFormPanel();
-        xLabel1 = new com.rameses.rcp.control.XLabel();
+        xTextField6 = new com.rameses.rcp.control.XTextField();
         xTextField1 = new com.rameses.rcp.control.XTextField();
         xTextField2 = new com.rameses.rcp.control.XTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        xTextArea1 = new com.rameses.rcp.control.XTextArea();
-        xIntegerField1 = new com.rameses.rcp.control.XIntegerField();
+        xTextField3 = new com.rameses.rcp.control.XTextField();
+        xLookupField2 = new com.rameses.rcp.control.XLookupField();
 
-        xLabel1.setCaption("Ruleset");
-        xLabel1.setExpression("#{entity.ruleset}");
-        xFormPanel1.add(xLabel1);
+        com.rameses.rcp.control.border.XTitledBorder xTitledBorder1 = new com.rameses.rcp.control.border.XTitledBorder();
+        xTitledBorder1.setTitle(" General Information ");
+        jPanel1.setBorder(xTitledBorder1);
+
+        xTextField6.setCaption("Rule Set");
+        xTextField6.setCaptionWidth(100);
+        xTextField6.setEnabled(false);
+        xTextField6.setIndex(-10);
+        xTextField6.setName("ruleset.title");
+        xTextField6.setPreferredSize(new java.awt.Dimension(300, 20));
+        xTextField6.setRequired(true);
+        xTextField6.setSpaceChar('_');
+        xTextField6.setTextCase(com.rameses.rcp.constant.TextCase.NONE);
+        xFormPanel1.add(xTextField6);
 
         xTextField1.setCaption("Name");
+        xTextField1.setCaptionWidth(100);
+        xTextField1.setIndex(-10);
         xTextField1.setName("entity.name");
-        xTextField1.setPreferredSize(new java.awt.Dimension(0, 19));
-        xTextField1.setTextCase(com.rameses.rcp.constant.TextCase.LOWER);
+        xTextField1.setPreferredSize(new java.awt.Dimension(300, 20));
+        xTextField1.setRequired(true);
+        xTextField1.setSpaceChar('_');
+        xTextField1.setTextCase(com.rameses.rcp.constant.TextCase.NONE);
         xFormPanel1.add(xTextField1);
 
-        xTextField2.setCaption("Title");
-        xTextField2.setName("entity.title");
-        xTextField2.setPreferredSize(new java.awt.Dimension(0, 19));
+        xTextField2.setCaption("Description");
+        xTextField2.setCaptionWidth(100);
+        xTextField2.setName("entity.description");
+        xTextField2.setPreferredSize(new java.awt.Dimension(300, 20));
+        xTextField2.setRequired(true);
+        xTextField2.setTextCase(com.rameses.rcp.constant.TextCase.NONE);
         xFormPanel1.add(xTextField2);
 
-        jScrollPane1.setName("entity.description");
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(0, 42));
-        xTextArea1.setCaption("Description");
-        xTextArea1.setName("entity.description");
-        xTextArea1.setPreferredSize(new java.awt.Dimension(0, 40));
-        jScrollPane1.setViewportView(xTextArea1);
+        xTextField3.setCaption("Class Name");
+        xTextField3.setCaptionWidth(100);
+        xTextField3.setName("entity.classname");
+        xTextField3.setPreferredSize(new java.awt.Dimension(300, 20));
+        xTextField3.setRequired(true);
+        xTextField3.setSpaceChar('_');
+        xTextField3.setTextCase(com.rameses.rcp.constant.TextCase.NONE);
+        xFormPanel1.add(xTextField3);
 
-        xFormPanel1.add(jScrollPane1);
+        xLookupField2.setCaption("Rule Group");
+        xLookupField2.setCaptionWidth(100);
+        xLookupField2.setExpression("#{entity.rulegrouptitle}");
+        xLookupField2.setHandler("lookupRulegroup");
+        xLookupField2.setName("entity.rulegroup");
+        xLookupField2.setPreferredSize(new java.awt.Dimension(300, 20));
+        xFormPanel1.add(xLookupField2);
 
-        xIntegerField1.setCaption("Sort order");
-        xIntegerField1.setName("entity.sortorder");
-        xIntegerField1.setPreferredSize(new java.awt.Dimension(50, 19));
-        xFormPanel1.add(xIntegerField1);
+        org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 416, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(254, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 116, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
@@ -71,27 +109,27 @@ public class RuleFactPage extends javax.swing.JPanel {
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 417, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(97, Short.MAX_VALUE))
+                .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 143, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(89, Short.MAX_VALUE))
+                .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(259, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel jPanel1;
     private com.rameses.rcp.control.XFormPanel xFormPanel1;
-    private com.rameses.rcp.control.XIntegerField xIntegerField1;
-    private com.rameses.rcp.control.XLabel xLabel1;
-    private com.rameses.rcp.control.XTextArea xTextArea1;
+    private com.rameses.rcp.control.XLookupField xLookupField2;
     private com.rameses.rcp.control.XTextField xTextField1;
     private com.rameses.rcp.control.XTextField xTextField2;
+    private com.rameses.rcp.control.XTextField xTextField3;
+    private com.rameses.rcp.control.XTextField xTextField6;
     // End of variables declaration//GEN-END:variables
     
 }

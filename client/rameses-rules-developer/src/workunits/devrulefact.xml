@@ -1,0 +1,79 @@
+<workunit>
+    <invokers>
+        <invoker type="devrulefact:create" action="create" caption="Rule Fact Information" resizable="false"/>
+        <invoker type="devrulefact:open" action="open" caption="Rule Fact Information" resizable="false"/>
+    </invokers>
+   
+    <code>
+    <![CDATA[
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.osiris2.client.*;
+        import com.rameses.osiris2.common.*;
+
+        public class DevRuleFactController extends CRUDController 
+        {        
+            //feed by the caller
+            def rulefactHandler, ruleset, rulefact;
+        
+            String prefixId = 'RFACT';
+            String createFocusComponent = 'entity.name'; 
+            String editFocusComponent = 'entity.description'; 
+            boolean allowApprove = false; 
+            boolean closeAfterSave = false;
+            
+            @Service('DevRuleFactService') 
+            def service;
+                        
+            void afterCreate( data ) {
+                data.ruleset = ruleset?.name;
+            } 
+            
+            void beforeSave( data ) { 
+                if (!data.ruleset) throw new Exception('Please specify ruleset');  
+            } 
+            
+            void afterSaveCreate(newData) {
+                if (ruleset) { 
+                    newData._filetype = 'devrulefact'; 
+                    ruleset.rulefacts << newData; 
+                } 
+            } 
+            
+            void afterSaveUpdate(newData) {
+                if (ruleset) { 
+                    newData._filetype = 'devrulefact'; 
+                    rulefact?.clear();
+                    rulefact?.putAll(newData);
+                } 
+            } 
+            
+            void afterSave( data ) {
+                if (ruleset) rulefactHandler?.reload();
+                if (closeAfterSave == true) binding.fireNavigation('_close');
+            }             
+            
+            def getLookupRulegroup() {
+                if (!entity.ruleset) 
+                    return new Exception('Please specify ruleset'); 
+            
+                def params = [ 
+                    onselect: {o-> 
+                        entity.rulegroup = o.name; 
+                        entity.rulegrouptitle = o.title; 
+                    }, 
+                    onempty: {
+                        entity.rulegroup = null;
+                        entity.rulegrouptitle = null; 
+                    } 
+                ];
+                params['query.ruleset'] = entity.ruleset;
+                return InvokerUtil.lookupOpener('devrulegroup:lookup', params); 
+            } 
+        }
+   ]]>
+   </code>
+   <pages>
+       <page template="com.rameses.rules.dev.RuleFactPage"/>
+   </pages>
+</workunit>

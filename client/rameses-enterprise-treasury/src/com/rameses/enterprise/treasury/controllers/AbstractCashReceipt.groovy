@@ -92,6 +92,9 @@ public abstract class AbstractCashReceipt {
             [entity: entity, saveHandler: handler ] );
     }
 
+    public void payerChanged( o ) {
+        //for overrides
+    }
 
     def getLookupEntity() {
         return InvokerUtil.lookupOpener( "entity:lookup", [
@@ -100,6 +103,7 @@ public abstract class AbstractCashReceipt {
                 entity.paidby = o.name;
                 entity.paidbyaddress = o.address;
                 binding.refresh("entity.(payer.*|paidby.*)");
+                payerChanged( o );
             }
         ]);
     }
@@ -149,8 +153,9 @@ public abstract class AbstractCashReceipt {
     }
     
     void reprint() {
-        MsgBox.alert("check first if allow reprint");
-        print();
+        if( MsgBox.prompt("Please enter security code")=="etracs"){
+            print();
+        }
     }
 
     def getInfoHtml() {

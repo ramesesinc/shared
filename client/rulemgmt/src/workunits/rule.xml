@@ -7,6 +7,7 @@
         <!-- actions -->
         <invoker type="formActions" action="create" caption="New" visibleWhen="#{mode=='read'}" />
         <invoker type="formActions" action="edit" caption="Edit"  visibleWhen="#{mode=='read'} &amp;&amp; rule.docstate != 'DEPLOYED'"/>
+        <invoker type="formActions" action="delete" caption="Delete"  visibleWhen="#{deleteButtonVisible == true}"/>
         <invoker type="formActions" action="deploy" caption="Deploy"  visibleWhen="#{mode=='read' &amp;&amp; rule.docstate == 'DRAFT'}"/>
         <invoker type="formActions" action="undeploy" caption="Undeploy"  visibleWhen="#{rule.docstate == 'DEPLOYED'}"/>
         <invoker type="formActions" action="supersede" caption="Supersede"  visibleWhen="#{rule.docstate == 'DEPLOYED'}"/>
@@ -32,6 +33,7 @@
             @Service("RuleMgmtService")
             def ruleMgmtSvc;
             
+            def ruleMgmtListHandler;
             def ruleMgmt;
             def rule;
             def mode;
@@ -53,19 +55,33 @@
             }
             
             void open() {
-                if(rule.conditions==null) rule.conditions = [];
-                if(rule.actions==null) rule.actions = [];
+                initRule(rule);
                 mode='read';
             }
             
             void edit() {
+                initRule(rule); 
                 mode = 'edit';
             }
+            
+            boolean isDeleteButtonVisible() {
+                return (mode == 'read' && rule?.docstate != 'DEPLOYED');
+            } 
+            
+            def delete() {
+                if (!MsgBox.confirm('You are about to delete this record. Continue?')) return;
+                
+                ruleMgmtSvc.removeEntity(rule); 
+                ruleMgmtListHandler?.reload();
+                return '_close';
+            } 
             
             def cancelsave() {
                 if(MsgBox.confirm("Changes will be discarded. Continue?")) {
                     if( mode =="create" ) return "_close";
+                    
                     rule = ruleMgmtSvc.open(rule);
+                    initRule(rule);
                     mode = 'read';
                     return null;
                 }
@@ -74,10 +90,10 @@
             void save() {
                 if(mode == "create") {
                     rule = ruleMgmtSvc.create(rule);
-                }
-                else {
+                } else {
                     rule = ruleMgmtSvc.update(rule);
                 }
+                initRule(rule);
                 mode = 'read';
             }
             
@@ -143,6 +159,7 @@
                      actionList: ruleMgmt.actions,
                      varList: RuleUtil.getVars( rule, -1 ),
                      saveHandler:{ o->
+                        o.text = ActionUtil.buildText(o); 
                         rule.actions << o;
                         binding.refresh();
                      }
@@ -155,6 +172,7 @@
                       action:selectedAction,
                       varList: RuleUtil.getVars( rule, -1 ),
                       saveHandler:{ o->
+                        o.text = ActionUtil.buildText(o); 
                         selectedAction.putAll( o );
                         binding.refresh();
                     }
@@ -164,6 +182,14 @@
             void removeAction() {
                 rule.actions.remove( selectedAction );
             }
+            
+            void initRule( o ) {
+                if (o.conditions == null) o.conditions = [];
+                if (o.actions == null) o.actions = [];
+                
+                o.actions.each { it.text = ActionUtil.buildText(it) }
+            } 
+            
             
             @Service("RuleTestService")
             def tester;

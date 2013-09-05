@@ -58,7 +58,6 @@ public class LiquidationReportByFund extends javax.swing.JPanel {
         xComboBox1.setCaptionWidth(60);
         xComboBox1.setDynamic(true);
         xComboBox1.setExpression("#{item.fundname}");
-        xComboBox1.setImmediate(true);
         xComboBox1.setItems("fundlist");
         xComboBox1.setName("fund");
         xComboBox1.setPreferredSize(new java.awt.Dimension(170, 20));
