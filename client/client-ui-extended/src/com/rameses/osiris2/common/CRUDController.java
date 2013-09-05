@@ -307,11 +307,13 @@ public class CRUDController
     }
     
     protected void beforeClose(){} 
+    protected void onClosing(){}
     
     public Object close() {
         beforeClose();
         this.mode = MODE_READ; 
         this.changeLog.clear(); 
+        onClosing(); 
         return "_close"; 
     }
     
@@ -322,8 +324,8 @@ public class CRUDController
     
     protected void beforeSave(Object data){}
     protected void afterSave(Object data){}
-    protected void afterSaveCreate(Object newData){}    
-    protected void afterSaveUpdate(Object newData, Object oldData){}
+    protected void afterSaveCreate(Object data){}    
+    protected void afterSaveUpdate(Object data){}
         
     public void save(){
         try {
@@ -358,7 +360,7 @@ public class CRUDController
             if (MODE_CREATE.equals(oldmode))
                 afterSaveCreate(newData);
             else if (MODE_EDIT.equals(oldmode)) 
-                afterSaveUpdate(newData, oldData);
+                afterSaveUpdate(newData);
             
             afterSave(getEntity()); 
             

@@ -501,7 +501,10 @@ public class InboxController extends ListController {
             }                 
             sval = helper.getFiletype(node); 
             if (sval != null && sval.length() > 0) {
-                sval = sval + node.getPropertyString("name"); 
+                filetypes.remove(sval.toLowerCase());
+                filetypes.add(sval.toLowerCase());
+                
+                sval = sval + ":" + node.getPropertyString("name"); 
                 filetypes.remove(sval.toLowerCase());
                 filetypes.add(sval.toLowerCase());
             } 

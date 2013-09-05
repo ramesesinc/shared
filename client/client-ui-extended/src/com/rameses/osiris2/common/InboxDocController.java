@@ -254,27 +254,30 @@ public class InboxDocController
         
     private void updateView() { 
         buildActions(); 
-        Binding obinding = (Binding) getNodeModel().getBinding(); 
-        if (obinding != null) {
-            Node selNode = getSelectedOpenNode(); 
-            String filetype = helper.getFiletype(selNode); 
-            if (filetype == null || filetype.length() == 0) 
-                filetype = getDefaultFileType();
-            
-            Opener o = null; 
-            try {
-                if (filetype == null || filetype.length() == 0) 
-                    o = InvokerUtil.lookupOpener(filetype.toLowerCase()+":open", new HashMap());                 
-            } catch(Throwable t) {
-                t.printStackTrace(); 
-            }
-            
-            if (o == null) {
-                o = new Opener();
-                o.setOutcome("blankpage");
-            }
-            showOpener(o);
-        } 
+
+        Node selNode = getSelectedOpenNode(); 
+        String filetype = helper.getFiletype(selNode); 
+        if (filetype == null || filetype.length() == 0) 
+            filetype = getDefaultFileType();
+
+        Invoker invoker = null;
+        if (filetype != null && filetype.length() > 0) {
+            String invtype = filetype.toLowerCase() + ":open"; 
+            invoker = actionsProvider.getInvoker(selNode, invtype);
+        }
+
+        Opener opener = null;
+        if (invoker != null) {
+            Map params = new HashMap();
+            params.put("inboxHandler", new InboxDocHandler());
+            params.put("node", selNode.getItem()); 
+            params.put("entity", selNode.getItem()); 
+            opener = actionsProvider.toOpener(invoker, params, selNode); 
+        } else {
+            opener = new Opener();
+            opener.setOutcome("blankpage");
+        }
+        showOpener(opener);
     } 
         
     private void buildActions() {
@@ -282,29 +285,46 @@ public class InboxDocController
         formActions.add(createAction("reload", "Refresh", "images/toolbars/refresh.png", "ctrl R", 'r', null, true)); 
         
         Node node = getSelectedNode();
-        if (node == null) return;
+        if (node == null) {
+            String filetype = getDefaultFileType();
+            if (filetype != null && filetype.length() > 0) {
+                String invtype = filetype.toLowerCase()+":formActions";
+                List<Invoker> invokers = actionsProvider.getInvokers(null, invtype);
+                for (Invoker invoker: invokers) { 
+                    formActions.add(new ActionInvoker(invoker)); 
+                } 
+            }
+            ///exit
+            return; 
+        }
         
         //load extended actions for the node
         List<Invoker> list = node.getPropertyList("Invoker.formActions"); 
         if (list == null) {
-            String filetype = getDefaultFileType();
-            if (filetype != null && filetype.length() > 0) {
-                List invokers = actionsProvider.getInvokers(node, filetype.toLowerCase()+":formActions");
-                if (invokers != null) list.addAll(invokers); 
-            }
-            
-            filetype = helper.getFiletype(node); 
-            if (filetype != null && filetype.length() > 0) {
-                String invtype = filetype + ":" + node.getPropertyString("name");
-                List invokers = actionsProvider.getInvokers(node, invtype.toLowerCase()+":formActions");
-                if (invokers != null) list.addAll(invokers); 
-            }
-            node.setProperty("Invoker.formActions", list);
-        } 
-        if (list != null && !list.isEmpty()) {
-            for (Invoker invoker: list) { 
-                formActions.add(new ActionInvoker(invoker)); 
+            List<String> filetypes = new ArrayList(); 
+            String sval = getDefaultFileType();
+            if (sval != null && sval.length() > 0) {
+                filetypes.add(sval.toLowerCase());
+            }                 
+            sval = helper.getFiletype(node); 
+            if (sval != null && sval.length() > 0) {
+                filetypes.remove(sval.toLowerCase());
+                filetypes.add(sval.toLowerCase());
+                
+                sval = sval + ":" + node.getPropertyString("name"); 
+                filetypes.remove(sval.toLowerCase());
+                filetypes.add(sval.toLowerCase());
             } 
+            
+            list = new ArrayList(); 
+            for (String filetype: filetypes) {
+                String invtype = filetype + ":formActions";
+                list.addAll(actionsProvider.getInvokers(node, invtype)); 
+            }                            
+            node.setProperty("Invoker.formActions", list);            
+        } 
+        for (Invoker invoker: list) { 
+            formActions.add(new ActionInvoker(invoker)); 
         } 
     }     
     
@@ -318,6 +338,16 @@ public class InboxDocController
         a.setShowCaption(true); 
         return a;
     }     
+    
+    public void reload() {
+        Node selNode = getSelectedOpenNode(); 
+        if (selNode == null) {
+            getNodeModel().reloadTree(); 
+        } else {
+            selNode.refresh();
+            selNode.open(); 
+        }
+    }
         
     // </editor-fold>    
     
@@ -339,7 +369,7 @@ public class InboxDocController
         Invoker getInvoker(Node node, String invokerType) {
             List<Invoker> list = getInvokers(node, invokerType);
             return (list.isEmpty()? null: list.get(0)); 
-        }        
+        }           
                 
         Opener toOpener(Invoker invoker, Map params, Node node) {
             Object nodeTitle = invoker.getProperties().get("formTitle");
@@ -486,9 +516,39 @@ public class InboxDocController
         
         public void refresh() {
             Node selNode = root.getSelectedOpenNode(); 
-            if (selNode == null) return; 
+            if (selNode != null) selNode.refresh(); 
+        }
+        
+        public void reload() {
+            Node selNode = root.getSelectedOpenNode(); 
+            if (selNode != null) selNode.reload();
+        }
+        
+        public void reloadTreeModel() {
+            root.getNodeModel().reloadTree();
+        } 
+        
+        public void update(Object data) {
+            Node selNode = root.getSelectedOpenNode(); 
+            if (selNode == null) return;
             
-            root.getNodeModel();
+            selNode.setItem(data); 
+            selNode.refresh(); 
+        }
+        
+        public void remove() {
+            Node selNode = root.getSelectedOpenNode(); 
+            if (selNode == null) return;
+            
+            selNode.remove();
+            selNode = root.getNodeModel().getSelectedNode(); 
+            if (selNode == null) clearView(); 
+        } 
+        
+        public void clearView() {
+            Opener opener = new Opener();
+            opener.setOutcome("blankpage"); 
+            root.showOpener(opener);             
         }
     }
     
