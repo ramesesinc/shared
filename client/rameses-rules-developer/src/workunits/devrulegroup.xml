@@ -41,7 +41,7 @@
                 } 
             } 
             
-            void afterSaveUpdate(newData, oldData) {
+            void afterSaveUpdate(newData) {
                 if (ruleset) { 
                     newData._filetype = 'devrulegroup'; 
                     rulegroup?.clear();

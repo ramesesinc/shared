@@ -1,0 +1,46 @@
+<workunit>
+    <invokers>
+        <invoker type="devruleoperator-item:create" caption="Operator Symbol" action="create" target="popup"/>
+        <invoker type="devruleoperator-item:open" caption="Operator Symbol" action="open" target="popup"/>
+    </invokers>
+   
+    <code>
+    <![CDATA[
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.osiris2.client.*;
+        import com.rameses.osiris2.common.*;
+
+        public class DevRuleOperatorItemController extends CRUDController 
+        { 
+            //feed by the caller
+            def symbolListHandler, operator; 
+            
+            String title =  'Operator Symbol'; 
+            String prefixId = 'RSYM';
+            String createFocusComponent = 'entity.name'; 
+            String editFocusComponent = 'entity.caption'; 
+            boolean allowApprove = false; 
+        
+            @Service('DevRuleOperatorItemService') 
+            def service;  
+            
+            void afterCreate(data) {
+                data.operator = operator?.name; 
+            } 
+            
+            void afterOpen(data) {
+                data._filetype = 'devruleoperator-item';
+            } 
+            
+            void afterSave(data) {
+                data._filetype = 'devruleoperator-item';
+                symbolListHandler.reload();
+            } 
+        } 
+   ]]>
+   </code>
+   <pages>
+       <page template="com.rameses.rules.dev.RuleOperatorItemPage"/>
+   </pages>
+</workunit>

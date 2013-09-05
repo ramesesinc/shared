@@ -40,7 +40,7 @@
                 } 
             } 
             
-            void afterSaveUpdate(newData, oldData) {
+            void afterSaveUpdate(newData) {
                 if (ruleset) { 
                     newData._filetype = 'devrulefact'; 
                     rulefact?.clear();
