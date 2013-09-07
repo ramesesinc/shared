@@ -4,7 +4,7 @@
  * Created on July 25, 2013, 11:03 AM
  */
 
-package com.rameses.rules.dev;
+package com.rameses.rules.zdev;
 
 import com.rameses.osiris2.themes.FormPage;
 import com.rameses.rcp.ui.annotations.Template;
@@ -13,12 +13,12 @@ import com.rameses.rcp.ui.annotations.Template;
  *
  * @author  Elmo
  */
-
+ 
 @Template(value=FormPage.class)
-public class RuleActionPage extends javax.swing.JPanel {
+public class AgendaGroupPage extends javax.swing.JPanel {
     
     /** Creates new form RulesetPage */
-    public RuleActionPage() {
+    public AgendaGroupPage() {
         initComponents();
     }
     
@@ -44,7 +44,6 @@ public class RuleActionPage extends javax.swing.JPanel {
         xTextField1.setCaption("Name");
         xTextField1.setName("entity.name");
         xTextField1.setPreferredSize(new java.awt.Dimension(0, 19));
-        xTextField1.setTextCase(com.rameses.rcp.constant.TextCase.LOWER);
         xFormPanel1.add(xTextField1);
 
         xTextField2.setCaption("Title");
@@ -79,8 +78,8 @@ public class RuleActionPage extends javax.swing.JPanel {
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 167, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(122, Short.MAX_VALUE))
+                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 140, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(151, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     

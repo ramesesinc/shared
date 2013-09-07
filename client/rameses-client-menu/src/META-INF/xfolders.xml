@@ -9,7 +9,7 @@
     <folder id="explorer" caption="Explorer">
         <folder id="txn" caption="Transactions"/>
         <folder id="master" caption="Master Data"/>
-        <folder id="setting" caption="Settings"/>
+        <folder id="setting" caption="Settings" index="9999"/>
     </folder>    
-        
+    
 </folders>
