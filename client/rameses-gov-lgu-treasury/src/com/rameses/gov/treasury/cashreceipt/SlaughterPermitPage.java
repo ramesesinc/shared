@@ -44,9 +44,8 @@ public class SlaughterPermitPage extends javax.swing.JPanel {
         formPanel3.setCaptionFont(new java.awt.Font("Arial", 0, 12));
         xLookupField1.setCaption("Account Title");
         xLookupField1.setCaptionWidth(180);
-        xLookupField1.setCellPadding(new java.awt.Insets(10, 0, 0, 0));
-        xLookupField1.setExpression("#{item.account.title}");
-        xLookupField1.setHandler("revenueitem:lookup");
+        xLookupField1.setExpression("#{item.item.title}");
+        xLookupField1.setHandler("lookupAccts");
         xLookupField1.setName("account");
         xLookupField1.setPreferredSize(new java.awt.Dimension(0, 19));
         xLookupField1.setRequired(true);
@@ -55,7 +54,7 @@ public class SlaughterPermitPage extends javax.swing.JPanel {
         xDecimalField1.setCaption("Permit Amount");
         xDecimalField1.setCaptionWidth(180);
         xDecimalField1.setFont(new java.awt.Font("Arial", 0, 12));
-        xDecimalField1.setName("permitamount");
+        xDecimalField1.setName("permitAmount");
         xDecimalField1.setPreferredSize(new java.awt.Dimension(150, 21));
         xDecimalField1.setRequired(true);
         formPanel3.add(xDecimalField1);
@@ -95,16 +94,15 @@ public class SlaughterPermitPage extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .add(21, 21, 21)
+                .addContainerGap()
                 .add(formPanel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 528, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addContainerGap(91, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
-                .addContainerGap()
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
                 .add(formPanel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 183, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(177, Short.MAX_VALUE))
+                .addContainerGap(188, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     
