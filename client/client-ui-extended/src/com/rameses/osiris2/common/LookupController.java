@@ -9,10 +9,13 @@
 
 package com.rameses.osiris2.common;
 
+import com.rameses.common.PropertyResolver;
 import com.rameses.osiris2.client.InvokerFilter;
 import com.rameses.osiris2.client.InvokerProxy;
 import com.rameses.osiris2.client.InvokerUtil;
+import com.rameses.osiris2.client.WorkUnitUIController;
 import com.rameses.rcp.annotations.Binding;
+import com.rameses.rcp.annotations.Controller;
 import com.rameses.rcp.annotations.Invoker;
 import com.rameses.rcp.common.AbstractListDataProvider;
 import com.rameses.rcp.common.Action;
@@ -39,11 +42,18 @@ public abstract class LookupController extends LookupModel
     @Binding
     private com.rameses.rcp.framework.Binding binding;
     
+    @Controller
+    protected WorkUnitUIController controller;    
+    
     private Object selectedEntity;
     private Object onselect;
     private Object onempty;
     private String tag;
     private Object callerHandler;
+    
+    private String serviceName;
+    private String entityName;
+    private int preferredRowSize;
     
     // this is injected by the caller for notification
     public Object getHandler() { return callerHandler; } 
@@ -51,11 +61,40 @@ public abstract class LookupController extends LookupModel
         this.callerHandler = handler; 
     }
     
-    public String getTag() { return tag; } 
+    public String getTag() { 
+        if (tag == null) {
+            try { 
+                Object ov = getControllerProperties().get("tag"); 
+                tag = (ov == null? null: ov.toString()); 
+            } catch(Throwable t){;} 
+        }         
+        return tag; 
+    }
+    
     public void setTag(String tag) { this.tag = tag; }
     
-    public String getServiceName() { return null; }
-    public String getEntityName() { return null; } 
+    public String getServiceName() { 
+        if (serviceName == null) {
+            try { 
+                Object ov = getControllerProperties().get("serviceName"); 
+                serviceName = (ov == null? null: ov.toString()); 
+            } catch(Throwable t){;} 
+            
+            if (serviceName == null) 
+                throw new RuntimeException("Please specify a serviceName"); 
+        } 
+        return serviceName;        
+    }
+    
+    public String getEntityName() { 
+        if (entityName == null) {
+            try { 
+                Object ov = getControllerProperties().get("entityName"); 
+                entityName = (ov == null? null: ov.toString()); 
+            } catch(Throwable t){;} 
+        } 
+        return entityName;      
+    } 
     
     public Column[] getColumns() { return null; }
 
@@ -116,7 +155,17 @@ public abstract class LookupController extends LookupModel
         return new ArrayList(); 
     } 
 
-    public int getRows() { return 10; }
+    public int getRows() {
+        if (preferredRowSize <= 0) {
+            try {
+                Object ov = getControllerProperties().get("rows");
+                preferredRowSize = Integer.parseInt(ov.toString()); 
+            } catch(Throwable t) {;} 
+            
+            if (preferredRowSize <= 0) preferredRowSize = 20;
+        } 
+        return preferredRowSize;
+    }
     
     public List getNavActions() { 
         return new ArrayList(); 
@@ -237,4 +286,23 @@ public abstract class LookupController extends LookupModel
     }
     
     // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc=" helper methods ">      
+    
+    private Map wuprops = null;
+    
+    protected final Map getControllerProperties() {
+        try {
+            if (wuprops == null) {
+                PropertyResolver res = PropertyResolver.getInstance(); 
+                wuprops = (Map) res.getProperty(controller, "workunit.workunit.properties"); 
+            } 
+        } catch(Throwable t){;} 
+            
+        if (wuprops == null) wuprops = new HashMap();
+        
+        return wuprops;
+    }
+    
+    // </editor-fold>    
 }
