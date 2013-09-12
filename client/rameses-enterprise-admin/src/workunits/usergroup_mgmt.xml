@@ -2,6 +2,6 @@
     serviceName="UsergroupService" context="usergroup" defaultFileType="usergroup">
         
     <invokers>
-        <invoker folderid="/explorer/admin" caption="User Groups" permission="system" index="2" action="init"/>
+        <invoker folderid="/explorer/admin" caption="User Groups" role="SYSADMIN" permission="system" index="2" action="init"/>
    </invokers>
 </workunit>

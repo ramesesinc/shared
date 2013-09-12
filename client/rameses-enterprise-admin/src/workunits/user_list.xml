@@ -1,6 +1,6 @@
 <workunit extends="wtemplates/ListController.xml" serviceName="UserAdminService" 
     entityName="user" rows="20">
     <invokers>
-        <invoker folderid="/explorer/admin" caption="Users" permission="system" index="0"/>
+        <invoker folderid="/explorer/admin" caption="Users" role="SYSADMIN" permission="system" index="0"/>
    </invokers>
 </workunit>
