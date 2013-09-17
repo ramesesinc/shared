@@ -59,6 +59,7 @@ public class RuleOperatorItemPage extends javax.swing.JPanel {
         xTextField3.setName("entity.symbol");
         xTextField3.setPreferredSize(new java.awt.Dimension(150, 20));
         xTextField3.setRequired(true);
+        xTextField3.setTextCase(com.rameses.rcp.constant.TextCase.NONE);
         xFormPanel1.add(xTextField3);
 
         xIntegerField1.setCaption("Sort Order");

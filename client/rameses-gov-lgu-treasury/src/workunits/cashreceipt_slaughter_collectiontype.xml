@@ -1,8 +1,8 @@
 <workunit>
-    <invokers>
+    <!--<invokers>
         <invoker type="collectiontype:handler" caption="Slaughter" 
             name="slaughter"  formno="57" formtype="serial" index="0"/>
-    </invokers>
+    </invokers>-->
     
    
     <code>

@@ -37,6 +37,10 @@
                 data._filetype = 'devruleoperator-item';
                 symbolListHandler.reload();
             } 
+            
+            void afterDelete(data) {
+                symbolListHandler.reload();
+            } 
         } 
    ]]>
    </code>
