@@ -1,0 +1,17 @@
+<!-- REQUISITION ISSUE SLIP -->
+<workunit>
+    
+    <invokers>
+       <invoker type="formActions" caption="Back" action="_close" visibleWhen="#{mode == 'create'}" shortcut="ctrl B"/>
+       <invoker type="formActions" caption="Submit" action="submit" visibleWhen="#{mode == 'create'}" shortcut="ctrl S"/>
+       
+       <invoker type="formActions" caption="Close" action="_exit" visibleWhen="#{mode != 'create'}" shortcut="ctrl C"/>
+    </invokers>
+    
+    <code class="com.rameses.enterprise.inventory.stock.StockRequestController" />
+    
+    <pages>
+        <page template="com.rameses.enterprise.inventory.stock.StockRequestPage"/>
+    </pages>
+    
+</workunit>

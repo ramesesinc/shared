@@ -1,0 +1,11 @@
+<!-- REQUISITION ISSUE SLIP -->
+<workunit extends="wtemplates/StockRequestController.xml">
+    
+    <invokers>
+       <invoker type="stockrequest:type" caption="Issuance" reqtype="ISSUANCE"/>
+       <invoker type="stockrequest:issuance:open" caption="Stock Issue Request" action="open"  target="window"/>
+        <invoker type="formActions" caption="Reports" name="popupReports"   
+            visibleWhen="#{mode == 'read' }" category="stockrequest:reports" />       
+    </invokers>
+    
+</workunit>

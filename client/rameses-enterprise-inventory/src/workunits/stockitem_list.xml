@@ -1,0 +1,6 @@
+<!-- REQUISITION ISSUE SLIP -->
+<workunit extends="wtemplates/InboxController.xml" serviceName="StockItemService" defaultFileType="stockitem">
+    <invokers>
+       <invoker folderid="/explorer/master/accounting" caption="Stock Items" target="window"/>
+    </invokers>
+</workunit>
