@@ -12,16 +12,13 @@
 
     class ServiceLookupController extends LookupController
     {
-        @Controller
-        def controller;
-        
         private String serviceName;
         private String entityName;
         private String tag;
         
         String getServiceName() {
             if (serviceName == null) {
-                serviceName = controller?.workunit?.workunit?.properties?.serviceName;
+                serviceName = controllerProperties?.serviceName;
                 
                 if (serviceName == null) 
                     throw new Exception('Please specify a serviceName attribute in your workunit'); 
@@ -31,14 +28,14 @@
         
         String getEntityName() {
             if (entityName == null) {
-                entityName = controller?.workunit?.workunit?.properties?.entityName;
+                entityName = controllerProperties?.entityName;
             } 
             return entityName; 
         } 
         
         String getTag() {
             if (tag == null) {
-                tag = controller?.workunit?.workunit?.properties?.tag;
+                tag = controllerProperties?.tag;
                 if (tag == null) tag = super.getTag();
             } 
             return tag; 

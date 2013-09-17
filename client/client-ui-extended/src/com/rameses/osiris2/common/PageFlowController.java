@@ -192,37 +192,43 @@ public class PageFlowController
             if (tname == null) tname = t.getTo();
             
             TransitionAction a = new TransitionAction(tname);
-            String caption = (String)t.getProperties().get("title");
-            String tag = (String)t.getProperties().get("tag");
-            if (caption == null) caption = (String)t.getProperties().get("caption");
-            if (caption == null) caption = tname; 
+            String sval = (String) t.getProperties().get("title");
+            if (sval == null) sval = (String)t.getProperties().get("caption");
+            if (sval == null) sval = tname; 
+
+            a.setCaption(sval);
+            a.setTooltip(sval);
+            a.setConfirm(t.getConfirm());             
             
-            String visibleWhen = (String)t.getProperties().get("visibleWhen");
-            String icon = (String) t.getProperties().get("icon");
-            a.setCaption( caption );
-            a.setTooltip( caption );
-            a.setTag(tag);
-            if (icon != null) { 
-                a.setIcon( icon );
-            }
-            if (visibleWhen != null) {
-                a.setVisibleWhen(visibleWhen);
-            }
-            a.setConfirm( t.getConfirm() );
+            sval = (String) t.getProperties().get("tag");            
+            a.setTag(sval); 
+            
+            sval = (String) t.getProperties().get("icon");            
+            if (sval != null) a.setIcon(sval);
+            
+            sval = (String)t.getProperties().get("visibleWhen");            
+            if (sval != null) a.setVisibleWhen(sval);
             
             boolean immediate = true;
             try {
-                String _immediate = (String)t.getProperties().get("immediate");
-                if(_immediate!=null) {
-                    immediate = Boolean.parseBoolean(_immediate);
-                }
-            } catch(Exception ign){;}
-            a.setImmediate( immediate );
+                sval = (String)t.getProperties().get("immediate");
+                if (sval != null) immediate = Boolean.parseBoolean(sval);
+            } catch(Throwable ex) { 
+                //do nothing 
+            } finally { 
+                a.setImmediate(immediate);
+            }
+            
+            sval = (String) t.getProperties().get("mnemonic"); 
+            if (sval != null && sval.trim().length() > 0) {
+                a.setMnemonic(sval.trim().charAt(0)); 
+            }
+            
             a.setDomain(domain);
             a.setRole(t.getRole());
             a.setPermission(t.getPermission());            
             a.setShowCaption(true);
-            actions.add(a );
+            actions.add(a);
         }
         return actions;
     }

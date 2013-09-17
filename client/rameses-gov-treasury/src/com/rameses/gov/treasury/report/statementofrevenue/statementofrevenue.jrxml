@@ -41,9 +41,13 @@
 	<field name="amount" class="java.math.BigDecimal"/>
 	<field name="type" class="java.lang.String"/>
 	<field name="subtotal" class="java.math.BigDecimal"/>
+	<field name="level" class="java.lang.Integer"/>
 
 	<variable name="totalcheck" class="java.math.BigDecimal" resetType="Report" calculation="System">
 		<initialValueExpression><![CDATA[BigDecimal.ZERO]]></initialValueExpression>
+	</variable>
+	<variable name="TOTAL" class="java.math.BigDecimal" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{amount}]]></variableExpression>
 	</variable>
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -203,7 +207,7 @@
 					<reportElement
 						x="0"
 						y="0"
-						width="354"
+						width="441"
 						height="18"
 						key="staticText-24"/>
 					<box leftPadding="3" rightPadding="3">					<topPen lineWidth="0.5" lineStyle="Solid"/>
@@ -216,7 +220,7 @@
 				</staticText>
 				<staticText>
 					<reportElement
-						x="358"
+						x="447"
 						y="0"
 						width="93"
 						height="18"
@@ -229,32 +233,19 @@
 					</textElement>
 				<text><![CDATA[AMOUNT]]></text>
 				</staticText>
-				<staticText>
-					<reportElement
-						x="454"
-						y="0"
-						width="86"
-						height="18"
-						key="staticText-26"/>
-					<box leftPadding="3" rightPadding="3">					<topPen lineWidth="0.5" lineStyle="Solid"/>
-					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
-</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
-					</textElement>
-				<text><![CDATA[SUB-TOTAL]]></text>
-				</staticText>
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="15"  isSplitAllowed="true" >
+			<band height="17"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="0"
 						y="0"
-						width="354"
+						width="440"
 						height="15"
-						key="textField-24"/>
+						key="textField-24">
+							<printWhenExpression><![CDATA[new Boolean($F{type}.equals("detail"))]]></printWhenExpression>
+						</reportElement>
 					<box></box>
 					<textElement verticalAlignment="Middle">
 						<font size="9"/>
@@ -263,12 +254,12 @@
 				</textField>
 				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="358"
+						x="447"
 						y="0"
 						width="93"
 						height="15"
 						key="textField-25">
-							<printWhenExpression><![CDATA[new Boolean($F{amount}.doubleValue()> 0.0)]]></printWhenExpression>
+							<printWhenExpression><![CDATA[new Boolean($F{type}.equals("detail"))]]></printWhenExpression>
 						</reportElement>
 					<box></box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -276,20 +267,65 @@
 					</textElement>
 				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{amount}]]></textFieldExpression>
 				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="441"
+						height="15"
+						key="textField-27">
+							<printWhenExpression><![CDATA[new Boolean($F{type}.equals("group"))]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{title}]]></textFieldExpression>
+				</textField>
 				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="454"
+						x="447"
 						y="0"
-						width="86"
+						width="93"
 						height="15"
-						key="textField-26">
-							<printWhenExpression><![CDATA[new Boolean($F{subtotal}.doubleValue()> 0.0)]]></printWhenExpression>
+						key="textField-28">
+							<printWhenExpression><![CDATA[new Boolean($F{type}.equals("group"))]]></printWhenExpression>
 						</reportElement>
 					<box></box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="9"/>
 					</textElement>
-				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{subtotal}]]></textFieldExpression>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{amount}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="441"
+						height="15"
+						key="textField-30">
+							<printWhenExpression><![CDATA[new Boolean($F{type}.equals("summary"))]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{title}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="447"
+						y="0"
+						width="93"
+						height="15"
+						key="textField-31">
+							<printWhenExpression><![CDATA[new Boolean($F{type}.equals("summary"))]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="9"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{amount}]]></textFieldExpression>
 				</textField>
 			</band>
 		</detail>
@@ -376,12 +412,12 @@
 			</band>
 		</pageFooter>
 		<summary>
-			<band height="84"  isSplitAllowed="true" >
+			<band height="137"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						mode="Transparent"
 						x="21"
-						y="52"
+						y="110"
 						width="192"
 						height="13"
 						forecolor="#000000"
@@ -401,7 +437,7 @@
 					<reportElement
 						mode="Transparent"
 						x="21"
-						y="66"
+						y="124"
 						width="192"
 						height="13"
 						forecolor="#000000"
@@ -421,7 +457,7 @@
 					<reportElement
 						mode="Transparent"
 						x="21"
-						y="26"
+						y="81"
 						width="192"
 						height="12"
 						forecolor="#000000"
@@ -440,8 +476,8 @@
 				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						mode="Transparent"
-						x="343"
-						y="52"
+						x="329"
+						y="110"
 						width="192"
 						height="13"
 						forecolor="#000000"
@@ -460,8 +496,8 @@
 				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						mode="Transparent"
-						x="343"
-						y="66"
+						x="329"
+						y="124"
 						width="192"
 						height="13"
 						forecolor="#000000"
@@ -480,8 +516,8 @@
 				<staticText>
 					<reportElement
 						mode="Transparent"
-						x="343"
-						y="26"
+						x="329"
+						y="81"
 						width="192"
 						height="12"
 						forecolor="#000000"
@@ -498,6 +534,50 @@
 				<text><![CDATA[Certified Correct By:
 ]]></text>
 				</staticText>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="447"
+						y="12"
+						width="93"
+						height="18"
+						key="textField-32"/>
+					<box></box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{TOTAL}]]></textFieldExpression>
+				</textField>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="9"
+						width="540"
+						height="0"
+						key="line-6"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<staticText>
+					<reportElement
+						x="268"
+						y="12"
+						width="173"
+						height="18"
+						key="staticText-26"/>
+					<box leftPadding="3" rightPadding="3"></box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+					</textElement>
+				<text><![CDATA[TOTAL REVENUE :]]></text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="33"
+						width="540"
+						height="0"
+						key="line-7"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
 			</band>
 		</summary>
 </jasperReport>

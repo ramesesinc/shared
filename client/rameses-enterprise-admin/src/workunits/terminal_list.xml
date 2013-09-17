@@ -3,6 +3,6 @@
     formName="terminal" rows="20">  
     
     <invokers>
-        <invoker folderid="/explorer/admin" caption="Terminals" permission="system" index="10"/>
+        <invoker folderid="/explorer/admin" caption="Terminals" role="SYSADMIN" permission="system" index="10"/>
    </invokers>
 </workunit>
