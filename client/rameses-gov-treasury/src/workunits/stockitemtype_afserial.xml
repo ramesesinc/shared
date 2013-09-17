@@ -1,32 +1,30 @@
+<!-- REQUISITION ISSUE SLIP -->
 <workunit>
+    
     <invokers>
-        <invoker type="collectiontype:handler" caption="Cash Ticket" name="cashticket" formtype="nonserial" index="100" />
+       <invoker type="stockitem:types" caption="AF Serial" itemtype="AFSERIAL" itemclass="AF" />
     </invokers>
     
     <code>
-        <![CDATA[    
+         <![CDATA[    
         import com.rameses.rcp.annotations.*
         import com.rameses.rcp.common.*
         import com.rameses.osiris2.client.*
         import com.rameses.osiris2.common.*
-        import com.rameses.enterprise.treasury.controllers.*
         
-        class  CashTicketHandlerController {
-        
+        class StockItemTypeAFSerialController {
             @Caller 
             def caller;
         
-            public def getEntity() {
+            def getEntity() {
                 return caller.entity;
             }
             
         }
         ]]>
-        
     </code>
     
     <pages>
-        <page template="com.rameses.gov.treasury.cashticket.CashTicketCollectionTypeHandler"/>
+        <page template="com.rameses.gov.treasury.af.AFSerialHandler"/>
     </pages>
-    
 </workunit>

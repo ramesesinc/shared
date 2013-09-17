@@ -4,7 +4,7 @@
  * Created on September 5, 2013, 5:15 PM
  */
 
-package com.rameses.gov.treasury.cashticket;
+package com.rameses.gov.treasury.af;
 
 import com.rameses.rcp.ui.annotations.StyleSheet;
 
@@ -13,10 +13,10 @@ import com.rameses.rcp.ui.annotations.StyleSheet;
  * @author  Elmo
  */
 @StyleSheet
-public class CashTicketHandler extends javax.swing.JPanel {
+public class AFSerialHandler extends javax.swing.JPanel {
     
     /** Creates new form AFSerialHandler */
-    public CashTicketHandler() {
+    public AFSerialHandler() {
         initComponents();
     }
     
@@ -28,16 +28,16 @@ public class CashTicketHandler extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
     private void initComponents() {
         xFormPanel1 = new com.rameses.rcp.control.XFormPanel();
-        xDecimalField1 = new com.rameses.rcp.control.XDecimalField();
+        xIntegerField1 = new com.rameses.rcp.control.XIntegerField();
 
         com.rameses.rcp.control.border.XTitledBorder xTitledBorder1 = new com.rameses.rcp.control.border.XTitledBorder();
         xTitledBorder1.setTitle("AF Serial Settings");
         setBorder(xTitledBorder1);
 
         xFormPanel1.setCaptionWidth(120);
-        xDecimalField1.setCaption("Denomination");
-        xDecimalField1.setName("entity.denomination");
-        xFormPanel1.add(xDecimalField1);
+        xIntegerField1.setCaption("Series length");
+        xIntegerField1.setName("entity.serieslength");
+        xFormPanel1.add(xIntegerField1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -59,8 +59,8 @@ public class CashTicketHandler extends javax.swing.JPanel {
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.rameses.rcp.control.XDecimalField xDecimalField1;
     private com.rameses.rcp.control.XFormPanel xFormPanel1;
+    private com.rameses.rcp.control.XIntegerField xIntegerField1;
     // End of variables declaration//GEN-END:variables
     
 }

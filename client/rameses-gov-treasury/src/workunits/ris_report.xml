@@ -1,12 +1,16 @@
 <workunit>
     <invokers>
-       <invoker type="ris:formActions" caption="View RIS" action="viewRIS" visibleWhen="#{entity?.state == 'APPROVED' || entity?.state == 'CLOSED'}" />
-       <invoker type="ris:formActions" caption="View RIV" action="viewRIV" visibleWhen="#{entity?.state == 'APPROVED' || entity?.state == 'CLOSED'}" />
+       <!-- 
+       <invoker type="stockrequest:issuance:formActions" caption="View RIS" action="viewRIS" visibleWhen="#{mode=='read' &amp;&amp; entity?.state != 'DRAFT'}" />
+       <invoker type="stockrequest:issuance:formActions" caption="View RIV" action="viewRIV" visibleWhen="#{mode=='read' &amp;&amp; entity?.state != 'DRAFT'}" />
+       <invoker type="stockrequest:purchase:formActions" caption="View RIS" action="viewRIS" visibleWhen="#{mode=='read' &amp;&amp; entity?.state != 'DRAFT'}" />
+       <invoker type="stockrequest:purchase:formActions" caption="View RIV" action="viewRIV" visibleWhen="#{mode=='read' &amp;&amp; entity?.state != 'DRAFT'}" />
+       -->
        
-        <invoker type="report:ris" caption="RIS Report" action="viewRIS"/>
-        <invoker type="report:riv" caption="RIV Report" action="viewRIV"/>
+       <invoker type="stockrequest:reports" caption="RIS Report" action="viewRIS"/>
+       <invoker type="stockrequest:reports" caption="RIV Report" action="viewRIV"/>
        
-        <invoker type="formActions" caption="Back" action="_close" />
+       <invoker type="formActions" caption="Back" action="_close" />
     </invokers>
     
     <code>
