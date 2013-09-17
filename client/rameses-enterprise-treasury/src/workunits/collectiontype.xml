@@ -27,7 +27,7 @@
             @PropertyChangeListener
             def listener = [
                 "selectedForm" : { o->
-                    entity.formno = o.formno;
+                    entity.formno = o.objid;
                     buildHandlers();
                 },
                 "selectedHandler" : { o->
@@ -36,9 +36,13 @@
             ]
             
             void afterOpen( def o ) {
-                selectedForm = formTypes.find{ it.formno == o.formno };
+                selectedForm = formTypes.find{ it.objid == o.formno };
                 buildHandlers();
                 selectedHandler = handlers.find{ it.properties.name == entity.handler };
+            }
+            
+            void afterEdit(def o) {
+                buildHandlers();
             }
             
             def getFormTypes() {
@@ -48,12 +52,9 @@
             void buildHandlers() {
                 handlers = InvokerUtil.lookupOpeners( "collectiontype:handler" ).findAll {
                     if( it.properties.formno ) {
-                        return (it.properties.formno == selectedForm.formno);
+                        return (it.properties.formno == selectedForm.objid);
                     }
-                    else if(it.properties.formtype) {
-                        return (it.properties.formtype == selectedForm.formtype);
-                    }
-                    return false;
+                    return true;
                 };
             }
             

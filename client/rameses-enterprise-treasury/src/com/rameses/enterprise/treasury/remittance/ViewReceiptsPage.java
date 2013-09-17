@@ -15,10 +15,10 @@ import java.math.BigDecimal;
  * @author  alvin
  */
 @Template(FormPage.class)
-public class RemittanceInitPage extends javax.swing.JPanel {
+public class ViewReceiptsPage extends javax.swing.JPanel {
     
     /** Creates new form RemittanceInitPage */
-    public RemittanceInitPage() {
+    public ViewReceiptsPage() {
         initComponents();
     }
     
@@ -33,15 +33,10 @@ public class RemittanceInitPage extends javax.swing.JPanel {
         xDataTable1 = new com.rameses.rcp.control.XDataTable();
         formPanel2 = new com.rameses.rcp.util.FormPanel();
         xNumberField1 = new com.rameses.rcp.control.XNumberField();
-        jPanel2 = new javax.swing.JPanel();
-        xFormPanel1 = new com.rameses.rcp.control.XFormPanel();
-        xLookupField1 = new com.rameses.rcp.control.XLookupField();
 
         setLayout(new java.awt.BorderLayout());
 
         setPreferredSize(new java.awt.Dimension(643, 466));
-        jPanel1.setLayout(null);
-
         com.rameses.rcp.control.border.XTitledBorder xTitledBorder1 = new com.rameses.rcp.control.border.XTitledBorder();
         xTitledBorder1.setTitle("Summary of Collections");
         xDataTable1.setBorder(xTitledBorder1);
@@ -49,9 +44,22 @@ public class RemittanceInitPage extends javax.swing.JPanel {
             new com.rameses.rcp.common.Column(new Object[]{
                 new Object[]{"name", "formno"}
                 , new Object[]{"caption", "Form No"}
+                , new Object[]{"width", 80}
+                , new Object[]{"minWidth", 80}
+                , new Object[]{"maxWidth", 80}
+                , new Object[]{"required", false}
+                , new Object[]{"resizable", true}
+                , new Object[]{"nullWhenEmpty", true}
+                , new Object[]{"editable", false}
+                , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
+            }),
+            new com.rameses.rcp.common.Column(new Object[]{
+                new Object[]{"name", "receiptno"}
+                , new Object[]{"caption", "Receipt No"}
                 , new Object[]{"width", 100}
-                , new Object[]{"minWidth", 0}
-                , new Object[]{"maxWidth", 0}
+                , new Object[]{"minWidth", 100}
+                , new Object[]{"maxWidth", 100}
                 , new Object[]{"required", false}
                 , new Object[]{"resizable", true}
                 , new Object[]{"nullWhenEmpty", true}
@@ -61,11 +69,11 @@ public class RemittanceInitPage extends javax.swing.JPanel {
                 , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
             }),
             new com.rameses.rcp.common.Column(new Object[]{
-                new Object[]{"name", "startseries"}
-                , new Object[]{"caption", "From"}
+                new Object[]{"name", "receiptdate"}
+                , new Object[]{"caption", "Date"}
                 , new Object[]{"width", 100}
-                , new Object[]{"minWidth", 0}
-                , new Object[]{"maxWidth", 0}
+                , new Object[]{"minWidth", 100}
+                , new Object[]{"maxWidth", 100}
                 , new Object[]{"required", false}
                 , new Object[]{"resizable", true}
                 , new Object[]{"nullWhenEmpty", true}
@@ -75,8 +83,8 @@ public class RemittanceInitPage extends javax.swing.JPanel {
                 , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
             }),
             new com.rameses.rcp.common.Column(new Object[]{
-                new Object[]{"name", "endseries"}
-                , new Object[]{"caption", "To"}
+                new Object[]{"name", "payer.name"}
+                , new Object[]{"caption", "Payer"}
                 , new Object[]{"width", 100}
                 , new Object[]{"minWidth", 0}
                 , new Object[]{"maxWidth", 0}
@@ -84,7 +92,7 @@ public class RemittanceInitPage extends javax.swing.JPanel {
                 , new Object[]{"resizable", true}
                 , new Object[]{"nullWhenEmpty", true}
                 , new Object[]{"editable", false}
-                , new Object[]{"alignment", "CENTER"}
+                , new Object[]{"alignment", "LEFT"}
                 , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
                 , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
             }),
@@ -92,19 +100,31 @@ public class RemittanceInitPage extends javax.swing.JPanel {
                 new Object[]{"name", "amount"}
                 , new Object[]{"caption", "Amount"}
                 , new Object[]{"width", 100}
-                , new Object[]{"minWidth", 0}
-                , new Object[]{"maxWidth", 0}
+                , new Object[]{"minWidth", 100}
+                , new Object[]{"maxWidth", 100}
                 , new Object[]{"required", false}
                 , new Object[]{"resizable", true}
                 , new Object[]{"nullWhenEmpty", true}
                 , new Object[]{"editable", false}
                 , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
                 , new Object[]{"typeHandler", new com.rameses.rcp.common.DecimalColumnHandler("#,##0.00", -1.0, -1.0, false)}
+            }),
+            new com.rameses.rcp.common.Column(new Object[]{
+                new Object[]{"name", "voided"}
+                , new Object[]{"caption", "Void"}
+                , new Object[]{"width", 50}
+                , new Object[]{"minWidth", 50}
+                , new Object[]{"maxWidth", 50}
+                , new Object[]{"required", false}
+                , new Object[]{"resizable", true}
+                , new Object[]{"nullWhenEmpty", true}
+                , new Object[]{"editable", false}
+                , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.CheckBoxColumnHandler(java.lang.Boolean.class, 1, 0)}
             })
         });
-        xDataTable1.setHandler("listModel");
-        jPanel1.add(xDataTable1);
-        xDataTable1.setBounds(14, 96, 540, 246);
+        xDataTable1.setHandler("receiptsListModel");
+        xDataTable1.setId("receiptsListModel");
 
         formPanel2.setCaptionFont(new java.awt.Font("Arial", 1, 14));
         xNumberField1.setCaption("Total");
@@ -117,41 +137,26 @@ public class RemittanceInitPage extends javax.swing.JPanel {
         xNumberField1.setReadonly(true);
         formPanel2.add(xNumberField1);
 
-        jPanel1.add(formPanel2);
-        formPanel2.setBounds(330, 350, 224, 44);
-
-        com.rameses.rcp.control.border.XTitledBorder xTitledBorder2 = new com.rameses.rcp.control.border.XTitledBorder();
-        xTitledBorder2.setTitle("Remittance Initial Information");
-        jPanel2.setBorder(xTitledBorder2);
-
-        xLookupField1.setCaption("Liquidating Officer");
-        xLookupField1.setCaptionWidth(150);
-        xLookupField1.setExpression("#{item.name}");
-        xLookupField1.setHandler("liquidatingofficer:lookup");
-        xLookupField1.setName("entity.liquidatingofficer");
-        xLookupField1.setPreferredSize(new java.awt.Dimension(0, 19));
-        xLookupField1.setRequired(true);
-        xFormPanel1.add(xLookupField1);
-
-        org.jdesktop.layout.GroupLayout jPanel2Layout = new org.jdesktop.layout.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel2Layout.createSequentialGroup()
-                .add(20, 20, 20)
-                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 446, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(66, Short.MAX_VALUE))
+        org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel1Layout.createSequentialGroup()
+                .add(14, 14, 14)
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(xDataTable1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 688, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(formPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 224, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 28, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .add(formPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 44, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(1, 1, 1)
+                .add(xDataTable1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 424, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(12, Short.MAX_VALUE))
         );
-        jPanel1.add(jPanel2);
-        jPanel2.setBounds(14, 20, 536, 70);
-
         add(jPanel1, java.awt.BorderLayout.CENTER);
 
     }// </editor-fold>//GEN-END:initComponents
@@ -160,10 +165,7 @@ public class RemittanceInitPage extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.rameses.rcp.util.FormPanel formPanel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private com.rameses.rcp.control.XDataTable xDataTable1;
-    private com.rameses.rcp.control.XFormPanel xFormPanel1;
-    private com.rameses.rcp.control.XLookupField xLookupField1;
     private com.rameses.rcp.control.XNumberField xNumberField1;
     // End of variables declaration//GEN-END:variables
     
