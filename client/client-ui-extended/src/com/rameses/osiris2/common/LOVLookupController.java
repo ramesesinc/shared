@@ -12,25 +12,29 @@ package com.rameses.osiris2.common;
 import com.rameses.common.MethodResolver;
 import com.rameses.rcp.annotations.FormTitle;
 import com.rameses.rcp.common.Column;
+import com.rameses.rcp.common.LookupModel;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 /**
  *
  * @author Elmo
  */
-public class LOVLookupController extends BasicListModel {
+public class LOVLookupController extends LookupModel {
     
     private String key;
     private Object selectedEntity;
     private Object onselect;
-    private List lovList;
+    private boolean multiSelect = false;
     
     /** Creates a new instance of LOVLookupController */
     public LOVLookupController() {
-        
+    }
+    
+    public Object getListHandler() {
+        return this;
     }
     
     @FormTitle
@@ -40,33 +44,13 @@ public class LOVLookupController extends BasicListModel {
     
     public Column[] getColumns() {
         return new Column[]{
-            new Column("title","Title")
+            new Column("key","Key"),
+            new Column("value","Value"),
         };
     }
     
-    private Map createMap(String key, String title) {
-        Map map = new HashMap();
-        map.put("key", key);
-        map.put("title", title);
-        return map;
-    }
-    
     public List fetchList(Map params) {
-        if(key==null) return new ArrayList();
-        if(lovList==null) {
-            lovList = new ArrayList();
-            List glist = (List) LOV.get(key);
-            for(Object g: glist) {
-                Map m = (Map)g;
-                String key = (String)m.get("key");
-                String title = key;
-                if(!key.equals(m.get("value"))) {
-                    title += " ("+m.get("value")+")";
-                }
-                lovList.add( createMap(key,title) );
-            }
-        }
-        return lovList;
+        return (List)LOV.get(key);
     }
     
     public String getKey() {
@@ -87,13 +71,11 @@ public class LOVLookupController extends BasicListModel {
     
     public String doSelect() throws Exception {
         Object value = getSelectedValue();
-        if(onselect!=null && value!=null) 
-        {
+        if(onselect!=null && value!=null) {
             Object aresult = null;
             if( value instanceof Map) {
                 aresult = ((Map)value).get("key");
-            }
-            else if(value instanceof List) {
+            } else if(value instanceof List) {
                 List list = new ArrayList();
                 for( Object k : (List)value) {
                     list.add  (((Map)k).get("key"));
@@ -110,14 +92,22 @@ public class LOVLookupController extends BasicListModel {
     public String doCancel() {
         return "_close";
     }
-
+    
     public Object getOnselect() {
         return onselect;
     }
-
+    
     public void setOnselect(Object onselect) {
         this.onselect = onselect;
     }
-     
+    
+    public boolean isMultiSelect() {
+        return multiSelect;
+    }
+    
+    public void setMultiSelect(boolean multiSelect) {
+        this.multiSelect = multiSelect;
+    }
+    
     
 }
