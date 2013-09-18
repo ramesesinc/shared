@@ -2,7 +2,7 @@
 <workunit>
     <invokers>
        <invoker type="stockrequest:purchase:formActions" caption="Receive" action="create" 
-            visibleWhen="#{mode=='read' &amp;&amp; entity?.state == 'OPEN'}" />
+            visibleWhen="#{mode=='read' &amp;&amp; entity?.state == 'OPEN'}" role="AFO"/>
 
        <invoker type="formActions" caption="Close" action="_exit" visibleWhen="#{mode=='read'}"/>  
        <invoker type="formActions" caption="Close" action="_close" visibleWhen="#{mode=='create'}" />  
