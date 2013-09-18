@@ -54,6 +54,7 @@ public class StockRequestController {
                     throw new Exception("Item is already selected");
                 selectedItem.item = o;
                 selectedItem.unit = o.defaultunit;
+                selectedItem.handler = o.type?.toLowerCase();
             }
         ] );
     }

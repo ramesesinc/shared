@@ -2,6 +2,13 @@
     <invokers>
         <invoker type="cashreceipt:select-afcontrol" caption="Select Accountable Form" target="popup"/>
         <invoker type="cashreceipt-initial:formActions" caption="Select AF" target="popup" action="init"/>
+        
+        <!-- OWN TOOLBARS -->
+        <invoker type="formActions" caption="Close" action="_close"/>
+        <invoker type="formActions" caption="Activate" action="activate" xvisibleWhen="#{selectedItem!=null &amp;&amp; selectedItem.active==0}"/>
+        <invoker type="formActions" caption="Assign" action="assign"  xvisibleWhen="#{selectedItem!=null &amp;&amp; selectedItem.active==0}"/>
+        <invoker type="formActions" caption="Deactivate" action="deactivate" xvisibleWhen="#{selectedItem!=null &amp;&amp; selectedItem.active==1}"/>
+        <invoker type="formActions" caption="View Assign To" action="_assignTo" />
     </invokers>
     
     <code>
@@ -23,11 +30,43 @@
             def entity;
             def list;
             
+            String title = "Manage Accountable Forms";
+            
             void init() {
                 if(!entity.formno)
                     throw new Exception("Please select an accountable form first");
             }
             
+            void activate() {
+                if(selectedItem.active==1)
+                    throw new Exception("Entry is already active");
+                def z = [:];
+                z.objid = selectedItem.objid;
+                z.txnmode = entity.txnmode;
+                z.afid = entity.formno
+                svc.activateControl(z);
+                listModel.reload();    
+            }
+            
+            void deactivate() {
+                if(selectedItem.active==0)
+                    throw new Exception("Entry is not active");
+                svc.deactivateControl([objid: selectedItem.objid]);
+                listModel.reload();
+            }
+
+            def assign() {
+                if(selectedItem.active==1) {
+                    throw new Exception("Entry is currently active. Deactivate first");
+                }    
+                return InvokerUtil.lookupOpener("subcollector:lookup", [
+                    onselect:{x->
+                        svc.assignToSubcollector( [objid:selectedItem.objid, assignee:x] );
+                        listModel.reload();
+                    }
+                ] );    
+            }
+
             def listModel = [
                 fetchList: { o->
                     list = svc.getOpenIssuanceList( [af:entity.formno, txnmode:entity.txnmode] );
@@ -35,32 +74,19 @@
                 },
                 getContextMenu: { o,colName->
                     def list = [];
-                    if(o.active==0) list.add( [value:'Activate',id:'activate'] );
-                    if(o.active==1) list.add([value:'Deactivate',id:'deactivate']);                    
-                    list.add([value:'Assign',id:'assign']);
+                    if(o.active==0) {
+                        list.add( [value:'Activate',id:'activate'] );
+                        list.add([value:'Assign',id:'assign']);    
+                    }    
+                    else{
+                        list.add([value:'Deactivate',id:'deactivate']);                    
+                    }
                     return list;
                 },
                 callContextMenu: { o,m->
-                    if( m.id == "activate") {
-                        def z = [:];
-                        z.objid = o.objid;
-                        z.txnmode = entity.txnmode;
-                        z.afid = entity.formno
-                        svc.activateControl(z);
-                        listModel.reload();
-                    }
-                    else if(m.id == "deactivate") {
-                        svc.deactivateControl([objid: o.objid]);
-                        listModel.reload();
-                    }
-                    else if(m.id=="assign") {
-                        return InvokerUtil.lookupOpener("subcollector:lookup", [
-                            onselect:{x->
-                                svc.assignToSubcollector( [objid:o.objid, assignee:x] );
-                                listModel.reload();
-                            }
-                        ] );
-                    }
+                    if( m.id == "activate") activate();
+                    else if(m.id == "deactivate") deactivate();
+                    else if(m.id=="assign") assign();
                 }
             ] as BasicListModel;
             
