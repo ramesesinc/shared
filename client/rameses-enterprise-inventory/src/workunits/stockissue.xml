@@ -3,9 +3,10 @@
     <invokers>
        <invoker type="stockrequest:issuance:formActions" caption="Issue" action="create" 
             visibleWhen="#{mode=='read' &amp;&amp; entity?.state == 'OPEN'}" />
-            
-       <invoker type="formActions" caption="Next" action="process" visibleWhen="#{mode=='initial'}" />
+
+       <invoker type="formActions" caption="Close" action="_exit" visibleWhen="#{mode=='read'}"/>
        <invoker type="formActions" caption="Back" action="revert" visibleWhen="#{mode=='create'}" />
+       <invoker type="formActions" caption="Next" action="process" visibleWhen="#{mode=='initial'}" />
        <invoker type="formActions" caption="Submit" action="save" visibleWhen="#{mode=='create'}"/>
     </invokers>
     
