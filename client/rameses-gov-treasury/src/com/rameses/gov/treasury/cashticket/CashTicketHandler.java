@@ -1,18 +1,21 @@
 /*
- * CashTicketHandler.java
+ * AFSerialHandler.java
  *
- * Created on August 21, 2013, 10:15 AM
+ * Created on September 5, 2013, 5:15 PM
  */
 
 package com.rameses.gov.treasury.cashticket;
+
+import com.rameses.rcp.ui.annotations.StyleSheet;
 
 /**
  *
  * @author  Elmo
  */
+@StyleSheet
 public class CashTicketHandler extends javax.swing.JPanel {
     
-    /** Creates new form CashTicketHandler */
+    /** Creates new form AFSerialHandler */
     public CashTicketHandler() {
         initComponents();
     }
@@ -24,31 +27,40 @@ public class CashTicketHandler extends javax.swing.JPanel {
      */
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
     private void initComponents() {
-        jLabel1 = new javax.swing.JLabel();
+        xFormPanel1 = new com.rameses.rcp.control.XFormPanel();
+        xDecimalField1 = new com.rameses.rcp.control.XDecimalField();
 
-        jLabel1.setText("Cash Ticket handler Page");
+        com.rameses.rcp.control.border.XTitledBorder xTitledBorder1 = new com.rameses.rcp.control.border.XTitledBorder();
+        xTitledBorder1.setTitle("AF Serial Settings");
+        setBorder(xTitledBorder1);
 
-        org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
+        xFormPanel1.setCaptionWidth(120);
+        xDecimalField1.setCaption("Denomination");
+        xDecimalField1.setName("entity.denomination");
+        xFormPanel1.add(xDecimalField1);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
-                .add(33, 33, 33)
-                .add(jLabel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 141, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(226, Short.MAX_VALUE))
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(xFormPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
-                .add(33, 33, 33)
-                .add(jLabel1)
-                .addContainerGap(253, Short.MAX_VALUE))
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(xFormPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(58, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private com.rameses.rcp.control.XDecimalField xDecimalField1;
+    private com.rameses.rcp.control.XFormPanel xFormPanel1;
     // End of variables declaration//GEN-END:variables
     
 }

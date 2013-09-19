@@ -1,10 +1,10 @@
 <workunit>
     
    <invokers>
-         <invoker type="remittance:create" caption="Remittance" action="init" target="window"/>
-         <invoker type="quick_launcher" code="REM" caption="Remittance" action="init" target="window"/>
+         <invoker type="remittance:create" caption="Remittance" action="create" target="window"/>
+         <invoker type="quick_launcher" code="REM" caption="Remittance" action="create" target="window"/>
          <invoker type="remittance:open" caption="Remittance (Open)" action="open" target="window"/>
-
+            
          <invoker type="formActions" caption="Close" name="_close"  />
          <invoker type="formActions" caption="Next" name="start" visibleWhen="#{mode == 'initial'}" />
          <invoker type="formActions" caption="Submit" name="submit" visibleWhen="#{mode == 'create' }" />
@@ -12,6 +12,7 @@
          <invoker type="formActions" caption="Reports" name="popupReports"   
             visibleWhen="#{mode == 'read' }" category="remittance:reports" />
 
+            
      </invokers>
    
    <code>
@@ -35,7 +36,7 @@
             
             def entity;
             def cashBreakdown;
-            def mode = 'initial';
+            def mode = 'create';
             
             def total = 0.0;
             def breakdown = 0.0;
@@ -53,23 +54,16 @@
                 return popupMenu;
             }
             
-            def init() {
-                mode = "initial";
-                entity = service.init();
-                println 'return initial';
-                return "initial"; 
-            }
-            
-             def start() {
+            void create() {
                 mode = "create";
+                entity = service.init();
                 entity.cashbreakdown = [];
                 cashBreakdown = InvokerUtil.lookupOpener("cash:breakdown", [
                     entries: entity.cashbreakdown, onupdate: { o->
                         breakdown = o;
                         total = entity.totalnoncash+breakdown;
                         binding.refresh("breakdown|total");
-                    }] );
-                return "default";
+                    }] );                
             }
             
             void open(){
@@ -92,8 +86,6 @@
                 }
             ] as BasicListModel;
             
-           
-            
             void submit() {
                 if( breakdown != entity.totalcash )
                     throw new Exception("Cash breakdown must equal total cash");
@@ -110,7 +102,6 @@
    </code>
    
    <pages>
-       <page name="initial" template="com.rameses.enterprise.treasury.remittance.RemittanceInitPage" />
        <page name="default" template="com.rameses.enterprise.treasury.remittance.RemittancePage" />
    </pages>
    

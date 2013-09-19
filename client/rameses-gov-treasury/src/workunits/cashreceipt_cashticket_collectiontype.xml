@@ -26,7 +26,7 @@
     </code>
     
     <pages>
-        <page template="com.rameses.gov.treasury.cashticket.CashTicketHandler"/>
+        <page template="com.rameses.gov.treasury.cashticket.CashTicketCollectionTypeHandler"/>
     </pages>
     
 </workunit>

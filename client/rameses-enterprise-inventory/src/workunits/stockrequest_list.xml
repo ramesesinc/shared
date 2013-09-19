@@ -1,0 +1,7 @@
+<workunit extends="wtemplates/InboxController.xml" serviceName="StockRequestService" 
+    defaultFileType="stockrequest">
+    <invokers>
+        <invoker folderid="/explorer/txn/inventory" caption="Stock Requests" role="AFO"/>
+        <invoker folderid="/explorer/txn/inventory" caption="Stock Requests" role="REQUESTER"/>
+    </invokers>
+</workunit>

@@ -15,12 +15,10 @@
         
             def entity;
             def service;
-            def page = 1;
             
             def title;
             
             void init() {
-                page = entity.currentpageno;
                 title = entity.title;
             }
             
@@ -32,28 +30,18 @@
             
             def listModel = [
                 fetchList: { o->
-                    if (!page) page = entity.currentpageno;
-                    return service.getEntries( [objid: entity.objid, page: page ] );
+                    o.objid = entity.objid;
+                    return service.getEntries( o );
                 }
             
-            ] as BasicListModel;
+            ] as PageListModel;
             
             void nextPage() {
-                page+=1; 
-                if(page>entity.currentpageno) {
-                    page = entity.currentpageno;
-                    throw new Exception("End of page");
-                }
-                listModel.reload();
+                 listModel.moveNextPage();
             }
             
             void prevPage() {
-                page-=1;
-                if(page<1) {
-                    page = 1;
-                    throw new Exception("Beginning of page");
-                }
-                listModel.reload();
+                listModel.moveBackPage();
            }
         }      
        ]]>

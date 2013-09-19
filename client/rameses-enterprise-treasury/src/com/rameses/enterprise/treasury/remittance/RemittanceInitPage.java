@@ -46,11 +46,61 @@ public class RemittanceInitPage extends javax.swing.JPanel {
         xTitledBorder1.setTitle("Summary of Collections");
         xDataTable1.setBorder(xTitledBorder1);
         xDataTable1.setColumns(new com.rameses.rcp.common.Column[]{
-            new com.rameses.rcp.common.Column("formno", "Form No", 100, 0, 0, false, true, true, false, null, new com.rameses.rcp.common.TextColumnHandler()).set("alignment","CENTER"),
-            new com.rameses.rcp.common.Column("stub", "Stub", 100, 0, 0, false, true, true, false, null, new com.rameses.rcp.common.TextColumnHandler()).set("alignment","CENTER"),
-            new com.rameses.rcp.common.Column("startseries", "From", 100, 0, 0, false, true, true, false, null, new com.rameses.rcp.common.TextColumnHandler()).set("alignment","CENTER"),
-            new com.rameses.rcp.common.Column("endseries", "To", 100, 0, 0, false, true, true, false, null, new com.rameses.rcp.common.TextColumnHandler()).set("alignment","CENTER"),
-            new com.rameses.rcp.common.Column("amount", "Amount", 100, 0, 0, false, true, true, false, null, new com.rameses.rcp.common.DecimalColumnHandler("#,##0.00", -1.0, -1.0, false))
+            new com.rameses.rcp.common.Column(new Object[]{
+                new Object[]{"name", "formno"}
+                , new Object[]{"caption", "Form No"}
+                , new Object[]{"width", 100}
+                , new Object[]{"minWidth", 0}
+                , new Object[]{"maxWidth", 0}
+                , new Object[]{"required", false}
+                , new Object[]{"resizable", true}
+                , new Object[]{"nullWhenEmpty", true}
+                , new Object[]{"editable", false}
+                , new Object[]{"alignment", "CENTER"}
+                , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
+            }),
+            new com.rameses.rcp.common.Column(new Object[]{
+                new Object[]{"name", "startseries"}
+                , new Object[]{"caption", "From"}
+                , new Object[]{"width", 100}
+                , new Object[]{"minWidth", 0}
+                , new Object[]{"maxWidth", 0}
+                , new Object[]{"required", false}
+                , new Object[]{"resizable", true}
+                , new Object[]{"nullWhenEmpty", true}
+                , new Object[]{"editable", false}
+                , new Object[]{"alignment", "CENTER"}
+                , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
+            }),
+            new com.rameses.rcp.common.Column(new Object[]{
+                new Object[]{"name", "endseries"}
+                , new Object[]{"caption", "To"}
+                , new Object[]{"width", 100}
+                , new Object[]{"minWidth", 0}
+                , new Object[]{"maxWidth", 0}
+                , new Object[]{"required", false}
+                , new Object[]{"resizable", true}
+                , new Object[]{"nullWhenEmpty", true}
+                , new Object[]{"editable", false}
+                , new Object[]{"alignment", "CENTER"}
+                , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
+            }),
+            new com.rameses.rcp.common.Column(new Object[]{
+                new Object[]{"name", "amount"}
+                , new Object[]{"caption", "Amount"}
+                , new Object[]{"width", 100}
+                , new Object[]{"minWidth", 0}
+                , new Object[]{"maxWidth", 0}
+                , new Object[]{"required", false}
+                , new Object[]{"resizable", true}
+                , new Object[]{"nullWhenEmpty", true}
+                , new Object[]{"editable", false}
+                , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.DecimalColumnHandler("#,##0.00", -1.0, -1.0, false)}
+            })
         });
         xDataTable1.setHandler("listModel");
         jPanel1.add(xDataTable1);

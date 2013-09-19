@@ -2,6 +2,7 @@ package com.rameses.enterprise.treasury.cashreceipt;
 
 import com.rameses.osiris2.themes.FormPage;
 import com.rameses.rcp.ui.annotations.Template;
+
 /*
  * CashReceiptInitial.java
  *
@@ -57,7 +58,6 @@ public class CashReceiptInitialPage extends javax.swing.JPanel {
         xFormPanel1.add(xComboBox2);
 
         xComboBox3.setCaption("Mode");
-        xComboBox3.setDynamic(true);
         xComboBox3.setExpression("#{item.caption}");
         xComboBox3.setItems("modeOpeners");
         xComboBox3.setName("modeOpener");
