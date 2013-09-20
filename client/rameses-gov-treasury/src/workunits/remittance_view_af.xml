@@ -21,18 +21,20 @@
             @Service("AFRemittanceService")
             def service;
             
-            
             String title = "Remittance";
             
             def entity;
             def receiptsListModel = [
                 fetchList: {
-                    def list = service.getRemittedAFSerial( [objid:entity.objid] );
-                    println list;
-                    return list;
+                    return service.getRemittedAFSerial( [objid:entity.objid] );
                 }
             ] as BasicListModel;
             
+            def cashTicketsListModel = [
+                fetchList: {
+                    return service.getRemittedCashTickets( [objid:entity.objid] );
+                }
+            ] as BasicListModel;
         }      
        ]]>
     </code>

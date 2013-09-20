@@ -1,6 +1,6 @@
 <workunit>
     <invokers>
-        <invoker type="afcontrol:formActions" caption="Change Mode" target="popup" action="init"/>
+        <invoker type="afserial:changemode" caption="Change Mode" target="popup" />
     </invokers>
     <code>
         <![CDATA[    
@@ -16,19 +16,15 @@
             def caller;
         
             def entity;
+            def saveHandler;
             
-            @Service("AFControlService")
+            @Service("AFSerialControlService")
             def service;
             
-           void init() {
-                entity = caller.selectedEntity;
-                if(entity==null)
-                    throw new Exception("Please select an item ");
-            }
-            
             def doOk() {
-                def m = [objid:entity.objid, mode: entity.mode];
+                def m = [objid:entity.objid, mode: entity.txnmode];
                 service.changeMode(m);
+                if(saveHandler) saveHandler();
                 return "_close";
             }
             
@@ -41,6 +37,6 @@
         ]]>
     </code>
     <pages>
-        <page template="com.rameses.gov.treasury.afcontrol.AFControlChangeMode"/>
+        <page template="com.rameses.gov.treasury.cashreceipt.ChangeModePage"/>
     </pages>
 </workunit>
