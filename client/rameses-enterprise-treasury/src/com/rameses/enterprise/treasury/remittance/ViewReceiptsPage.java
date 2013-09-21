@@ -83,8 +83,8 @@ public class ViewReceiptsPage extends javax.swing.JPanel {
                 , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
             }),
             new com.rameses.rcp.common.Column(new Object[]{
-                new Object[]{"name", "payer.name"}
-                , new Object[]{"caption", "Payer"}
+                new Object[]{"name", "paidby"}
+                , new Object[]{"caption", "Paid By"}
                 , new Object[]{"width", 100}
                 , new Object[]{"minWidth", 0}
                 , new Object[]{"maxWidth", 0}
@@ -124,7 +124,6 @@ public class ViewReceiptsPage extends javax.swing.JPanel {
             })
         });
         xDataTable1.setHandler("receiptsListModel");
-        xDataTable1.setId("receiptsListModel");
 
         formPanel2.setCaptionFont(new java.awt.Font("Arial", 1, 14));
         xNumberField1.setCaption("Total");

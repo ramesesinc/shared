@@ -4,16 +4,16 @@
  * Created on August 9, 2013, 2:16 AM
  */
 
-package com.rameses.gov.treasury.cashreceipt;
+package com.rameses.enterprise.treasury.cashreceipt;
 
 /**
  *
  * @author  Elmo
  */
-public class OfflinePage extends javax.swing.JPanel {
+public class ModeOfflinePage extends javax.swing.JPanel {
     
     /** Creates new form OnlinePage */
-    public OfflinePage() {
+    public ModeOfflinePage() {
         initComponents();
     }
     
