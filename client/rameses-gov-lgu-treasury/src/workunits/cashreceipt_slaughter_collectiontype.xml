@@ -11,7 +11,7 @@
         import com.rameses.rcp.common.*
         import com.rameses.osiris2.client.*
         import com.rameses.osiris2.common.*
-        import com.rameses.enterprise.treasury.controllers.*
+        import com.rameses.enterprise.treasury.cashreceipt.*
         
         class  SlaughterCollectionTypeController {
             @Caller 

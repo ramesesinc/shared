@@ -1,6 +1,6 @@
 <workunit>
     <invokers>
-        <invoker type="cashreceipt:mode" caption="ONLINE" index="0" />
+        <invoker type="cashreceipt:mode" caption="CAPTURE" index="2"/>
     </invokers>
     
     <code>
@@ -11,7 +11,7 @@
         import com.rameses.osiris2.common.*
         import com.rameses.enterprise.treasury.cashreceipt.*
         
-        class  CashReceiptModeOnlineController  {
+        class  CashReceiptModeCaptureController  {
             def entity;
         }
         ]]>
@@ -19,7 +19,7 @@
     </code>
     
     <pages>
-        <page template="com.rameses.gov.treasury.cashreceipt.OnlinePage"/>
+        <page template="com.rameses.enterprise.treasury.cashreceipt.ModeCapturePage"/>
     </pages>
     
 </workunit>

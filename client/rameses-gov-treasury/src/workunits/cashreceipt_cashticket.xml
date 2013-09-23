@@ -1,6 +1,8 @@
-<workunit extends="wtemplates/enterprise/treasury/BasicCashReceiptController.xml">
+<workunit>
     <invokers>
-        <invoker type="cashreceipt:cashticket" action="init" />
+        <invoker type="cashreceipt:cashticket"/>
+        <invoker type="formActions" action="_close" caption="Back" immediate="true"/>
+        <invoker type="formActions" action="save" caption="Submit"/>
     </invokers>
     
     <code>
@@ -9,12 +11,93 @@
         import com.rameses.rcp.common.*
         import com.rameses.osiris2.client.*
         import com.rameses.osiris2.common.*
-        import com.rameses.enterprise.treasury.controllers.*
+        import com.rameses.enterprise.treasury.cashreceipt.*
         
-        class  CashTicketReceiptController extends BasicCashReceipt {
+        class  CashTicketReceiptController {
+            
+            @Service("CashReceiptService")
+            def service;
+            
+            @Binding
+            def binding;
             
             String title = "Cash Ticket " ;
-        
+            def itemAmount = 0.0;
+            def entity;
+            
+           
+            @PropertyChangeListener
+            def listener = [
+                "entity.amount": { o->
+                    if( ( (double)o % (double)entity.denomination)!=0) {
+                        MsgBox.err("Amount must be exact by denomination");
+                        return false;
+                    }    
+                    entity.qtyissued = (int)  ((double)o / (double)entity.denomination);
+                    binding.refresh("entity.qtyissued");
+                },
+                "entity.qtyissued": { o->
+                    entity.amount = o * entity.denomination;
+                    binding.refresh("entity.amount");
+                },
+            ]
+            
+            def itemListModel = [
+                fetchList: { o->
+                    return entity.items;
+                },
+                onAddItem: {o-> 
+                    entity.items << o;
+                    itemAmount += o.amount;
+                },
+                onColumnUpdate: {o,name-> 
+                    if(entity.items) {
+                        itemAmount = entity.items.sum{ it.amount };
+                    }
+                },
+                onRemoveItem: { o->
+                    if(!MsgBox.confirm("You are about to remove this entry. Proceed?")) 
+                        return false;
+                    entity.items.remove( o );
+                    itemAmount = 0;
+                    if( entity.items ) {
+                       itemAmount = entity.items.sum{ it.amount };
+                    }
+                    return true;
+                }
+            ] as EditorListModel;
+            
+
+            def selectedItem;
+            def getLookupItems() {
+                return InvokerUtil.lookupOpener("revenueitem:lookup",[
+                    "query.txntype" : "cashreceipt",
+                    onselect:{ o->
+                        if(!o.fund.objid) 
+                            throw new Exception("The item selected must be associated with a fund");
+
+                        if(!o.cashbookid) 
+                            throw new Exception("There is no associated cashbook for this item. Please contact the treasury");
+
+                        if( entity.items.find{ it.item.objid == o.objid }!=null )
+                            throw new Exception("This item has already been added");
+                        selectedItem.item = o;
+                    }
+                ]); 
+            }
+            
+            def save() {
+                if(!entity.items)
+                    throw new Exception("Please specify at least one item");
+                if(itemAmount!= entity.amount)
+                    throw new Exception("Total of items must be equal to amount collected");
+                if( MsgBox.confirm('You are about to post this transaction. Continue?')) {
+                    entity = service.post( entity );
+                    MsgBox.alert( "suceesfully saved. Receipt No " + entity.receiptno );
+                    return "_close";
+                }
+            }
+            
         }
         ]]>
         

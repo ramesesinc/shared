@@ -1,4 +1,4 @@
-package com.rameses.enterprise.treasury.controllers; 
+package com.rameses.enterprise.treasury.cashreceipt; 
 
 import com.rameses.rcp.annotations.*
 import com.rameses.rcp.common.*
@@ -44,15 +44,10 @@ public class BasicCashReceipt extends AbstractCashReceipt {
 
     def selectedItem;
     def getLookupItems() {
-        return InvokerUtil.lookupOpener("revenueitem:lookup",[
+        return InvokerUtil.lookupOpener("cashreceiptitem:lookup",[
             "query.txntype" : "cashreceipt",
+            "query.collectorid" : entity.collector.objid,
             onselect:{ o->
-                if(!o.fund.objid) 
-                    throw new Exception("The item selected must be associated with a fund");
-
-                if(!o.cashbookid) 
-                    throw new Exception("There is no associated cashbook for this item. Please contact the treasury");
-
                 if( entity.items.find{ it.item.objid == o.objid }!=null )
                     throw new Exception("This item has already been added");
                 selectedItem.item = o;

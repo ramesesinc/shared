@@ -9,6 +9,7 @@
         <invoker type="formActions" caption="Assign" action="assign"  xvisibleWhen="#{selectedItem!=null &amp;&amp; selectedItem.active==0}"/>
         <invoker type="formActions" caption="Deactivate" action="deactivate" xvisibleWhen="#{selectedItem!=null &amp;&amp; selectedItem.active==1}"/>
         <invoker type="formActions" caption="View Assign To" action="_assignTo" />
+        <invoker type="formActions" caption="Change Mode" action="changeMode" />
     </invokers>
     
     <code>
@@ -43,7 +44,7 @@
                 def z = [:];
                 z.objid = selectedItem.objid;
                 z.txnmode = entity.txnmode;
-                z.afid = entity.formno
+                z.formno = entity.formno;
                 svc.activateControl(z);
                 listModel.reload();    
             }
@@ -67,9 +68,16 @@
                 ] );    
             }
 
+            def changeMode() {
+                if(!selectedItem) throw new Exception("Select an item");
+                return InvokerUtil.lookupOpener("afserial:changemode", 
+                    [entity:selectedItem, saveHandler: { listModel.reload(); }] 
+                );
+            }
+            
             def listModel = [
                 fetchList: { o->
-                    list = svc.getOpenIssuanceList( [af:entity.formno, txnmode:entity.txnmode] );
+                    list = svc.getOpenIssuanceList( entity );
                     return list;
                 },
                 getContextMenu: { o,colName->
@@ -81,19 +89,25 @@
                     else{
                         list.add([value:'Deactivate',id:'deactivate']);                    
                     }
+                    list.add([value:'Change Mode',id:'changemode']);
                     return list;
                 },
                 callContextMenu: { o,m->
                     if( m.id == "activate") activate();
                     else if(m.id == "deactivate") deactivate();
-                    else if(m.id=="assign") assign();
+                    else if(m.id=="assign") {
+                        return assign();
+                    }    
+                    else if(m.id=="changemode") {
+                        return changeMode();
+                    }    
                 }
             ] as BasicListModel;
             
             
             def assigneeListModel = [
                 fetchList: { o->
-                    list = svc.getAssigneeIssuanceList( [af:entity.formno, txnmode:entity.txnmode] );
+                    list = svc.getAssigneeIssuanceList( entity );
                     return list;
                 },
                 getContextMenu: { o,colName->

@@ -6,3 +6,6 @@
     enabled: true;
 }
 
+"entity.amount" [ true == true ] {
+    enabled: false;
+}

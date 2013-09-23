@@ -1,17 +1,10 @@
 <!-- REQUISITION ISSUE SLIP -->
 <workunit>
     <invokers>
-       <invoker type="stockrequest:create" caption="New Stock Request"  action="init" target="window" index="100" role="AFO"/>
-       <invoker type="stockrequest:create" caption="New Stock Request"  action="init" target="window" index="100" role="REQUESTER"/>
-       
-       <invoker type="home.action" caption="Stock Request" action="init" index="1" target="window" role="AFO" />
-       <invoker type="home.action" caption="Stock Request" action="init" index="1" target="window" role="REQUESTER" />
-       
-       <invoker type="quick_launcher" code="STK" caption="Cash Receipt" action="init" index="1" target="window" role="AFO" />
-       <invoker type="quick_launcher" code="STK" caption="Cash Receipt" action="init" index="1" target="window" role="REQUESTER"/>
-       
+       <invoker type="stockrequest:create" caption="New Stock Request"  action="init" target="window" index="100" role="AFO,REQUESTER"/>
+       <invoker type="home.action" caption="Stock Request" action="init" index="1" target="window" role="AFO,REQUESTER" />
+       <invoker type="quick_launcher" code="STK" caption="Cash Receipt" action="init" index="1" target="window" role="AFO,REQUESTER" />
        <invoker type="formActions" caption="Next" action="doCreate"  />
-       
     </invokers>
     
     <code>
