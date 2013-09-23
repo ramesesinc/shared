@@ -1,4 +1,4 @@
-package com.rameses.enterprise.treasury.controllers; 
+package com.rameses.enterprise.treasury.cashreceipt; 
 
 import com.rameses.rcp.annotations.*
 import com.rameses.rcp.common.*
