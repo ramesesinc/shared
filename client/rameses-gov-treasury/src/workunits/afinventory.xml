@@ -1,7 +1,7 @@
 <workunit>
     <invokers>
-        <invoker folderid="/explorer/txn/treasury" caption="AF Inventory" action="init"/>
-        <invoker type="formActions" caption="Close" action="_close" role="AFO"/>
+        <invoker folderid="/explorer/txn/treasury" caption="AF Inventory" action="init" role="AFO"/>
+        <invoker type="formActions" caption="Close" action="_close" />
     </invokers>
     
     <code>
