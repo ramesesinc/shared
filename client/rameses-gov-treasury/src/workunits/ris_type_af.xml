@@ -17,7 +17,6 @@
         import com.rameses.osiris2.client.*;
         import com.rameses.util.*;
         import java.rmi.server.*;
-        import com.rameses.gov.treasury.controllers.*
         
         public class AFRISController extends RISController {
         

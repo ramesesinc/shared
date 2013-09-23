@@ -11,7 +11,7 @@
         <invoker type="formActions" action="void" caption="Void" visibleWhen="#{completed}"/>
     </invokers>
     
-    <code class="com.rameses.enterprise.treasury.controllers.BasicCashReceipt"/>
+    <code class="com.rameses.enterprise.treasury.cashreceipt.BasicCashReceipt"/>
 
     <pages>
         <page name="completed" template="com.rameses.enterprise.treasury.cashreceipt.CashReceiptInfoPage"/>

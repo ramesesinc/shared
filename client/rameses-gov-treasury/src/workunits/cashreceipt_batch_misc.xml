@@ -18,17 +18,26 @@
         import com.rameses.enterprise.treasury.cashreceipt.batch.*;
         
         class BatchCashReceiptController extends BatchCaptureController {
+        
+            @Service("CashReceiptBatchCaptureService")
+            def service;
+        
             String title = "Batch Capture (Miscellaneous Collection)";
+            def batchItems = [];
             
             void init() {
                 entity = entity.batchcontrol;
             }
             
-            public String getNextSeries() {
+            public String getNextReceiptNo() {
                 def p = (entity.prefix)?entity.prefix:'';
                 def s = (entity.suffix)?entity.sufix:'';
                 def pad = "0".multiply(entity.serieslength - (entity.startseries+'').length());
                 return p+pad+entity.startseries+s;
+            }
+            
+            public int getNextSeries() {
+                return entity.startseries;
             }
             
             public void moveNext() {
@@ -36,6 +45,10 @@
                 binding.refresh("entity.startseries");
             }
             
+            public void save() {
+                entity.items = batchItems;
+                service.create( entity );
+            }
            
         }      
        ]]>

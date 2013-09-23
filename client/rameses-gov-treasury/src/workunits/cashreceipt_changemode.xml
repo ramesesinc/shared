@@ -22,7 +22,7 @@
             def service;
             
             def doOk() {
-                def m = [objid:entity.objid, mode: entity.txnmode];
+                def m = [objid:entity.objid, txnmode: entity.txnmode];
                 service.changeMode(m);
                 if(saveHandler) saveHandler();
                 return "_close";

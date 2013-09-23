@@ -14,12 +14,8 @@ public abstract class BatchCaptureController  {
     def batchItems = [];
     def selectedItem;
 
-    //variables for init page 
-    def defaulttxndate;
-    def afcontrol;
-    def collectiontype;
-
-    public abstract String getNextSeries();
+    public abstract int getNextSeries();
+    public abstract String getNextReceiptNo();
     public abstract void moveNext();
             
     def getLookupPayer() {
@@ -33,7 +29,8 @@ public abstract class BatchCaptureController  {
     }
             
     def getLookupAccount() {
-        return InvokerUtil.lookupOpener("revenueitem:lookup", [ 
+        return InvokerUtil.lookupOpener("cashreceiptitem:lookup", [ 
+            "query.collectorid": entity.collector.objid,
             onselect: { o->
                 if(selectedItem.items == null ) selectedItem.items = [];
                 selectedItem.items.clear();
@@ -59,8 +56,9 @@ public abstract class BatchCaptureController  {
         createItem: {
             def m  = [:];
             m._filetype = "cashreceipt_batchcapture";
-            m.receiptno = getNextSeries();
+            m.receiptno = getNextReceiptNo();
             m.receiptdate = entity.receiptdate;
+            m.series = getNextSeries();
             m.amount = 0.0;
             return m;
         },
