@@ -17,6 +17,7 @@ public abstract class BatchCaptureController  {
     public abstract int getNextSeries();
     public abstract String getNextReceiptNo();
     public abstract void moveNext();
+    public abstract String getFileType();
             
     def getLookupPayer() {
         return InvokerUtil.lookupOpener("entity:lookup", [
@@ -55,7 +56,7 @@ public abstract class BatchCaptureController  {
         },
         createItem: {
             def m  = [:];
-            m._filetype = "cashreceipt_batchcapture";
+            m._filetype = getFileType();
             m.receiptno = getNextReceiptNo();
             m.receiptdate = entity.receiptdate;
             m.series = getNextSeries();

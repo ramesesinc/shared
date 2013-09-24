@@ -1,5 +1,0 @@
-<workunit extends="wtemplates/BasicLookupController.xml" serviceName="SREAccountLookupService">
-    <invokers> 
-        <invoker type="sreaccount:lookup" caption="Lookup SRE Account" target="popup"/> 
-    </invokers> 
-</workunit>
