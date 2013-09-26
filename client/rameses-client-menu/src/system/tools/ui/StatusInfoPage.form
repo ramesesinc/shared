@@ -63,7 +63,7 @@
             <BevelBorder bevelType="1"/>
           </Border>
         </Property>
-        <Property name="expression" type="java.lang.String" value="&lt;b&gt;CLIENT&lt;/b&gt;: #{user.clientCode}"/>
+        <Property name="expression" type="java.lang.String" value="&lt;b&gt;ORG&lt;/b&gt;: #{user.clientCode}"/>
         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[120, 22]"/>
         </Property>
