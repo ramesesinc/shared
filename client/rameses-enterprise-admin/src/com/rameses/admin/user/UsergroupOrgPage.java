@@ -13,7 +13,7 @@ package com.rameses.admin.user;
 public class UsergroupOrgPage extends javax.swing.JPanel {
     
     public UsergroupOrgPage() {
-        initComponents();
+        initComponents(); 
     }
     
     /** This method is called from within the constructor to
