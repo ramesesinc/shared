@@ -36,7 +36,10 @@ public class UserGroupController extends CRUDController {
     }
     
     Map createEntity() {
-        return [usergroupid: node.usergroupid ];
+        def usergroupid = node.usergroupid;
+        if (!usergroupid) usergroupid = entity?.usergroupid;
+            
+        return [usergroupid: usergroupid ];
     } 
 
     def getSecurityGroups() {
@@ -57,7 +60,7 @@ public class UserGroupController extends CRUDController {
     }
 
     def getLookupOrg() {
-        if( !node.orgclass ) return null;
+        //if( !node.orgclass ) return null;
         return InvokerUtil.lookupOpener( "org:lookup", [
             "query.orgclass":node.orgclass,
             onselect: { o->
