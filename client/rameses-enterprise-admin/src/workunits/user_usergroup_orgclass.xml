@@ -23,9 +23,19 @@
             }
             
             def getLookupOrg() {
-                return InvokerUtil.lookupOpener('org:lookup', [ 
-                    'query.orgclass': entity.orgclass 
-                ]); 
+                def params = [ 
+                    'query.orgclass': entity.orgclass, 
+                    
+                    onselect: {o-> 
+                        entity.org = o; 
+                        entity.orgclass = o.orgclass; 
+                    }, 
+                    
+                    onempty: {
+                        entity.orgclass = null; 
+                    } 
+                ]; 
+                return InvokerUtil.lookupOpener('org:lookup', params); 
             } 
             
             def showPermissions() {

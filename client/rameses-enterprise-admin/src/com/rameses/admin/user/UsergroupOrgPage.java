@@ -27,8 +27,8 @@ public class UsergroupOrgPage extends javax.swing.JPanel {
         xFormPanel1 = new com.rameses.rcp.control.XFormPanel();
         xTextField1 = new com.rameses.rcp.control.XTextField();
         xTextField2 = new com.rameses.rcp.control.XTextField();
-        xTextField3 = new com.rameses.rcp.control.XTextField();
         xLookupField1 = new com.rameses.rcp.control.XLookupField();
+        xTextField3 = new com.rameses.rcp.control.XTextField();
         xFormPanel2 = new com.rameses.rcp.control.XFormPanel();
         xComboBox2 = new com.rameses.rcp.control.XComboBox();
         xButton1 = new com.rameses.rcp.control.XButton();
@@ -54,22 +54,22 @@ public class UsergroupOrgPage extends javax.swing.JPanel {
         xTextField2.setReadonly(true);
         xFormPanel1.add(xTextField2);
 
+        xLookupField1.setCaption("Org. Name");
+        xLookupField1.setCaptionWidth(110);
+        xLookupField1.setExpression("#{entity.org.name}");
+        xLookupField1.setHandler("lookupOrg");
+        xLookupField1.setName("entity.org");
+        xLookupField1.setPreferredSize(new java.awt.Dimension(300, 20));
+        xFormPanel1.add(xLookupField1);
+
         xTextField3.setCaption("Org. Class");
         xTextField3.setCaptionWidth(110);
+        xTextField3.setDepends(new String[] {"entity.org"});
         xTextField3.setEnabled(false);
         xTextField3.setName("entity.orgclass");
         xTextField3.setPreferredSize(new java.awt.Dimension(300, 20));
         xTextField3.setReadonly(true);
         xFormPanel1.add(xTextField3);
-
-        xLookupField1.setCaption("Org. Name");
-        xLookupField1.setCaptionWidth(110);
-        xLookupField1.setDisableWhen("#{entity.orgclass == null}");
-        xLookupField1.setExpression("#{entity.org.name}");
-        xLookupField1.setHandler("lookupOrg");
-        xLookupField1.setName("entity.org");
-        xLookupField1.setPreferredSize(new java.awt.Dimension(200, 20));
-        xFormPanel1.add(xLookupField1);
 
         xFormPanel2.setOrientation(com.rameses.rcp.constant.UIConstants.HORIZONTAL);
         xFormPanel2.setPadding(new java.awt.Insets(0, 0, 5, 5));
@@ -133,7 +133,7 @@ public class UsergroupOrgPage extends javax.swing.JPanel {
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(119, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     
