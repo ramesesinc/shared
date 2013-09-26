@@ -54,6 +54,7 @@ public abstract class LookupController extends LookupModel
     private String serviceName;
     private String entityName;
     private int preferredRowSize;
+    private List showedResults;
     
     // this is injected by the caller for notification
     public Object getHandler() { return callerHandler; } 
@@ -112,6 +113,14 @@ public abstract class LookupController extends LookupModel
     }
     
     public List fetchList(Map params) { 
+        if (showedResults != null) {
+            List list = new ArrayList();
+            list.addAll(showedResults);
+            showedResults.clear();
+            showedResults = null; 
+            return list; 
+        }
+        
         String name = getServiceName();
         if (name != null && name.length() > 0) {
             String stag = getTag();
@@ -197,6 +206,17 @@ public abstract class LookupController extends LookupModel
     }
         
     // </editor-fold>    
+    
+    public boolean show(String searchtext) {
+        boolean success = super.show(searchtext);
+        if (success) {
+            showedResults = new ArrayList();
+            showedResults.addAll(getDataList()); 
+        } else {
+            showedResults = null; 
+        }
+        return success;
+    }    
     
     public void search() {
         load(); 
@@ -305,4 +325,5 @@ public abstract class LookupController extends LookupModel
     }
     
     // </editor-fold>    
+
 }

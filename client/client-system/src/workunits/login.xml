@@ -1,7 +1,7 @@
 <workunit>
     
     <invokers>
-        <invoker type="loader" role="SYSTEM" caption="Login" index="-1000" action="init"/> 
+        <invoker type="loader" caption="Login" index="-1000" action="init"/> 
     </invokers>
     
     <code>
@@ -29,11 +29,13 @@
             def path = System.getProperty( "user.dir" ) + "/client.conf";
             def config;
             
-            void init()
-            {
+            def init() {                 
+                if (user.env.USERID) return '_close'; 
+            
                 config = new ConfigProperties(path);
                 clientcode = config.getProperty("app.clientcode");
-            }
+                return 'default';
+            } 
             
             def login()
             {

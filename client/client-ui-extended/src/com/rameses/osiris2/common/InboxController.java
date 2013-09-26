@@ -60,6 +60,17 @@ public class InboxController extends ListController {
     public void init() {
         formActions.clear();
         formActions.add(createAction("reload", "Refresh", "images/toolbars/refresh.png", "ctrl R", 'r', null, true)); 
+        
+        if (!isAllowCreate()) return;
+
+        String filetype = getDefaultFileType();
+        if (filetype != null && filetype.length() > 0) {
+            String invtype = filetype.toLowerCase() + ":create";
+            List<Invoker> invokers = actionsProvider.getInvokers(null, invtype); 
+            for (Invoker invoker: invokers) { 
+                formActions.add(new ActionInvoker(invoker)); 
+            } 
+        } 
     }
     
     // <editor-fold defaultstate="collapsed" desc=" Getters/Settters ">
@@ -415,7 +426,7 @@ public class InboxController extends ListController {
         String invtype = filetype.toLowerCase() + ":"+mode;
         return actionsProvider.getInvokers(node, invtype); 
     }
-        
+    
     private void buildActions() {
         formActions.clear(); 
         formActions.add(createAction("reload", "Refresh", "images/toolbars/refresh.png", "ctrl R", 'r', null, true)); 

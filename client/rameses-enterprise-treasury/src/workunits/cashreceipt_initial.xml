@@ -1,9 +1,11 @@
 <workunit>
     
    <invokers>
-         <invoker type="home.action" caption="Cash Receipt" action="init" index="1" role="COLLECTOR" target="window"/>
-         <invoker type="quick_launcher" code="RCT" caption="Cash Receipt" action="init" index="1" role="COLLECTOR" target="window"/>
-         <invoker folderid="/menu/txn/treasury" caption="Cash Receipt" action="init" index="10" role="COLLECTOR"/>
+         <invoker type="home.action" caption="Cash Receipt" action="init" index="1" role="COLLECTOR,SUBCOLLECTOR" target="window"/>
+         <invoker type="quick_launcher" code="RCT" caption="Cash Receipt" action="init" index="1" role="COLLECTOR,SUBCOLLECTOR" target="window"/>
+         <invoker folderid="/menu/txn/treasury" caption="Cash Receipt" action="init" index="10" role="COLLECTOR,SUBCOLLECTOR"/>
+         
+         <!-- self toolbars -->
          <invoker type="formActions" caption="Next" action="runProcess" shortcut="ctrl N"/>
    </invokers>
    
@@ -56,6 +58,8 @@
             def listener = [
                 "modeOpener" : { o->
                     entity.txnmode = o.caption;
+                    entity.receiptdate = null;
+                    entity.collector = null;
                 }
             ]
             
@@ -63,6 +67,13 @@
                 try {
                     //call init first
                     def newRecord = cashReceiptSvc.init( entity );
+                    if( newRecord.batchcontrol ) {
+                        try {
+                            def o = InvokerUtil.lookupOpener("cashreceipt:batch:"+entity.collectiontype.handler,[entity: newRecord]);
+                            if(o) return o;
+                        }
+                        catch(ign){;}
+                    }
                     return InvokerUtil.lookupOpener("cashreceipt:"+entity.collectiontype.handler,[entity: newRecord]);
                 }
                 catch(Warning w) {
