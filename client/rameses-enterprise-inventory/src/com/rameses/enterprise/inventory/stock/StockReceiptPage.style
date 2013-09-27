@@ -1,4 +1,4 @@
-"addItems"[mode=='create'] {
+"addItems|reqType"[mode=='create'] {
     enabled: true;
 }
 
@@ -6,7 +6,7 @@
     enabled:true;
 }
 
-"addItems"[mode!='create'] {
+"addItems|reqType"[mode!='create'] {
     enabled: false;
 }
 

@@ -1,0 +1,38 @@
+<workunit>
+    <invokers>
+        <invoker type="revenueitem:formActions" caption="Options" visibleWhen="#{mode=='read'}"/>
+        <invoker type="formActions" caption="Back" action="_close" immediate="true"/>
+        <invoker type="formActions" caption="Save" action="save"/>
+   </invokers>
+   <code>
+    <![CDATA[
+    import com.rameses.osiris2.common.*;
+    import com.rameses.rcp.common.*;
+    import com.rameses.rcp.annotations.*;
+    import com.rameses.osiris2.client.*;
+    import com.rameses.common.*;
+
+    public class RevenueItemAccountController {
+    
+        @Service("RevenueItemAccountService")
+        def service;
+        
+        def entity;
+        
+        String title = "Revenue Item Option";
+        
+        def valueTypes = [ "ANY", "FIXED", "FIXEDUNIT" ];
+        
+        public void save() {
+            service.update(entity);
+            MsgBox.alert("changes saved");
+        }
+    }    
+    ]]>
+   </code>
+   
+   <pages>
+       <page template="com.rameses.enterprise.accounts.RevenueItemOptionPage"/>
+   </pages>
+   
+</workunit>

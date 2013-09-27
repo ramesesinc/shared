@@ -24,9 +24,7 @@ public class StockRequestController {
     def selectedItem;
 
     void create() {
-        title = "Stock Request ( " +entity.reqtype + " )";
         entity.objid = "STKREQ"+new UID();
-        entityName = "stockrequest:"+entity.reqtype.toLowerCase();
         mode = "create";
     }
 
@@ -74,7 +72,7 @@ public class StockRequestController {
         }
     ] as EditorListModel;
 
-    def submit() {
+    def save() {
         if(!entity.items)
             throw new Exception("Please indicate at least one item");
 
@@ -83,5 +81,9 @@ public class StockRequestController {
             mode = "read";
        }
        return null;
+    }
+
+    def print() {
+        throw new Exception("Unsupported print method");
     }
 }

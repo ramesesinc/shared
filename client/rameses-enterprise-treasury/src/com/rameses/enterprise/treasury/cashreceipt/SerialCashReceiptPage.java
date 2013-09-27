@@ -41,6 +41,7 @@ public class SerialCashReceiptPage extends javax.swing.JPanel {
         xFormPanel3 = new com.rameses.rcp.control.XFormPanel();
         xLabel2 = new com.rameses.rcp.control.XLabel();
         xLabel5 = new com.rameses.rcp.control.XLabel();
+        xLabel1 = new com.rameses.rcp.control.XLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -132,6 +133,10 @@ public class SerialCashReceiptPage extends javax.swing.JPanel {
         xLabel5.setPreferredSize(new java.awt.Dimension(0, 20));
         xLabel5.setShowCaption(false);
         xFormPanel3.add(xLabel5);
+
+        xLabel1.setExpression("stub no:  #{entity.stub}");
+        xLabel1.setShowCaption(false);
+        xFormPanel3.add(xLabel1);
 
         org.jdesktop.layout.GroupLayout jPanel2Layout = new org.jdesktop.layout.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -358,8 +363,8 @@ public class SerialCashReceiptPage extends javax.swing.JPanel {
                 , new Object[]{"resizable", true}
                 , new Object[]{"nullWhenEmpty", true}
                 , new Object[]{"editable", false}
-                , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
                 , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
             }),
             new com.rameses.rcp.common.Column(new Object[]{
                 new Object[]{"name", "particulars"}
@@ -371,8 +376,8 @@ public class SerialCashReceiptPage extends javax.swing.JPanel {
                 , new Object[]{"resizable", true}
                 , new Object[]{"nullWhenEmpty", true}
                 , new Object[]{"editable", false}
-                , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
                 , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
             }),
             new com.rameses.rcp.common.Column(new Object[]{
                 new Object[]{"name", "amount"}
@@ -384,8 +389,8 @@ public class SerialCashReceiptPage extends javax.swing.JPanel {
                 , new Object[]{"resizable", true}
                 , new Object[]{"nullWhenEmpty", true}
                 , new Object[]{"editable", false}
-                , new Object[]{"typeHandler", new com.rameses.rcp.common.DecimalColumnHandler("#,##0.00", -1.0, -1.0, false)}
                 , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.DecimalColumnHandler("#,##0.00", -1.0, -1.0, false, 0)}
             })
         });
         xDataTable1.setHandler("paymentListModel");
@@ -460,6 +465,7 @@ public class SerialCashReceiptPage extends javax.swing.JPanel {
     private com.rameses.rcp.control.XFormPanel xFormPanel1;
     private com.rameses.rcp.control.XFormPanel xFormPanel2;
     private com.rameses.rcp.control.XFormPanel xFormPanel3;
+    private com.rameses.rcp.control.XLabel xLabel1;
     private com.rameses.rcp.control.XLabel xLabel2;
     private com.rameses.rcp.control.XLabel xLabel5;
     private com.rameses.rcp.control.XLookupField xLookupField1;

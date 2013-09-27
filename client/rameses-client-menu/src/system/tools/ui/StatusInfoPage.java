@@ -39,7 +39,7 @@ public class StatusInfoPage extends javax.swing.JPanel {
         xLabel1.setUseHtml(true);
 
         xLabel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        xLabel2.setExpression("<b>CLIENT</b>: #{user.clientCode}");
+        xLabel2.setExpression("<b>ORG</b>: #{user.clientCode}");
         xLabel2.setPreferredSize(new java.awt.Dimension(120, 22));
         xLabel2.setUseHtml(true);
 
