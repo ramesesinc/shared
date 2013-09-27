@@ -52,8 +52,8 @@ public class StockIssueResultPage extends javax.swing.JPanel {
         xLabel4.setName("entity.txntype");
         xFormPanel1.add(xLabel4);
 
-        xLabel2.setCaption("Requester");
-        xLabel2.setExpression("#{entity.requester.name}");
+        xLabel2.setCaption("Issue To");
+        xLabel2.setExpression("#{entity.issueto.name}");
         xFormPanel1.add(xLabel2);
 
         xLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

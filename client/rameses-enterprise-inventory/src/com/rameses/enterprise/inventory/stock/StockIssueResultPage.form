@@ -86,8 +86,8 @@
             </Component>
             <Component class="com.rameses.rcp.control.XLabel" name="xLabel2">
               <Properties>
-                <Property name="caption" type="java.lang.String" value="Requester"/>
-                <Property name="expression" type="java.lang.String" value="#{entity.requester.name}"/>
+                <Property name="caption" type="java.lang.String" value="Issue To"/>
+                <Property name="expression" type="java.lang.String" value="#{entity.issueto.name}"/>
               </Properties>
             </Component>
           </SubComponents>

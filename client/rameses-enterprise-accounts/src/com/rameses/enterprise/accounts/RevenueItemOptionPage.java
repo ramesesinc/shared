@@ -1,26 +1,27 @@
 /*
- * RISInitial.java
+ * AccountPage.java
  *
- * Created on August 10, 2013, 10:29 PM
+ * Created on February 27, 2011, 12:48 PM
  */
 
-package com.rameses.gov.treasury.ris;
+package com.rameses.enterprise.accounts;
+
 
 import com.rameses.osiris2.themes.FormPage;
 import com.rameses.rcp.ui.annotations.Template;
+import com.rameses.util.TemplateProvider;
 
 /**
  *
- * @author  Elmo
+ * @author  jzamss
  */
 @Template(FormPage.class)
-public class RISInitialPage extends javax.swing.JPanel {
+public class RevenueItemOptionPage extends javax.swing.JPanel {
     
-    /** Creates new form RISInitial */
-    public RISInitialPage() {
+    /** Creates new form AccountPage */
+    public RevenueItemOptionPage() {
         initComponents();
     }
-    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -29,20 +30,29 @@ public class RISInitialPage extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
     private void initComponents() {
         jPanel1 = new javax.swing.JPanel();
-        xFormPanel1 = new com.rameses.rcp.control.XFormPanel();
+        xFormPanel2 = new com.rameses.rcp.control.XFormPanel();
+        xDecimalField1 = new com.rameses.rcp.control.XDecimalField();
         xComboBox1 = new com.rameses.rcp.control.XComboBox();
 
+        setPreferredSize(new java.awt.Dimension(542, 498));
         com.rameses.rcp.control.border.XTitledBorder xTitledBorder1 = new com.rameses.rcp.control.border.XTitledBorder();
-        xTitledBorder1.setTitle("Requisition Info");
+        xTitledBorder1.setTitle("Value Option");
         jPanel1.setBorder(xTitledBorder1);
 
-        xFormPanel1.setCaptionWidth(150);
-        xComboBox1.setCaption("Requisition Type");
-        xComboBox1.setExpression("#{item.caption}");
-        xComboBox1.setItems("risTypes");
-        xComboBox1.setName("risType");
+        xFormPanel2.setCaptionWidth(120);
+        xDecimalField1.setCaption("Default Value");
+        xDecimalField1.setName("entity.defaultvalue");
+        xDecimalField1.setPreferredSize(new java.awt.Dimension(0, 20));
+        xDecimalField1.setRequired(true);
+        xFormPanel2.add(xDecimalField1);
+
+        xComboBox1.setAllowNull(false);
+        xComboBox1.setCaption("Value Type");
+        xComboBox1.setItems("valueTypes");
+        xComboBox1.setName("entity.valuetype");
         xComboBox1.setPreferredSize(new java.awt.Dimension(0, 22));
-        xFormPanel1.add(xComboBox1);
+        xComboBox1.setRequired(true);
+        xFormPanel2.add(xComboBox1);
 
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -50,15 +60,15 @@ public class RISInitialPage extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 389, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(103, 103, 103))
+                .add(xFormPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 287, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(170, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 33, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(164, Short.MAX_VALUE))
+                .add(xFormPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 72, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
@@ -68,14 +78,14 @@ public class RISInitialPage extends javax.swing.JPanel {
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(202, Short.MAX_VALUE))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     
@@ -83,9 +93,8 @@ public class RISInitialPage extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private com.rameses.rcp.control.XComboBox xComboBox1;
-    private com.rameses.rcp.control.XFormPanel xFormPanel1;
+    private com.rameses.rcp.control.XDecimalField xDecimalField1;
+    private com.rameses.rcp.control.XFormPanel xFormPanel2;
     // End of variables declaration//GEN-END:variables
-    
-    
     
 }
