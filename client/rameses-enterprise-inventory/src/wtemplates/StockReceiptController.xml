@@ -1,0 +1,15 @@
+<!-- REQUISITION ISSUE SLIP -->
+<workunit>
+    
+    <invokers>
+       <invoker type="formActions" caption="Close" action="_close" shortcut="ctrl C"/>
+       <invoker type="formActions" caption="Next" action="process" visibleWhen="#{mode=='initial'}"/>
+       <invoker type="formActions" caption="Save" action="save" visibleWhen="#{mode=='create'}" shortcut="ctrl S"/>
+       <invoker type="formActions" caption="Print" action="print" visibleWhen="#{mode == 'read'}" shortcut="ctrl P"/>
+    </invokers>
+    
+    <pages>
+        <page name="default" template="com.rameses.enterprise.inventory.stock.StockReceiptPage"/>
+    </pages>
+    
+</workunit>

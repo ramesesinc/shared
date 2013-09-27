@@ -39,10 +39,9 @@ public class LiquidationPage extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         xFormPanel4 = new com.rameses.rcp.control.XFormPanel();
         xDecimalField5 = new com.rameses.rcp.control.XDecimalField();
-        xDecimalField8 = new com.rameses.rcp.control.XDecimalField();
         xFormPanel3 = new com.rameses.rcp.control.XFormPanel();
         xDecimalField6 = new com.rameses.rcp.control.XDecimalField();
-        xDecimalField7 = new com.rameses.rcp.control.XDecimalField();
+        xDecimalField10 = new com.rameses.rcp.control.XDecimalField();
         xFormPanel1 = new com.rameses.rcp.control.XFormPanel();
         xLabel1 = new com.rameses.rcp.control.XLabel();
         xLabel2 = new com.rameses.rcp.control.XLabel();
@@ -58,8 +57,8 @@ public class LiquidationPage extends javax.swing.JPanel {
                 , new Object[]{"resizable", true}
                 , new Object[]{"nullWhenEmpty", true}
                 , new Object[]{"editable", false}
-                , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
                 , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
             }),
             new com.rameses.rcp.common.Column(new Object[]{
                 new Object[]{"name", "fund.title"}
@@ -71,8 +70,8 @@ public class LiquidationPage extends javax.swing.JPanel {
                 , new Object[]{"resizable", true}
                 , new Object[]{"nullWhenEmpty", true}
                 , new Object[]{"editable", false}
-                , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
                 , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
             }),
             new com.rameses.rcp.common.Column(new Object[]{
                 new Object[]{"name", "amount"}
@@ -84,8 +83,8 @@ public class LiquidationPage extends javax.swing.JPanel {
                 , new Object[]{"resizable", true}
                 , new Object[]{"nullWhenEmpty", true}
                 , new Object[]{"editable", false}
-                , new Object[]{"typeHandler", new com.rameses.rcp.common.DecimalColumnHandler("#,##0.00", -1.0, -1.0, false)}
                 , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.DecimalColumnHandler("#,##0.00", -1.0, -1.0, false, 0)}
             }),
             new com.rameses.rcp.common.Column(new Object[]{
                 new Object[]{"name", "cashier"}
@@ -98,8 +97,8 @@ public class LiquidationPage extends javax.swing.JPanel {
                 , new Object[]{"nullWhenEmpty", true}
                 , new Object[]{"editable", true}
                 , new Object[]{"editableWhen", null}
-                , new Object[]{"typeHandler", new com.rameses.rcp.common.LookupColumnHandler("#{item.cashier.name}", "cashier:lookup")}
                 , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.LookupColumnHandler("#{item.cashier.name}", "cashier:lookup")}
             })
         });
         xDataTable2.setHandler("fundSummaryModel");
@@ -124,8 +123,8 @@ public class LiquidationPage extends javax.swing.JPanel {
                 , new Object[]{"resizable", false}
                 , new Object[]{"nullWhenEmpty", true}
                 , new Object[]{"editable", false}
-                , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
                 , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
             }),
             new com.rameses.rcp.common.Column(new Object[]{
                 new Object[]{"name", "particulars"}
@@ -137,8 +136,8 @@ public class LiquidationPage extends javax.swing.JPanel {
                 , new Object[]{"resizable", true}
                 , new Object[]{"nullWhenEmpty", true}
                 , new Object[]{"editable", false}
-                , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
                 , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
             }),
             new com.rameses.rcp.common.Column(new Object[]{
                 new Object[]{"name", "amount"}
@@ -150,8 +149,8 @@ public class LiquidationPage extends javax.swing.JPanel {
                 , new Object[]{"resizable", false}
                 , new Object[]{"nullWhenEmpty", true}
                 , new Object[]{"editable", false}
-                , new Object[]{"typeHandler", new com.rameses.rcp.common.DecimalColumnHandler("#,##0.00", -1.0, -1.0, false)}
                 , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.DecimalColumnHandler("#,##0.00", -1.0, -1.0, false, 0)}
             }),
             new com.rameses.rcp.common.Column(new Object[]{
                 new Object[]{"name", "voided"}
@@ -163,8 +162,8 @@ public class LiquidationPage extends javax.swing.JPanel {
                 , new Object[]{"resizable", false}
                 , new Object[]{"nullWhenEmpty", true}
                 , new Object[]{"editable", false}
-                , new Object[]{"typeHandler", new com.rameses.rcp.common.CheckBoxColumnHandler(java.lang.Integer.class, 1, 0)}
                 , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.CheckBoxColumnHandler(java.lang.Integer.class, 1, 0)}
             })
         });
         xDataTable3.setHandler("checkModel");
@@ -186,13 +185,6 @@ public class LiquidationPage extends javax.swing.JPanel {
         xDecimalField5.setPreferredSize(new java.awt.Dimension(0, 19));
         xFormPanel4.add(xDecimalField5);
 
-        xDecimalField8.setCaption("Total Cash");
-        xDecimalField8.setEnabled(false);
-        xDecimalField8.setFont(new java.awt.Font("Tahoma", 1, 12));
-        xDecimalField8.setName("entity.totalcash");
-        xDecimalField8.setPreferredSize(new java.awt.Dimension(0, 19));
-        xFormPanel4.add(xDecimalField8);
-
         xFormPanel3.setCaptionWidth(120);
         xDecimalField6.setCaption("Cash Breakdown");
         xDecimalField6.setEnabled(false);
@@ -201,12 +193,12 @@ public class LiquidationPage extends javax.swing.JPanel {
         xDecimalField6.setPreferredSize(new java.awt.Dimension(0, 19));
         xFormPanel3.add(xDecimalField6);
 
-        xDecimalField7.setCaption("T O T A L ");
-        xDecimalField7.setEnabled(false);
-        xDecimalField7.setFont(new java.awt.Font("Tahoma", 1, 12));
-        xDecimalField7.setName("total");
-        xDecimalField7.setPreferredSize(new java.awt.Dimension(0, 19));
-        xFormPanel3.add(xDecimalField7);
+        xDecimalField10.setCaption("Total Cash");
+        xDecimalField10.setEnabled(false);
+        xDecimalField10.setFont(new java.awt.Font("Tahoma", 1, 12));
+        xDecimalField10.setName("entity.totalcash");
+        xDecimalField10.setPreferredSize(new java.awt.Dimension(0, 19));
+        xFormPanel3.add(xDecimalField10);
 
         org.jdesktop.layout.GroupLayout jPanel3Layout = new org.jdesktop.layout.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -223,7 +215,7 @@ public class LiquidationPage extends javax.swing.JPanel {
                         .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(jPanel3Layout.createSequentialGroup()
                                 .add(jLabel3)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 244, Short.MAX_VALUE))
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 245, Short.MAX_VALUE))
                             .add(xSubFormPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)))
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel3Layout.createSequentialGroup()
                         .add(217, 217, 217)
@@ -317,10 +309,9 @@ public class LiquidationPage extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel3;
     private com.rameses.rcp.control.XDataTable xDataTable2;
     private com.rameses.rcp.control.XDataTable xDataTable3;
+    private com.rameses.rcp.control.XDecimalField xDecimalField10;
     private com.rameses.rcp.control.XDecimalField xDecimalField5;
     private com.rameses.rcp.control.XDecimalField xDecimalField6;
-    private com.rameses.rcp.control.XDecimalField xDecimalField7;
-    private com.rameses.rcp.control.XDecimalField xDecimalField8;
     private com.rameses.rcp.control.XDecimalField xDecimalField9;
     private com.rameses.rcp.control.XFormPanel xFormPanel1;
     private com.rameses.rcp.control.XFormPanel xFormPanel3;

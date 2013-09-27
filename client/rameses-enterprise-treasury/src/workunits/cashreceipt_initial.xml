@@ -30,37 +30,39 @@
             
             String title = "Cash Receipts";
 
+            def formType;    
             def formTypes;
+            
             def collectiontype;
+            def collectionTypes;
+            
             def modeOpener;
             def modeOpeners;
-            
+                
             def entity = [:];
-            
-            def getExtActions() {
-                return InvokerUtil.lookupActions( "cashreceipt-initial:formActions", [entity:entity] );
-            }
+            String entityName = "cashreceipt-initial";
             
             void init() {
-                formTypes = collectionTypeSvc.getFormTypes()*.objid;
+                formTypes = collectionTypeSvc.getFormTypes();
                 modeOpeners = InvokerUtil.lookupOpeners( "cashreceipt:mode", [entity:entity]);
-                if(modeOpeners.size()>0) {
-                    modeOpener = modeOpeners.first();
-                    entity.txnmode = modeOpener.caption;
-                }    
             }
 
-            def getCollectionTypes()  {
-                return collectionTypeSvc.getCollectionTypes([formno: entity.formno]);
-            }
-            
             @PropertyChangeListener
             def listener = [
+                "formType": { o->
+                    entity.formno = o.objid;
+                    entity.formtype = o.formtype;
+                    collectionTypes = collectionTypeSvc.getCollectionTypes([formno: o.objid]);
+                },
+                "collectiontype": { o->
+                    entity.collectiontype = o;
+                },
                 "modeOpener" : { o->
                     entity.txnmode = o.caption;
                     entity.receiptdate = null;
                     entity.collector = null;
                 }
+                
             ]
             
             def runProcess() {

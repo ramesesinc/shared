@@ -42,10 +42,9 @@ public class RemittancePage extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         xFormPanel4 = new com.rameses.rcp.control.XFormPanel();
         xDecimalField5 = new com.rameses.rcp.control.XDecimalField();
-        xDecimalField8 = new com.rameses.rcp.control.XDecimalField();
         xFormPanel3 = new com.rameses.rcp.control.XFormPanel();
         xDecimalField6 = new com.rameses.rcp.control.XDecimalField();
-        xDecimalField7 = new com.rameses.rcp.control.XDecimalField();
+        xDecimalField8 = new com.rameses.rcp.control.XDecimalField();
 
         xButton2.setMnemonic('d');
         xButton2.setText("Check Details");
@@ -132,7 +131,7 @@ public class RemittancePage extends javax.swing.JPanel {
                 , new Object[]{"nullWhenEmpty", true}
                 , new Object[]{"editable", false}
                 , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
-                , new Object[]{"typeHandler", new com.rameses.rcp.common.DecimalColumnHandler("#,##0.00", -1.0, -1.0, false)}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.DecimalColumnHandler("#,##0.00", -1.0, -1.0, false, 0)}
             }),
             new com.rameses.rcp.common.Column(new Object[]{
                 new Object[]{"name", "voided"}
@@ -167,13 +166,6 @@ public class RemittancePage extends javax.swing.JPanel {
         xDecimalField5.setPreferredSize(new java.awt.Dimension(0, 19));
         xFormPanel4.add(xDecimalField5);
 
-        xDecimalField8.setCaption("Total Cash");
-        xDecimalField8.setEnabled(false);
-        xDecimalField8.setFont(new java.awt.Font("Tahoma", 1, 12));
-        xDecimalField8.setName("entity.totalcash");
-        xDecimalField8.setPreferredSize(new java.awt.Dimension(0, 19));
-        xFormPanel4.add(xDecimalField8);
-
         xFormPanel3.setCaptionWidth(120);
         xDecimalField6.setCaption("Cash Breakdown");
         xDecimalField6.setEnabled(false);
@@ -182,12 +174,12 @@ public class RemittancePage extends javax.swing.JPanel {
         xDecimalField6.setPreferredSize(new java.awt.Dimension(0, 19));
         xFormPanel3.add(xDecimalField6);
 
-        xDecimalField7.setCaption("T O T A L ");
-        xDecimalField7.setEnabled(false);
-        xDecimalField7.setFont(new java.awt.Font("Tahoma", 1, 12));
-        xDecimalField7.setName("total");
-        xDecimalField7.setPreferredSize(new java.awt.Dimension(0, 19));
-        xFormPanel3.add(xDecimalField7);
+        xDecimalField8.setCaption("Total Cash");
+        xDecimalField8.setEnabled(false);
+        xDecimalField8.setFont(new java.awt.Font("Tahoma", 1, 12));
+        xDecimalField8.setName("entity.totalcash");
+        xDecimalField8.setPreferredSize(new java.awt.Dimension(0, 19));
+        xFormPanel3.add(xDecimalField8);
 
         org.jdesktop.layout.GroupLayout jPanel3Layout = new org.jdesktop.layout.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -263,7 +255,6 @@ public class RemittancePage extends javax.swing.JPanel {
     private com.rameses.rcp.control.XDecimalField xDecimalField4;
     private com.rameses.rcp.control.XDecimalField xDecimalField5;
     private com.rameses.rcp.control.XDecimalField xDecimalField6;
-    private com.rameses.rcp.control.XDecimalField xDecimalField7;
     private com.rameses.rcp.control.XDecimalField xDecimalField8;
     private com.rameses.rcp.control.XFormPanel xFormPanel3;
     private com.rameses.rcp.control.XFormPanel xFormPanel4;
