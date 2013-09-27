@@ -14,6 +14,8 @@ import com.rameses.common.PropertyResolver;
 import com.rameses.osiris2.Invoker;
 import com.rameses.osiris2.client.InvokerProxy;
 import com.rameses.osiris2.client.InvokerUtil;
+import com.rameses.osiris2.client.WorkUnitUIController;
+import com.rameses.rcp.annotations.Controller;
 import com.rameses.rcp.common.Action;
 import com.rameses.rcp.common.ListItemStatus;
 import com.rameses.rcp.common.MsgBox;
@@ -32,8 +34,8 @@ import java.util.Map;
  *
  * @author wflores
  */
-public class InboxController extends ListController {
-    
+public class InboxController extends ListController 
+{
     private String context; 
     private String defaultFileType;
     private String serviceName;
@@ -54,23 +56,9 @@ public class InboxController extends ListController {
         actionsProvider = new ActionsProvider(); 
         helper = new Helper(); 
         formActions = new ArrayList(); 
-        init();        
     }
 
     public void init() {
-        formActions.clear();
-        formActions.add(createAction("reload", "Refresh", "images/toolbars/refresh.png", "ctrl R", 'r', null, true)); 
-        
-        if (!isAllowCreate()) return;
-
-        String filetype = getDefaultFileType();
-        if (filetype != null && filetype.length() > 0) {
-            String invtype = filetype.toLowerCase() + ":create";
-            List<Invoker> invokers = actionsProvider.getInvokers(null, invtype); 
-            for (Invoker invoker: invokers) { 
-                formActions.add(new ActionInvoker(invoker)); 
-            } 
-        } 
     }
     
     // <editor-fold defaultstate="collapsed" desc=" Getters/Settters ">
@@ -117,7 +105,26 @@ public class InboxController extends ListController {
     }
 
     public int getRows() { return 20; } 
-    public List getFormActions() { return formActions; }  
+    public List getFormActions() 
+    {
+        if (formActions.isEmpty()) {
+            formActions.add(createAction("reload", "Refresh", "images/toolbars/refresh.png", "ctrl R", 'r', null, true)); 
+
+            if (!isAllowCreate()) return formActions; 
+
+            String filetype = getDefaultFileType();
+            if (filetype != null && filetype.length() > 0) {
+                String invtype = filetype.toLowerCase() + ":create";
+                List<Invoker> invokers = actionsProvider.getInvokers(null, invtype); 
+                if (!invokers.isEmpty()) {
+                    ActionInvoker ai = new ActionInvoker(invokers.get(0));
+                    ai.setCaption("New");
+                    formActions.add(ai); 
+                }
+            } 
+        }         
+        return formActions; 
+    }  
     
     public Node getSelectedNode() { return selectedNode; } 
     public void setSelectedNode(Node selectedNode) {
