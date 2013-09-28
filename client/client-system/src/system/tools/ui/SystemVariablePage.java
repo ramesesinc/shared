@@ -29,7 +29,8 @@ public class SystemVariablePage extends javax.swing.JPanel {
         xFormPanel1 = new com.rameses.rcp.control.XFormPanel();
         xTextField1 = new com.rameses.rcp.control.XTextField();
         xTextField2 = new com.rameses.rcp.control.XTextField();
-        xTextField3 = new com.rameses.rcp.control.XTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        xTextArea1 = new com.rameses.rcp.control.XTextArea();
         xTextField4 = new com.rameses.rcp.control.XTextField();
 
         com.rameses.rcp.control.border.XTitledBorder xTitledBorder1 = new com.rameses.rcp.control.border.XTitledBorder();
@@ -37,6 +38,7 @@ public class SystemVariablePage extends javax.swing.JPanel {
         xFormPanel1.setBorder(xTitledBorder1);
         xFormPanel1.setPadding(new java.awt.Insets(10, 15, 10, 20));
         xTextField1.setCaption("Name");
+        xTextField1.setIndex(-10);
         xTextField1.setName("entity.name");
         xTextField1.setPreferredSize(new java.awt.Dimension(200, 20));
         xTextField1.setRequired(true);
@@ -47,10 +49,12 @@ public class SystemVariablePage extends javax.swing.JPanel {
         xTextField2.setPreferredSize(new java.awt.Dimension(0, 20));
         xFormPanel1.add(xTextField2);
 
-        xTextField3.setCaption("Description");
-        xTextField3.setName("entity.description");
-        xTextField3.setPreferredSize(new java.awt.Dimension(0, 20));
-        xFormPanel1.add(xTextField3);
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(0, 50));
+        xTextArea1.setCaption("Description");
+        xTextArea1.setName("entity.description");
+        jScrollPane1.setViewportView(xTextArea1);
+
+        xFormPanel1.add(jScrollPane1);
 
         xTextField4.setCaption("Category");
         xTextField4.setName("entity.category");
@@ -70,17 +74,18 @@ public class SystemVariablePage extends javax.swing.JPanel {
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane1;
     private com.rameses.rcp.control.XFormPanel xFormPanel1;
+    private com.rameses.rcp.control.XTextArea xTextArea1;
     private com.rameses.rcp.control.XTextField xTextField1;
     private com.rameses.rcp.control.XTextField xTextField2;
-    private com.rameses.rcp.control.XTextField xTextField3;
     private com.rameses.rcp.control.XTextField xTextField4;
     // End of variables declaration//GEN-END:variables
     

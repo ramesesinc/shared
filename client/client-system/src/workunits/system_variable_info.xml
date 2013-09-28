@@ -17,7 +17,8 @@
     class SystemVariableController extends CRUDController 
     {
        String serviceName = 'VarService';
-       
+       String createFocusComponent = 'entity.name';
+       String editFocusComponent = 'entity.name';
        boolean allowApprove = false; 
     }
     ]]>
