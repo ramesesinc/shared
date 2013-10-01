@@ -32,6 +32,9 @@ condition.constraints.eachWithIndex { con, i->
 			else if( dtype == "integer" && con.usevar == false) {
 				print intFormatter.format(con.value);
 			}
+			else if( dtype == "integer" && con.usevar == true) {
+				print con.value;
+			}
 			else {
 				print '"'+con.value+'"';
 			}
