@@ -51,6 +51,14 @@ public class BasicCashReceipt extends AbstractCashReceipt {
                 if( entity.items.find{ it.item.objid == o.objid }!=null )
                     throw new Exception("This item has already been added");
                 selectedItem.item = o;
+                selectedItem.amount = o.defaultvalue;
+                if(o.valuetype == "FIXEDUNIT") {
+                    def m = MsgBox.prompt( "Enter qty");
+                    if(!m || m == "null" ) throw new Exception("Please provide qty");
+                    if( !m.isInteger()) throw new Exception("Qty must be numeric");
+                    selectedItem.amount = Integer.parseInt( m )*o.defaultvalue;
+                    selectedItem.remarks = "qty@"+Integer.parseInt( m );
+                }
             }
         ]); 
     }

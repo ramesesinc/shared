@@ -1,0 +1,18 @@
+<!-- REQUISITION ISSUE SLIP -->
+<workunit>
+    
+    <invokers>
+       <invoker type="formActions" caption="Close" action="_close" shortcut="ctrl C"/>
+       <invoker type="formActions" caption="Next" action="enterQty" visibleWhen="#{mode=='initial'}"/>
+       <invoker type="formActions" caption="Next" action="process" visibleWhen="#{mode=='enterqty'}"/>
+       <invoker type="formActions" caption="Back" action="revert" visibleWhen="#{mode=='process'}" shortcut="ctrl B"/>
+       <invoker type="formActions" caption="Save" action="save" visibleWhen="#{mode=='process'}" shortcut="ctrl S"/>
+       <invoker type="formActions" caption="Print" action="print" visibleWhen="#{mode == 'read'}" shortcut="ctrl P"/>
+    </invokers>
+    
+    <pages>
+        <page name="enterqty" template="com.rameses.enterprise.inventory.stock.StockIssuePage"/>
+        <page name="default" template="com.rameses.enterprise.inventory.stock.StockIssueResultPage"/>
+    </pages>
+    
+</workunit>

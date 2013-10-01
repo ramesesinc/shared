@@ -7,12 +7,14 @@
 package com.rameses.enterprise.inventory.stock;
 
 import com.rameses.osiris2.themes.FormPage;
+import com.rameses.rcp.ui.annotations.StyleSheet;
 import com.rameses.rcp.ui.annotations.Template;
 
 /**
  *
  * @author  Elmo
  */
+@StyleSheet
 @Template(FormPage.class)
 public class StockRequestPage extends javax.swing.JPanel {
     
@@ -30,7 +32,7 @@ public class StockRequestPage extends javax.swing.JPanel {
     private void initComponents() {
         jPanel1 = new javax.swing.JPanel();
         xFormPanel1 = new com.rameses.rcp.control.XFormPanel();
-        xLabel1 = new com.rameses.rcp.control.XLabel();
+        xComboBox1 = new com.rameses.rcp.control.XComboBox();
         xLabel3 = new com.rameses.rcp.control.XLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -41,10 +43,12 @@ public class StockRequestPage extends javax.swing.JPanel {
         jPanel1.setBorder(xTitledBorder1);
 
         xFormPanel1.setCaptionWidth(120);
-        xLabel1.setCaption("Txn Type");
-        xLabel1.setExpression("#{entity.reqtype}");
-        xLabel1.setName("entity.txntype");
-        xFormPanel1.add(xLabel1);
+        xComboBox1.setCaption("Request Type");
+        xComboBox1.setExpression("#{item.caption}");
+        xComboBox1.setItems("reqTypes");
+        xComboBox1.setName("reqType");
+        xComboBox1.setPreferredSize(new java.awt.Dimension(0, 22));
+        xFormPanel1.add(xComboBox1);
 
         xLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         xLabel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
@@ -79,7 +83,7 @@ public class StockRequestPage extends javax.swing.JPanel {
         );
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14));
-        jLabel1.setText("Items to request");
+        jLabel1.setText("Request items");
 
         xDataTable1.setColumns(new com.rameses.rcp.common.Column[]{
             new com.rameses.rcp.common.Column(new Object[]{
@@ -172,9 +176,9 @@ public class StockRequestPage extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private com.rameses.rcp.control.XComboBox xComboBox1;
     private com.rameses.rcp.control.XDataTable xDataTable1;
     private com.rameses.rcp.control.XFormPanel xFormPanel1;
-    private com.rameses.rcp.control.XLabel xLabel1;
     private com.rameses.rcp.control.XLabel xLabel3;
     // End of variables declaration//GEN-END:variables
     

@@ -7,14 +7,12 @@
 package com.rameses.admin.usergroup;
 
 import com.rameses.osiris2.themes.FormPage;
-import com.rameses.rcp.ui.annotations.StyleSheet;
 import com.rameses.rcp.ui.annotations.Template;
 
 /**
  *
  * @author  Elmo
  */
-@StyleSheet
 @Template(FormPage.class)
 public class UsergroupPage extends javax.swing.JPanel {
     
@@ -56,6 +54,7 @@ public class UsergroupPage extends javax.swing.JPanel {
         xLookupField1.setCaption("User");
         xLookupField1.setExpression("#{  (item ) ?  item.lastname + ' ,  ' +  item.firstname: ''  }");
         xLookupField1.setHandler("lookupUser");
+        xLookupField1.setIndex(-10);
         xLookupField1.setName("entity.user");
         xLookupField1.setPreferredSize(new java.awt.Dimension(0, 19));
         xLookupField1.setRequired(true);
@@ -88,6 +87,7 @@ public class UsergroupPage extends javax.swing.JPanel {
         xTextField1.setPreferredSize(new java.awt.Dimension(0, 19));
         xFormPanel1.add(xTextField1);
 
+        xButton1.setIndex(1);
         xButton1.setName("openSecurityGroup");
         xButton1.setText("v");
 

@@ -5,14 +5,12 @@
          <invoker type="quick_launcher" code="REM" caption="Remittance" action="create" target="window"/>
          <invoker type="remittance:open" caption="Remittance (Open)" action="open" target="window"/>
             
-         <invoker type="formActions" caption="Close" name="_close"  />
+         <invoker type="formActions" caption="Close" name="_close" immediate="true" />
          <invoker type="formActions" caption="Next" name="start" visibleWhen="#{mode == 'initial'}" />
          <invoker type="formActions" caption="Submit" name="submit" visibleWhen="#{mode == 'create' }" />
          
          <invoker type="formActions" caption="Reports" name="popupReports"   
             visibleWhen="#{mode == 'read' }" category="remittance:reports" />
-
-            
      </invokers>
    
    <code>
@@ -91,8 +89,10 @@
                     throw new Exception("Cash breakdown must equal total cash");
             
                 if( MsgBox.confirm("You are about to submit this remittance. Please ensure the entries are correct")) {
-                    entity = service.post( entity );
+                    def o = service.post( entity );
+                    entity.txnno = o.txnno;
                     mode = 'read'
+                    entity = o;
                     MsgBox.alert("Posting successful");
                 }
             }

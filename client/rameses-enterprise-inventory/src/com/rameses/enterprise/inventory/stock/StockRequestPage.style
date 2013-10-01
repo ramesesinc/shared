@@ -1,0 +1,12 @@
+"addItems|reqType"[mode=='create'] {
+    enabled: true;
+}
+
+"addItems|reqType"[mode!='create'] {
+    enabled: false;
+}
+
+"itemModel:.*"[mode!='create'] {
+    editable: false;
+}
+

@@ -1,0 +1,70 @@
+<workunit>
+    
+   <invokers>
+         <invoker type="subcollector_remittance:create" caption="SubCollector Remittance" action="create" target="window"/>
+         <invoker type="quick_launcher" code="REM" caption="SubCollector  Remittance" action="create" target="window"/>
+         <invoker type="remittance:open" caption="SubCollector Remittance (Open)" action="open" target="window"/>
+            
+         <invoker type="formActions" caption="Close" name="_close"  />
+         <invoker type="formActions" caption="Submit" name="submit" visibleWhen="#{mode == 'create'}"/>
+            
+     </invokers>
+   
+   <code>
+       <![CDATA[
+        import com.rameses.osiris2.common.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.rcp.annotations.*;
+        import java.rmi.server.*;
+        import com.rameses.osiris2.client.*;
+        import com.rameses.util.*;
+        
+        class SubCollectorRemittanceController {
+        
+            @Service("SubCollectorRemittanceService")
+            def service;
+        
+            def collectorList;
+            def entity;    
+            String title = "SubCollector Remittance";
+            def mode =" create";
+            
+            void create() {
+                mode = "create"
+                collectorList = service.getCollectorList();
+                entity = [:];
+                entity.objid =  "SUBREM"+new UID();
+                entity.items = [];
+            }
+            
+            @PropertyChangeListener
+            def listener = [
+                "entity.collector": { o->
+                    entity = service.getUremittedCollections(entity);
+                    listModel.reload();
+                    
+                }
+            ]
+            
+            def listModel = [
+                fetchList: { o->
+                    return entity.items;
+                }
+            ] as BasicListModel;
+            
+            def submit() {
+                if(MsgBox.confirm("You are about to remit this transaction. Proceed?")) {
+                    entity = service.post(entity);
+                    MsgBox.alert("Remittance successful. Remittance no is " + entity.txnno );
+                    return "_close";
+                }
+            }
+        }      
+       ]]>
+   </code>
+   
+   <pages>
+       <page  template="com.rameses.enterprise.treasury.remittance.SubCollectorRemittanceInitPage" />
+   </pages>
+   
+</workunit>

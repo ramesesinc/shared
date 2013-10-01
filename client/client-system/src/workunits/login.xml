@@ -49,12 +49,9 @@
                     def usr = loginSvc.login([ username:uid, password:encPwd ]);
 
                     user.init( usr, encPwd );
-
-                    if (!config.getProperty("app.clientcode")) 
-                    {
-                        config.put("app.clientcode", clientcode? clientcode: '');
-                        config.update();
-                    }
+                    
+                    config.put("app.clientcode", clientcode? clientcode: '');
+                    config.update();
                 }
                 else 
                 {
