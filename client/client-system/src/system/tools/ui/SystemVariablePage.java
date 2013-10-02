@@ -6,12 +6,14 @@
 
 package system.tools.ui;
 
+import com.rameses.rcp.ui.annotations.StyleSheet;
 import com.rameses.rcp.ui.annotations.Template;
 
 /**
  *
  * @author  wflores
  */
+@StyleSheet
 @Template(com.rameses.osiris2.themes.FormPage.class)
 public class SystemVariablePage extends javax.swing.JPanel {
     
@@ -42,14 +44,18 @@ public class SystemVariablePage extends javax.swing.JPanel {
         xTextField1.setName("entity.name");
         xTextField1.setPreferredSize(new java.awt.Dimension(200, 20));
         xTextField1.setRequired(true);
+        xTextField1.setTextCase(com.rameses.rcp.constant.TextCase.NONE);
         xFormPanel1.add(xTextField1);
 
         xTextField2.setCaption("Value");
         xTextField2.setName("entity.value");
         xTextField2.setPreferredSize(new java.awt.Dimension(0, 20));
+        xTextField2.setTextCase(com.rameses.rcp.constant.TextCase.NONE);
         xFormPanel1.add(xTextField2);
 
         jScrollPane1.setPreferredSize(new java.awt.Dimension(0, 50));
+        xTextArea1.setLineWrap(true);
+        xTextArea1.setWrapStyleWord(true);
         xTextArea1.setCaption("Description");
         xTextArea1.setName("entity.description");
         jScrollPane1.setViewportView(xTextArea1);
