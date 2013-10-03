@@ -32,8 +32,8 @@ import java.util.Map;
  *
  * @author wflores
  */
-public class InboxController extends ListController {
-    
+public class InboxController extends ListController 
+{
     private String context; 
     private String defaultFileType;
     private String serviceName;
@@ -47,30 +47,16 @@ public class InboxController extends ListController {
     private Helper helper; 
     private Object itemStat;
     
+    private List<Invoker> defaultCreateInvokers;
     private Invoker defaultCreateInvoker;
     private Invoker defaultOpenInvoker;
     
     public InboxController() {
         actionsProvider = new ActionsProvider(); 
         helper = new Helper(); 
-        formActions = new ArrayList(); 
-        init();        
     }
 
     public void init() {
-        formActions.clear();
-        formActions.add(createAction("reload", "Refresh", "images/toolbars/refresh.png", "ctrl R", 'r', null, true)); 
-        
-        if (!isAllowCreate()) return;
-
-        String filetype = getDefaultFileType();
-        if (filetype != null && filetype.length() > 0) {
-            String invtype = filetype.toLowerCase() + ":create";
-            List<Invoker> invokers = actionsProvider.getInvokers(null, invtype); 
-            for (Invoker invoker: invokers) { 
-                formActions.add(new ActionInvoker(invoker)); 
-            } 
-        } 
     }
     
     // <editor-fold defaultstate="collapsed" desc=" Getters/Settters ">
@@ -117,7 +103,25 @@ public class InboxController extends ListController {
     }
 
     public int getRows() { return 20; } 
-    public List getFormActions() { return formActions; }  
+    public List getFormActions() 
+    {
+        if (formActions == null) {
+            formActions = new ArrayList(); 
+            formActions.add(createAction("reload", "Refresh", "images/toolbars/refresh.png", "ctrl R", 'r', null, true));             
+            if (!isAllowCreate()) return formActions; 
+
+            List<Invoker> invokers = getDefaultCreateInvokers();
+            if (!invokers.isEmpty()) {
+                Action a = createAction("create", "New", "images/toolbars/create.png", "ctrl N", 'n', null, true); 
+                formActions.add(a); 
+            }
+            
+            Action a = createAction("open", "Open", "images/toolbars/open.png", "ctrl O", 'o', "#{selectedEntity != null && openButtonVisible==true}", true); 
+            a.getProperties().put("depends", "selectedEntity"); 
+            formActions.add(a); 
+        } 
+        return formActions; 
+    }  
     
     public Node getSelectedNode() { return selectedNode; } 
     public void setSelectedNode(Node selectedNode) {
@@ -231,7 +235,6 @@ public class InboxController extends ListController {
         private Object openNodeImpl(Node node) {
             if (node == null) return null;
 
-            System.out.println("openNode-> " + node.getItem());  
             _selectedOpenNode = node; 
             updateView();
             return null; 
@@ -334,31 +337,25 @@ public class InboxController extends ListController {
     }    
     
     public Opener create() throws Exception {
+        List<Invoker> invokers = null;
         Node node = getSelectedNode(); 
-        if (node != null) {
-            List<Invoker> list = node.getPropertyList("Invoker.createlist");
-            if (list != null && !list.isEmpty()) {
-                Map map = createOpenerParams();
-                map.put("node", node.getItem());
-                
-                PopupMenuOpener menu = new PopupMenuOpener(); 
-                menu.setExecuteOnSingleResult(true);
-                for (Invoker invoker: list) {
-                    menu.add(actionsProvider.toOpener(invoker, map, node)); 
-                }
-                return menu; 
-            }
-        }
+        if (node != null) 
+            invokers = node.getPropertyList("Invoker.createlist");
         
-        String filetype = getDefaultFileType();
-        if (filetype != null && filetype.length() > 0) {
-            Invoker invoker = actionsProvider.getInvoker(null, filetype.toLowerCase()+":create"); 
-            if (invoker != null) {
-                Map map = createOpenerParams();
-                map.put("node", null);
-                return actionsProvider.toOpener(invoker, map, node);            
-            }
-        } 
+        if (invokers == null || invokers.isEmpty()) 
+            invokers = getDefaultCreateInvokers();
+        
+        if (invokers != null && !invokers.isEmpty()) {
+            Map map = createOpenerParams();
+            map.put("node", (node == null? null: node.getItem()));
+            
+            PopupMenuOpener menu = new PopupMenuOpener(); 
+            menu.setExecuteOnSingleResult(true);
+            for (Invoker inv: invokers) {
+                menu.add(actionsProvider.toOpener(inv, map, node)); 
+            } 
+            return menu;             
+        }
         
         System.out.println("No available file type handler"); 
         return null; 
@@ -427,27 +424,42 @@ public class InboxController extends ListController {
         return actionsProvider.getInvokers(node, invtype); 
     }
     
+    private List<Invoker> getDefaultCreateInvokers() {
+        if (defaultCreateInvokers == null) {
+            defaultCreateInvokers = new ArrayList();             
+            
+            String dfiletype = getDefaultFileType();
+            if (dfiletype == null || dfiletype.length() == 0) 
+                return defaultCreateInvokers;
+            
+            String invtype = dfiletype.toLowerCase() + ":create";
+            defaultCreateInvokers.addAll(actionsProvider.getInvokers(null, invtype));             
+        }
+        return defaultCreateInvokers;
+    }
+    
     private void buildActions() {
-        formActions.clear(); 
+        if (formActions == null) { 
+            formActions = new ArrayList(); 
+        } else { 
+            formActions.clear(); 
+        } 
+        
         formActions.add(createAction("reload", "Refresh", "images/toolbars/refresh.png", "ctrl R", 'r', null, true)); 
         
+        boolean allowCreate = isAllowCreate();
         Node node = getSelectedNode();
-        if (node == null) {
-            if (!isAllowCreate()) return;
-            
-            String filetype = getDefaultFileType();
-            if (filetype != null && filetype.length() > 0) {
-                String invtype = filetype.toLowerCase() + ":create";
-                List<Invoker> invokers = actionsProvider.getInvokers(null, invtype); 
-                for (Invoker invoker: invokers) { 
-                    formActions.add(new ActionInvoker(invoker)); 
-                } 
+        if (node == null && allowCreate) {
+            List<Invoker> invokers = getDefaultCreateInvokers();
+            if (!invokers.isEmpty()) { 
+                Action a = createAction("create", "New", "images/toolbars/create.png", "ctrl N", 'n', null, true); 
+                formActions.add(a); 
             } 
             //exit
             return;
         } 
         
-        if (isAllowCreate()) { 
+        if (allowCreate) { 
             List<Invoker> list = node.getPropertyList("Invoker.createlist"); 
             if (list == null) {
                 List<String> filetypes = new ArrayList(); 
