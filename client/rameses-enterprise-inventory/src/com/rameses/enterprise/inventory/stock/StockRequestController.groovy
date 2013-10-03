@@ -69,6 +69,12 @@ public class StockRequestController {
         },
         onAddItem: { o->
             entity.items << o;
+        },
+        onRemoveItem: { o->
+            if(!MsgBox.confirm("Delete item? ")) return false;
+
+            entity.items.remove(o)
+            return true;
         }
     ] as EditorListModel;
 
@@ -84,6 +90,6 @@ public class StockRequestController {
     }
 
     def print() {
-        throw new Exception("Unsupported print method");
+        return InvokerUtil.lookupOpener("stockrequest:ris", [entity: entity]);
     }
 }
