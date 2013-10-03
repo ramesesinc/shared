@@ -1,9 +1,11 @@
 <workunit>
     <invokers>        
         <invoker type="var:create" caption="System Variable" 
+            domain="ADMIN" role="SYSADMIN" permission="system" 
             target="popup" action="create" resizable="false"/> 
             
         <invoker type="var:open" caption="System Variable" 
+            domain="ADMIN" role="SYSADMIN" permission="system" 
             target="popup" action="open" resizable="false"/> 
     </invokers>
         
@@ -18,8 +20,9 @@
     {
        String serviceName = 'VarService';
        String createFocusComponent = 'entity.name';
-       String editFocusComponent = 'entity.name';
-       boolean allowApprove = false; 
+       String editFocusComponent = 'entity.value';
+       boolean showConfirmOnSave = false; 
+       boolean allowApprove = false;        
     }
     ]]>
     </code>
