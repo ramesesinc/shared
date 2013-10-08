@@ -116,6 +116,9 @@ public abstract class ListController extends BasicListController implements Page
     public boolean isShowNavActions() { return true; } 
     public boolean isShowFormActions() { return true; } 
     
+    public Map getCreatePermission() { return null; } 
+    public Map getReadPermission() { return null; } 
+    
     public boolean isAllowClose() { 
         Map wuprops = getControllerProperties();
         Object oval = wuprops.get("allowClose");
@@ -257,12 +260,18 @@ public abstract class ListController extends BasicListController implements Page
             if (isAllowClose()) 
                 formActions.add(createAction("close", "Close", "images/toolbars/cancel.png", "ctrl C", 'c', null, true)); 
             
-            if (isAllowCreate()) 
-                formActions.add(createAction("create", "New", "images/toolbars/create.png", "ctrl N", 'n', null, true));       
-            
+            if (isAllowCreate()) {
+                Action a = createAction("create", "New", "images/toolbars/create.png", "ctrl N", 'n', null, true); 
+                Map perm = getCreatePermission();
+                loadPermission(a, perm); 
+                formActions.add(a); 
+            }
             if (isAllowOpen()) { 
                 Action a = createAction("open", "Open", "images/toolbars/open.png", "ctrl O", 'o', "#{selectedEntity != null}", true);
-                a.getProperties().put("depends", "selectedEntity");
+                a.getProperties().put("depends", "selectedEntity");                
+                
+                Map perm = getReadPermission();
+                loadPermission(a, perm);
                 formActions.add(a); 
             }
             
@@ -285,6 +294,19 @@ public abstract class ListController extends BasicListController implements Page
         a.setShowCaption(true); 
         return a;
     } 
+    
+    private void loadPermission(Action a, Map perm) {
+        if (perm == null || perm.isEmpty()) return; 
+        
+        a.setDomain(getString(perm, "domain")); 
+        a.setRole(getString(perm, "role")); 
+        a.setPermission(getString(perm, "permission")); 
+    }
+    
+    private String getString(Map map, String name) {
+        Object ov = (map == null? null: map.get(name)); 
+        return (ov == null? null: ov.toString()); 
+    }
         
     // </editor-fold>
     

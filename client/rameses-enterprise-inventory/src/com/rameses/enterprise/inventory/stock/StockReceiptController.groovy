@@ -79,6 +79,10 @@ public abstract class StockReceiptController {
             MsgBox.alert("Record successfully saved!");
         }
     }
+
+    def print() {
+        return InvokerUtil.lookupOpener("stockrequest:ris", [entity: entity]);
+    }
     
 }
 
