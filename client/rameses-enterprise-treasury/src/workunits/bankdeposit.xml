@@ -6,13 +6,13 @@
          <invoker type="quick_launcher" code="BNKD" caption="Bank Deposits" action="open" target="window"/>
          <invoker type="bankdeposit:open" caption="Bank Deposit (Open)" action="open" target="window"/>
          
-         <invoker type="formActions" caption="Close" name="_close"  icon="images/toolbars/cancel.png"/>
-         <invoker type="formActions" caption="Next" name="start" visibleWhen="#{state == 'initial'}" />
-         <invoker type="formActions" caption="Submit" name="submit" visibleWhen="#{state == 'processing'}" />
+         <invoker type="formActions" caption="Close" name="_close"  icon="images/toolbars/cancel.png" mnemonic="c" shortcut="ctrl C"/>
+         <invoker type="formActions" caption="Next" name="start" visibleWhen="#{state == 'initial'}" mnemonic="n" shortcut="ctrl N"/>
+         <invoker type="formActions" caption="Submit" name="submit" visibleWhen="#{state == 'processing'}" icon="images/toolbars/save.png" mnemonic="s" shortcut="ctrl S"/>
          
          
          <invoker type="formActions" caption="Reports" name="popupReports"   
-            visibleWhen="#{mode == 'read' }" category="bankdeposit:reports" />
+            visibleWhen="#{mode == 'read' }" category="bankdeposit:reports" mnemonic="r"/>
      </invokers>
    
    <code>
@@ -133,8 +133,8 @@
                     throw new Exception("There should be no undeposited balance");
             
                 if( MsgBox.confirm("You are about to submit this deposit. Please ensure the entries are correct")) {
-                    //entity = service.post( entity );
-                    service.post( entity );
+                    entity = service.post( entity );
+                    //service.post( entity );
                     state = "completed";
                     mode = "read";
                     MsgBox.alert("Posting successful");
