@@ -1,0 +1,51 @@
+<workunit>
+    <invokers>
+    </invokers>
+    <code>
+        <![CDATA[
+        
+        import com.rameses.rcp.common.*;
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.osiris2.client.*;
+        import com.rameses.osiris2.common.*
+        import com.rameses.osiris2.reports.*;
+        
+        class RuleMgmtController extends DefaultListController {
+        
+            @Controller 
+            def controller;
+                
+            @Service("RuleMgmtService")
+            def service;
+            
+            def rulegroups;
+            def rulestates;
+            String entityName = "rulemgmt";
+            String formName = 'rulemgmt';
+            def ruleset;
+            
+            void init() {
+               ruleset = tag;
+               query.ruleset = tag;
+               rulegroups = service.getRulegroups([ruleset:query.ruleset]);
+               rulestates = [ "DRAFT", "DEPLOYED", "APPROVED"];
+            }
+            
+            void search() {
+                reload();
+            }
+            
+            boolean getDebug() {
+                def d =  OsirisContext.clientContext.appEnv['app.debug'];
+                if(!d) return false;
+                return d;
+            }
+            
+        }
+        ]]>
+    </code>
+    <pages>
+        <page template="com.rameses.osiris2.themes.ListPage"/>
+        <page name="queryform" template="com.rameses.rulemgmt.RuleMgmtQuery"/>
+    </pages>
+</workunit>

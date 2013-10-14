@@ -54,7 +54,7 @@ public class ExpressionEditor extends javax.swing.JPanel {
         xLabel2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         xLabel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
         xLabel2.setDepends(new String[] {"selectedItem", "selectedNode"});
-        xLabel2.setExpression("<html>\n<h3>#{selectedItem.signature}</h3>\n#{selectedItem.description}\n</html>");
+        xLabel2.setExpression("<html>\n<h3>#{selectedItem.title}</h3>\n#{selectedItem.description}\n</html>");
 
         xTextArea1.setHandler("textHandler");
         xTextArea1.setName("value");

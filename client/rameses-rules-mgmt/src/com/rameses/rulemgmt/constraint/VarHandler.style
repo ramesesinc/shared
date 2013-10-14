@@ -1,0 +1,7 @@
+"constraint.var"[ !constraint.operator.symbol.contains("null") ] {
+    visible: true; 
+}
+
+"constraint.var"[ constraint.operator.symbol.contains("null") ] {
+    visible: false; 
+}

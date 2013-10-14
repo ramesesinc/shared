@@ -1,0 +1,7 @@
+"addCondition|addAction"[ entity.state != 'DEPLOYED' ] {
+    visible: true; 
+}
+
+"addCondition|addAction"[ entity.state == 'DEPLOYED' ] {
+    visible: false; 
+}
