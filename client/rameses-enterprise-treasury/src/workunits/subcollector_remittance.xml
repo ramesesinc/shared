@@ -3,7 +3,7 @@
    <invokers>
          <invoker type="subcollector_remittance:create" caption="SubCollector Remittance" action="create" target="window"/>
          <invoker type="quick_launcher" code="REM" caption="SubCollector  Remittance" action="create" target="window"/>
-         <invoker type="remittance:open" caption="SubCollector Remittance (Open)" action="open" target="window"/>
+         <invoker type="subcollector_remittancex:open" caption="SubCollector Remittance (Open)" action="open" target="window"/>
             
          <invoker type="formActions" caption="Close" name="_close"  />
          <invoker type="formActions" caption="Submit" name="submit" visibleWhen="#{mode == 'create'}"/>
@@ -37,6 +37,11 @@
                 entity.items = [];
             }
             
+            void open() {
+                mode='open'
+                entity = service.open( entity)
+            }
+            
             @PropertyChangeListener
             def listener = [
                 "entity.collector": { o->
@@ -56,6 +61,7 @@
                 if(MsgBox.confirm("You are about to remit this transaction. Proceed?")) {
                     entity = service.post(entity);
                     MsgBox.alert("Remittance successful. Remittance no is " + entity.txnno );
+                    mode='open'
                     return "_close";
                 }
             }
