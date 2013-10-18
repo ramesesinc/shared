@@ -6,9 +6,9 @@
          
          <invoker type="liquidation:open" caption="Liquidation (Open)" action="open" target="window"/>
          
-         <invoker type="formActions" caption="Close" name="_close"  />
-         <invoker type="formActions" caption="Next" name="start" visibleWhen="#{mode == 'initial'}" />
-         <invoker type="formActions" caption="Submit" name="submit" visibleWhen="#{mode == 'create'}" />
+         <invoker type="formActions" caption="Close" name="_close"  immediate="true" mnemonic="c" shortcut="ctrl C" icon="images/toolbars/cancel.png"/>
+         <invoker type="formActions" caption="Next" name="start" visibleWhen="#{mode == 'initial'}" mnemonic="n" shortcut="ctrl N"/>
+         <invoker type="formActions" caption="Submit" name="submit" visibleWhen="#{mode == 'create'}" mnemonic="s" shortcut="ctrl S" icon="images/toolbars/save.png"/>
          
          <invoker type="formActions" caption="Reports" name="popupReports"   
             visibleWhen="#{mode == 'read' }" category="liquidation:reports" />

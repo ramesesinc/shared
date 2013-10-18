@@ -28,8 +28,12 @@
     <%}%>
 
     <tr>
-        <td>Receipt No</td>
-        <td><b>${entity.receiptno} <font color=blue>${entity.txnmode}</font></b></td>
+        <td>Receipt No </td>
+        <td><font size="4" color="blue"> <b>${entity.receiptno}</font> </b></td>
+    </tr>
+    <tr>
+        <td>Mode </td>
+        <td><b>${entity.txnmode}</font> </b></td>
     </tr>
     <tr>
         <td>Receipt Date</td>
@@ -83,8 +87,8 @@
         <td colspan="2">
             <hr>
             <%if(entity.totalcash) {%>
-                Cash Paid: ${df.format(entity.totalcash)} <br>
-                Cash Change: ${df.format(entity.cashchange)} <br>
+               <font size="6"><b>Cash Paid: ${df.format(entity.totalcash)}</b></font><br>
+               <font size="6"><b>Cash Change: ${df.format(entity.cashchange)}</b></font> <br>
             <%}%>
         </td>
     </tr>

@@ -48,8 +48,6 @@ public class BasicCashReceipt extends AbstractCashReceipt {
             "query.txntype" : "cashreceipt",
             "query.collectorid" : entity.collector.objid,
             onselect:{ o->
-                if( entity.items.find{ it.item.objid == o.objid }!=null )
-                    throw new Exception("This item has already been added");
                 selectedItem.item = o;
                 selectedItem.amount = o.defaultvalue;
                 if(o.valuetype == "FIXEDUNIT") {

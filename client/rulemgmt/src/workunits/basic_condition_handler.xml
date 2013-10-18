@@ -63,7 +63,7 @@
                 if( constraint.usevar == true ) {
                     return new Opener(outcome:"var");
                 }
-                else if( usetype.matches("decimal|integer|string") ) {
+                else if( usetype.matches("decimal|integer|string|boolean") ) {
                     return new Opener(outcome:usetype);
                 }
                 else {
@@ -79,6 +79,10 @@
             
             def getUseVarList() {
                 return varList.findAll{ it.datatype == selectedField.datatype }
+            }
+            
+            def getBooleanList(){
+                return [true, false]
             }
             
             //function for constraints
@@ -141,6 +145,7 @@
         <page name="decimal" template="com.rameses.rules.constraints.ui.DecimalHandler"/>
         <page name="integer" template="com.rameses.rules.constraints.ui.IntegerHandler"/>
         <page name="string" template="com.rameses.rules.constraints.ui.StringHandler"/>
+        <page name="boolean" template="com.rameses.rules.constraints.ui.BooleanHandler"/>
         <page name="var" template="com.rameses.rules.constraints.ui.VarListHandler"/>
         
     </pages>

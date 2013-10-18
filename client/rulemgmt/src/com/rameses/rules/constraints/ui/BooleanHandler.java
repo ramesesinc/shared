@@ -10,10 +10,10 @@ package com.rameses.rules.constraints.ui;
  *
  * @author  Elmo
  */
-public class StringHandler extends javax.swing.JPanel {
+public class BooleanHandler extends javax.swing.JPanel {
     
     /** Creates new form DecimalHandler */
-    public StringHandler() {
+    public BooleanHandler() {
         initComponents();
     }
     
@@ -24,26 +24,27 @@ public class StringHandler extends javax.swing.JPanel {
      */
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
     private void initComponents() {
-        xTextField1 = new com.rameses.rcp.control.XTextField();
+        xComboBox1 = new com.rameses.rcp.control.XComboBox();
 
-        xTextField1.setName("constraint.value");
-        xTextField1.setTextCase(com.rameses.rcp.constant.TextCase.NONE);
+        xComboBox1.setExpression("#{item.name}");
+        xComboBox1.setItems("booleanList");
+        xComboBox1.setName("constraint.value");
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(xTextField1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+            .add(xComboBox1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(xTextField1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+            .add(xComboBox1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
         );
     }// </editor-fold>//GEN-END:initComponents
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.rameses.rcp.control.XTextField xTextField1;
+    private com.rameses.rcp.control.XComboBox xComboBox1;
     // End of variables declaration//GEN-END:variables
     
 }

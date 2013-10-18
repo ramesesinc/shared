@@ -2,7 +2,7 @@
 <workunit>
     
     <invokers>
-       <invoker type="formActions" caption="Close" action="_close" shortcut="ctrl C" mnemonic="c" icon="images/toolbars/cancel.png" />
+       <invoker type="formActions" caption="Close" action="_close" shortcut="ctrl C" mnemonic="c" icon="images/toolbars/cancel.png" immediate="true"/>
        <invoker type="formActions" caption="Next" action="enterQty" visibleWhen="#{mode=='initial'}" shortcut="ctrl N" mnemonic='n'/>
        <invoker type="formActions" caption="Next" action="process" visibleWhen="#{mode=='enterqty'}" shortcut="ctrl N" mnemonic='n'/>
        <invoker type="formActions" caption="Back" action="revert" visibleWhen="#{mode=='process'}" shortcut="ctrl B" mnemonic='b'/>

@@ -54,7 +54,8 @@ class RuleBuilderService {
 			},
 			actionHandler: { a,i->
 				def actionDef = actionList.find{ it.name == a.name };
-				String temp = actionDef.template;		
+				String temp = actionDef.template;	
+				println 'action template -> ' + actionRoot + temp 
 				return tmpSvc.render( actionRoot + temp +".gtpl", 
 					[action: a, index:i, actionDef: actionDef ] 
 				).toString(); 	

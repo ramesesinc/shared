@@ -1,8 +1,8 @@
-"addItems|reqType"[mode=='create'] {
+"addItems|reqType|entity.requester"[mode=='create'] {
     enabled: true;
 }
 
-"addItems|reqType"[mode!='create'] {
+"addItems|reqType|entity.requester"[mode!='create'] {
     enabled: false;
 }
 
