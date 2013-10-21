@@ -9,7 +9,28 @@ public class DefaultWorkunitInfoController
 {
     def info;
         
-    void init() {
+    void init() {        
+    }
+    
+    def selectedItem;
+    def listhandler = [
+        fetchList: {o-> 
+            return info?.invokers; 
+        } 
+    ] as BasicListModel 
+            
+    def getHtmlview() {
+        def buffer = new StringBuffer();
+        buffer.append('<html>');
+        buffer.append('<body>');
+        buffer.append('<b>Properties</b><br/>');
         
+        def props = selectedItem?.properties;
+        if (props == null) props = [:]; 
+        
+        buffer.append(props); 
+        buffer.append('</body>');
+        buffer.append('</html>');
+        return buffer;
     }
 }
