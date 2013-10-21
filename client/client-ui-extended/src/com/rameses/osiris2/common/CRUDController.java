@@ -152,6 +152,11 @@ public class CRUDController
     public String getConfirmApproveMsg() { return null; }
     public String getConfirmDeleteMsg() { return null; }
     
+    public Map getCreatePermission() { return null; } 
+    public Map getEditPermission() { return null; } 
+    public Map getDeletePermission() { return null; } 
+    public Map getApprovePermission() { return null; } 
+    
     
     /*
      *  use as a prefix value in generating the UID key 
@@ -178,14 +183,30 @@ public class CRUDController
             
             formActions = new ArrayList();
             formActions.add(createAction("close", "Close", "images/toolbars/cancel.png", "ctrl C", 'c', "#{mode=='read'}", true));  
-            if (isAllowCreate())
-                formActions.add(createAction("init", "New", "images/toolbars/create.png", "ctrl N", 'n', "#{mode=='read'}", true));        
-            if (isAllowEdit())
-                formActions.add(createAction("edit", "Edit", "images/toolbars/edit.png", "ctrl E", 'e',  "#{mode=='read' && entity.state=='DRAFT'}", true)); 
-            if (isAllowDelete()) 
-                formActions.add(createAction("delete", "Delete", "images/toolbars/trash.png", null, 'd', "#{mode=='read' && entity.state=='DRAFT'}", true)); 
-            if (isAllowApprove())
-                formActions.add(createAction("approve", "Approve", "images/toolbars/approve.png", null, 'v', "#{mode=='read' && entity.state=='DRAFT'}", true)); 
+            if (isAllowCreate()) { 
+                Action a = createAction("init", "New", "images/toolbars/create.png", "ctrl N", 'n', "#{mode=='read'}", true); 
+                Map perm = getCreatePermission(); 
+                loadPermission(a, perm); 
+                formActions.add(a); 
+            } 
+            if (isAllowEdit()) { 
+                Action a = createAction("edit", "Edit", "images/toolbars/edit.png", "ctrl E", 'e',  "#{mode=='read' && entity.state=='DRAFT'}", true); 
+                Map perm = getEditPermission(); 
+                loadPermission(a, perm); 
+                formActions.add(a); 
+            }
+            if (isAllowDelete()) { 
+                Action a = createAction("delete", "Delete", "images/toolbars/trash.png", null, 'd', "#{mode=='read' && entity.state=='DRAFT'}", true); 
+                Map perm = getDeletePermission(); 
+                loadPermission(a, perm); 
+                formActions.add(a); 
+            }
+            if (isAllowApprove()) {
+                Action a = createAction("approve", "Approve", "images/toolbars/approve.png", null, 'v', "#{mode=='read' && entity.state=='DRAFT'}", true); 
+                Map perm = getApprovePermission(); 
+                loadPermission(a, perm); 
+                formActions.add(a); 
+            }
             
             formActions.add(createAction("cancel", "Cancel", "images/toolbars/cancel.png", "ctrl C", 'c', "#{mode!='read'}", true)); 
             formActions.add(createAction("save", "Save", "images/toolbars/save.png", "ctrl S", 's', "#{mode!='read' && allowSave==true}", false)); 
@@ -489,6 +510,19 @@ public class CRUDController
       
     private void focusComponent(String ctrlname){
         if ( binding != null ) binding.focus(ctrlname); 
+    }    
+    
+    private void loadPermission(Action a, Map perm) {
+        if (perm == null || perm.isEmpty()) return; 
+        
+        a.setDomain(getString(perm, "domain")); 
+        a.setRole(getString(perm, "role")); 
+        a.setPermission(getString(perm, "permission")); 
+    }
+    
+    private String getString(Map map, String name) {
+        Object ov = (map == null? null: map.get(name)); 
+        return (ov == null? null: ov.toString()); 
     }    
     
     // <editor-fold defaultstate="collapsed" desc=" CRUDServiceProxy "> 

@@ -25,9 +25,7 @@
               <Component id="jLabel3" min="-2" pref="33" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="xTextField1" min="-2" pref="216" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="xButton1" min="-2" pref="50" max="-2" attributes="0"/>
-              <EmptySpace pref="37" max="32767" attributes="0"/>
+              <EmptySpace pref="93" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -40,7 +38,6 @@
               <Component id="xComboBox2" alignment="3" min="-2" max="-2" attributes="0"/>
               <Component id="jLabel3" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
               <Component id="xTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
-              <Component id="xButton1" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -79,15 +76,6 @@
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
         <Property name="text" type="java.lang.String" value="Title"/>
-      </Properties>
-    </Component>
-    <Component class="com.rameses.rcp.control.XButton" name="xButton1">
-      <Properties>
-        <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-          <Insets value="[0, 0, 0, 0]"/>
-        </Property>
-        <Property name="name" type="java.lang.String" value="search"/>
-        <Property name="text" type="java.lang.String" value="Search"/>
       </Properties>
     </Component>
   </SubComponents>

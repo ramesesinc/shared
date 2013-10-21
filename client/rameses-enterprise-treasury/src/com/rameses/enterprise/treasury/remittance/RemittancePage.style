@@ -1,11 +1,7 @@
-"entity.*|cashBreakdown:item.*" [ mode == 'read' ] {
+"entity.liquidatingofficer|cashBreakdown:item.*" [ mode == 'read' ] {
     enabled: false;
 }
 
-"entity.*|cashBreakdown:item.qty" [ mode == 'create' ] {
+"entity.liquidatingofficer|cashBreakdown:item.qty" [ mode == 'create' ] {
     enabled: true;
-}
-
-"entity.amount" [ true == true ] {
-    enabled: false;
 }

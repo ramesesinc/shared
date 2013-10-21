@@ -30,7 +30,6 @@ public class RuleMgmtQuery extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         xTextField1 = new com.rameses.rcp.control.XTextField();
         jLabel3 = new javax.swing.JLabel();
-        xButton1 = new com.rameses.rcp.control.XButton();
 
         xComboBox1.setExpression("#{item.title}");
         xComboBox1.setItemKey("name");
@@ -49,10 +48,6 @@ public class RuleMgmtQuery extends javax.swing.JPanel {
 
         jLabel3.setText("Title");
 
-        xButton1.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        xButton1.setName("search");
-        xButton1.setText("Search");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -70,9 +65,7 @@ public class RuleMgmtQuery extends javax.swing.JPanel {
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(xTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(xButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(93, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -82,8 +75,7 @@ public class RuleMgmtQuery extends javax.swing.JPanel {
                 .addComponent(jLabel2)
                 .addComponent(xComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(xTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(xButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(xTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
     
@@ -92,7 +84,6 @@ public class RuleMgmtQuery extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private com.rameses.rcp.control.XButton xButton1;
     private com.rameses.rcp.control.XComboBox xComboBox1;
     private com.rameses.rcp.control.XComboBox xComboBox2;
     private com.rameses.rcp.control.XTextField xTextField1;

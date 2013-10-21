@@ -12,17 +12,44 @@
         
         class RuleMgmtController extends DefaultListController {
         
-            @Controller 
-            def controller;
-                
+           
             @Service("RuleMgmtService")
             def service;
             
+            @Script("Template")
+            def template;
+            
+           
             def rulegroups;
             def rulestates;
             String entityName = "rulemgmt";
             String formName = 'rulemgmt';
             def ruleset;
+            
+            @PropertyChangeListener
+            def listener = [
+                "query.rulegroup": {o->
+                    reload();
+                },
+                "query.state": {o->
+                    reload();
+                },
+                "query.title": {o->
+                    reload();
+                },
+                
+            ]
+            
+            def ruleHtml;
+            
+            public void setSelectedEntity( o ) {
+                if( !o.ruleHtml ) {
+                    def z = service.open( [objid: o.objid] );
+                    o.ruleHtml = template.render( "html/rule_html", [rule: z, editable:false] );
+                }
+                ruleHtml = o.ruleHtml;
+                super.setSelectedEntity(o);
+            }
             
             void init() {
                ruleset = tag;
@@ -41,11 +68,13 @@
                 return d;
             }
             
+            
+            
         }
         ]]>
     </code>
     <pages>
-        <page template="com.rameses.osiris2.themes.ListPage"/>
+        <page template="com.rameses.rulemgmt.RuleListPage"/>
         <page name="queryform" template="com.rameses.rulemgmt.RuleMgmtQuery"/>
     </pages>
 </workunit>

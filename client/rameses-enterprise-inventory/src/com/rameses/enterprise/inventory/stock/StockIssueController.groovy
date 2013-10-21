@@ -85,10 +85,25 @@ public abstract class StockIssueController {
 
     String getRenderer() {
         if(!selectedItem) return "";
-        println  "com/rameses/handlers/stockissue/" + selectedItem.handler +".gtpl";
         return TemplateProvider.instance.getResult( "com/rameses/handlers/stockissue/" + selectedItem.handler +".gtpl", [entity:selectedItem] );            
     }
     
+    def print() {
+        entity.reqno = entity.request.reqno;
+        entity.dtfiled = entity.request.dtfiled;
+        entity.requester = entity.request.requester;
+        entity.items.each { itm -> 
+            itm.qty = itm.qtyrequested
+            itm.qtyreceived = itm.qtyissued     
+            def srs = []
+            itm.items.each{
+                srs <<  it.startseries.toString().padLeft(7, '0') + " - " + it.endseries.toString().padLeft(7, '0') + " ( " + (it.startstub == it.endstub ? it.startstub+"" : ( it.startstub + " - " + it.endstub )) + " ) "
+            }
+            itm.series = srs.join(',')
+        }   
+
+        return InvokerUtil.lookupOpener("stockrequest:ris", [entity: entity]);
+    }
 }
 
         

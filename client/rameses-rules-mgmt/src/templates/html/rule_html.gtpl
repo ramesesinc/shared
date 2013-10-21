@@ -19,7 +19,7 @@ def actpath = "templates/html/action_param_";
                 <b>${ (!cond.varname) ? '' : cond.varname + ': ' }</b>
                 <u>${cond.fact.title}</u>
 
-                <%if(rule.state!='DEPLOYED') {%>
+                <%if(editable==true && rule.state!='DEPLOYED') {%>
                     <a href="editCondition" objid="${cond.objid}">[Edit]</a>&nbsp;&nbsp;
                     <a href="removeCondition" objid="${cond.objid}">[Remove]</a>&nbsp;&nbsp;
                 <%}%>
@@ -82,7 +82,7 @@ def actpath = "templates/html/action_param_";
             <div class="block">
                 <u><b>${action.actiondef.title}</b></u> with the ff. paramaters:
 
-                <%if(rule.state!='DEPLOYED') {%>
+                <%if(editable==true && rule.state!='DEPLOYED') {%>
                     <a href="editAction" objid="${action.objid}">[Edit]</a>
                     <a href="removeAction" objid="${action.objid}">[Remove]</a>&nbsp;&nbsp;
                     <br>

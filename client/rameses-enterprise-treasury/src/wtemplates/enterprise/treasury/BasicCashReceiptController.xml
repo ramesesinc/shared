@@ -1,19 +1,19 @@
 <workunit>
     <invokers>
         <invoker type="formActions" action="_close" caption="Back" immediate="true" visibleWhen="#{!completed}" 
-            icon="images/toolbars/cancel.png" mnemonic="c"/>
+            icon="images/toolbars/cancel.png" mnemonic="b" shortcut="ctrl B"/>
         <invoker type="formActions" action="post" caption="Save" visibleWhen="#{!completed}"
-            icon="images/toolbars/save.png" shortcut="ctrl S" />
+            icon="images/toolbars/save.png" shortcut="ctrl S" mnemonic="s" />
         
         <invoker type="formActions" action="_close:_close" caption="Quit" visibleWhen="#{completed}" 
-            shortcut="ctrl Q"/>
+            shortcut="ctrl Q" mnemonic="q" />
             
-        <invoker type="formActions" action="_close" caption="New" visibleWhen="#{completed}" shortcut="ctrl N"/>
+        <invoker type="formActions" action="_close" caption="New" visibleWhen="#{completed}" shortcut="ctrl N" mnemonic="n"/>
             
         <invoker type="formActions" action="reprint" caption="Reprint" 
             visibleWhen="#{completed}" shortcut="ctrl P"/>
             
-        <invoker type="formActions" action="doVoid" immediate="true" caption="Void" visibleWhen="#{completed &amp;&amp; !entity.voided}" />
+        <invoker type="formActions" action="doVoid" immediate="true" caption="Void" visibleWhen="#{completed &amp;&amp; !entity.voided}" shortcut="ctrl V" mnemonic="v"/>
         
         <!-- 
         FOR TESTING VIEWER
