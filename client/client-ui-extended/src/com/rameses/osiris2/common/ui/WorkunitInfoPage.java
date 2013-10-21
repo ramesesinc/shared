@@ -29,14 +29,13 @@ public class WorkunitInfoPage extends javax.swing.JPanel
         xFormPanel1 = new com.rameses.rcp.control.XFormPanel();
         xLabel1 = new com.rameses.rcp.control.XLabel();
         xLabel2 = new com.rameses.rcp.control.XLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtURL = new com.rameses.rcp.control.XTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtWorkunitProperties = new com.rameses.rcp.control.XTextArea();
         xLabel4 = new com.rameses.rcp.control.XLabel();
         xLabel5 = new com.rameses.rcp.control.XLabel();
         xLabel8 = new com.rameses.rcp.control.XLabel();
-        xLabel7 = new com.rameses.rcp.control.XLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtURL = new com.rameses.rcp.control.XTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtModuleProperties = new com.rameses.rcp.control.XTextArea();
 
@@ -62,6 +61,17 @@ public class WorkunitInfoPage extends javax.swing.JPanel
         xLabel2.setPreferredSize(new java.awt.Dimension(0, 20));
         xLabel2.setUseHtml(true);
         xFormPanel1.add(xLabel2);
+
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(0, 40));
+        txtURL.setEditable(false);
+        txtURL.setLineWrap(true);
+        txtURL.setWrapStyleWord(true);
+        txtURL.setCaption("Path");
+        txtURL.setCellPadding(new java.awt.Insets(0, 10, 0, 0));
+        txtURL.setName("info.workunit_path");
+        jScrollPane1.setViewportView(txtURL);
+
+        xFormPanel1.add(jScrollPane1);
 
         jScrollPane3.setPreferredSize(new java.awt.Dimension(0, 60));
         txtWorkunitProperties.setEditable(false);
@@ -107,29 +117,6 @@ public class WorkunitInfoPage extends javax.swing.JPanel
         xLabel8.setUseHtml(true);
         xFormPanel1.add(xLabel8);
 
-        xLabel7.setBackground(new java.awt.Color(255, 255, 255));
-        com.rameses.rcp.control.border.XLineBorder xLineBorder4 = new com.rameses.rcp.control.border.XLineBorder();
-        xLineBorder4.setLineColor(new java.awt.Color(150, 150, 150));
-        xLabel7.setBorder(xLineBorder4);
-        xLabel7.setCaption("Context Path");
-        xLabel7.setCellPadding(new java.awt.Insets(0, 10, 0, 0));
-        xLabel7.setExpression("#{info.module_context_path}");
-        xLabel7.setOpaque(true);
-        xLabel7.setPreferredSize(new java.awt.Dimension(0, 20));
-        xLabel7.setUseHtml(true);
-        xFormPanel1.add(xLabel7);
-
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(0, 40));
-        txtURL.setEditable(false);
-        txtURL.setLineWrap(true);
-        txtURL.setWrapStyleWord(true);
-        txtURL.setCaption("URL");
-        txtURL.setCellPadding(new java.awt.Insets(0, 10, 0, 0));
-        txtURL.setName("info.module_url");
-        jScrollPane1.setViewportView(txtURL);
-
-        xFormPanel1.add(jScrollPane1);
-
         jScrollPane2.setPreferredSize(new java.awt.Dimension(0, 60));
         txtModuleProperties.setEditable(false);
         txtModuleProperties.setLineWrap(true);
@@ -148,7 +135,7 @@ public class WorkunitInfoPage extends javax.swing.JPanel
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(xFormPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
+            .addComponent(xFormPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
     
@@ -165,7 +152,6 @@ public class WorkunitInfoPage extends javax.swing.JPanel
     private com.rameses.rcp.control.XLabel xLabel2;
     private com.rameses.rcp.control.XLabel xLabel4;
     private com.rameses.rcp.control.XLabel xLabel5;
-    private com.rameses.rcp.control.XLabel xLabel7;
     private com.rameses.rcp.control.XLabel xLabel8;
     // End of variables declaration//GEN-END:variables
     
