@@ -91,6 +91,7 @@ public abstract class StockIssueController {
     def print() {
         entity.reqno = entity.request.reqno;
         entity.dtfiled = entity.request.dtfiled;
+        entity.requester = entity.request.requester;
         entity.items.each { itm -> 
             itm.qty = itm.qtyrequested
             itm.qtyreceived = itm.qtyissued     
