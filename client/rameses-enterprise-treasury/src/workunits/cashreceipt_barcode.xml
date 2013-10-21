@@ -21,7 +21,7 @@
                     return InvokerUtil.lookupOpener( "cashreceipt:barcode:"+prefix, [barcodeid: barcodeid]);
                 }
                 catch(e) {
-                    MsgBox.err("No appropriate handler found for this particular barcode.-> cashreceipt:"+prefix+":"+barcodeid);
+                    MsgBox.err("No appropriate handler found for this particular barcode.[ cashreceipt:barcode:"+prefix+"]->"+barcodeid);
                     return null;
                 }
             }
