@@ -1,6 +1,6 @@
 <workunit>
     <invokers>
-        <invoker type="valuerange:editor" target="popup" action="init"/>
+        <invoker type="valuerange:editor" caption="Table Editor" target="popup" action="init"/>
     </invokers>
     <code>
         <![CDATA[    
@@ -10,36 +10,51 @@
         import com.rameses.osiris2.client.*
         import com.rameses.osiris2.common.*
         
+        
         class ValueRangeEditorController {
         
             @Binding
             def binding;
             
+            ValueRangeModel model;
+            
             def selectedEntry;
             def fromValue = 0;
             
-            
             //to be passed as parameter
-            def handler;
-            def vars;   
-            def var;    
+            def updateHandler;
             def entries;
+            def var;
+            def vars;
             
             void init() {
-                if(!entries) {
-                    entries = [];
-                } 
-                else {
+                vars = model.getVars(); 
+                var = model.getVar();
+                def vals = model.getValue();
+                entries = [];
+                if(vals) {
+                    entries.addAll( vals );
                     fromValue = entries.last()?.to;
-                }
+                }    
             }
 
             def getFormulaOpener() {
-                return InvokerUtil.lookupOpener( "expression:editor", [vars: vars]);
+                def editor = model.getExpressionEditor(selectedEntry);
+                editor.handle.updateHandler = { o->
+                    selectedEntry.value = o;
+                    listModel.refreshEditedCell();
+                }
+                return editor;
+            }
+            
+            def changeStart() {
+                MsgBox.alert('Not yet implemented');
             }
             
             def listModel = [
                 onAddItem: { o->
+                    if( o.from == null ) 
+                        throw new Exception("Cannot add entry");
                     entries << o;
                     fromValue = o.to;
                 },
@@ -47,18 +62,17 @@
                     return [
                         new Column(name:"from", width:100, maxWidth:100, editable:false, caption:"From",typeHandler: new DecimalColumnHandler()),
                         new Column(name:"to", width:100, maxWidth:100, editable:true, caption:"To", typeHandler: new DecimalColumnHandler()),
-                        new Column(name:"value", editable:true, caption:"Value Expression", 
-                            typeHandler: new OpenerColumnHandler( handler: "formulaOpener" ) )
+                        new Column(name:"value", editable:true, caption:"Value Expression", typeHandler: new OpenerColumnHandler( handler: "formulaOpener" ) )
                     ] as Column[]
                 },
                 onColumnUpdate: {item, colName->
-                    if(colName == "to" && item.to < fromValue )
+                    if(colName == "to" && (item.to!=null && item.to < fromValue) )
                         throw new Exception("To must be greater than " + fromValue);
                     if(!item.from) item.from = fromValue;
                 },
                 onRemoveItem: { o->
                     if( o != entries.last() ) {
-                        throw new Exception("Removal not allowed");
+                        throw new Exception("Removal not allowed. Only last item can be removed");
                     }    
                     entries.remove(o);
                     fromValue = entries.last()?.to;
@@ -79,8 +93,9 @@
                     throw new Exception("Please specify a variable");
                 if(!entries) 
                     throw new Exception("Please indicate at least one entry");
-                def m = [var:var, entries:entries];
-                handler(m);
+                model.setVar( var );
+                model.setValue( entries );
+                if(updateHandler) updateHandler( [var:var, entries: entries] );
                 return "_close";
             }
         }

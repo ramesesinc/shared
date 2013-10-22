@@ -1,0 +1,47 @@
+<workunit extends="wtemplates/ListController.xml">
+    <invokers>
+        <invoker type="revenueitem-list:formActions" caption="Account Mapping View" srole="MASTER_ENCODER"/>
+   </invokers>
+   <code>
+       <![CDATA[
+        import com.rameses.osiris2.common.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.osiris2.client.*;
+        
+        class RevenueItemAccountMappingController2 {
+        
+            @Service("RevenueAccountMappingService")
+            def service;
+            
+            String title = "Revenue Account Mapping";
+        
+            def query = [:];
+            def selectedEntity;
+            def formActions;    
+            
+            def listHandler = [
+                getColumnList: { 
+                    return service.getColumns(query);
+                },
+                fetchList: { o->
+                    return service.getList(o);
+                }
+            ] as EditorListModel             
+            
+            def getLookupSegment() {
+                String name = listHandler.getSelectedColumn();
+                //println listHandler.getSelectedColumnProperties();
+                def h = [
+                    onselect: { o->
+                        def m = [segment: name, objid:selectedEntity.objid, acctid:o.objid]; 
+                        service.addSegment( m );
+                        selectedEntity[name] = [code: o.code, title: o.title];
+                    }
+                ]
+                return InvokerUtil.lookupOpener( name + ":lookup", h );
+            }            
+        } 
+       ]]>
+   </code>
+</workunit>

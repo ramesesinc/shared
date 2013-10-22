@@ -1,0 +1,80 @@
+<workunit>
+    
+    <invokers>
+        <invoker type="rule:selectactiondef" caption="Select Action Definition" action="init" target="popup"/>
+                
+        <invoker type="rulemgmt:formActions" caption="Manage Actions" action="manage" target="popup" visibleWhen="#{debug==true}"/>
+    </invokers>
+    <code>
+         <![CDATA[
+        import com.rameses.rcp.common.*;
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.osiris2.client.*;
+        import com.rameses.osiris2.common.*
+        
+        class SelectActionDefController  {
+        
+            @Service("RuleMgmtService")
+            def service;
+        
+            @Caller
+            def caller;
+            
+            @Binding
+            def binding;
+            
+            def rule;
+            def selectedActionDef;
+            def actionDefList;
+            def savehandler;
+            def mgmt = false;
+            
+            void init() {
+                mgmt = false;
+                actionDefList = service.getActionDefs([ruleset:rule.ruleset]);
+            }
+
+            void manage() {
+                mgmt = true;
+                rule = [ruleset: caller.query.ruleset ];
+                actionDefList = service.getActionDefs([ruleset:rule.ruleset]);
+            }
+            
+            
+            def doNext() {
+                def m = [actionDef:selectedActionDef, rule:rule, savehandler: savehandler];
+                def h = "default";
+                if(selectedActionDef.handler)  h = selectedActionDef.handler;
+                return InvokerUtil.lookupOpener("ruleaction:"+h+":create", m );
+            }
+            
+            def doClose() {
+                return "_close";
+            }
+            
+            
+             /******************************************************************
+            * debugging
+            *******************************************************************/
+            boolean getDebug() {
+                def d =  OsirisContext.clientContext.appEnv['app.debug'];
+                if(!d) return false;
+                return d;
+            }
+            
+            def addActionDef() {
+                return InvokerUtil.lookupOpener( "ruleactiondef:create", [ruleset:rule.ruleset] );
+            }
+            
+            def editActionDef() {
+                if(!selectedActionDef) return;
+                return InvokerUtil.lookupOpener( "ruleactiondef:edit", [entity:selectedActionDef] );
+            }
+            
+        }
+        ]]>
+    </code>
+    <pages>
+        <page  template="com.rameses.rulemgmt.SelectActionPage"/>
+    </pages>
+</workunit>

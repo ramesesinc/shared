@@ -37,7 +37,7 @@
         
         def getSegmentLookup() {
             if( !selectedSegment) return null;
-
+            
             def parent = null;
             if(selectedSegment.depends) {
                 //find the dependency account.
@@ -47,8 +47,8 @@
             def params = [:];
             params.put( "query.entity", entity );
             if( parent ) params.put( "query.parent", parent );
-
-            params.onselect= { o -> 
+            
+            params.onselect = { o -> 
                 def m = [
                     segment:selectedSegment.name, 
                     objectname: entityName,

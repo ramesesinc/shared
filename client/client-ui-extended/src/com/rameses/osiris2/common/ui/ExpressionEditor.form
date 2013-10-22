@@ -97,7 +97,7 @@
             <StringItem index="1" value="selectedNode"/>
           </StringArray>
         </Property>
-        <Property name="expression" type="java.lang.String" value="&lt;html&gt;&#xa;&lt;h3&gt;#{selectedItem.signature}&lt;/h3&gt;&#xa;#{selectedItem.description}&#xa;&lt;/html&gt;"/>
+        <Property name="expression" type="java.lang.String" value="&lt;html&gt;&#xa;&lt;h3&gt;#{selectedItem.title}&lt;/h3&gt;&#xa;#{selectedItem.description}&#xa;&lt;/html&gt;"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">

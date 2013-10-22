@@ -1,0 +1,133 @@
+<workunit>
+    
+    <invokers>
+        <invoker type="rulefact:create" caption="Create Fact" action="create"/>
+        <invoker type="rulefact:edit" caption="Edit Fact" action="edit"/>
+        <invoker type="formActions" caption="Close" action="_close" immediate="true"/>
+        <invoker type="formActions" caption="Save" action="saveFact"/>
+    </invokers>
+    
+    <code>
+         <![CDATA[
+        
+        import com.rameses.rcp.common.*;
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.osiris2.client.*;
+        import com.rameses.osiris2.common.*
+        import com.rameses.rulemgmt.*;
+        import com.rameses.util.*;
+        import java.rmi.server.*;
+        
+        class RuleFactController {
+        
+            @Service("RuleDeveloperService")
+            def service;
+        
+            def entity;
+            def ruleset;
+            def field;
+            def mode;
+            def fieldmode;
+            def selectedField;
+            String title = "Fact";
+            
+            def handlerTypes = [
+                "lov", "lookup", "var", "decimal", "integer", "dynamiclookup"
+            ]
+            
+            @PropertyChangeListener
+            def listener = [
+                "field.handler": { o->
+                    switch(o) {
+                        case "decimal" : 
+                            field.vardatatype = "decimal";
+                            field.datatype = "decimal";
+                            break;
+                        case "integer" : 
+                            field.vardatatype = "integer";
+                            field.datatype = "integer";
+                            break;
+                        default:
+                            field.vardatatype = null;
+                            field.datatype = null;
+                    }
+                }
+            ]
+            
+            def getOpener() {
+                if(!field.handler) return null;
+                return new Opener( outcome: field.handler );
+            }
+            
+            void create() {
+                mode = "create";
+                entity = [objid: "RULFACT" + new UID()];
+                entity.fields  = [];
+                entity.ruleset = ruleset;
+            }
+            
+            void edit() {
+                mode = "edit";
+                entity = service.findFact( entity );
+            }
+            
+            
+            def saveFact() {
+                service.saveFact( entity );
+                MsgBox.alert("Record saved");
+                return "_close";
+            }
+            
+            def fieldModel = [
+                fetchList: { o->
+                    return  entity.fields;
+                }
+            ] as BasicListModel;
+            
+            def addField() {
+                fieldmode = "add";
+                field = [objid: "FACTFLD"+new UID()];
+                field.sortorder = 0;
+                def opener = new Opener(id:"rulefact:addfield", outcome:"fieldinfo");
+                opener.target = "popup";
+                return opener;
+            }
+            
+            def editField() {
+                fieldmode = "edit";
+                field = selectedField;
+                def opener = new Opener(id:"rulefact:editfield", outcome:"fieldinfo");
+                opener.target = "popup";
+                return opener;
+            }
+            
+            void removeField() {
+                if(MsgBox.confirm("You are about to remove this entry. Continue?")) {
+                    entity.fields.remove( selectedField );
+                    if(!entity._deleted_fields) entity._deleted_fields = [];
+                    entity._deleted_fields << selectedField;
+                }
+            }
+            
+            def saveField() {
+                if(fieldmode == "add") {
+                    entity.fields << field;
+                }
+                fieldModel.reload();
+                return "_close";
+            }   
+        }
+        ]]>
+    </code>
+    <pages>
+        <page template="com.rameses.rulemgmt.developer.FactInfo"/>
+        <page name="fieldinfo" template="com.rameses.rulemgmt.developer.FactField"/>
+        
+        <page name="lookup" template="com.rameses.rulemgmt.developer.FactFieldLookup"/>
+        <page name="dynamiclookup" template="com.rameses.rulemgmt.developer.FactFieldDynamicLookup"/>
+        <page name="decimal" template="com.rameses.rulemgmt.developer.FactFieldDefault"/>
+        <page name="integer" template="com.rameses.rulemgmt.developer.FactFieldDefault"/>
+        <page name="var" template="com.rameses.rulemgmt.developer.FactFieldVar"/>
+        <page name="lov" template="com.rameses.rulemgmt.developer.FactFieldLOV"/>
+    </pages>
+</workunit>

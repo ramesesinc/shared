@@ -1,0 +1,137 @@
+<workunit>
+    
+    <invokers>
+        <invoker type="ruleactiondef:create" caption="Create Action Def" action="create"/>
+        <invoker type="ruleactiondef:edit" caption="Edit Action Def" action="edit"/>
+        
+        <invoker type="formActions" caption="Close" action="_close" immediate="true"/>
+        <invoker type="formActions" caption="Save" action="saveAction"/>
+    </invokers>
+    <code>
+         <![CDATA[
+        
+        import com.rameses.rcp.common.*;
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.osiris2.client.*;
+        import com.rameses.osiris2.common.*
+        import com.rameses.rulemgmt.*;
+        import com.rameses.util.*;
+        import java.rmi.server.*;
+        
+        class RuleActionDefController {
+        
+            @Service("RuleDeveloperService")
+            def service;
+        
+            def entity;
+            def ruleset;
+            def param;
+            def mode;
+            def selectedParam;
+            def parammode;
+            
+            String title = "Action";
+            
+            def handlerTypes = [
+                "lov", "lookup", "var", "expression", "message"
+            ]
+            
+            @PropertyChangeListener
+            def listener = [
+                "param.handler": { o->
+                    switch(o) {
+                        case "decimal" : 
+                            param.vardatatype = "decimal";
+                            param.datatype = "decimal";
+                            break;
+                        case "integer" : 
+                            param.vardatatype = "integer";
+                            param.datatype = "integer";
+                            break;
+                        default:
+                            param.vardatatype = null;
+                            param.datatype = null;
+                    }
+                }
+            ]
+            
+            def getOpener() {
+                if(!param.handler) return null;
+                return new Opener( outcome: param.handler );
+            }
+            
+            void create() {
+                mode = "create";
+                entity = [objid: "RULADEF" + new UID()];
+                entity.params  = [];
+                entity.ruleset = ruleset;
+            }
+            
+            void edit() {
+                mode = "edit";
+                entity = service.findActionDef( entity );
+            }
+            
+            def paramModel = [
+                fetchList: { o->
+                    return  entity.params;
+                }
+            ] as BasicListModel;
+            
+            def addParam() {
+                parammode = "add";
+                param = [objid: "ACTPARAM"+new UID()];
+                param.sortorder = 0;
+                def opener = new Opener(id:"ruleactiondef:addparam", outcome:"paraminfo");
+                opener.target = "popup";
+                return opener;
+            }
+            
+            def editParam() {
+                parammode = "edit";
+                param = selectedParam;
+                def opener = new Opener(id:"ruleactiondef:editparam", outcome:"paraminfo");
+                opener.target = "popup";
+                return opener;
+            }
+            
+            void removeParam() {
+                if(MsgBox.confirm("You are about to remove this entry. Continue?")) {
+                    entity.params.remove( selectedParam );
+                    if(!entity._deleted_params) entity._deleted_params = [];
+                    entity._deleted_params << selectedParam;
+                }
+            }
+            
+            def saveParam() {
+                if(parammode == "add") {
+                    entity.params << param;
+                }
+                paramModel.reload();
+                return "_close";
+            }   
+            
+            
+            
+            def saveAction() {
+                service.saveActionDef( entity );
+                MsgBox.alert("Record saved");
+                return "_close";
+            }
+        }
+        ]]>
+    </code>
+    <pages>
+        <page template="com.rameses.rulemgmt.developer.ActionDefInfo"/>
+        <page name="paraminfo" template="com.rameses.rulemgmt.developer.ActionDefParam"/>
+        
+        <page name="lookup" template="com.rameses.rulemgmt.developer.ActionParamLookup"/>
+        <page name="decimal" template="com.rameses.rulemgmt.developer.ActionParamDefault"/>
+        <page name="integer" template="com.rameses.rulemgmt.developer.ActionParamDefault"/>
+        <page name="expression" template="com.rameses.rulemgmt.developer.ActionParamDefault"/>
+        <page name="var" template="com.rameses.rulemgmt.developer.ActionParamVar"/>
+        <page name="lov" template="com.rameses.rulemgmt.developer.ActionParamLOV"/>
+        <page name="message" template="com.rameses.rulemgmt.developer.ActionParamDefault"/>
+        
+    </pages>
+</workunit>
