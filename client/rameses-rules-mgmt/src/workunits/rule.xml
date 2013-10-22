@@ -3,6 +3,8 @@
     <invokers>
         <invoker type="rulemgmt:create" caption="New Rule" action="create" target="popup"/>
         <invoker type="rulemgmt:open" caption="Rule" action="open" target="popup"/>
+        
+        <invoker type="extActions" caption="View Rule" action="viewRule" visibleWhen="#{mode=='read'}" />
     </invokers>
     <code>
          <![CDATA[
@@ -162,6 +164,11 @@
             void saveUpdate() {
                 service.update(entity);
                 mode = "read";
+            }
+            
+            def viewRule() {
+                def ruleText = service.viewRuleText( [objid: entity.objid] );
+                return InvokerUtil.lookupOpener( "rule:ruletext", [ruleText:ruleText] );
             }
         }
         ]]>
