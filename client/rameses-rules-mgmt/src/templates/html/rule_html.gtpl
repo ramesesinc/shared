@@ -44,6 +44,8 @@ def actpath = "templates/html/action_param_";
                                         def handler = cons.field.handler;
                                         if(!handler) handler = cons.field.datatype;
                                         switch( handler ) {
+                                            case "boolean":
+                                                break;
                                             case "decimal":
                                                 out.print(cons.decimalvalue);
                                                 break;
