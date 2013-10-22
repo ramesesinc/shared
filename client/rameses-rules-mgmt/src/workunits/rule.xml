@@ -150,6 +150,19 @@
                 service.undeploy( [objid: entity.objid] );
                 entity.state = 'APPROVED';
             }
+            
+            void edit() {
+                mode = "edit";
+            }
+            
+            void cancelEdit() {
+                mode = "read";
+            }
+            
+            void saveUpdate() {
+                service.update(entity);
+                mode = "read";
+            }
         }
         ]]>
     </code>
@@ -163,11 +176,19 @@
             <transition to="editinfo" caption="Next" immediate="false" 
                 confirm="You are about to create this rule. Continue?" action="createNew"/>
         </page>
-         <page name="editinfo" title="Rule Info">
+        <page name="editinfo" title="Rule Info">
             <transition to="end" caption="Cancel" />
+            <transition to="editing" caption="Edit" action="edit"/>
             <transition to="deployed" caption="Deploy" action="deploy"/>
         </page>    
-         <page name="deployed" title="Deployed Rule">
+        <page name="editing" title="Rule Info (Edit)">
+            <transition to="editinfo" caption="Cancel" action="cancelEdit"/>
+            <transition to="saveInfo" caption="Save" action="saveUpdate"/>
+        </page>    
+        <process name="saveInfo">
+            <transition to="editinfo" />    
+        </process>    
+        <page name="deployed" title="Deployed Rule">
             <transition to="end" caption="Cancel" />
             <transition to="editinfo" caption="Undeploy" action="undeploy"/>
         </page>    
@@ -176,6 +197,7 @@
     <pages>
         <page name="initial" template="com.rameses.rulemgmt.NewRulePage"/>
         <page name="editinfo" template="com.rameses.rulemgmt.RulePage"/>
+        <page name="editing" template="com.rameses.rulemgmt.RulePage"/>
         <page name="deployed" template="com.rameses.rulemgmt.RulePage"/>
     </pages>
 </workunit>

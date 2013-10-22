@@ -32,71 +32,31 @@ public class RulePage extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         xHtmlView1 = new com.rameses.rcp.control.XHtmlView();
         jPanel1 = new javax.swing.JPanel();
-        xFormPanel2 = new com.rameses.rcp.control.XFormPanel();
-        xLabel1 = new com.rameses.rcp.control.XLabel();
-        xComboBox1 = new com.rameses.rcp.control.XComboBox();
-        xIntegerField1 = new com.rameses.rcp.control.XIntegerField();
+        xButton1 = new com.rameses.rcp.control.XButton();
+        xButton2 = new com.rameses.rcp.control.XButton();
         xFormPanel1 = new com.rameses.rcp.control.XFormPanel();
         xLabel3 = new com.rameses.rcp.control.XLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         xTextArea1 = new com.rameses.rcp.control.XTextArea();
-        xButton1 = new com.rameses.rcp.control.XButton();
-        xButton2 = new com.rameses.rcp.control.XButton();
+        xLabel1 = new com.rameses.rcp.control.XLabel();
+        xComboBox1 = new com.rameses.rcp.control.XComboBox();
+        xIntegerField1 = new com.rameses.rcp.control.XIntegerField();
+        xFormPanel3 = new com.rameses.rcp.control.XFormPanel();
+        xDateField1 = new com.rameses.rcp.control.XDateField();
+        xDateField2 = new com.rameses.rcp.control.XDateField();
 
         xHtmlView1.setName("ruleHtml");
         jScrollPane1.setViewportView(xHtmlView1);
-
-        xFormPanel2.setCaptionWidth(120);
-        xLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        xLabel1.setCaption("Ruleset");
-        xLabel1.setExpression("#{entity.ruleset}");
-        xLabel1.setPreferredSize(new java.awt.Dimension(0, 16));
-        xFormPanel2.add(xLabel1);
-
-        xComboBox1.setCaption("Rule Group");
-        xComboBox1.setExpression("#{item.title}");
-        xComboBox1.setItemKey("name");
-        xComboBox1.setItems("rulegroups");
-        xComboBox1.setName("entity.rulegroup");
-        xComboBox1.setPreferredSize(new java.awt.Dimension(0, 22));
-        xComboBox1.setReadonly(true);
-        xFormPanel2.add(xComboBox1);
-
-        xIntegerField1.setCaption("Salience");
-        xIntegerField1.setName("entity.salience");
-        xFormPanel2.add(xIntegerField1);
-
-        xLabel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        xLabel3.setCaption("Rule Name");
-        xLabel3.setExpression("#{entity.name}");
-        xLabel3.setPreferredSize(new java.awt.Dimension(0, 16));
-        xFormPanel1.add(xLabel3);
-
-        jScrollPane3.setName("entity.description");
-        jScrollPane3.setPreferredSize(new java.awt.Dimension(0, 42));
-        xTextArea1.setCaption("Title");
-        xTextArea1.setName("entity.title");
-        jScrollPane3.setViewportView(xTextArea1);
-
-        xFormPanel1.add(jScrollPane3);
 
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
-                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(xFormPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 336, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+            .add(0, 0, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel1Layout.createSequentialGroup()
-                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
-                .addContainerGap())
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
-                .add(xFormPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 69, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(14, 14, 14))
+            .add(0, 82, Short.MAX_VALUE)
         );
 
         xButton1.setCaption("Add Condition");
@@ -108,36 +68,98 @@ public class RulePage extends javax.swing.JPanel {
         xButton2.setName("addAction");
         xButton2.setText("Add Action");
 
+        com.rameses.rcp.control.border.XTitledBorder xTitledBorder1 = new com.rameses.rcp.control.border.XTitledBorder();
+        xTitledBorder1.setTitle("General Info");
+        xFormPanel1.setBorder(xTitledBorder1);
+        xLabel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        xLabel3.setCaption("Rule Name");
+        xLabel3.setExpression("#{entity.name}");
+        xLabel3.setPreferredSize(new java.awt.Dimension(0, 16));
+        xFormPanel1.add(xLabel3);
+
+        jScrollPane3.setName("entity.description");
+        jScrollPane3.setPreferredSize(new java.awt.Dimension(0, 42));
+        xTextArea1.setLineWrap(true);
+        xTextArea1.setWrapStyleWord(true);
+        xTextArea1.setCaption("Title");
+        xTextArea1.setName("entity.title");
+        jScrollPane3.setViewportView(xTextArea1);
+
+        xFormPanel1.add(jScrollPane3);
+
+        xLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        xLabel1.setCaption("Ruleset");
+        xLabel1.setExpression("#{entity.ruleset}");
+        xLabel1.setPreferredSize(new java.awt.Dimension(0, 16));
+        xFormPanel1.add(xLabel1);
+
+        xComboBox1.setCaption("Rule Group");
+        xComboBox1.setExpression("#{item.title}");
+        xComboBox1.setItemKey("name");
+        xComboBox1.setItems("rulegroups");
+        xComboBox1.setName("entity.rulegroup");
+        xComboBox1.setPreferredSize(new java.awt.Dimension(0, 22));
+        xComboBox1.setReadonly(true);
+        xFormPanel1.add(xComboBox1);
+
+        xIntegerField1.setCaption("Salience");
+        xIntegerField1.setName("entity.salience");
+        xFormPanel1.add(xIntegerField1);
+
+        com.rameses.rcp.control.border.XTitledBorder xTitledBorder2 = new com.rameses.rcp.control.border.XTitledBorder();
+        xTitledBorder2.setTitle("Rules Effectivity Dates");
+        xFormPanel3.setBorder(xTitledBorder2);
+        xDateField1.setText("entity.effectivefrom");
+        xDateField1.setCaption("From Date");
+        xDateField1.setName("entity.effectivefrom");
+        xDateField1.setOutputFormat("yyyy-MM-dd");
+        xDateField1.setPreferredSize(new java.awt.Dimension(0, 20));
+        xFormPanel3.add(xDateField1);
+
+        xDateField2.setCaption("To Date");
+        xDateField2.setName("entity.effectiveto");
+        xDateField2.setOutputFormat("yyyy-MM-dd");
+        xDateField2.setPreferredSize(new java.awt.Dimension(0, 20));
+        xFormPanel3.add(xDateField2);
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
                     .add(layout.createSequentialGroup()
-                        .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 799, Short.MAX_VALUE)
-                        .addContainerGap())
+                        .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 380, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(xFormPanel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .add(layout.createSequentialGroup()
                         .add(xButton1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 79, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(xButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 74, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .add(layout.createSequentialGroup()
-                        .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(95, Short.MAX_VALUE))))
+                        .add(xButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 74, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 686, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .add(36, 36, 36)
+                .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .addContainerGap()
-                .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 72, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(xButton1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 29, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(xButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 28, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(layout.createSequentialGroup()
+                        .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 153, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                            .add(xButton1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 29, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(xButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 28, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                    .add(xFormPanel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 153, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(layout.createSequentialGroup()
+                        .add(262, 262, 262)
+                        .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(layout.createSequentialGroup()
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 338, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -150,8 +172,10 @@ public class RulePage extends javax.swing.JPanel {
     private com.rameses.rcp.control.XButton xButton1;
     private com.rameses.rcp.control.XButton xButton2;
     private com.rameses.rcp.control.XComboBox xComboBox1;
+    private com.rameses.rcp.control.XDateField xDateField1;
+    private com.rameses.rcp.control.XDateField xDateField2;
     private com.rameses.rcp.control.XFormPanel xFormPanel1;
-    private com.rameses.rcp.control.XFormPanel xFormPanel2;
+    private com.rameses.rcp.control.XFormPanel xFormPanel3;
     private com.rameses.rcp.control.XHtmlView xHtmlView1;
     private com.rameses.rcp.control.XIntegerField xIntegerField1;
     private com.rameses.rcp.control.XLabel xLabel1;
