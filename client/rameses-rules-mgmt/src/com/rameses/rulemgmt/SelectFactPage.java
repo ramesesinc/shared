@@ -37,7 +37,7 @@ public class SelectFactPage extends javax.swing.JPanel {
         xButton2 = new com.rameses.rcp.control.XButton();
         xButton3 = new com.rameses.rcp.control.XButton();
 
-        setPreferredSize(new java.awt.Dimension(574, 400));
+        setPreferredSize(new java.awt.Dimension(636, 400));
         xList1.setExpression("#{item.title}");
         xList1.setItems("factList");
         xList1.setName("selectedFact");
@@ -65,7 +65,7 @@ public class SelectFactPage extends javax.swing.JPanel {
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 554, Short.MAX_VALUE)
+                    .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 616, Short.MAX_VALUE)
                     .add(jLabel1)
                     .add(layout.createSequentialGroup()
                         .add(xButton1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
