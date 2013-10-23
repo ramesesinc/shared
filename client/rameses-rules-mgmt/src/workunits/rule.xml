@@ -34,6 +34,7 @@
             def entity;
             def rulegroups;
             def mode;
+            def savehandler;
             
             def create() {
                 mode = "create";
@@ -170,6 +171,11 @@
                 def ruleText = service.viewRuleText( [objid: entity.objid] );
                 return InvokerUtil.lookupOpener( "rule:ruletext", [ruleText:ruleText] );
             }
+            
+            def removeRule() {
+                service.removeEntity(entity);
+                caller.reload();
+            }
         }
         ]]>
     </code>
@@ -184,9 +190,10 @@
                 confirm="You are about to create this rule. Continue?" action="createNew"/>
         </page>
         <page name="editinfo" title="Rule Info">
-            <transition to="end" caption="Cancel" />
+            <transition to="end" name="cancel" caption="Cancel" />
             <transition to="editing" caption="Edit" action="edit"/>
             <transition to="deployed" caption="Deploy" action="deploy"/>
+            <transition to="end" name="delete" caption="Delete" action="removeRule" confirm="You are about to remove this rule. Continue?"/>
         </page>    
         <page name="editing" title="Rule Info (Edit)">
             <transition to="editinfo" caption="Cancel" action="cancelEdit"/>
