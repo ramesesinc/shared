@@ -17,6 +17,7 @@
         import com.rameses.rulemgmt.*;
         import com.rameses.util.*;
         import java.rmi.server.*;
+        import com.rameses.rulemgmt.developer.*;
         
         class RuleFactController {
         
@@ -29,6 +30,7 @@
             def mode;
             def fieldmode;
             def selectedField;
+            def varStatus;
             String title = "Fact";
             
             def handlerTypes = [
@@ -116,6 +118,23 @@
                 fieldModel.reload();
                 return "_close";
             }   
+            
+            def shiftUp() {
+                int pos = varStatus.index;
+                entity.fields = RuleDevUtil.shiftPos( entity.fields, pos );
+                if(pos>0) pos = pos-1;
+                fieldModel.setSelectedItem(pos);
+                fieldModel.reload();
+            }
+
+            def shiftDown() {
+                int pos = varStatus.index + 1;
+                entity.fields = RuleDevUtil.shiftPos( entity.fields, pos );
+                if(pos >= entity.fields.size()) pos = entity.fields.size()-1;
+                fieldModel.setSelectedItem(pos);
+                fieldModel.reload();
+            }
+            
         }
         ]]>
     </code>

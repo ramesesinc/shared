@@ -17,6 +17,7 @@
         import com.rameses.rulemgmt.*;
         import com.rameses.util.*;
         import java.rmi.server.*;
+        import com.rameses.rulemgmt.developer.*;
         
         class RuleActionDefController {
         
@@ -29,6 +30,7 @@
             def mode;
             def selectedParam;
             def parammode;
+            def varStatus;
             
             String title = "Action";
             
@@ -117,6 +119,22 @@
                 service.saveActionDef( entity );
                 MsgBox.alert("Record saved");
                 return "_close";
+            }
+            
+            def shiftUp() {
+                int pos = varStatus.index;
+                entity.params = RuleDevUtil.shiftPos( entity.params, pos );
+                if(pos>0) pos = pos-1;
+                paramModel.setSelectedItem(pos);
+                paramModel.reload();
+            }
+
+            def shiftDown() {
+                int pos = varStatus.index + 1;
+                entity.params = RuleDevUtil.shiftPos( entity.params, pos );
+                if(pos >= entity.params.size()) pos = entity.params.size()-1;
+                paramModel.setSelectedItem(pos);
+                paramModel.reload();
             }
         }
         ]]>
