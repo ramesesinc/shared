@@ -71,6 +71,10 @@
                 return InvokerUtil.lookupOpener( "ruleactiondef:edit", [entity:selectedActionDef] );
             }
             
+            void reloadList() {
+                actionDefList = service.getActionDefs([ruleset:rule.ruleset]);
+                binding.refresh();
+            }
         }
         ]]>
     </code>

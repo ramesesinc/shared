@@ -71,6 +71,11 @@
                 if(!selectedFact) return;
                 return InvokerUtil.lookupOpener( "rulefact:edit", [entity:selectedFact] );
             }
+            
+            void reloadList() {
+                factList = service.getFacts([ruleset:rule.ruleset]);            
+                binding.refresh();
+            }
         }
         ]]>
     </code>

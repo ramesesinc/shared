@@ -1,8 +1,8 @@
-"addFact|editFact"[ debug == true ] {
+"addFact|editFact|refresh"[ debug == true ] {
     visible: true; 
 }
 
-"addFact|editFact"[ debug != true ] {
+"addFact|editFact|refresh"[ debug != true ] {
     visible: false; 
 }
 
