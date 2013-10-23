@@ -142,6 +142,7 @@
             void createNew() {
                  entity = service.create(entity);
                  mode = "read";
+                 caller.reload();
             }
             
             void deploy() {
@@ -165,6 +166,7 @@
             void saveUpdate() {
                 service.update(entity);
                 mode = "read";
+                caller.reload();
             }
             
             def viewRule() {

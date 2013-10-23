@@ -31,6 +31,10 @@
                       <Component id="xButton3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="xButton4" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="361" max="-2" attributes="0"/>
+                      <Component id="xButton5" min="-2" pref="34" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="xButton6" min="-2" pref="35" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -47,10 +51,16 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="xDataTable1" pref="127" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="xButton2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="xButton3" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="xButton4" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                      <Component id="xButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="xButton3" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="xButton4" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                      <Component id="xButton6" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="xButton5" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -124,6 +134,7 @@
         </Property>
         <Property name="handler" type="java.lang.String" value="fieldModel"/>
         <Property name="name" type="java.lang.String" value="selectedField"/>
+        <Property name="varStatus" type="java.lang.String" value="varStatus"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
@@ -146,6 +157,25 @@
         <Property name="immediate" type="boolean" value="true"/>
         <Property name="name" type="java.lang.String" value="removeField"/>
         <Property name="text" type="java.lang.String" value="Remove"/>
+      </Properties>
+    </Component>
+    <Component class="com.rameses.rcp.control.XButton" name="xButton5">
+      <Properties>
+        <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+          <Insets value="[0, 0, 0, 0]"/>
+        </Property>
+        <Property name="name" type="java.lang.String" value="shiftUp"/>
+        <Property name="text" type="java.lang.String" value="Up"/>
+      </Properties>
+    </Component>
+    <Component class="com.rameses.rcp.control.XButton" name="xButton6">
+      <Properties>
+        <Property name="immediate" type="boolean" value="true"/>
+        <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+          <Insets value="[0, 0, 0, 0]"/>
+        </Property>
+        <Property name="name" type="java.lang.String" value="shiftDown"/>
+        <Property name="text" type="java.lang.String" value="Dn"/>
       </Properties>
     </Component>
   </SubComponents>
