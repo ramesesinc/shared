@@ -38,19 +38,20 @@ public class RuleConstraintLookupHandler extends RuleConstraintListValueHandler 
     def showLookup() {
         if( !field.lookupkey || !field.lookupvalue || !field.lookuphandler )
             throw new Exception( "Please specify a lookup key, value and handler in the definition" )
-        return InvokerUtil.lookupOpener( field.lookuphandler, [
-            multiSelect: true,
-            multiSelectHandler: { o->
-                return (constraint.listvalue?.find{ it.key == o[field.lookupkey] }!=null);
-            },
-            onselect: { o->
-                if(constraint.listvalue==null) constraint.listvalue = [];
-                o.each {
-                    constraint.listvalue << [ key: it[field.lookupkey], value: it[field.lookupvalue] ] ;
-                }
-                binding.refresh("selection");
-            }
-        ]);
+        def m = [:];
+        
+        m.lookupHandler = field.lookuphandler;
+        m.lookupKey = field.lookupkey;
+        m.lookupValue = field.lookupvalue;
+        m.items = [];
+        if(constraint.listvalue !=null) {
+            m.items.addAll( constraint.listvalue );
+        }    
+        m.handler = { o->
+            constraint.listvalue = o;
+            binding.refresh("selection");
+        }
+        return InvokerUtil.lookupOpener( "ruleconstraint:multilookup", m );
     }
     
     String getSelection() {
