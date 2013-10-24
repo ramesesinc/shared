@@ -19,7 +19,7 @@
             @Script("Template")
             def template;
             
-           
+            def ruleHtml;
             def rulegroups;
             def rulestates;
             String entityName = "rulemgmt";
@@ -28,27 +28,19 @@
             
             @PropertyChangeListener
             def listener = [
-                "query.rulegroup": {o->
+                "query.(rulegroup|state|title)": {o->
                     reload();
-                },
-                "query.state": {o->
-                    reload();
-                },
-                "query.title": {o->
-                    reload();
-                },
-                
+                }
             ]
             
-            def ruleHtml;
-            
-            public void setSelectedEntity( o ) {
+            public String getRuleHtml() {
+                if(!selectedEntity) return  "";
+                def o = selectedEntity;
                 if( !o.ruleHtml ) {
                     def z = service.open( [objid: o.objid] );
                     o.ruleHtml = template.render( "html/rule_html", [rule: z, editable:false] );
                 }
-                ruleHtml = o.ruleHtml;
-                super.setSelectedEntity(o);
+                return o.ruleHtml;
             }
             
             void init() {
