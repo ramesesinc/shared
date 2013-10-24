@@ -49,6 +49,10 @@
                             field.vardatatype = "integer";
                             field.datatype = "integer";
                             break;
+                        case "string" : 
+                            field.vardatatype = "string";
+                            field.datatype = "string";
+                            break;
                         default:
                             field.vardatatype = null;
                             field.datatype = null;
