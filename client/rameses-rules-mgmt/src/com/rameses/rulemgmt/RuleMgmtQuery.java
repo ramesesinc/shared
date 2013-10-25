@@ -31,6 +31,7 @@ public class RuleMgmtQuery extends javax.swing.JPanel {
         xTextField1 = new com.rameses.rcp.control.XTextField();
         jLabel3 = new javax.swing.JLabel();
 
+        setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 0));
         xComboBox1.setExpression("#{item.title}");
         xComboBox1.setItemKey("name");
         xComboBox1.setItems("rulegroups");
@@ -65,7 +66,7 @@ public class RuleMgmtQuery extends javax.swing.JPanel {
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(xTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

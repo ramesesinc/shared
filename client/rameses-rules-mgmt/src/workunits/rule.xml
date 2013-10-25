@@ -178,6 +178,11 @@
                 service.removeEntity(entity);
                 caller.reload();
             }
+            
+            void reloadInfo() {
+                entity = service.open( entity );
+                binding.refresh();
+            }
         }
         ]]>
     </code>

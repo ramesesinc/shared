@@ -50,8 +50,10 @@
                     }
                     else if(o.item.group == "var") {
                         return [
+                            [caption:'Decimal', leaf:true, group:'var', type:'decimal'],
+                            [caption:'Integer', leaf:true, group:'var', type:'integer'],
+                            [caption:'Boolean', leaf:true, group:'var', type:'boolean'],
                             [caption:'String', leaf:true, group:'var', type:'string'],
-                            [caption:'Number', leaf:true, group:'var', type:'number'],
                             [caption:'Other', leaf:true, group:'var', type:'object'],
                         ];
                     }
@@ -83,6 +85,10 @@
                 if(updateHandler) updateHandler(value);
                 return '_close';
             }   
+            
+            def test() {
+                throw new Exception("This function is not yet supported"); 
+            }
             
         }
         
