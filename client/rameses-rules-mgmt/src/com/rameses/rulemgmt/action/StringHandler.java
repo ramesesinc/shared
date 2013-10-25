@@ -1,10 +1,10 @@
 /*
- * FactInfo.java
+ * RuleConstraintDecimalHandler.java
  *
- * Created on October 7, 2013, 10:04 PM
+ * Created on September 30, 2013, 9:12 AM
  */
 
-package com.rameses.rulemgmt.developer;
+package com.rameses.rulemgmt.action;
 
 import com.rameses.rcp.ui.annotations.StyleSheet;
 
@@ -12,10 +12,11 @@ import com.rameses.rcp.ui.annotations.StyleSheet;
  *
  * @author  Elmo
  */
-public class ActionParamDefault extends javax.swing.JPanel {
+@StyleSheet
+public class StringHandler extends javax.swing.JPanel {
     
-    /** Creates new form FactInfo */
-    public ActionParamDefault() {
+    /** Creates new form RuleConstraintDecimalHandler */
+    public StringHandler() {
         initComponents();
     }
     
@@ -26,24 +27,25 @@ public class ActionParamDefault extends javax.swing.JPanel {
      */
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
     private void initComponents() {
+        xTextField1 = new com.rameses.rcp.control.XTextField();
 
-        com.rameses.rcp.control.border.XTitledBorder xTitledBorder1 = new com.rameses.rcp.control.border.XTitledBorder();
-        xTitledBorder1.setTitle("Data Info");
-        setBorder(xTitledBorder1);
+        xTextField1.setName("actionParam.stringvalue");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 373, Short.MAX_VALUE)
+            .addComponent(xTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 259, Short.MAX_VALUE)
+            .addComponent(xTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
     }// </editor-fold>//GEN-END:initComponents
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.rameses.rcp.control.XTextField xTextField1;
     // End of variables declaration//GEN-END:variables
     
 }

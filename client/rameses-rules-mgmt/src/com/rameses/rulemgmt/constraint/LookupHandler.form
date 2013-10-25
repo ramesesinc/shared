@@ -127,6 +127,7 @@
           <Insets value="[2, 4, 2, 4]"/>
         </Property>
         <Property name="name" type="java.lang.String" value="showLookup"/>
+        <Property name="opaque" type="boolean" value="true"/>
         <Property name="showCaption" type="boolean" value="false"/>
       </Properties>
     </Component>

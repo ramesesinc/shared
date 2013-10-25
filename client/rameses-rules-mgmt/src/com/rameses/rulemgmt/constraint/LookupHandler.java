@@ -72,6 +72,7 @@ public class LookupHandler extends javax.swing.JPanel {
         xButton1.setIconResource("images/buttons/search.png");
         xButton1.setMargin(new java.awt.Insets(2, 4, 2, 4));
         xButton1.setName("showLookup");
+        xButton1.setOpaque(true);
         xButton1.setShowCaption(false);
 
         xCheckBox1.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));

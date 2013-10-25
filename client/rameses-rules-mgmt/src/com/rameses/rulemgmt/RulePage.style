@@ -1,8 +1,8 @@
-"addCondition|addAction"[ entity.state != 'DEPLOYED' || mode =='read' ] {
+"addCondition|addAction|reloadInfo"[ entity.state != 'DEPLOYED' || mode =='read' ] {
     visible: true; 
 }
 
-"addCondition|addAction"[ entity.state == 'DEPLOYED' || mode != 'read' ] {
+"addCondition|addAction|reloadInfo"[ entity.state == 'DEPLOYED' || mode != 'read' ] {
     visible: false; 
 }
 

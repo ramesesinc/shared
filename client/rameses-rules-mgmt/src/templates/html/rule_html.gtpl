@@ -109,14 +109,19 @@ def actpath = "templates/html/action_param_";
                                             case "lov":    
                                                 out.print( param.lov );
                                                 break;
-                                            case "expression": 
-                                                out.print( param.expr );
+                                            case "expression":
+                                                String expr = param.expr.replace('\n','<br>').replace('\t', '&nbsp;'.multiply(5)).replace('\\s', '&nbsp;' );
+                                                out.print( expr );
                                                 break;
                                             case "boolean":
-                                                out.print( param.booleanvalue );
+                                                if(param.booleanvalue==1 || param.booleanvalue == true) {
+                                                    out.print( "Yes" );
+                                                }
+                                                else {
+                                                    out.print( "No" );
+                                                }
                                                 break;
-    
-                                            case "message": 
+                                            default: 
                                                 out.print( param.stringvalue );
                                                 break;
                                          }

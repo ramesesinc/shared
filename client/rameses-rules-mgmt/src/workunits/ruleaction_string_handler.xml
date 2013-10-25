@@ -1,6 +1,6 @@
 <workunit>
     <invokers>
-        <invoker type="ruleaction:handler:boolean" action="init" />
+        <invoker type="ruleaction:handler:string" action="init" />
     </invokers>
     <code>
         <![CDATA[
@@ -13,16 +13,11 @@
         import java.rmi.server.*;
 
         class RuleActionExpressionHandler extends RuleActionHandler {
-            void init() {
-                if( actionParam.booleanvalue == null ) {
-                    actionParam.booleanvalue = false;
-                }
-                super.init();
-            }
+            
         }
         ]]>
     </code>    
     <pages>
-        <page template="com.rameses.rulemgmt.action.BooleanHandler"/>
+        <page template="com.rameses.rulemgmt.action.StringHandler"/>
     </pages>
 </workunit>
