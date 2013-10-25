@@ -97,10 +97,15 @@ public abstract class StockIssueController {
             itm.qtyreceived = itm.qtyissued     
             def srs = []
             itm.items.each{
-                srs <<  it.startseries.toString().padLeft(7, '0') + " - " + it.endseries.toString().padLeft(7, '0') + " ( " + (it.startstub == it.endstub ? it.startstub+"" : ( it.startstub + " - " + it.endstub )) + " ) "
+                if( it.startseries )
+                    srs <<  it.startseries.toString().padLeft(7, '0') + " - " + it.endseries.toString().padLeft(7, '0') + " ( " + (it.startstub == it.endstub ? it.startstub+"" : ( it.startstub + " - " + it.endstub )) + " ) "
+                else     
+                    srs << (it.startstub == it.endstub ? it.startstub+ "" : ( it.startstub + " - " + it.endstub ))
             }
             itm.series = srs.join(',')
         }   
+
+        
 
         return InvokerUtil.lookupOpener("stockrequest:ris", [entity: entity]);
     }
