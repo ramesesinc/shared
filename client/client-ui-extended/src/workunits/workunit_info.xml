@@ -1,6 +1,6 @@
 <workunit disableWorkunitInfo="true">
     <invokers>
-        <invoker type="workunit-info:show" caption="Workunit Information" action="init"/> 
+        <invoker type="workunit-info:show" caption="Workunit Information" action="init" target="popup"/> 
     </invokers>
 
     <code class="com.rameses.osiris2.common.ui.WorkunitInfoController"/>
