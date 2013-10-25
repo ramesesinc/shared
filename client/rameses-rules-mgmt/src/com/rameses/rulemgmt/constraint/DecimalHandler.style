@@ -22,3 +22,10 @@
     visible: true; 
 }
 
+"removeConstraint"[ constraint.field.required == 1 ] {
+    visible: false;
+}
+
+"removeConstraint"[ constraint.field.required != 1 ] {
+    visible: true;
+}

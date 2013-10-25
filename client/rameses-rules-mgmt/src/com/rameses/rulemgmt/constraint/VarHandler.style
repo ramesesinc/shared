@@ -5,3 +5,11 @@
 "constraint.var"[ constraint.operator.symbol.contains("null") ] {
     visible: false; 
 }
+
+"removeConstraint"[ constraint.field.required == 1 ] {
+    visible: false;
+}
+
+"removeConstraint"[ constraint.field.required != 1 ] {
+    visible: true;
+}
