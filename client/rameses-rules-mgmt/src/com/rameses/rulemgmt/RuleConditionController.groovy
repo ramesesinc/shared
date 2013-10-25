@@ -80,7 +80,7 @@ class RuleConditionController  {
     }
 
     def addConstraint() {
-        def fieldList = fact.fields;
+        def fieldList = fact.fields.findAll{it.required!=1};
         return InvokerUtil.lookupOpener("rulecondition:selectfield",[
             fieldList : fieldList,
             onselect: {o->
