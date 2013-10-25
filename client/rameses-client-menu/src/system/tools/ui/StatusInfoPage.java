@@ -18,6 +18,7 @@ public class StatusInfoPage extends javax.swing.JPanel {
         xLabel2.setBorder("ScrollPane.border");
         xLabel3.setBorder("ScrollPane.border");
         xLabel4.setBorder("ScrollPane.border");
+        setLayout(new StatusInfoLayout()); 
     }
     
     /** This method is called from within the constructor to
@@ -32,25 +33,25 @@ public class StatusInfoPage extends javax.swing.JPanel {
         xLabel3 = new com.rameses.rcp.control.XLabel();
         xLabel4 = new com.rameses.rcp.control.XLabel();
 
-        setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 3, 1, 3));
+        setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 3, 2, 3));
         xLabel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        xLabel1.setExpression("<b>USER</b>: #{user.name}");
-        xLabel1.setPreferredSize(new java.awt.Dimension(120, 22));
+        xLabel1.setExpression("<div style=\"white-space:nowrap;\"><b>USER</b>: #{user.name}</div>");
+        xLabel1.setPreferredSize(new java.awt.Dimension(260, 22));
         xLabel1.setUseHtml(true);
 
         xLabel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        xLabel2.setExpression("<b>ORG</b>: #{user.clientCode}");
-        xLabel2.setPreferredSize(new java.awt.Dimension(120, 22));
+        xLabel2.setExpression("<div style=\"white-space:nowrap;\"><b>ORG</b>: #{user.clientCode}</div>");
+        xLabel2.setPreferredSize(new java.awt.Dimension(151, 22));
         xLabel2.setUseHtml(true);
 
         xLabel3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        xLabel3.setExpression("<b>TERMINAL</b>: #{user.terminalId}");
-        xLabel3.setPreferredSize(new java.awt.Dimension(120, 22));
+        xLabel3.setExpression("<div style=\"white-space:nowrap;\"><b>TERMINAL</b>: #{user.terminalId}</div>");
+        xLabel3.setPreferredSize(new java.awt.Dimension(168, 22));
         xLabel3.setUseHtml(true);
 
         xLabel4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        xLabel4.setExpression("<b>MODE</b>: #{user.mode}");
-        xLabel4.setPreferredSize(new java.awt.Dimension(120, 22));
+        xLabel4.setExpression("<div style=\"white-space:nowrap;\"><b>MODE</b>: #{user.mode}</div>");
+        xLabel4.setPreferredSize(new java.awt.Dimension(150, 22));
         xLabel4.setUseHtml(true);
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
