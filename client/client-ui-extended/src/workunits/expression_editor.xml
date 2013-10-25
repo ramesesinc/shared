@@ -1,6 +1,6 @@
 <workunit>
     <invokers>
-        <invoker type="expression:editor" target="popup"/>
+        <invoker type="expression:editor" caption="Expression Editor" target="popup" action="init"/>
     </invokers>
     <code>
         <![CDATA[    
@@ -11,90 +11,84 @@
         import com.rameses.osiris2.common.*
         import com.rameses.common.*;
         
-        class ExpressionEditorController1 {        
+        class ExpressionEditorController {        
+                
         
-            @Binding
-            def binding;
+            ExpressionModel model;    
+        
+            def selectedNode;
+            def updateHandler;
+            def selectedItem;
+            def textHandler = new TextDocumentModel();
+            def value;
             
-            //Required fields to be injected by the XOpenerField
-            def handler;                    //callback handler to be invoked
-            def value;                      //current value
-            def vars;                       //variables 
+            void init() {
+                value = model.getValue();
+            }
             
             def doCancel() {
                 return "_close";
             }
             
-            def doOk() 
-            {
-                //publish the modified value
-                if (handler) handler(value); 
-                return '_close';
-            }   
-            
-            def selectedNode;
-            def selectedItem;
-            
             def tree = [
                 getRootNode : { 
-                    return [caption:'Root'];
+                    return null;
                 },
-
                 fetchNodes : { o->
-                    if(o.item?.group == "func") {
+                    if(!o.item) {
                         return [
-                            [caption:'Logical', leaf:true, item:[group:'func', type:'logical']],
-                            [caption:'String', leaf:true, item:[group:'func', type:'string']],
-                            [caption:'Number', leaf:true, item:[group:'func', type:'number']],
+                            [caption:'Variables', group:'var'],
+                            [caption:'Functions', group:'func'],
                         ];
                     }
-                    else if(o.item?.group == "var") {
+                    else if(o.item.group == "func") {
                         return [
-                            [caption:'String', leaf:true, item:[group:'var', type:'string']],
-                            [caption:'Number', leaf:true, item:[group:'var', type:'number']],
-                            [caption:'Date', leaf:true, item:[group:'var', type:'date']],
-                            [caption:'Other', leaf:true, item:[group:'var', type:'other']],
+                            [caption:'Logical', leaf:true, group:'func', type:'logical'],
+                            [caption:'String', leaf:true, group:'func', type:'string'],
+                            [caption:'Number', leaf:true, group:'func', type:'number'],
                         ];
                     }
-                    else {
+                    else if(o.item.group == "var") {
                         return [
-                            [caption:'Variables', item:[group:'var']],
-                            [caption:'Functions', item:[group:'func']],
+                            [caption:'Decimal', leaf:true, group:'var', type:'decimal'],
+                            [caption:'Integer', leaf:true, group:'var', type:'integer'],
+                            [caption:'Boolean', leaf:true, group:'var', type:'boolean'],
+                            [caption:'String', leaf:true, group:'var', type:'string'],
+                            [caption:'Other', leaf:true, group:'var', type:'object'],
                         ];
                     }
                 },
             ] as TreeNodeModel;   
             
             def getListItems() {
-                def z = selectedNode.item;
-                if( z?.group == "var" && z.type ) {
-                    return vars?.findAll{ 
-                        if( z.type == "string") {
-                            return it.datatype == "string";
-                        }
-                        else if(z.type=="number") {
-                            return it.datatype?.matches( "decimal|integer" );
-                        }
-                        else if(z.type=="date") {
-                            return it.datatype == "date";
-                        }
-                        else {
-                            //return all datatypes not classified in any of the ff.
-                            return !it.datatype?.matches( "decimal|integer|string|date" );
-                        }
-                    }.collect{ [caption:it.name, signature:it.name, description: '('+it.datatype + ')' ]  };
+                if(! selectedNode.item ) {
+                    return [];
                 }
-                else if(z?.group == 'func' && z.type) {
-                    return FunctionResolver.instance.getFunctionsByGroup(z.type);
+                else if( selectedNode.item.group == "var" ) {
+                    def type = selectedNode.item.type;
+                    return model.getVariables(type);
+                }
+                else if( selectedNode.item.group == "func" ) {
+                    def type = selectedNode.item.type;
+                    return FunctionResolver.instance.getFunctionsByGroup(type);
                 }
             }
+            
             
             void addText() {
                 textHandler.insertText( selectedItem.signature );
                 textHandler.requestFocus();
             }
             
-            def textHandler = new TextDocumentModel();
+            def doOk() {
+                model.setValue(value);
+                if(updateHandler) updateHandler(value);
+                return '_close';
+            }   
+            
+            def test() {
+                throw new Exception("This function is not yet supported"); 
+            }
             
         }
         

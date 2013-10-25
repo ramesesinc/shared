@@ -1,0 +1,7 @@
+"addActionDef|editActionDef|refresh"[ debug == true ] {
+    visible: true; 
+}
+
+"addActionDef|editActionDef|refresh"[ debug != true ] {
+    visible: false; 
+}

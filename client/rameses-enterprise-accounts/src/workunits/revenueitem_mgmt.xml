@@ -1,5 +1,5 @@
 <workunit extends="wtemplates/ListController.xml" 
-    serviceName="RevenueItemAccountService" entityName="revenueitem">
+    serviceName="RevenueItemAccountService" entityName="revenueitem" formName="revenueitem-list">
     <invokers>
         <invoker folderid="/explorer/master/account" caption="Revenue Items" 
             index="1"  role="ACCOUNT_DATAMGMT"/>
