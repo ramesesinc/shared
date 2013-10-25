@@ -8,25 +8,6 @@
         <invoker folderid="/menu/system" action="logoff" caption="Logoff ... " separator="before" index="20000"  target="process" permission="system"/>
     </invokers>
     
-    <code>
-        import com.rameses.rcp.common.*;
-        import com.rameses.rcp.annotations.*;
-        import com.rameses.rcp.framework.ClientContext;
-        
-        public class SystemExitController {
-        
-            public void logoff() {
-                ClientContext.currentContext.platform.logoff();
-            }
-        
-            public void restart() {
-                ClientContext.currentContext.platform.logoff();
-            }
+    <code class="system.controller.SystemExitController"/>
 
-            public def shutdown() {
-                ClientContext.currentContext.platform.shutdown();
-            }
-            
-        }
-    </code>
 </workunit>
