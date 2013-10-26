@@ -11,6 +11,7 @@
         import com.rameses.rcp.common.*;
         import com.rameses.rcp.annotations.*;
         import com.rameses.osiris2.client.*;
+        import java.rmi.server.*;
         
         class AccountDetailController extends CRUDController {
         
@@ -23,12 +24,34 @@
             Map createEntity() {
                 return [parentid:node.objid,parentcode:node.code, type:'detail'];
             }
+            
+            def subAccountModel = [
+                fetchList: { o->
+                    return service.getSubAccounts( entity );
+                },
+                onAddItem: { o->
+                    o.objid = "SUBACCT" + new UID();
+                    o.state = 'APPROVED';
+                    o.type = "subaccount";
+                    o.acctgroup = entity.acctgroup;
+                    o.parentid = entity.objid;
+                    service.create(o);
+                },
+                onRemoveItem: { o->
+                    if( MsgBox.confirm("Remove this item. Continue?")) {
+                        service.removeEntity( o ); 
+                        subAccountModel.reload();
+                    }
+                }
+            ] as EditorListModel;
+            
+            
         }      
        ]]>
    </code>
    
    <pages>
-       <page template="com.rameses.enterprise.accounts.AccountPage"/>
+       <page template="com.rameses.enterprise.accounts.AccountDetailPage"/>
    </pages>
    
 </workunit>
