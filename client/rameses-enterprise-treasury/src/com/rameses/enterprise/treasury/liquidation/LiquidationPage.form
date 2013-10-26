@@ -15,7 +15,7 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="228" max="32767" attributes="0"/>
+              <EmptySpace pref="218" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -34,22 +34,22 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="551" max="-2" attributes="0"/>
-                              <Component id="xFormPanel1" min="-2" pref="256" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="xFormPanel1" min="-2" pref="274" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="xDataTable2" alignment="0" pref="796" max="32767" attributes="1"/>
                               <Component id="xFormPanel5" alignment="0" min="-2" pref="302" max="-2" attributes="0"/>
-                              <Component id="xDataTable2" alignment="0" min="-2" pref="796" max="-2" attributes="1"/>
+                              <Component id="jPanel3" alignment="0" max="32767" attributes="1"/>
                           </Group>
                       </Group>
-                      <Component id="jPanel3" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="49" max="32767" attributes="0"/>
+                  <EmptySpace pref="68" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -57,13 +57,13 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="xFormPanel1" min="-2" pref="39" max="-2" attributes="0"/>
+                  <Component id="xFormPanel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="xDataTable2" min="-2" pref="123" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="xFormPanel5" min="-2" pref="21" max="-2" attributes="0"/>
+                  <Component id="xFormPanel5" min="-2" pref="25" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jPanel3" max="32767" attributes="0"/>
+                  <Component id="jPanel3" pref="301" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -87,13 +87,16 @@
             <Component class="com.rameses.rcp.control.XDecimalField" name="xDecimalField9">
               <Properties>
                 <Property name="caption" type="java.lang.String" value="Total amount to liquidate"/>
+                <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="0" green="0" red="0" type="rgb"/>
+                </Property>
                 <Property name="enabled" type="boolean" value="false"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="12" style="1"/>
                 </Property>
                 <Property name="name" type="java.lang.String" value="entity.amount"/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[0, 19]"/>
+                  <Dimension value="[0, 22]"/>
                 </Property>
               </Properties>
             </Component>
@@ -116,16 +119,16 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
                                       <Component id="jLabel3" min="-2" max="-2" attributes="1"/>
-                                      <EmptySpace pref="245" max="32767" attributes="0"/>
+                                      <EmptySpace pref="236" max="32767" attributes="0"/>
                                   </Group>
-                                  <Component id="xSubFormPanel2" pref="338" max="32767" attributes="2"/>
+                                  <Component id="xSubFormPanel2" pref="329" max="32767" attributes="2"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace min="-2" pref="217" max="-2" attributes="0"/>
-                              <Component id="xFormPanel4" min="-2" pref="244" max="-2" attributes="1"/>
+                              <EmptySpace min="-2" pref="198" max="-2" attributes="0"/>
+                              <Component id="xFormPanel4" min="-2" pref="263" max="-2" attributes="1"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="xFormPanel3" pref="338" max="32767" attributes="1"/>
+                              <Component id="xFormPanel3" pref="329" max="32767" attributes="1"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -140,16 +143,16 @@
                           <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="xSubFormPanel2" pref="218" max="32767" attributes="1"/>
-                          <Component id="xDataTable3" alignment="0" pref="218" max="32767" attributes="1"/>
+                          <Component id="xDataTable3" alignment="0" min="-2" pref="218" max="-2" attributes="1"/>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="xFormPanel4" max="32767" attributes="1"/>
                           <Component id="xFormPanel3" alignment="0" min="-2" max="-2" attributes="3"/>
                       </Group>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -190,18 +193,24 @@
             <Container class="com.rameses.rcp.control.XFormPanel" name="xFormPanel4">
               <Properties>
                 <Property name="captionWidth" type="int" value="100"/>
+                <Property name="padding" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                  <Insets value="[0, 5, 5, 0]"/>
+                </Property>
               </Properties>
               <SubComponents>
                 <Component class="com.rameses.rcp.control.XDecimalField" name="xDecimalField5">
                   <Properties>
                     <Property name="caption" type="java.lang.String" value="Total Noncash"/>
+                    <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="0" green="0" red="0" type="rgb"/>
+                    </Property>
                     <Property name="enabled" type="boolean" value="false"/>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="12" style="1"/>
                     </Property>
                     <Property name="name" type="java.lang.String" value="entity.totalnoncash"/>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[0, 19]"/>
+                      <Dimension value="[0, 22]"/>
                     </Property>
                   </Properties>
                 </Component>
@@ -210,31 +219,40 @@
             <Container class="com.rameses.rcp.control.XFormPanel" name="xFormPanel3">
               <Properties>
                 <Property name="captionWidth" type="int" value="120"/>
+                <Property name="padding" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                  <Insets value="[0, 5, 5, 0]"/>
+                </Property>
               </Properties>
               <SubComponents>
                 <Component class="com.rameses.rcp.control.XDecimalField" name="xDecimalField6">
                   <Properties>
                     <Property name="caption" type="java.lang.String" value="Cash Breakdown"/>
+                    <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="0" green="0" red="0" type="rgb"/>
+                    </Property>
                     <Property name="enabled" type="boolean" value="false"/>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="12" style="1"/>
                     </Property>
                     <Property name="name" type="java.lang.String" value="breakdown"/>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[0, 19]"/>
+                      <Dimension value="[0, 22]"/>
                     </Property>
                   </Properties>
                 </Component>
                 <Component class="com.rameses.rcp.control.XDecimalField" name="xDecimalField10">
                   <Properties>
-                    <Property name="caption" type="java.lang.String" value="Total Cash"/>
+                    <Property name="caption" type="java.lang.String" value="Total Cash Expected"/>
+                    <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="0" green="0" red="0" type="rgb"/>
+                    </Property>
                     <Property name="enabled" type="boolean" value="false"/>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="12" style="1"/>
                     </Property>
                     <Property name="name" type="java.lang.String" value="entity.totalcash"/>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[0, 19]"/>
+                      <Dimension value="[0, 22]"/>
                     </Property>
                   </Properties>
                 </Component>
@@ -243,6 +261,11 @@
           </SubComponents>
         </Container>
         <Container class="com.rameses.rcp.control.XFormPanel" name="xFormPanel1">
+          <Properties>
+            <Property name="padding" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[0, 5, 5, 0]"/>
+            </Property>
+          </Properties>
           <SubComponents>
             <Component class="com.rameses.rcp.control.XLabel" name="xLabel1">
               <Properties>
@@ -253,10 +276,14 @@
                     </LineBorder>
                   </Border>
                 </Property>
-                <Property name="caption" type="java.lang.String" value="Liq. No"/>
+                <Property name="caption" type="java.lang.String" value="Liquidation No."/>
+                <Property name="captionWidth" type="int" value="100"/>
                 <Property name="expression" type="java.lang.String" value="#{entity.txnno}"/>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="12" style="1"/>
+                </Property>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[0, 16]"/>
+                  <Dimension value="[0, 22]"/>
                 </Property>
               </Properties>
             </Component>
@@ -269,10 +296,14 @@
                     </LineBorder>
                   </Border>
                 </Property>
-                <Property name="caption" type="java.lang.String" value="Liq Date"/>
+                <Property name="caption" type="java.lang.String" value="Liquidation Date"/>
+                <Property name="captionWidth" type="int" value="100"/>
                 <Property name="expression" type="java.lang.String" value="#{entity.dtposted}"/>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="12" style="1"/>
+                </Property>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[0, 16]"/>
+                  <Dimension value="[0, 22]"/>
                 </Property>
               </Properties>
             </Component>
