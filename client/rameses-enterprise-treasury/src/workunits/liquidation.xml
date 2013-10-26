@@ -2,7 +2,7 @@
     
    <invokers>
          <invoker type="liquidation:create" caption="Liquidation" action="init" target="window"/>
-         <invoker type="quick_launcher" code="LIQ" caption="Liquidation" action="open" target="window"/>
+         <invoker type="quick_launcher" code="LIQ" caption="Liquidation" action="init" target="window"/>
          
          <invoker type="liquidation:open" caption="Liquidation (Open)" action="open" target="window"/>
          
