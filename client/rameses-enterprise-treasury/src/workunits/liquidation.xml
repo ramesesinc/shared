@@ -81,7 +81,7 @@
             def open(){
                 mode = "read";
                 entity = service.open(entity);
-                cashBreakdown = InvokerUtil.lookupOpener("cash:breakdown", [entries: entity.cashbreakdown] );    
+                cashBreakdown = InvokerUtil.lookupOpener("cash:breakdown", [entries: entity.cashbreakdown, allowEdit:false] );    
                 total = entity.totalcash + entity.totalnoncash;
                 breakdown = entity.cashbreakdown.sum{it.amount};
             }
