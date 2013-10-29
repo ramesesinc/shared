@@ -10,12 +10,17 @@ public class RuleConstraintLookupHandler extends RuleConstraintListValueHandler 
     @Service("RuleMgmtService")
     def service;
 
-    def varList;
+    def varList = [];
 
     void buildVarList() {
-        varList = service.findAllVarsByType( [ruleid:condition.parentid, datatype:field.vardatatype, pos: condition.pos ] ).collect{  
-            [objid: it.objid, name: it.name]
-        };
+        try {
+            varList = service.findAllVarsByType( [ruleid:condition.parentid, datatype:field.vardatatype, pos: condition.pos ] ).collect{  
+                [objid: it.objid, name: it.name]
+            };
+        }
+        catch(e) {
+            println "error in building varlist ->" + e.message;
+        }
     }
     
     void init() {

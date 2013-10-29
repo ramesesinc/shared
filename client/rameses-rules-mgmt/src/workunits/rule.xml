@@ -72,7 +72,10 @@
                 def c = entity.conditions.find{ it.objid == o.objid };
                 def fact = service.findFact( [objid: c.fact.objid]);
                 def d = fact.handler;
-                if(!d) d = "default";
+                if(!d) {
+                    d = "default";
+                    if(fact.dynamic == 1) d = "dynamic";
+                }
                 return InvokerUtil.lookupOpener("rulecondition:"+ d +":open", [
                     rule:entity,
                     fact: fact, 

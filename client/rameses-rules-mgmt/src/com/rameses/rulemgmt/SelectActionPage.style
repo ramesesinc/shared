@@ -1,7 +1,7 @@
-"addActionDef|editActionDef|refresh"[ debug == true ] {
+"addActionDef|editActionDef|removeActionDef|refresh"[ debug == true ] {
     visible: true; 
 }
 
-"addActionDef|editActionDef|refresh"[ debug != true ] {
+"addActionDef|editActionDef|removeActionDef|refresh"[ debug != true ] {
     visible: false; 
 }

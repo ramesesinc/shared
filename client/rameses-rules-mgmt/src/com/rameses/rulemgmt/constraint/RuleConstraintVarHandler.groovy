@@ -11,17 +11,16 @@ public class RuleConstraintVarHandler  extends RuleConstraintHandler {
     def service;
 
     def varList;
-
-    def operatorList = [
-        [caption:"equals", symbol:"=="],
-        [caption:"is null", symbol:"== null"],
-        [caption:"not null", symbol:"!= null"],
-    ];
+    def operatorList;
 
     void init() {
         varList = service.findAllVarsByType( [ruleid:condition.parentid, datatype:field.vardatatype, pos: condition.pos ] ).collect{  
             [objid: it.objid, name: it.name]
         };
+        operatorList = [];
+        if(varList) operatorList << [caption:"equals", symbol:"=="];
+        operatorList << [caption:"is null", symbol:"== null"];
+        operatorList << [caption:"not null", symbol:"!= null"];
     }
 
 }
