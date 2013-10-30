@@ -19,29 +19,74 @@
             def query = [:];
             def selectedEntity;
             def formActions;    
+            def columns;
             
             def listHandler = [
                 getColumnList: { 
-                    return service.getColumns(query);
+                    if( !columns )columns = service.getColumns(query);
+                    return columns
                 },
                 fetchList: { o->
                     return service.getList(o);
+                },
+                onColumnUpdate: { o,col->
+                    if( !o[col] ) {
+                        //if column is null, we need to remove the col. This is
+                        //accomplished by passing a null acctid in addSegment.
+                        def m = [segment: col, objid:selectedEntity.objid, acctid:null ];
+                        service.addSegment( m );
+                    }
                 }
             ] as EditorListModel             
             
             def getLookupSegment() {
                 String name = listHandler.getSelectedColumn();
-                //println listHandler.getSelectedColumnProperties();
+                def props = listHandler.selectedColumnProperties;
+                if(!props.lookuphandler) {
+                    def ex = new Exception("lookuphandler not specified in account segment");
+                    MsgBox.err(ex);
+                    return null;
+                }
+                
                 def h = [
                     onselect: { o->
                         def m = [segment: name, objid:selectedEntity.objid, acctid:o.objid]; 
+                        //check first if there are other columns that depend on this 
+                        def z = columns.findAll{ it.depends == name };
+                        if(z) {
+                            m.dependencies = z*.name;
+                            boolean hasItems = false;
+                            for( x in m.dependencies ) {
+                                if( selectedEntity[x]?.objid != null ) {
+                                    hasItems = true;
+                                    break;
+                                }
+                            }
+                            if(hasItems==true && !MsgBox.confirm( "This item has dependencies. Changing this will remove the dependencies. Continue?" )) {
+                                return;
+                            }
+                        }
                         service.addSegment( m );
-                        selectedEntity[name] = [code: o.code, title: o.title];
+                        selectedEntity[name] = [code: o.code, title: o.title, objid: o.objid];
+                        if(m.dependencies) {
+                            m.dependencies.each {
+                                selectedEntity[it] = null;
+                            }
+                        }
                     }
                 ]
-                return InvokerUtil.lookupOpener( name + ":lookup", h );
+
+                if(props.depends) {
+                    def parent = selectedEntity[props.depends];
+                    h["query.parentid"] = parent.objid;
+                }
+                
+                return InvokerUtil.lookupOpener( props.lookuphandler, h );
             }            
         } 
        ]]>
    </code>
+   <pages>
+       <page name="queryform" template="com.rameses.osiris2.themes.DefaultQueryFormPanel"/>
+   </pages>
 </workunit>

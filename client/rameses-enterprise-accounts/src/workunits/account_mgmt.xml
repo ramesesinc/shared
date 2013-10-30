@@ -1,6 +1,6 @@
 <workunit extends="wtemplates/ExplorerViewController.xml" 
     serviceName="AccountService" context="account" defaultFileType="account">
     <invokers>
-        <invoker folderid="/explorer/master/account" caption="Chart of Accounts" index="1" action="init" role="ACCOUNT_DATAMGMT"/>
+        <invoker folderid="/explorer/master/account" caption="NGAS" index="1" action="init" role="ACCOUNT_DATAMGMT"/>
    </invokers>
 </workunit>

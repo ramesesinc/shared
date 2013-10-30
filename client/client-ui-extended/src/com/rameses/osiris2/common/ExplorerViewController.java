@@ -210,7 +210,7 @@ public class ExplorerViewController {
                 defaultViewOpener = InvokerUtil.lookupOpener(name, new HashMap()); 
             }
             
-            System.out.println("openNode-> " + node.getItem());            
+            //System.out.println("openNode-> " + node.getItem());            
             ExplorerViewHandler handler = (ExplorerViewHandler) defaultViewOpener.getHandle(); 
             handler.setParent(root); 
             handler.setNode(node); 

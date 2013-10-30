@@ -23,7 +23,9 @@
             boolean showConfirmOnSave = false;
             
             Map createEntity() {
-                return [parentid:node.objid,parentcode:node.code, type:'group'];
+                def m = [parentid:node.objid, type:'group'];
+                m.parent = [code:node.code, title: node.title];
+                return m;
             }
             
         }      

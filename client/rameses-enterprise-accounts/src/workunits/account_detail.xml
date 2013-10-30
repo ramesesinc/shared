@@ -22,7 +22,22 @@
             def node;
             
             Map createEntity() {
-                return [parentid:node.objid,parentcode:node.code, type:'detail'];
+                def m = [parentid:node.objid, type:'detail'];
+                m.parent = [code:node.code, title: node.title];
+                return m;
+            }
+            
+            def transferParent() {
+                return InvokerUtil.lookupOpener( "accountgroup:lookup", [
+                    onselect: { o->
+                        if( MsgBox.confirm('You are about to transfer this account to another group. Continue?') ) {
+                            service.changeParent( [parentid:o.objid, objid:entity.objid] );
+                            entity.parentid = o.objid;
+                            entity.parent = o;
+                            binding.refresh();
+                        }
+                    }
+                ]);
             }
             
             def subAccountModel = [
@@ -35,13 +50,15 @@
                     o.type = "subaccount";
                     o.acctgroup = entity.acctgroup;
                     o.parentid = entity.objid;
-                    service.create(o);
                 },
                 onRemoveItem: { o->
                     if( MsgBox.confirm("Remove this item. Continue?")) {
                         service.removeEntity( o ); 
                         subAccountModel.reload();
                     }
+                },
+                onCommitItem: {o ->
+                    service.saveSubAccount(o);
                 }
             ] as EditorListModel;
             
