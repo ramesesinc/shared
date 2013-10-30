@@ -1,0 +1,7 @@
+"addUsergroup|removeUsergroup" [mode == 'read'] {
+    visible:true;
+}
+
+"addUsergroup|removeUsergroup" [mode != 'read'] {
+    visible:false;
+}

@@ -1,8 +1,8 @@
 <workunit>
         
     <invokers>
-         <invoker type="fund:open" action="open"/>
-         <invoker type="fund:create" action="create"/>
+         <invoker type="subfund:open" action="open"/>
+         <invoker type="subfund:create" action="create"/>
    </invokers>
    
    <code>
@@ -15,13 +15,16 @@
         class FundController extends CrudFileType {
         
             String serviceName = "FundService";
-            String entityName = "fund";
-            String title = "Fund";
-            String prefixId = "FUND";
-            
+            String entityName = "subfund";
+            String title = "Sub Fund";
+            String prefixId = "SUBFND";
+            def node;
             
             Map createEntity() {
-                return [parentid:node.item.objid];
+                def m = [type:"subfund"];
+                m.parentid = node.objid;
+                m.parent = [code:node.code, title: node.title];
+                return m;
             }
         }      
        ]]>
