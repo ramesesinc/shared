@@ -14,17 +14,23 @@ public class SystemExitController
     
     public void logoff() {
         logoffUser();
-        ClientContext.currentContext.platform.logoff();
+        def ctx = ClientContext.currentContext;
+        ctx.platform.logoff();
+        ctx.headers.clear();
     }
 
     public void restart() {
         logoffUser();
-        ClientContext.currentContext.platform.logoff();
+        def ctx = ClientContext.currentContext;
+        ctx.platform.logoff();
+        ctx.headers.clear();
     }
 
     public def shutdown() {
         logoffUser();
-        ClientContext.currentContext.platform.shutdown();
+        def ctx = ClientContext.currentContext;
+        ctx.platform.shutdown();
+        ctx.headers.clear();
     }
     
     

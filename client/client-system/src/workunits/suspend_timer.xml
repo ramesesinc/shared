@@ -1,7 +1,7 @@
 <workunit>
     
     <invokers>
-         <invoker type="loader"  index="100" action="init"/>
+         <invoker type="loader" index="100" action="init"/>
     </invokers>
     
     <code>
@@ -14,15 +14,14 @@
         import java.awt.Toolkit;
         import java.awt.event.AWTEventListener;
         import com.rameses.rcp.framework.ClientContext;
-        
-        
+                
         public class SuspendTimerController extends CountDownTimer implements AWTEventListener 
         {
             long _maxSeconds;
             
             public def init() {
                 _maxSeconds = 180;
-                OsirisContext.clientContext.taskManager.addTask( this );
+                ClientContext.currentContext.taskManager.addTask( this );
                 Toolkit.defaultToolkit.addAWTEventListener( this, AWTEvent.KEY_EVENT_MASK | AWTEvent.MOUSE_EVENT_MASK );
                 return "_close";
             }
@@ -35,13 +34,19 @@
             
             def resetHandler = {
                 super.reset();
-                OsirisContext.clientContext.taskManager.addTask( this );
+                ClientContext.currentContext.taskManager.addTask( this );
             }
             
             public void onTimeout() {
                 try {
                     String sessionId = OsirisContext.env.SESSIONID;
-                    if(sessionId) {
+                    if (sessionId == null) {
+                        //This is the fixed when the user log offs the system 
+                        //If no sessionid is specified then do nothing
+                        return; 
+                    } 
+                    
+                    if (sessionId) {
                         //def svc = InvokerProxy.instance.create("SessionService");
                         //if(svc) svc.checkSession();
                     }

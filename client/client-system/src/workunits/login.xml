@@ -29,7 +29,7 @@
             def path = System.getProperty( "user.dir" ) + "/client.conf";
             def config;
             
-            def init() {                 
+            def init() {      
                 if (user.env.USERID) return '_close'; 
             
                 config = new ConfigProperties(path);
