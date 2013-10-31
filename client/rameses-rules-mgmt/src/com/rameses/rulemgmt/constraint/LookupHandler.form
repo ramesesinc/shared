@@ -13,10 +13,10 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="xComboBox1" min="-2" pref="173" max="-2" attributes="0"/>
+              <Component id="xComboBox1" min="-2" pref="173" max="-2" attributes="1"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="xCheckBox1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="xFormPanel1" pref="224" max="32767" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="xButton1" min="-2" pref="23" max="-2" attributes="0"/>
@@ -32,7 +32,7 @@
                       <Component id="xCheckBox1" alignment="3" min="-2" max="-2" attributes="1"/>
                   </Group>
                   <Component id="xButton1" alignment="0" min="-2" pref="19" max="-2" attributes="0"/>
-                  <Component id="xFormPanel1" alignment="0" max="32767" attributes="1"/>
+                  <Component id="xFormPanel1" alignment="0" pref="44" max="32767" attributes="1"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>

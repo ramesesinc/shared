@@ -43,7 +43,6 @@ public class VarHandler extends javax.swing.JPanel {
 
         xFormPanel1.setCaptionBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         xFormPanel1.setShowCaption(false);
-        xComboBox2.setAllowNull(false);
         xComboBox2.setCaption("Variable");
         xComboBox2.setDepends(new String[] {"constraint.operator"});
         xComboBox2.setDynamic(true);

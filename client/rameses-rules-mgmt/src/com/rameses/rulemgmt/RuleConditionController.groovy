@@ -22,7 +22,7 @@ class RuleConditionController  {
     def savehandler;
     def mode;
 
-    void create() {
+    void initCreate() {
         mode = "create";
         fact = service.findFact( fact ); 
         entity = [vars:[], constraints: []];
@@ -31,7 +31,11 @@ class RuleConditionController  {
         entity.objid = "RCOND" + new UID();
         entity.fact = fact;
         entity.pos = rule.conditions.size();
+        if( fact.defaultvarname ) entity.varname = fact.defaultvarname;
+    }
 
+    void create() {
+        initCreate();
         //immediately load all required fields in the fact.
         def reqs = fact.fields.findAll{ it.required == 1 };
         reqs.each { fld->
@@ -79,8 +83,12 @@ class RuleConditionController  {
         constraintControls << m;
     }
 
+    def getAvailableFields() {
+        return fact.fields.findAll{it.required!=1};
+    }
+
     def addConstraint() {
-        def fieldList = fact.fields.findAll{it.required!=1};
+        def fieldList = getAvailableFields();
         return InvokerUtil.lookupOpener("rulecondition:selectfield",[
             fieldList : fieldList,
             onselect: {o->

@@ -33,7 +33,12 @@ def actpath = "templates/html/action_param_";
                             out.print( cons.field?.title );
                             if(cons.operator!=null) {
                                 if(cons.operator.symbol.contains("null")) {
-                                    out.print( "&nbsp;${cons.operator.caption}");
+                                    String expr = cons.operator.caption;
+                                    if(expr == "is null") 
+                                        expr = "is not specified";
+                                    else
+                                        expr = "is specified";
+                                    out.print( "&nbsp;"+expr);
                                 }
                                 else {
                                     out.print( "&nbsp;${cons.operator?.caption}&nbsp;");
@@ -55,9 +60,7 @@ def actpath = "templates/html/action_param_";
                                             case "lookup":
                                                 out.print( cons.listvalue*.value.join(","));
                                                 break;    
-                                            case "dynamiclookup":
-                                                out.print( cons.dynamicvar.name  );
-                                                break;
+                                            
                                             case "lov":
                                                 out.print( cons.listvalue.join(",") );
                                                  break;
@@ -101,16 +104,30 @@ def actpath = "templates/html/action_param_";
                                          if(!handler) handler = param.actiondefparam.datatype;
                                          switch(handler) {
                                             case "lookup": 
-                                                out.print( param.obj.value );
+                                                String expr = param.obj?.value;
+                                                if(!expr) {
+                                                    expr = "Not specified";
+                                                }
+                                                out.print( expr );
                                                 break;
                                             case "var":    
-                                                out.print( param.var.name );
+                                                String expr = param.var?.name;
+                                                if(!expr) {
+                                                    expr = "Not specified";
+                                                }
+                                                out.print( expr );
                                                 break;
                                             case "lov":    
                                                 out.print( param.lov );
                                                 break;
                                             case "expression":
-                                                String expr = param.expr.replace('\n','<br>').replace('\t', '&nbsp;'.multiply(5)).replace('\\s', '&nbsp;' );
+                                                String expr = param.expr;
+                                                if(expr) {
+                                                    expr = expr.replace('\n','<br>').replace('\t', '&nbsp;'.multiply(5)).replace('\\s', '&nbsp;' );
+                                                }
+                                                else {
+                                                    expr = "Not specified";
+                                                }
                                                 out.print( expr );
                                                 break;
                                             case "boolean":

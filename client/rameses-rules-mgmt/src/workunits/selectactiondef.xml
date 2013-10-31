@@ -17,6 +17,9 @@
             @Service("RuleMgmtService")
             def service;
         
+            @Service("RuleDeveloperService")
+            def devService;
+            
             @Caller
             def caller;
             
@@ -69,6 +72,12 @@
             def editActionDef() {
                 if(!selectedActionDef) return;
                 return InvokerUtil.lookupOpener( "ruleactiondef:edit", [entity:selectedActionDef] );
+            }
+            
+            void removeActionDef() {
+                if(!selectedActionDef) return;
+                devService.removeActionDef(selectedActionDef);
+                binding.refresh();
             }
             
             void reloadList() {

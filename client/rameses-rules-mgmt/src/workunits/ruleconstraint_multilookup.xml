@@ -24,14 +24,8 @@
             
             def getAddItem() {
                 return InvokerUtil.lookupOpener( lookupHandler, [
-                    multiSelect: true,
-                    multiSelectHandler: { o->
-                        return (items.find{ it.key == o[lookupKey] }!=null);
-                    },
                     onselect: { o->
-                        o.each {
-                            items << [ key: it[lookupKey], value: it[lookupValue] ] ;
-                        }
+                        items << [ key: o[lookupKey], value: o[lookupValue] ] ;
                         listModel.reload();
                     }
                 ]);

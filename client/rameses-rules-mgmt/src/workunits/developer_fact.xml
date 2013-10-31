@@ -34,7 +34,7 @@
             String title = "Fact";
             
             def handlerTypes = [
-                "lov", "lookup", "var", "decimal", "integer", "dynamiclookup", "string", "boolean"
+                "lov", "lookup", "var", "decimal", "integer", "string", "boolean"
             ]
             
             @PropertyChangeListener
@@ -53,9 +53,13 @@
                             field.vardatatype = "string";
                             field.datatype = "string";
                             break;
+                         case "boolean" : 
+                            field.vardatatype = "boolean";
+                            field.datatype = "boolean";
+                            break;   
                         default:
-                            field.vardatatype = null;
-                            field.datatype = null;
+                            field.vardatatype = "string";
+                            field.datatype = "string";
                     }
                 }
             ]
@@ -147,7 +151,6 @@
         <page name="fieldinfo" template="com.rameses.rulemgmt.developer.FactField"/>
         
         <page name="lookup" template="com.rameses.rulemgmt.developer.FactFieldLookup"/>
-        <page name="dynamiclookup" template="com.rameses.rulemgmt.developer.FactFieldDynamicLookup"/>
         <page name="decimal" template="com.rameses.rulemgmt.developer.FactFieldDefault"/>
         <page name="integer" template="com.rameses.rulemgmt.developer.FactFieldDefault"/>
         <page name="var" template="com.rameses.rulemgmt.developer.FactFieldVar"/>

@@ -1,21 +1,17 @@
-"selection|showLookup"[ constraint.usevar != 1 && constraint.operator!=null && !constraint.operator.symbol.contains("null")  ] {
+"selection|showLookup"[ constraint.usevar != 1 && (constraint.operator!=null && !constraint.operator.symbol.contains("null"))  ] {
     visible: true; 
 }
 
-"selection|showLookup"[ constraint.usevar == 1 || constraint.operator==null || constraint.operator.symbol.contains("null") ] {
+"selection|showLookup"[ constraint.usevar == 1 || constraint.operator==null || constraint.operator?.symbol.contains("null") ] {
     visible: false; 
 }
 
-"constraint.var"[ constraint.usevar == 1 && constraint.operator != null && !constraint.operator.symbol.contains("null")] {
+"constraint.var"[ constraint.usevar == 1 && (constraint.operator != null && !constraint.operator?.symbol.contains("null"))] {
     visible: true; 
 }
 
-"constraint.var"[ constraint.usevar != 1 || constraint.operator==null || constraint.operator.symbol.contains("null") ] {
+"constraint.var"[ constraint.usevar != 1 || constraint.operator==null || constraint.operator?.symbol.contains("null") ] {
     visible: false; 
-}
-
-"constraint.usevar"[ field.handler == 'dynamiclookup' || constraint.operator.symbol.contains("null") ] {
-    enabled: false; 
 }
 
 "constraint.usevar"[ constraint.operator==null || constraint.operator.symbol.contains("null")] {

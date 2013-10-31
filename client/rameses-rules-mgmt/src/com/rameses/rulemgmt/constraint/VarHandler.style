@@ -1,8 +1,8 @@
-"constraint.var"[ !constraint.operator.symbol.contains("null") ] {
+"constraint.var"[ constraint.operator!=null && !constraint.operator.symbol.contains("null") ] {
     visible: true; 
 }
 
-"constraint.var"[ constraint.operator.symbol.contains("null") ] {
+"constraint.var"[constraint.operator!=null && constraint.operator.symbol.contains("null") ] {
     visible: false; 
 }
 

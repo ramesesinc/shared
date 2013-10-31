@@ -36,7 +36,7 @@ public class NewRulePage extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         xTextArea1 = new com.rameses.rcp.control.XTextArea();
 
-        setPreferredSize(new java.awt.Dimension(747, 504));
+        setPreferredSize(new java.awt.Dimension(717, 554));
         com.rameses.rcp.control.border.XTitledBorder xTitledBorder1 = new com.rameses.rcp.control.border.XTitledBorder();
         xTitledBorder1.setTitle("New Rule Information");
         jPanel1.setBorder(xTitledBorder1);
