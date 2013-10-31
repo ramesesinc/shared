@@ -45,8 +45,8 @@ public class BankDepositEntryPage extends javax.swing.JPanel {
         xFormPanel4 = new com.rameses.rcp.control.XFormPanel();
         xDecimalField5 = new com.rameses.rcp.control.XDecimalField();
         xFormPanel3 = new com.rameses.rcp.control.XFormPanel();
-        xDecimalField4 = new com.rameses.rcp.control.XDecimalField();
         xDecimalField6 = new com.rameses.rcp.control.XDecimalField();
+        xDecimalField4 = new com.rameses.rcp.control.XDecimalField();
 
         setPreferredSize(new java.awt.Dimension(795, 489));
 
@@ -76,12 +76,15 @@ public class BankDepositEntryPage extends javax.swing.JPanel {
         xFormPanel2.add(xLabel2);
 
         xDecimalField2.setCaption("Balance");
+        xDecimalField2.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         xDecimalField2.setEnabled(false);
         xDecimalField2.setName("selectedFund.balance");
+        xDecimalField2.setPreferredSize(new java.awt.Dimension(120, 20));
         xFormPanel2.add(xDecimalField2);
 
         xDecimalField3.setCaption("Amount To Deposit");
         xDecimalField3.setName("entity.amount");
+        xDecimalField3.setPreferredSize(new java.awt.Dimension(120, 20));
         xFormPanel2.add(xDecimalField3);
 
         xDataTable1.setColumns(new com.rameses.rcp.common.Column[]{
@@ -95,8 +98,8 @@ public class BankDepositEntryPage extends javax.swing.JPanel {
                 , new Object[]{"resizable", false}
                 , new Object[]{"nullWhenEmpty", true}
                 , new Object[]{"editable", false}
-                , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
                 , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
             }),
             new com.rameses.rcp.common.Column(new Object[]{
                 new Object[]{"name", "particulars"}
@@ -108,8 +111,8 @@ public class BankDepositEntryPage extends javax.swing.JPanel {
                 , new Object[]{"resizable", true}
                 , new Object[]{"nullWhenEmpty", true}
                 , new Object[]{"editable", false}
-                , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
                 , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
             }),
             new com.rameses.rcp.common.Column(new Object[]{
                 new Object[]{"name", "amount"}
@@ -121,8 +124,8 @@ public class BankDepositEntryPage extends javax.swing.JPanel {
                 , new Object[]{"resizable", false}
                 , new Object[]{"nullWhenEmpty", true}
                 , new Object[]{"editable", false}
-                , new Object[]{"typeHandler", new com.rameses.rcp.common.DecimalColumnHandler("#,##0.00", -1.0, -1.0, false)}
                 , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.DecimalColumnHandler("#,##0.00", -1.0, -1.0, false, 0)}
             })
         });
         xDataTable1.setHandler("checkModel");
@@ -149,6 +152,7 @@ public class BankDepositEntryPage extends javax.swing.JPanel {
 
         xFormPanel4.setCaptionWidth(100);
         xDecimalField5.setCaption("Total Noncash");
+        xDecimalField5.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         xDecimalField5.setEnabled(false);
         xDecimalField5.setFont(new java.awt.Font("Tahoma", 1, 12));
         xDecimalField5.setName("entity.totalnoncash");
@@ -156,19 +160,21 @@ public class BankDepositEntryPage extends javax.swing.JPanel {
         xFormPanel4.add(xDecimalField5);
 
         xFormPanel3.setCaptionWidth(120);
+        xDecimalField6.setCaption("Cash Breakdown");
+        xDecimalField6.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        xDecimalField6.setEnabled(false);
+        xDecimalField6.setFont(new java.awt.Font("Tahoma", 1, 12));
+        xDecimalField6.setName("breakdown");
+        xDecimalField6.setPreferredSize(new java.awt.Dimension(0, 19));
+        xFormPanel3.add(xDecimalField6);
+
         xDecimalField4.setCaption("Total Cash");
+        xDecimalField4.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         xDecimalField4.setEnabled(false);
         xDecimalField4.setFont(new java.awt.Font("Tahoma", 1, 12));
         xDecimalField4.setName("entity.totalcash");
         xDecimalField4.setPreferredSize(new java.awt.Dimension(0, 19));
         xFormPanel3.add(xDecimalField4);
-
-        xDecimalField6.setCaption("T O T A L ");
-        xDecimalField6.setEnabled(false);
-        xDecimalField6.setFont(new java.awt.Font("Tahoma", 1, 12));
-        xDecimalField6.setName("total");
-        xDecimalField6.setPreferredSize(new java.awt.Dimension(0, 19));
-        xFormPanel3.add(xDecimalField6);
 
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -209,7 +215,7 @@ public class BankDepositEntryPage extends javax.swing.JPanel {
                         .add(xButton1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(xFormPanel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, xFormPanel4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
