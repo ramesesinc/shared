@@ -106,10 +106,11 @@ public class LiquidationPage extends javax.swing.JPanel {
 
         xFormPanel5.setCaptionWidth(150);
         xDecimalField9.setCaption("Total amount to liquidate");
+        xDecimalField9.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         xDecimalField9.setEnabled(false);
         xDecimalField9.setFont(new java.awt.Font("Tahoma", 1, 12));
         xDecimalField9.setName("entity.amount");
-        xDecimalField9.setPreferredSize(new java.awt.Dimension(0, 19));
+        xDecimalField9.setPreferredSize(new java.awt.Dimension(0, 22));
         xFormPanel5.add(xDecimalField9);
 
         xDataTable3.setColumns(new com.rameses.rcp.common.Column[]{
@@ -178,26 +179,31 @@ public class LiquidationPage extends javax.swing.JPanel {
         jLabel3.setText("Cash Breakdown");
 
         xFormPanel4.setCaptionWidth(100);
+        xFormPanel4.setPadding(new java.awt.Insets(0, 5, 5, 0));
         xDecimalField5.setCaption("Total Noncash");
+        xDecimalField5.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         xDecimalField5.setEnabled(false);
         xDecimalField5.setFont(new java.awt.Font("Tahoma", 1, 12));
         xDecimalField5.setName("entity.totalnoncash");
-        xDecimalField5.setPreferredSize(new java.awt.Dimension(0, 19));
+        xDecimalField5.setPreferredSize(new java.awt.Dimension(0, 22));
         xFormPanel4.add(xDecimalField5);
 
         xFormPanel3.setCaptionWidth(120);
+        xFormPanel3.setPadding(new java.awt.Insets(0, 5, 5, 0));
         xDecimalField6.setCaption("Cash Breakdown");
+        xDecimalField6.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         xDecimalField6.setEnabled(false);
         xDecimalField6.setFont(new java.awt.Font("Tahoma", 1, 12));
         xDecimalField6.setName("breakdown");
-        xDecimalField6.setPreferredSize(new java.awt.Dimension(0, 19));
+        xDecimalField6.setPreferredSize(new java.awt.Dimension(0, 22));
         xFormPanel3.add(xDecimalField6);
 
-        xDecimalField10.setCaption("Total Cash");
+        xDecimalField10.setCaption("Total Cash Expected");
+        xDecimalField10.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         xDecimalField10.setEnabled(false);
         xDecimalField10.setFont(new java.awt.Font("Tahoma", 1, 12));
         xDecimalField10.setName("entity.totalcash");
-        xDecimalField10.setPreferredSize(new java.awt.Dimension(0, 19));
+        xDecimalField10.setPreferredSize(new java.awt.Dimension(0, 22));
         xFormPanel3.add(xDecimalField10);
 
         org.jdesktop.layout.GroupLayout jPanel3Layout = new org.jdesktop.layout.GroupLayout(jPanel3);
@@ -215,13 +221,13 @@ public class LiquidationPage extends javax.swing.JPanel {
                         .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(jPanel3Layout.createSequentialGroup()
                                 .add(jLabel3)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 245, Short.MAX_VALUE))
-                            .add(xSubFormPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)))
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 236, Short.MAX_VALUE))
+                            .add(xSubFormPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)))
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .add(217, 217, 217)
-                        .add(xFormPanel4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 244, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(198, 198, 198)
+                        .add(xFormPanel4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 263, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(xFormPanel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)))
+                        .add(xFormPanel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -231,26 +237,31 @@ public class LiquidationPage extends javax.swing.JPanel {
                     .add(jLabel3)
                     .add(jLabel2))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(xSubFormPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
-                    .add(xDataTable3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE))
+                    .add(xDataTable3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 218, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(xFormPanel4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .add(xFormPanel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        xFormPanel1.setPadding(new java.awt.Insets(0, 5, 5, 0));
         xLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        xLabel1.setCaption("Liq. No");
+        xLabel1.setCaption("Liquidation No.");
+        xLabel1.setCaptionWidth(100);
         xLabel1.setExpression("#{entity.txnno}");
-        xLabel1.setPreferredSize(new java.awt.Dimension(0, 16));
+        xLabel1.setFont(new java.awt.Font("Tahoma", 1, 12));
+        xLabel1.setPreferredSize(new java.awt.Dimension(0, 22));
         xFormPanel1.add(xLabel1);
 
         xLabel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        xLabel2.setCaption("Liq Date");
+        xLabel2.setCaption("Liquidation Date");
+        xLabel2.setCaptionWidth(100);
         xLabel2.setExpression("#{entity.dtposted}");
-        xLabel2.setPreferredSize(new java.awt.Dimension(0, 16));
+        xLabel2.setFont(new java.awt.Font("Tahoma", 1, 12));
+        xLabel2.setPreferredSize(new java.awt.Dimension(0, 22));
         xFormPanel1.add(xLabel2);
 
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
@@ -258,29 +269,29 @@ public class LiquidationPage extends javax.swing.JPanel {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                        .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel1Layout.createSequentialGroup()
-                            .add(551, 551, 551)
-                            .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 256, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                    .add(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 274, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                            .add(xDataTable2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 796, Short.MAX_VALUE)
                             .add(xFormPanel5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 302, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                            .add(xDataTable2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 796, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                    .add(jPanel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(49, Short.MAX_VALUE))
+                            .add(jPanel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 39, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(xDataTable2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 123, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(xFormPanel5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 21, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(xFormPanel5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 25, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jPanel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(jPanel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -291,7 +302,7 @@ public class LiquidationPage extends javax.swing.JPanel {
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(228, Short.MAX_VALUE))
+                .addContainerGap(218, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
