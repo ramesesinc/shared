@@ -42,7 +42,7 @@
             def getLookupSubAccounts() {
                 return InvokerUtil.lookupOpener( "cashbook_subacct:lookup", [
                     onselect : { o->
-                        entity.subacct.name = o.firstname+" "+o.lastname + "("+o.role+")";
+                        entity.subacct.name = o.name + "("+o.role+")";
                         entity.subacct.objid = o.objid;
                         entity.type = o.role;
                         entity.title = entity.subacct.name + " - " + entity.fund?.title;
