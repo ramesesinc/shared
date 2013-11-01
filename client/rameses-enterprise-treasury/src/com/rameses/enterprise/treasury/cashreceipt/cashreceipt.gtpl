@@ -14,11 +14,22 @@
     def df = new java.text.DecimalFormat("#,##0.00")
 %>
 
+<table width="380" cellpadding="0" >
+    <tr>
+        <td><font size="5"><b>Cash Tendered</b></font></td>
+        <td>:</td>
+        <td align="right"><font size="6"><b>${df.format(entity.totalcash)}</b></font></td>
+    </tr>
+    <tr style="color:red">
+        <td><font size="5"><b>Change</b></font></td>
+        <td>:</td>
+        <td align="right"><font size="6"><b>${df.format(entity.cashchange)}</b></font></td>
+    </tr>
+</table>
 <br>
+<hr>
 <br>
-<br>
-<br>
-<table width="300">
+<table width="400">
     <%if(entity.voided){%>
         <tr>
             <td colspan="2">
@@ -29,7 +40,7 @@
 
     <tr>
         <td>Receipt No </td>
-        <td><font size="4" color="blue"> <b>${entity.receiptno}</font> </b></td>
+        <td><font size="4"> <b>${entity.receiptno}</font> </b></td>
     </tr>
     <tr>
         <td>Mode </td>
@@ -54,11 +65,11 @@
             </br>
         </td>
     </tr>
-
+    
     <tr>
         <td colspan="2">
             <hr>
-            <table>
+            <table width="100%">
                 <tr>
                     <th>Item code</th>
                     <th>Title</th>
@@ -81,15 +92,6 @@
             <hr>
                 <b>AMOUNT : ${df.format(entity.amount)}<BR></b>
            </hr>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2">
-            <hr>
-            <%if(entity.totalcash) {%>
-               <font size="6"><b>Cash Paid: ${df.format(entity.totalcash)}</b></font><br>
-               <font size="6"><b>Cash Change: ${df.format(entity.cashchange)}</b></font> <br>
-            <%}%>
         </td>
     </tr>
     <tr>

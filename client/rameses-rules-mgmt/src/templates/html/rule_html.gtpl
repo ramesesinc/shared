@@ -122,11 +122,11 @@ def actpath = "templates/html/action_param_";
                                                 break;
                                             case "expression":
                                                 String expr = param.expr;
-                                                if(expr) {
-                                                    expr = expr.replace('\n','<br>').replace('\t', '&nbsp;'.multiply(5)).replace('\\s', '&nbsp;' );
-                                                }
-                                                else {
+                                                if(!expr) {
                                                     expr = "Not specified";
+                                                }
+                                                else if(param.exprtype == "expression") {
+                                                    expr = expr.replace('\n','<br>').replace('\t', '&nbsp;'.multiply(5)).replace('\\s', '&nbsp;' );
                                                 }
                                                 out.print( expr );
                                                 break;

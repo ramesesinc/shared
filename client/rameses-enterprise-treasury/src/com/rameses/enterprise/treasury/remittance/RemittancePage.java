@@ -84,6 +84,7 @@ public class RemittancePage extends javax.swing.JPanel {
         xDecimalField4.setCaption("Amount to remit");
         xDecimalField4.setCaptionFont(new java.awt.Font("Arial", 0, 14));
         xDecimalField4.setCaptionWidth(140);
+        xDecimalField4.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         xDecimalField4.setEnabled(false);
         xDecimalField4.setFont(new java.awt.Font("Arial", 1, 14));
         xDecimalField4.setName("entity.amount");
@@ -160,6 +161,7 @@ public class RemittancePage extends javax.swing.JPanel {
 
         xFormPanel4.setCaptionWidth(100);
         xDecimalField5.setCaption("Total Noncash");
+        xDecimalField5.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         xDecimalField5.setEnabled(false);
         xDecimalField5.setFont(new java.awt.Font("Tahoma", 1, 12));
         xDecimalField5.setName("entity.totalnoncash");
@@ -168,6 +170,7 @@ public class RemittancePage extends javax.swing.JPanel {
 
         xFormPanel3.setCaptionWidth(120);
         xDecimalField6.setCaption("Cash Breakdown");
+        xDecimalField6.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         xDecimalField6.setEnabled(false);
         xDecimalField6.setFont(new java.awt.Font("Tahoma", 1, 12));
         xDecimalField6.setName("breakdown");
@@ -175,6 +178,7 @@ public class RemittancePage extends javax.swing.JPanel {
         xFormPanel3.add(xDecimalField6);
 
         xDecimalField8.setCaption("Total Cash");
+        xDecimalField8.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         xDecimalField8.setEnabled(false);
         xDecimalField8.setFont(new java.awt.Font("Tahoma", 1, 12));
         xDecimalField8.setName("entity.totalcash");

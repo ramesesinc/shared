@@ -28,6 +28,15 @@
             def cashBreakdown;
             def selectedCheck;
             def total = 0;
+            def breakdown = 0;
+            
+            @PropertyChangeListener
+            def listener = [
+                "entity.amount" : { o-> 
+                    entity.totalcash = o;
+                    binding.refresh('entity.totalcash')
+                }
+            ]
             
             void init() {
                 entity = [amount:selectedFund.balance,totalcash:0.0, totalnoncash:0.0, amount:0.0];
@@ -35,12 +44,13 @@
                 entity.checks = [];
                 entity.cashbreakdown = [];
                 entity.amount = selectedFund.balance;
+                entity.totalcash = entity.amount 
                 cashBreakdown = InvokerUtil.lookupOpener("cash:breakdown", 
                   [ entries: entity.cashbreakdown,
                     onupdate: { o->
-                        entity.totalcash = o;
-                        total = entity.totalcash+entity.totalnoncash;
-                        binding.refresh("entity.totalcash|total");
+                        breakdown = o
+                        total = breakdown+entity.totalnoncash;
+                        binding.refresh("breakdown|total");
                     }
                    ]
                 );
@@ -63,9 +73,10 @@
                                     undepositedChecks.remove(it);
                                 }
                                 entity.totalnoncash = entity.checks.amount.sum();
+                                entity.totalcash =  entity.amount - entity.totalnoncash
                                 total = entity.totalcash+entity.totalnoncash;
                                 checkModel.reload();
-                                binding.refresh("entity.totalnoncash|total");
+                                binding.refresh("entity.totalnoncash|total|entity.totalcash");
                             }
                         }
                     ]
@@ -92,6 +103,8 @@
                     throw new Exception('Bank Account is required.');
                 if(entity.amount > selectedFund.balance) 
                     throw new Exception("Amount to deposit should not exceed balance");
+                if( breakdown != entity.totalcash )
+                    throw new Exception("Cash breakdown must be equal to total cash.");
                 if( entity.amount != total)
                     throw new Exception("Total cash and non cash must equal amount to deposit");
                 if(handler) {

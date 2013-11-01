@@ -9,8 +9,8 @@
     </tr>
     <% entity.entries.each { o-> %>
         <tr>
-            <td>${o.from}</td>
-            <td>${o.to}</td>
+            <td>${(!o.from || o.from == 'null') ?'': o.from}</td>
+            <td>${(!o.to || o.from == 'null') ?'': o.to}</td>
             <td>${o.value}</td>
         </tr>
     <%}%>

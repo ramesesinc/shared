@@ -17,7 +17,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jScrollPane1" alignment="0" pref="574" max="32767" attributes="0"/>
+          <Component id="jScrollPane1" alignment="0" pref="564" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -28,6 +28,9 @@
   </Layout>
   <SubComponents>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="ruleText"/>
+      </Properties>
       <AuxValues>
         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
       </AuxValues>
@@ -36,9 +39,7 @@
       <SubComponents>
         <Component class="com.rameses.rcp.control.XTextArea" name="xTextArea1">
           <Properties>
-            <Property name="editable" type="boolean" value="false"/>
             <Property name="lineWrap" type="boolean" value="true"/>
-            <Property name="wrapStyleWord" type="boolean" value="true"/>
             <Property name="name" type="java.lang.String" value="ruleText"/>
           </Properties>
         </Component>

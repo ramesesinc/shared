@@ -32,9 +32,8 @@ public class RuleViewerPage extends javax.swing.JPanel {
         xTextArea1 = new com.rameses.rcp.control.XTextArea();
 
         setPreferredSize(new java.awt.Dimension(574, 400));
-        xTextArea1.setEditable(false);
+        jScrollPane1.setName("ruleText");
         xTextArea1.setLineWrap(true);
-        xTextArea1.setWrapStyleWord(true);
         xTextArea1.setName("ruleText");
         jScrollPane1.setViewportView(xTextArea1);
 
@@ -42,7 +41,7 @@ public class RuleViewerPage extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE)
+            .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 564, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
