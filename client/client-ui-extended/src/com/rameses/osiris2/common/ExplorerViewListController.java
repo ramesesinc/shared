@@ -92,8 +92,12 @@ public class ExplorerViewListController extends ListController implements Explor
     public void updateView() { 
         Node node = getNode();
         String nodeName = (node == null? null: node.getPropertyString("name")); 
-        _showQueryForm = "search".equals(nodeName+""); 
-        
+        if ("search".equals(nodeName+"")) {
+            _showQueryForm = true; 
+        } else {
+            _showQueryForm = "true".equals(node.getPropertyString("allowSearch")); 
+        } 
+                
         getQuery().clear(); 
         
         buildActions(); 
@@ -279,7 +283,10 @@ public class ExplorerViewListController extends ListController implements Explor
         /*
          *  if the selected item has a filetype, then use this as our primary handler 
          */
-        String itemfiletype = getString(item, "filetype"); 
+        String itemfiletype = getString(item, "_filetype"); 
+        if (itemfiletype == null || itemfiletype.length() == 0) { 
+            itemfiletype = getString(item, "filetype"); 
+        } 
         if (itemfiletype != null && itemfiletype.length() > 0) {
             String invtype = itemfiletype.toLowerCase()+":open";
             Invoker invoker = actionsProvider.getInvoker(node, invtype);  
