@@ -94,8 +94,10 @@ public class ExplorerViewListController extends ListController implements Explor
         String nodeName = (node == null? null: node.getPropertyString("name")); 
         if ("search".equals(nodeName+"")) {
             _showQueryForm = true; 
+            
         } else {
-            _showQueryForm = "true".equals(node.getPropertyString("allowSearch")); 
+            String _allowSearch = (node == null? null: node.getPropertyString("allowSearch"));
+            _showQueryForm = "true".equals(_allowSearch); 
         } 
                 
         getQuery().clear(); 
@@ -172,7 +174,20 @@ public class ExplorerViewListController extends ListController implements Explor
                 }                
                 node.setProperty("Invoker.createlist", list);
             } 
-            
+            if (list.isEmpty()) {
+                String cfiletype = parentController.getDefaultFileType();
+                if (cfiletype != null && cfiletype.length() > 0) { 
+                    String invtype = cfiletype.toLowerCase() + ":create";
+                    Invoker invoker = actionsProvider.getInvoker(node, invtype); 
+                    if (invoker != null) {
+                        invoker = invoker.clone(); 
+                        Map citem = new HashMap();
+                        citem.put("filetype", cfiletype); 
+                        invoker.getProperties().put("Node.fileTypeObject", citem);
+                        list.add(invoker);
+                    }  
+                } 
+            }            
             if (!list.isEmpty()) { 
                 Action a = createAction("create", "New", "images/toolbars/create.png", "ctrl N", 'n', null, true); 
                 formActions.add(a); 
@@ -216,6 +231,9 @@ public class ExplorerViewListController extends ListController implements Explor
         
         //load extended actions for the node
         List<Invoker> list = node.getPropertyList("Invoker.formActions"); 
+        if (list == null && (filetype == null || filetype.length() == 0)) {
+            filetype = parentController.getDefaultFileType();
+        } 
         if (list == null && filetype != null) {
             String invtype = filetype.toLowerCase() + ":formActions";
             list = actionsProvider.getInvokers(node, invtype);
@@ -244,6 +262,15 @@ public class ExplorerViewListController extends ListController implements Explor
     // </editor-fold>
         
     // <editor-fold defaultstate="collapsed" desc=" overrides/helper/utility methods ">
+    
+    public Opener getQueryForm() {
+        if (!isAllowSearch()) return null;
+        if (_showQueryForm) { 
+            return super.getQueryForm(); 
+        } else { 
+            return null; 
+        } 
+    }
         
     protected void beforeGetColumns(Map params) {
         Node node = getNode(); 
