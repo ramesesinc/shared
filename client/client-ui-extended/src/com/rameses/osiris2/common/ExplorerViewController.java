@@ -344,7 +344,8 @@ public class ExplorerViewController
     } 
     
     public Object getNode() {
-        return getListHandler().getNode(); 
+        Node node = getListHandler().getNode(); 
+        return (node == null? null: node.getItem()); 
     }
     
     // </editor-fold>
