@@ -1,5 +1,5 @@
 /*
- * ExplorerViewListController2.java
+ * ExplorerViewListController.java
  *
  * Created on July 31, 2013, 4:35 PM
  *
@@ -31,8 +31,8 @@ import javax.swing.UIManager;
  *
  * @author wflores
  */
-public class ExplorerViewListController extends ListController 
-{
+public class ExplorerViewListController_old extends ListController implements ExplorerViewHandler {
+    
     private Node node; 
     private ExplorerViewService service;
     private List<Invoker> defaultInvokers; 
@@ -41,9 +41,8 @@ public class ExplorerViewListController extends ListController
     private Object extendedParams;
     
     private boolean _showQueryForm = false;
-    private Opener customQueryForm;
     
-    public ExplorerViewListController() {
+    public ExplorerViewListController_old() {
     }
         
     // <editor-fold defaultstate="collapsed" desc=" Getters/Setters ">
@@ -75,9 +74,9 @@ public class ExplorerViewListController extends ListController
 
     private DefaultListService defaultService = new DefaultListService();    
     private ActionsProvider actionsProvider = new ActionsProvider();     
-    private ExplorerViewController parentController;
+    private ExplorerViewController_old parentController;
     
-    public void setParent(ExplorerViewController parentController) {
+    public void setParent(ExplorerViewController_old parentController) {
         this.parentController = parentController; 
     }
         
@@ -98,15 +97,7 @@ public class ExplorerViewListController extends ListController
             
         } else {
             String _allowSearch = (node == null? null: node.getPropertyString("allowSearch"));
-            String _queryform = (node == null? null: node.getPropertyString("queryform"));
-            
             _showQueryForm = "true".equals(_allowSearch); 
-            if (_showQueryForm && _queryform != null) {
-                customQueryForm = new Opener();
-                customQueryForm.setOutcome(_queryform);
-            } else {
-                customQueryForm = null; 
-            }
         } 
                 
         getQuery().clear(); 
@@ -135,8 +126,6 @@ public class ExplorerViewListController extends ListController
         formActions.clear();
         nodeActions.clear();
         
-        formActions.add(createAction("listHandler.reload", "Refresh", "images/toolbars/refresh.png", "ctrl R", 'r', null, true)); 
-        
         Node node = getNode();
         if (node == null) return;
                 
@@ -150,7 +139,7 @@ public class ExplorerViewListController extends ListController
                 node.setProperty("Invoker.edit", invoker); 
             }            
             if (invoker != null) { 
-                Action a = createAction("listHandler.edit", "", "images/toolbars/edit.png", "ctrl E", 'e', null, true); 
+                Action a = createAction("edit", "", "images/toolbars/edit.png", "ctrl E", 'e', null, true); 
                 nodeActions.add(a);
             } 
         }
@@ -182,25 +171,25 @@ public class ExplorerViewListController extends ListController
                             list.add(invoker);
                         }
                     }
-                } 
-                if (list.isEmpty()) {
-                    String cfiletype = parentController.getDefaultFileType();
-                    if (cfiletype != null && cfiletype.length() > 0) { 
-                        String invtype = cfiletype.toLowerCase() + ":create";
-                        Invoker invoker = actionsProvider.getInvoker(node, invtype); 
-                        if (invoker != null) {
-                            invoker = invoker.clone(); 
-                            Map citem = new HashMap();
-                            citem.put("filetype", cfiletype); 
-                            invoker.getProperties().put("Node.fileTypeObject", citem);
-                            list.add(invoker);
-                        }  
-                    } 
-                } 
+                }                
                 node.setProperty("Invoker.createlist", list);
             } 
+            if (list.isEmpty()) {
+                String cfiletype = parentController.getDefaultFileType();
+                if (cfiletype != null && cfiletype.length() > 0) { 
+                    String invtype = cfiletype.toLowerCase() + ":create";
+                    Invoker invoker = actionsProvider.getInvoker(node, invtype); 
+                    if (invoker != null) {
+                        invoker = invoker.clone(); 
+                        Map citem = new HashMap();
+                        citem.put("filetype", cfiletype); 
+                        invoker.getProperties().put("Node.fileTypeObject", citem);
+                        list.add(invoker);
+                    }  
+                } 
+            }            
             if (!list.isEmpty()) { 
-                Action a = createAction("listHandler.create", "New", "images/toolbars/create.png", "ctrl N", 'n', null, true); 
+                Action a = createAction("create", "New", "images/toolbars/create.png", "ctrl N", 'n', null, true); 
                 formActions.add(a); 
             }
         }   
@@ -233,11 +222,13 @@ public class ExplorerViewListController extends ListController
                 node.setProperty("Invoker.openlist", list); 
             } 
             
-            Action a = createAction("listHandler.open", "Open", "images/toolbars/open.png", "ctrl O", 'o', "#{listHandler.selectedEntity != null}", true); 
-            a.getProperties().put("depends", "listHandler.selectedEntity"); 
+            Action a = createAction("open", "Open", "images/toolbars/open.png", "ctrl O", 'o', "#{selectedEntity != null}", true); 
+            a.getProperties().put("depends", "selectedEntity"); 
             formActions.add(a); 
         }
-                
+        
+        formActions.add(createAction("reload", "Refresh", "images/toolbars/refresh.png", "ctrl R", 'r', null, true)); 
+        
         //load extended actions for the node
         List<Action> actionlist = parentController.lookupActions("formActions");
         if (actionlist != null) formActions.addAll(actionlist); 
@@ -257,7 +248,7 @@ public class ExplorerViewListController extends ListController
             for (Invoker invoker: list) { 
                 formActions.add(new ActionInvoker(invoker)); 
             } 
-        }  
+        } 
     } 
     
     private void buildActionsForSearchNode() {
@@ -270,35 +261,20 @@ public class ExplorerViewListController extends ListController
         String dfiletype = (parentController==null? null: parentController.getDefaultFileType()); 
         if (dfiletype == null || dfiletype.length() == 0) return;
                 
-        formActions.add(createAction("listHandler.reload", "Refresh", "images/toolbars/refresh.png", "ctrl R", 'r', null, true));         
+        formActions.add(createAction("reload", "Refresh", "images/toolbars/refresh.png", "ctrl R", 'r', null, true));         
     }     
     
     // </editor-fold>
         
     // <editor-fold defaultstate="collapsed" desc=" overrides/helper/utility methods ">
     
-    private List navActions;
-    public List getNavActions() {
-        if (navActions == null) {
-            if (!isShowNavActions()) return null;
-            
-            navActions = new ArrayList();
-            navActions.add(createAction("listHandler.moveFirstPage", "", "images/navbar/first.png", null, '\u0000', null, true)); 
-            navActions.add(createAction("listHandler.moveBackPage",  "", "images/navbar/previous.png", null, '\u0000', null, true)); 
-            navActions.add(createAction("listHandler.moveNextPage",  "", "images/navbar/next.png", null, '\u0000', null, true)); 
-            navActions.add(createAction("listHandler.moveLastPage",  "", "images/navbar/last.png", null, '\u0000', null, true)); 
-        } 
-        return navActions; 
-    }    
-    
     public Opener getQueryForm() {
         if (!isAllowSearch()) return null;
-        
-        if (customQueryForm == null) {
+        if (_showQueryForm) { 
             return super.getQueryForm(); 
         } else { 
-            return customQueryForm; 
-        }
+            return null; 
+        } 
     }
         
     protected void beforeGetColumns(Map params) {
@@ -529,7 +505,7 @@ public class ExplorerViewListController extends ListController
     
     private class ActionInvoker extends Action 
     {
-        ExplorerViewListController root = ExplorerViewListController.this;
+        ExplorerViewListController_old root = ExplorerViewListController_old.this;
         private Invoker invoker;
         
         ActionInvoker(Invoker invoker) {
@@ -607,7 +583,7 @@ public class ExplorerViewListController extends ListController
     
     private class ListModelHandlerImpl implements ListModelHandler {
         
-        ExplorerViewListController root = ExplorerViewListController.this; 
+        ExplorerViewListController_old root = ExplorerViewListController_old.this; 
         
         public Object getSelectedEntity() { 
             return root.getSelectedEntity(); 
@@ -632,7 +608,7 @@ public class ExplorerViewListController extends ListController
     
     private class DefaultIconColumnHandler extends IconColumnHandler {
         
-        ExplorerViewListController root = ExplorerViewListController.this;
+        ExplorerViewListController_old root = ExplorerViewListController_old.this;
         
         public Object getValue(Object rowValue, Object columnValue) {
             if (rowValue instanceof Map) {

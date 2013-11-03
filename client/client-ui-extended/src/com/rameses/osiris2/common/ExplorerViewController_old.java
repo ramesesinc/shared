@@ -1,5 +1,5 @@
 /*
- * ExplorerViewController2.java
+ * ExplorerViewController.java
  *
  * Created on July 30, 2013, 6:47 PM
  *
@@ -30,15 +30,15 @@ import java.util.Map;
  *
  * @author wflores
  */
-public class ExplorerViewController 
-{
+public class ExplorerViewController_old {
+    
     @Invoker
     protected com.rameses.osiris2.Invoker invoker;
     
     @Binding
     protected com.rameses.rcp.framework.Binding binding;
     
-    @Controller(onready="setupWorkunitProperties")
+    @Controller 
     protected Object controller;
 
     private String context; 
@@ -48,8 +48,13 @@ public class ExplorerViewController
     private TreeNodeModel nodeModel; 
     private Node selectedNode;   
     private ExplorerViewService service;
-        
-    public ExplorerViewController() {
+    private Opener openerObject; 
+    private Opener defaultViewOpener; 
+    
+    public ExplorerViewController_old() {
+        try {
+            openerObject = InvokerUtil.lookupOpener("explorer-view-intro", new HashMap()); 
+        } catch(Throwable t){;} 
     } 
     
     public void init(){
@@ -62,15 +67,27 @@ public class ExplorerViewController
     } 
     
     public String getContext() { 
-        return wucontext; 
+        if (context == null) {
+            Object o = getWorkunitProperties().get("context");
+            context = (o == null? "explorer": o.toString()); 
+        } 
+        return context; 
     }
     
     public String getDefaultFileType() { 
-        return wudefaultFileType;
+        if (defaultFileType == null) {
+            Object o = getWorkunitProperties().get("defaultFileType");
+            defaultFileType = (o == null? null: o.toString()); 
+        } 
+        return defaultFileType;     
     } 
     
     public String getServiceName() { 
-        return wuserviceName; 
+        if (serviceName == null) {
+            Object o = getWorkunitProperties().get("serviceName");
+            serviceName = (o == null? null: o.toString()); 
+        }
+        return serviceName; 
     }
         
     public Node getSelectedNode() { return selectedNode; } 
@@ -97,18 +114,11 @@ public class ExplorerViewController
         return service;
     }     
     
-    public String getIcon() { 
-        return null; 
-    } 
-    public boolean isRootVisible() { 
-        return wurootVisible; 
-    } 
-    public boolean isAllowSearch() { 
-        return wuallowSearch; 
-    }
-    public boolean isAutoSelect() {
-        return wuautoSelect;
-    }
+    public Opener getOpenerObject() { return openerObject; } 
+    
+    public boolean isRootVisible() { return false; } 
+    public boolean isAllowSearch() { return true; }  
+    public String getIcon() { return null; }
     
     // </editor-fold>     
     
@@ -116,15 +126,11 @@ public class ExplorerViewController
       
     private class TreeNodeModelImpl extends TreeNodeModel 
     {
-        ExplorerViewController root = ExplorerViewController.this;
+        ExplorerViewController_old root = ExplorerViewController_old.this;
         
         public boolean isRootVisible() { 
             return root.isRootVisible(); 
         } 
-        
-        public boolean isAutoSelect() {
-            return root.isAutoSelect(); 
-        }
         
         public String getIcon() { 
             String icon = root.getIcon();
@@ -193,44 +199,34 @@ public class ExplorerViewController
         private Object openNodeImpl(Node node) {
             if (node == null) return null;
             
-            String filetype = node.getPropertyString("filetype");
-            if (filetype == null) {
-                String childtypes = node.getPropertyString("childtypes"); 
-                String[] values = (childtypes == null? null: childtypes.split(",")); 
-                if (values != null && values.length > 0) filetype = values[0]; 
-            }
-            if (filetype == null) filetype = getDefaultFileType(); 
+//            String filetype = node.getPropertyString("filetype");
+//            if (filetype == null) {
+//                String childtypes = node.getPropertyString("childtypes"); 
+//                String[] values = (childtypes == null? null: childtypes.split(",")); 
+//                if (values != null && values.length > 0) filetype = values[0]; 
+//            }
+//            if (filetype == null) filetype = getDefaultFileType(); 
             
-            _queryFormName = "queryform";
-            
-            String nodeName = (node == null? null: node.getPropertyString("name")); 
-            if ("search".equals(nodeName+"")) {
-                _showQueryForm = true; 
-            } else { 
-                String sallowSearch = (node == null? null: node.getPropertyString("allowSearch"));
-                String sfiletype = (node == null? null: node.getPropertyString("filetype"));
-                if (sfiletype != null) sfiletype = sfiletype.toLowerCase();
-                
-                _showQueryForm = "true".equals(sallowSearch); 
-                if (_showQueryForm && containsPage(sfiletype+":queryform")) {
-                    _queryFormName = sfiletype + ":queryform";
-                } 
-            } 
-            getListHandler().setNode(node); 
-            getListHandler().updateView(); 
-            Object ob = this.getBinding();
-            if (ob instanceof com.rameses.rcp.framework.Binding) {
-                com.rameses.rcp.framework.Binding ab = (com.rameses.rcp.framework.Binding)ob;
-                ab.refresh("nodechange"); 
-                ab.refresh("listHandler.*");
+            if (defaultViewOpener == null) {
+                String name = "explorer-view-handler";   
+                defaultViewOpener = InvokerUtil.lookupOpener(name, new HashMap()); 
             }
+            
+            //System.out.println("openNode-> " + node.getItem());            
+            ExplorerViewHandler handler = (ExplorerViewHandler) defaultViewOpener.getHandle(); 
+            handler.setParent(root); 
+            handler.setNode(node); 
+            handler.updateView();
+            openerObject = defaultViewOpener; 
+            if (binding != null) binding.refresh("subform"); 
+
             return null; 
         }
     }
     
     // </editor-fold>        
     
-    // <editor-fold defaultstate="collapsed" desc=" workunit/controller support ">
+    // <editor-fold defaultstate="collapsed" desc=" override / helper methods ">
     
     private Map wuprops;
     protected final Map getWorkunitProperties() {
@@ -243,7 +239,7 @@ public class ExplorerViewController
             if (wuprops == null) wuprops = new HashMap(); 
         } 
         return wuprops;
-    }
+    } 
     
     public final List<Action> lookupActions(String type) { 
         List<Action> actions = new ArrayList(); 
@@ -262,90 +258,7 @@ public class ExplorerViewController
             actions.set(i, newAction);
         } 
         return actions; 
-    }     
-    
-    private boolean containsPage(String name) {
-        try {
-            PropertyResolver resolver = PropertyResolver.getInstance();
-            Map pages = (Map) resolver.getProperty(controller, "workunit.workunit.pages"); 
-            return pages.containsKey(name); 
-        } catch(Throwable t) {
-            return false; 
-        }
-    }
-
-    private String wucontext;
-    private String wudefaultFileType;
-    private String wuserviceName; 
-    private boolean wuallowSearch;
-    private boolean wurootVisible;
-    private boolean wuautoSelect;
-    
-    public void setupWorkunitProperties() {
-        Map map = getWorkunitProperties(); 
-        wucontext = getString(map, "context");
-        if (wucontext == null) wucontext = "explorer";
-        
-        wudefaultFileType = getString(map, "defaultFileType"); 
-        wuserviceName = getString(map, "serviceName"); 
-        
-        String sval = getString(map, "allowSearch");
-        wuallowSearch = ("false".equals(sval)? false: true);
-        wurootVisible = "true".equals(getString(map, "rootVisible")); 
-        wuautoSelect = "true".equals(getString(map, "autoSelect"));
     } 
-    
-    private String getString(Map map, String name) { 
-        if (map == null || name == null) return null;
-        
-        Object ov = (map == null? null: map.get(name)); 
-        return (ov == null? null: ov.toString()); 
-    }
-    
-    // </editor-fold>
-
-    // <editor-fold defaultstate="collapsed" desc=" list view support ">
-    
-    private boolean _showQueryForm;
-    private String _queryFormName;
-    private Opener _queryform; 
-    private ExplorerViewListController listHandler; 
-    
-    public ExplorerViewListController getListHandler() {
-        if (listHandler == null) {
-            listHandler = new ExplorerViewListController();
-            listHandler.setParent(this);
-        } 
-        return listHandler; 
-    }
-    
-    public boolean isQueryFormVisible() { 
-        return _showQueryForm; 
-    }
-    
-    public Opener getQueryForm() {
-        if (!isAllowSearch()) return null;
-        
-        if (isQueryFormVisible()) {
-            Opener o = new Opener();
-            o.setOutcome(_queryFormName); 
-            return o;
-        } else { 
-            return null; 
-        } 
-    }
-    
-    public Map getQuery() { 
-        return getListHandler().getQuery(); 
-    }
-    
-    public void search() { 
-        getListHandler().search(); 
-    } 
-    
-    public Object getNode() {
-        return getListHandler().getNode(); 
-    }
     
     // </editor-fold>
 

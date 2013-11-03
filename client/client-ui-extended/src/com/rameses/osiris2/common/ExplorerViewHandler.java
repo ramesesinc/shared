@@ -18,7 +18,7 @@ import com.rameses.rcp.common.Opener;
  */
 public interface ExplorerViewHandler {
     
-    void setParent(ExplorerViewController parentController); 
+    void setParent(ExplorerViewController_old parentController); 
     
     void setNode(Node node); 
     
