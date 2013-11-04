@@ -1,6 +1,5 @@
 package com.rameses.osiris2.common;
 
-import com.rameses.common.PropertyResolver;
 import com.rameses.osiris2.client.InvokerFilter;
 import com.rameses.osiris2.client.InvokerUtil;
 import com.rameses.osiris2.client.WorkUnitUIController;
@@ -26,7 +25,7 @@ public abstract class BasicListController extends PageListModel
     @Binding
     private com.rameses.rcp.framework.Binding binding;
     
-    @Controller
+    @Controller(onready="onready_controller")
     protected WorkUnitUIController controller;
     
     private Object selectedEntity;
@@ -142,8 +141,7 @@ public abstract class BasicListController extends PageListModel
     protected final Map getControllerProperties() {
         try {
             if (wuprops == null) {
-                PropertyResolver res = PropertyResolver.getInstance(); 
-                wuprops = (Map) res.getProperty(controller, "workunit.workunit.properties"); 
+                wuprops = controller.getWorkunit().getWorkunit().getProperties();
             } 
         } catch(Throwable t){;} 
             
@@ -152,5 +150,14 @@ public abstract class BasicListController extends PageListModel
         return wuprops;
     }
     
+    public final void onready_controller() {
+        handleWorkunitProperties(getControllerProperties()); 
+    }
+    
+    protected void handleWorkunitProperties(Map props) {
+        //to be implemented 
+    }
+    
     // </editor-fold>
+    
 }

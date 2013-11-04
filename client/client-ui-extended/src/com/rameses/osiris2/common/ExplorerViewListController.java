@@ -477,11 +477,6 @@ public class ExplorerViewListController extends ListController
         if (node != null) node.reloadItems();
     } 
     
-    private String getString(Map data, String name) {
-        Object o = (data == null? null: data.get(name));
-        return (o == null? null: o.toString()); 
-    }
-
     protected Map createOpenerParams() {
         Map params = super.createOpenerParams(); 
         params.put("listModelHandler", new ListModelHandlerImpl()); 

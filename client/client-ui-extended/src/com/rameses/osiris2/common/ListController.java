@@ -27,35 +27,40 @@ public abstract class ListController extends BasicListController implements Page
     public abstract String getServiceName();
     
     public String getEntityName() {
-        throw new RuntimeException("Please provide an entityName");
+        if (wuentityName == null || wuentityName.length() == 0)
+            throw new RuntimeException("Please provide an entityName");
+        
+        return wuentityName; 
     }
        
     // <editor-fold defaultstate="collapsed" desc=" Getter/Setter ">        
             
     public String getTag() { return tag; } 
-    public void setTag(String tag) { this.tag = tag; }    
-    
-    public String getFormTarget() { return "popup"; }    
-    
-    public String getFormName() { 
-        Map wuprops = getControllerProperties();
-        Object oval = wuprops.get("formName");
-        return (oval == null? this.formName: oval.toString()); 
+    public void setTag(String tag) { 
+        this.tag = tag; 
     } 
     
+    public String getFormTarget() { 
+        if (wuformTarget == null || wuformTarget.length() == 0) { 
+            return "popup"; 
+        } else {
+            return wuformTarget; 
+        }
+    } 
+    
+    public String getFormName() { 
+        if (wuformName == null || wuformName.length() == 0) { 
+            return formName; 
+        } else { 
+            return wuformName; 
+        } 
+    }     
     public void setFormName(String formName) { 
         this.formName = formName; 
     }
     
     public int getRows() {
-        Map wuprops = getControllerProperties();
-        Object oval = wuprops.get("rows");
-        if (oval != null) {
-            try {
-                return Integer.parseInt(oval.toString()); 
-            } catch(Throwable t) {;}
-        }
-        return defaultRowSize; 
+        return (wurows == null? defaultRowSize: wurows.intValue()); 
     }
         
     public Map getQuery() { return query; }
@@ -120,36 +125,34 @@ public abstract class ListController extends BasicListController implements Page
     public Map getReadPermission() { return null; } 
     
     public boolean isAllowClose() { 
-        Map wuprops = getControllerProperties();
-        Object oval = wuprops.get("allowClose");
-        if (oval == null) return true; 
+        if (wuallowClose == null) return true; 
         
-        return "true".equals(oval.toString()); 
+        return wuallowClose.booleanValue();
     } 
     
     public boolean isAllowCreate() { 
-        Map wuprops = getControllerProperties();
-        Object oval = wuprops.get("allowCreate");
-        if (oval == null) return true; 
+        if (wuallowCreate == null) return true; 
         
-        return "true".equals(oval.toString());     
+        return wuallowCreate.booleanValue();
     } 
     
     public boolean isAllowOpen() { 
-        Map wuprops = getControllerProperties();
-        Object oval = wuprops.get("allowOpen");
-        if (oval == null) return true; 
+        if (wuallowOpen == null) return true; 
         
-        return "true".equals(oval.toString());     
+        return wuallowOpen.booleanValue();
     } 
     
     public boolean isAllowSearch() { 
-        Map wuprops = getControllerProperties();
-        Object oval = wuprops.get("allowSearch");
-        if (oval == null) return true; 
+        if (wuallowSearch == null) return true; 
         
-        return "true".equals(oval.toString());         
+        return wuallowSearch.booleanValue();
     } 
+
+    public boolean isAllowColumnEditing() {
+        if (wuallowColumnEditing == null) return false; 
+        
+        return wuallowColumnEditing.booleanValue(); 
+    }
     
     // </editor-fold>
     
@@ -303,11 +306,70 @@ public abstract class ListController extends BasicListController implements Page
         a.setPermission(getString(perm, "permission")); 
     }
     
-    private String getString(Map map, String name) {
+    protected String getString(Map map, String name) {
         Object ov = (map == null? null: map.get(name)); 
         return (ov == null? null: ov.toString()); 
     }
+    
+    protected Integer getInteger(Map map, String name) {
+        try {
+            String sval = getString(map, name); 
+            if (sval == null || sval.length() == 0) return null; 
+            
+            return new Integer(Integer.parseInt(sval)); 
+        } catch(Throwable t) {
+            return null; 
+        }
+    }
+    
+    protected Boolean getBoolean(Map map, String name) {
+        try {
+            String sval = getString(map, name); 
+            if (sval == null || sval.length() == 0) return null; 
+            if ("true".equals(sval)) return new Boolean(true); 
+            else if ("false".equals(sval)) return new Boolean(false); 
+            else return null; 
+        } catch(Throwable t) {
+            return null; 
+        }
+    }    
+
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc=" handle workunit properties ">
+
+    protected String wuserviceName;    
+    private String wuformName;
+    private String wuformTarget = "popup";    
+    private Integer wurows;
+    private Boolean wuallowClose;
+    private Boolean wuallowCreate;
+    private Boolean wuallowOpen;
+    private Boolean wuallowSearch;
+    private String wuentityName;
+    private Boolean wuallowColumnEditing;
+    
+    protected void handleWorkunitProperties(Map props) {
+        if (props == null) return;
         
+        wuformName = getString(props, "formName");
+        wurows = getInteger(props, "rows");
+        wuallowClose = getBoolean(props, "allowClose");
+        wuallowCreate = getBoolean(props, "allowCreate");
+        wuallowOpen = getBoolean(props, "allowOpen");
+        wuallowSearch = getBoolean(props, "allowSearch");
+        wuserviceName = getString(props, "serviceName");
+        wuentityName = getString(props, "entityName");
+        
+        wuformTarget = getString(props, "formTarget");
+        if (wuformTarget == null || wuformTarget.length() == 0) {
+            wuformTarget = "popup"; 
+        }
+        
+        setTag(getString(props, "tag")); 
+        wuallowColumnEditing = getBoolean(props, "allowColumnEditing");
+    }
+    
     // </editor-fold>
     
     protected void onbeforeFetchList(Map params) {}

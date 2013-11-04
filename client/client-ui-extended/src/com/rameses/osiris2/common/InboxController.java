@@ -62,44 +62,28 @@ public class InboxController extends ListController
     // <editor-fold defaultstate="collapsed" desc=" Getters/Settters ">
     
     public String getContext() { 
-        if (context == null) {
-            Object o = getWorkunitProperties().get("context");
-            context = (o == null? "explorer": o.toString()); 
+        if (wucontext == null || wucontext.length() == 0) { 
+            wucontext = "explorer"; 
         } 
         return context; 
     }
     
     public String getDefaultFileType() { 
-        if (defaultFileType == null) {
-            Object o = getWorkunitProperties().get("defaultFileType");
-            defaultFileType = (o == null? null: o.toString()); 
-        } 
-        return defaultFileType;     
+        return wudefaultFileType; 
     } 
     
     public String getServiceName() { 
-        if (serviceName == null) {
-            Object o = getWorkunitProperties().get("serviceName");
-            serviceName = (o == null? null: o.toString()); 
-        }
-        return serviceName; 
+        return wuserviceName;
     }
     
     public String getEntityName() { 
-        if (serviceName == null) {
-            Object o = getWorkunitProperties().get("entityName");
-            serviceName = (o == null? null: o.toString()); 
-        }
-        return serviceName; 
+        return wuentityName;
     }  
     
-    private Object _dynamicColumns;
-    public boolean isDynamicColumns() {
-        if (_dynamicColumns == null) {
-            Object o = getWorkunitProperties().get("dynamicColumns");
-            _dynamicColumns = (o == null? "true": "true".equals(o.toString())); 
-        } 
-        return "true".equals(_dynamicColumns+"");
+    public boolean isDynamicColumns() { 
+        if (wudynamicColumns == null) return true; 
+        
+        return wudynamicColumns.booleanValue();
     }
 
     public int getRows() { return 20; } 
@@ -693,6 +677,27 @@ public class InboxController extends ListController
             else 
                 return filetype + ":" + node.getPropertyString("name"); 
         } 
+    }
+    
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc=" handle workunit properties ">
+
+    private String wucontext;
+    private String wudefaultFileType;
+    private String wuserviceName;
+    private String wuentityName;
+    private Boolean wudynamicColumns;
+    
+    protected void handleWorkunitProperties(Map props) {
+        if (props == null) return;
+        
+        super.handleWorkunitProperties(props);        
+        wucontext = getString(props, "context");
+        wudefaultFileType = getString(props, "defaultFileType");
+        wuserviceName = getString(props, "serviceName");
+        wuentityName = getString(props, "entityName");
+        wudynamicColumns = getBoolean(props, "dynamicColumns"); 
     }
     
     // </editor-fold>
