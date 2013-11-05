@@ -7,35 +7,53 @@ import com.rameses.rcp.framework.ClientContext;
 import com.rameses.osiris2.client.*;
 import com.rameses.util.*;
 
-public class SystemExitController 
+public class SuspendController 
 {
+    def pwd;
+
     @Script("User")
     def user;
-    
+
+    boolean canclose;
+
+    void init() {
+        ClientContext.currentContext.platform.lock();
+    }
+
+    @Close
+    public boolean canClose() {
+        return canclose;
+    }
+
+    def resetHandler;
+
+    public def resume() {
+        user.checkPwd( pwd );
+        ClientContext.currentContext.platform.unlock();
+        if (resetHandler) resetHandler();
+        
+        canclose = true;
+        return "_exit";
+    }
+
     public void logoff() {
+        canclose = true;
         logoffUser();
         def ctx = ClientContext.currentContext;
         ctx.platform.logoff();
-        ctx.headers.clear();
+        ctx.headers.clear(); 
+        ctx.taskManager.stop();
     }
 
-    public void restart() {
-        logoffUser();
-        def ctx = ClientContext.currentContext;
-        ctx.platform.logoff();
-        ctx.headers.clear();
-    }
-
-    public def shutdown() {
+    public void exit() {
+        canclose = true;
         logoffUser();
         def ctx = ClientContext.currentContext;
         ctx.platform.shutdown();
-        ctx.headers.clear();
+        ctx.headers.clear();        
     }
     
-    
-    private def handler;
-    
+    private def handler;    
     private void logoffUser() {
         if (user.sessionId == null) return; 
         
@@ -44,7 +62,7 @@ public class SystemExitController
             handler = new LogoutHandler(service: service, user: user); 
             OsirisContext.mainWindowListener.add(handler); 
         } 
-    }
+    }    
 }
 
 public class LogoutHandler implements MainWindowListener 

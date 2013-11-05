@@ -2,7 +2,7 @@
     
     <!-- this loader hooks to logout session -->
     <invokers>
-        <invoker type="loader" caption="Logout" index="-900" action="init" permission="system" target="process" /> 
+        <invoker type="xxxloader" caption="Logout" index="-900" action="init" permission="system" target="process" /> 
     </invokers>
     
     <code>
