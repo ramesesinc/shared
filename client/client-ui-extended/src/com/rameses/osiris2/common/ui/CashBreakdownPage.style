@@ -1,5 +1,6 @@
 "listModel:item.*"[ item.qty != 0 ] {
     background-color: yellow;
+    color: black;
 }   
 
 "selectedItem" [allowEdit == true]{
