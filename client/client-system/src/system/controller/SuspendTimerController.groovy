@@ -14,7 +14,7 @@ public class SuspendTimerController extends CountDownTimer implements AWTEventLi
     long _maxSeconds;
 
     public def init() {
-        _maxSeconds = 180;
+        _maxSeconds = 300;
         ClientContext.currentContext.taskManager.addTask( this );
         Toolkit.defaultToolkit.addAWTEventListener( this, AWTEvent.KEY_EVENT_MASK | AWTEvent.MOUSE_EVENT_MASK );
         return "_close";
