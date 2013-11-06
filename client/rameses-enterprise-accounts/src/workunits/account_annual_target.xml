@@ -1,0 +1,55 @@
+<workunit extends="wtemplates/ListController.xml">
+        
+    <invokers>
+        <invoker folderid="/explorer/master/account" caption="Annual Income Targets" index="1" action="init" />
+   </invokers>
+   
+   <code>
+       <![CDATA[
+        import com.rameses.osiris2.common.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.osiris2.client.*;
+        
+        class AccountTargetController  {
+        
+            @Service("AccountIncomeTargetService")
+            def service;
+
+            def queryForm = new Opener(outcome:'queryform');
+            String title = "Account Income Target";
+            def columns;
+            def query  = [:];
+            
+            void init() {
+                query.year = service.getCurrentYear();
+            }
+            
+            void search() {
+                listHandler.reload();
+            }
+                
+            def listHandler = [
+                getColumnList: { 
+                    if( !columns )columns = service.getColumns(query);
+                    return columns
+                },
+                fetchList: { o->
+                    return service.getList(query);
+                },
+                onColumnUpdate: { o,col->
+                    if( col == "target" ) {
+                        def m = [year:query.year, objid:o.objid, target: o.target]; 
+                        service.saveTarget( m );
+                    }
+                }
+            ] as EditorListModel     
+        }      
+       ]]>
+   </code>
+   
+   <pages>
+       <page name="queryform" template="com.rameses.enterprise.accounts.AccountTargetQuery"/>
+   </pages>
+   
+</workunit>

@@ -54,6 +54,9 @@
                         entity.dynamic.key = o[fact.lookupkey];
                         entity.dynamic.value = o[fact.lookupvalue];
                         entity.dynamic.datatype = o[fact.lookupdatatype];
+                        if(entity.dynamic.datatype == "string_array") {
+                            entity.dynamic.datatype = "string";
+                        }
                         buildItems(o[fact.lookupkey]);
                         binding.refresh();
                     }

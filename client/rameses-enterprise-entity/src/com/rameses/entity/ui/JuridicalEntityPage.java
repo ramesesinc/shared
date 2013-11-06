@@ -28,6 +28,7 @@ public class JuridicalEntityPage extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
     private void initComponents() {
         xFormPanel1 = new com.rameses.rcp.control.XFormPanel();
+        xLabel1 = new com.rameses.rcp.control.XLabel();
         xTextField2 = new com.rameses.rcp.control.XTextField();
         xTextField5 = new com.rameses.rcp.control.XTextField();
         xComboBox1 = new com.rameses.rcp.control.XComboBox();
@@ -41,6 +42,14 @@ public class JuridicalEntityPage extends javax.swing.JPanel {
         xTitledBorder1.setPadding(new java.awt.Insets(30, 15, 15, 15));
         xTitledBorder1.setTitle("General Information");
         xFormPanel1.setBorder(xTitledBorder1);
+        xLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        xLabel1.setCaption("Acct No");
+        xLabel1.setCaptionWidth(120);
+        xLabel1.setExpression("#{entity.entityno}");
+        xLabel1.setFont(new java.awt.Font("Tahoma", 1, 12));
+        xLabel1.setPreferredSize(new java.awt.Dimension(200, 20));
+        xFormPanel1.add(xLabel1);
+
         xTextField2.setCaption("Company Name");
         xTextField2.setCaptionWidth(120);
         xTextField2.setName("entity.name");
@@ -98,8 +107,8 @@ public class JuridicalEntityPage extends javax.swing.JPanel {
                 , new Object[]{"nullWhenEmpty", true}
                 , new Object[]{"editable", true}
                 , new Object[]{"editableWhen", null}
-                , new Object[]{"typeHandler", new com.rameses.rcp.common.ComboBoxColumnHandler("contactTypes", "key", "#{item.value}")}
                 , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.ComboBoxColumnHandler("contactTypes", "key", "#{item.value}")}
             }),
             new com.rameses.rcp.common.Column(new Object[]{
                 new Object[]{"name", "contact"}
@@ -112,8 +121,8 @@ public class JuridicalEntityPage extends javax.swing.JPanel {
                 , new Object[]{"nullWhenEmpty", true}
                 , new Object[]{"editable", true}
                 , new Object[]{"editableWhen", null}
-                , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
                 , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.NONE}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
             })
         });
         xDataTable1.setHandler("contactListHandler");
@@ -167,6 +176,7 @@ public class JuridicalEntityPage extends javax.swing.JPanel {
     private com.rameses.rcp.control.XDataTable xDataTable1;
     private com.rameses.rcp.control.XDateField xDateField1;
     private com.rameses.rcp.control.XFormPanel xFormPanel1;
+    private com.rameses.rcp.control.XLabel xLabel1;
     private com.rameses.rcp.control.XTextField xTextField2;
     private com.rameses.rcp.control.XTextField xTextField5;
     private com.rameses.rcp.control.XTextField xTextField6;

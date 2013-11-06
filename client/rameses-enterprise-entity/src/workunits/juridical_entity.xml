@@ -32,7 +32,10 @@
             
             void beforeCreate( entity ) { 
                 entity.type = entityType;
-                if (orgTypes == null) orgTypes = orgTypeSvc.getList(); 
+                if (orgTypes == null) {
+                    orgTypes = orgTypeSvc.getList(); 
+                    orgTypes.remove( orgTypes.find{ it.key == "SING" } );
+                }
             }   
             
             void entityChanged() { 

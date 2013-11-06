@@ -1,6 +1,6 @@
 <workunit extends="wtemplates/ListController.xml">
     <invokers>
-        <invoker folderid="/explorer/master/entity" caption="Multiple Ownerships" action="init" role="ENTITY_ENCODER" />
+        <invoker folderid="/explorer/master/entity" caption="Multiple Ownership" action="init" role="ENTITY_ENCODER" />
    </invokers>
    
    <code>
