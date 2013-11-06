@@ -31,7 +31,7 @@ public class User
     }
 
     public void init( def usr, def pwd ) 
-    {
+    { 
         if (!usr.env) usr.env = [:];
 
         def sp = OsirisContext.session.securityProvider;

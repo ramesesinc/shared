@@ -2,55 +2,9 @@
     
     <!-- this loader hooks to logout session -->
     <invokers>
-        <invoker type="xxxloader" caption="Logout" index="-900" action="init" permission="system" target="process" /> 
+        <invoker type="loader" index="-900" action="init" permission="system" target="process"/> 
     </invokers>
     
-    <code>
-    <![CDATA[
-        import com.rameses.platform.interfaces.*;
-        import com.rameses.rcp.common.*;
-        import com.rameses.osiris2.client.*;
-        import com.rameses.rcp.annotations.*;
-        import com.rameses.util.*;
-
-        public class LogoutController 
-        {
-            @Script("User")
-            def user;
-
-            public void init() 
-            {
-                def service = null;
-                if ( user.sessionId ) 
-                    service = InvokerProxy.instance.create("LogoutService"); 
-                
-                def handler = new LogoutHandler( service: service, user: user );
-                OsirisContext.mainWindowListener.add(handler);
-            }
-        }
-        
-
-        public class LogoutHandler implements MainWindowListener 
-        {
-            def service;
-            def user;
-
-            public Object onEvent(String eventName, Object evt) {
-                return null;
-            }
-
-            public boolean onClose() 
-            {
-                if ( MsgBox.confirm( "Are you sure you want to logout this application?") ) 
-                {
-                    if (service) service.logout( user.env );
-
-                    return true;
-                }
-                return false;
-            }
-        }
-    ]]>
-    </code>    
+    <code class="system.controller.LogoutController"/>
 
 </workunit>

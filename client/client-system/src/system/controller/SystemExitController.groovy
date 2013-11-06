@@ -13,56 +13,31 @@ public class SystemExitController
     def user;
     
     public void logoff() {
-        logoffUser();
-        def ctx = ClientContext.currentContext;
+        def ctx = ClientContext.currentContext; 
+        def handler = ctx.properties.logoutHandler; 
+        if (handler != null && !handler.confirmLogoff()) return; 
+        
         ctx.platform.logoff();
-        ctx.headers.clear();
+        ctx.headers.clear(); 
+        ctx.taskManager.stop();
     }
 
     public void restart() {
-        logoffUser();
-        def ctx = ClientContext.currentContext;
+        def ctx = ClientContext.currentContext; 
+        def handler = ctx.properties.logoutHandler; 
+        if (handler != null && !handler.confirmRestart()) return; 
+        
         ctx.platform.logoff();
-        ctx.headers.clear();
+        ctx.headers.clear(); 
+        ctx.taskManager.stop();
     }
 
     public def shutdown() {
-        logoffUser();
-        def ctx = ClientContext.currentContext;
-        ctx.platform.shutdown();
-        ctx.headers.clear();
-    }
-    
-    
-    private def handler;
-    
-    private void logoffUser() {
-        if (user.sessionId == null) return; 
+        def ctx = ClientContext.currentContext; 
+        def handler = ctx.properties.logoutHandler; 
+        if (handler != null && !handler.confirmExit()) return; 
         
-        if (handler == null) {
-            def service = InvokerProxy.instance.create("LogoutService"); 
-            handler = new LogoutHandler(service: service, user: user); 
-            OsirisContext.mainWindowListener.add(handler); 
-        } 
-    }
-}
-
-public class LogoutHandler implements MainWindowListener 
-{
-    def service;
-    def user;
-
-    public Object onEvent(String eventName, Object evt) {
-        return null;
-    }
-
-    public boolean onClose() 
-    {
-        if (MsgBox.confirm("Are you sure you want to logout this application?")) {
-            if (service) service.logout(user.env);
-
-            return true;
-        }
-        return false;
+        ctx.platform.shutdown();
+        ctx.headers.clear(); 
     }
 }
