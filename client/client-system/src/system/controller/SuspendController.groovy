@@ -9,11 +9,10 @@ import com.rameses.util.*;
 
 public class SuspendController 
 {
-    def pwd;
-
     @Script("User")
     def user;
-
+    
+    def pwd;
     boolean canclose;
 
     void init() {
@@ -25,10 +24,9 @@ public class SuspendController
         return canclose;
     }
 
-    def resetHandler;
-
+    def resetHandler;    
     public def resume() {
-        user.checkPwd( pwd );
+        user.checkPwd(pwd);
         ClientContext.currentContext.platform.unlock();
         if (resetHandler) resetHandler();
         
@@ -37,50 +35,23 @@ public class SuspendController
     }
 
     public void logoff() {
+        def ctx = ClientContext.currentContext; 
+        def handler = ctx.properties.logoutHandler; 
+        if (handler != null && !handler.confirmLogoff()) return; 
+        
         canclose = true;
-        logoffUser();
-        def ctx = ClientContext.currentContext;
         ctx.platform.logoff();
         ctx.headers.clear(); 
         ctx.taskManager.stop();
     }
 
     public void exit() {
-        canclose = true;
-        logoffUser();
-        def ctx = ClientContext.currentContext;
-        ctx.platform.shutdown();
-        ctx.headers.clear();        
-    }
-    
-    private def handler;    
-    private void logoffUser() {
-        if (user.sessionId == null) return; 
+        def ctx = ClientContext.currentContext; 
+        def handler = ctx.properties.logoutHandler; 
+        if (handler != null && !handler.confirmExit()) return; 
         
-        if (handler == null) {
-            def service = InvokerProxy.instance.create("LogoutService"); 
-            handler = new LogoutHandler(service: service, user: user); 
-            OsirisContext.mainWindowListener.add(handler); 
-        } 
-    }    
-}
-
-public class LogoutHandler implements MainWindowListener 
-{
-    def service;
-    def user;
-
-    public Object onEvent(String eventName, Object evt) {
-        return null;
-    }
-
-    public boolean onClose() 
-    {
-        if (MsgBox.confirm("Are you sure you want to logout this application?")) {
-            if (service) service.logout(user.env);
-
-            return true;
-        }
-        return false;
+        canclose = true;
+        ctx.platform.shutdown(); 
+        ctx.headers.clear(); 
     }
 }
