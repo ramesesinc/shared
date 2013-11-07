@@ -1,7 +1,7 @@
-"entity.liquidatingofficer|cashBreakdown:item.*" [ mode == 'read' ] {
+"cashBreakdown:item.*" [ mode == 'read' ] {
     enabled: false;
 }
 
-"entity.liquidatingofficer|cashBreakdown:item.qty" [ mode == 'create' ] {
+"cashBreakdown:item.qty" [ mode == 'create' ] {
     enabled: true;
 }

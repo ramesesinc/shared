@@ -34,7 +34,7 @@ public class RemittanceInitPage extends javax.swing.JPanel {
         formPanel2 = new com.rameses.rcp.util.FormPanel();
         xNumberField1 = new com.rameses.rcp.control.XNumberField();
         jPanel2 = new javax.swing.JPanel();
-        xFormPanel1 = new com.rameses.rcp.control.XFormPanel();
+        formPanel3 = new com.rameses.rcp.util.FormPanel();
         xLookupField1 = new com.rameses.rcp.control.XLookupField();
 
         setLayout(new java.awt.BorderLayout());
@@ -99,12 +99,12 @@ public class RemittanceInitPage extends javax.swing.JPanel {
                 , new Object[]{"nullWhenEmpty", true}
                 , new Object[]{"editable", false}
                 , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
-                , new Object[]{"typeHandler", new com.rameses.rcp.common.DecimalColumnHandler("#,##0.00", -1.0, -1.0, false)}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.DecimalColumnHandler("#,##0.00", -1.0, -1.0, false, 2)}
             })
         });
         xDataTable1.setHandler("listModel");
         jPanel1.add(xDataTable1);
-        xDataTable1.setBounds(14, 96, 540, 246);
+        xDataTable1.setBounds(10, 80, 560, 260);
 
         formPanel2.setCaptionFont(new java.awt.Font("Arial", 1, 14));
         xNumberField1.setCaption("Total");
@@ -118,39 +118,30 @@ public class RemittanceInitPage extends javax.swing.JPanel {
         formPanel2.add(xNumberField1);
 
         jPanel1.add(formPanel2);
-        formPanel2.setBounds(330, 350, 224, 44);
+        formPanel2.setBounds(350, 340, 224, 44);
+
+        jPanel2.setLayout(null);
 
         com.rameses.rcp.control.border.XTitledBorder xTitledBorder2 = new com.rameses.rcp.control.border.XTitledBorder();
-        xTitledBorder2.setTitle("Remittance Initial Information");
+        xTitledBorder2.setTitle("Remittance Information");
         jPanel2.setBorder(xTitledBorder2);
 
         xLookupField1.setCaption("Liquidating Officer");
-        xLookupField1.setCaptionWidth(150);
+        xLookupField1.setCaptionFont(new java.awt.Font("Arial", 0, 14));
+        xLookupField1.setCaptionWidth(140);
         xLookupField1.setExpression("#{item.name}");
+        xLookupField1.setFont(new java.awt.Font("Arial", 1, 14));
         xLookupField1.setHandler("liquidatingofficer:lookup");
         xLookupField1.setName("entity.liquidatingofficer");
-        xLookupField1.setPreferredSize(new java.awt.Dimension(0, 19));
+        xLookupField1.setPreferredSize(new java.awt.Dimension(0, 22));
         xLookupField1.setRequired(true);
-        xFormPanel1.add(xLookupField1);
+        formPanel3.add(xLookupField1);
 
-        org.jdesktop.layout.GroupLayout jPanel2Layout = new org.jdesktop.layout.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel2Layout.createSequentialGroup()
-                .add(20, 20, 20)
-                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 446, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(66, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 28, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        jPanel2.add(formPanel3);
+        formPanel3.setBounds(10, 20, 540, 40);
+
         jPanel1.add(jPanel2);
-        jPanel2.setBounds(14, 20, 536, 70);
+        jPanel2.setBounds(10, 10, 560, 70);
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
 
@@ -159,10 +150,10 @@ public class RemittanceInitPage extends javax.swing.JPanel {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.rameses.rcp.util.FormPanel formPanel2;
+    private com.rameses.rcp.util.FormPanel formPanel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private com.rameses.rcp.control.XDataTable xDataTable1;
-    private com.rameses.rcp.control.XFormPanel xFormPanel1;
     private com.rameses.rcp.control.XLookupField xLookupField1;
     private com.rameses.rcp.control.XNumberField xNumberField1;
     // End of variables declaration//GEN-END:variables
