@@ -79,7 +79,6 @@ public class UsergroupPage extends javax.swing.JPanel {
         xComboBox1.setItems("securityGroups");
         xComboBox1.setName("entity.securitygroupid");
         xComboBox1.setPreferredSize(new java.awt.Dimension(0, 22));
-        xComboBox1.setRequired(true);
         xFormPanel1.add(xComboBox1);
 
         xTextField1.setCaption("User Txn Code");
