@@ -13,7 +13,6 @@
         
         public class SystemInfoController
         {
-
             @Script("User")
             def user;
             
@@ -29,13 +28,14 @@
                 },
             
                 fetchList : {o->
-                    return user.env.collect{ [ key: it.key, value: it.value ] }; 
+                    def list = user.env.collect{ [key: it.key, value: it.value] }; 
+                    list.add([key:'Java Version', value:System.getProperty('java.version')]); 
+                    list.add([key:'Java Home', value:System.getProperty('java.home')]); 
+                    return list;
                 }
             ] as SubListModel;
             
             public void save() {}
-        
-            
         }
         ]]>
     </code>

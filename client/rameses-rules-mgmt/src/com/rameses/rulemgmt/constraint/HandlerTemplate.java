@@ -47,6 +47,7 @@ public class HandlerTemplate extends javax.swing.JPanel {
         xTextField1.setName("constraint.varname");
         xTextField1.setPreferredSize(new java.awt.Dimension(60, 20));
         xTextField1.setShowCaption(false);
+        xTextField1.setSpaceChar('_');
         xFormPanel1.add(xTextField1);
 
         add(xFormPanel1, java.awt.BorderLayout.WEST);
