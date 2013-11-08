@@ -1,0 +1,7 @@
+"entity.*" [ mode == 'open' ] {
+    enabled: false;
+}
+
+"entity.*" [ mode != 'open' ] {
+    enabled: true;
+}

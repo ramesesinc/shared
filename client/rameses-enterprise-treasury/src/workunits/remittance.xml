@@ -7,6 +7,7 @@
             
          <invoker type="formActions" caption="Close" name="_close" immediate="true" mnemonic="c" shortcut="ctrl C" icon="images/toolbars/cancel.png"/>
          <invoker type="formActions" caption="Next" name="start" visibleWhen="#{mode == 'initial'}" mnemonic="n" shortcut="ctrl N"/>
+         <invoker type="formActions" caption="Back" name="back" visibleWhen="#{mode == 'create'}" mnemonic="b" shortcut="ctrl B"/>
          <invoker type="formActions" caption="Submit" name="submit" visibleWhen="#{mode == 'create' }" mnemonic="s" shortcut="ctrl S" icon="images/toolbars/save.png"/>
          
          <invoker type="formActions" caption="Reports" name="popupReports"   
@@ -52,24 +53,34 @@
                 return popupMenu;
             }
             
-            void create() {
-                mode = "create";
-                entity = service.init();
+            def start() {
                 entity.cashbreakdown = [];
                 cashBreakdown = InvokerUtil.lookupOpener("cash:breakdown", [
                     entries: entity.cashbreakdown, onupdate: { o->
                         breakdown = o;
                         total = entity.totalnoncash+breakdown;
                         binding.refresh("breakdown|total");
-                    }] );                
+                    }] );      
+                mode = "create";    
+                return "main"
             }
             
-            void open(){
+            void create() {
+                mode = "initial";
+                entity = service.init();        
+            }
+            
+            def back() {
+                return "default"
+            }
+            
+            def open(){
                 mode = "read";
                 entity = service.open(entity);
                 cashBreakdown = InvokerUtil.lookupOpener("cash:breakdown", [entries: entity.cashbreakdown] );    
                 total = entity.totalcash + entity.totalnoncash;
                 breakdown = entity.cashbreakdown.sum{it.amount};
+                return "main"
             }
             
             def listModel = [
@@ -102,7 +113,8 @@
    </code>
    
    <pages>
-       <page name="default" template="com.rameses.enterprise.treasury.remittance.RemittancePage" />
+       <page template="com.rameses.enterprise.treasury.remittance.RemittanceInitPage" />
+       <page name="main" template="com.rameses.enterprise.treasury.remittance.RemittancePage" />
    </pages>
    
 </workunit>
