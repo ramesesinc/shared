@@ -34,7 +34,7 @@
             String title = "Fact";
             
             def handlerTypes = [
-                "lov", "lookup", "var", "decimal", "integer", "string", "boolean"
+                "lov", "lookup", "var", "decimal", "integer", "string", "boolean","date"
             ]
             
             @PropertyChangeListener
@@ -53,10 +53,14 @@
                             field.vardatatype = "string";
                             field.datatype = "string";
                             break;
-                         case "boolean" : 
+                        case "boolean" : 
                             field.vardatatype = "boolean";
                             field.datatype = "boolean";
                             break;   
+                        case "date" : 
+                            field.vardatatype = "date";
+                            field.datatype = "date";
+                            break;                               
                         default:
                             field.vardatatype = "string";
                             field.datatype = "string";
@@ -157,5 +161,6 @@
         <page name="lov" template="com.rameses.rulemgmt.developer.FactFieldLOV"/>
         <page name="string" template="com.rameses.rulemgmt.developer.FactFieldDefault"/>
         <page name="boolean" template="com.rameses.rulemgmt.developer.FactFieldDefault"/>
+        <page name="date" template="com.rameses.rulemgmt.developer.FactFieldDefault"/>
     </pages>
 </workunit>

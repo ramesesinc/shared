@@ -30,6 +30,7 @@ public class StringHandler extends javax.swing.JPanel {
         xTextField1 = new com.rameses.rcp.control.XTextField();
 
         xTextField1.setName("actionParam.stringvalue");
+        xTextField1.setTextCase(com.rameses.rcp.constant.TextCase.NONE);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
