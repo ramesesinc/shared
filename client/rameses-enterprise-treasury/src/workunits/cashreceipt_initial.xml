@@ -6,7 +6,7 @@
          <invoker folderid="/menu/txn/treasury" caption="Cash Receipt" action="init" index="10" role="COLLECTOR,SUBCOLLECTOR"/>
          
          <!-- self toolbars -->
-         <invoker type="formActions" caption="Next" action="runProcess" shortcut="ctrl N" mnemonic="n"/>
+         <invoker type="formActions" caption="Next" action="runProcess" shortcut="ctrl N" mnemonic="n" icon="images/toolbars/arrow_right.png"/>
    </invokers>
    
    <code>
