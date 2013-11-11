@@ -3,7 +3,7 @@
    <invokers>
          <invoker type="subcollector_remittance:create" caption="SubCollector Remittance" action="create" target="window"/>
          <invoker type="quick_launcher" code="REM" caption="SubCollector  Remittance" action="create" target="window"/>
-         <invoker type="subcollector_remittancex:open" caption="SubCollector Remittance (Open)" action="open" target="window"/>
+         <invoker type="subcollector_remittance:open" caption="SubCollector Remittance (Open)" action="open" target="window"/>
             
          <invoker type="formActions" caption="Close" name="_close"  />
          <invoker type="formActions" caption="Submit" name="submit" visibleWhen="#{mode == 'create'}"/>
@@ -38,8 +38,10 @@
             }
             
             void open() {
-                mode='open'
-                entity = service.open( entity)
+                mode = 'open'
+                collectorList = [ entity.collector ]
+                entity.items = service.getItems(entity )
+                listModel.reload()
             }
             
             @PropertyChangeListener
@@ -57,13 +59,20 @@
                 }
             ] as BasicListModel;
             
-            def submit() {
+            
+            
+            void submit() {
                 if(MsgBox.confirm("You are about to remit this transaction. Proceed?")) {
                     entity = service.post(entity);
                     MsgBox.alert("Remittance successful. Remittance no is " + entity.txnno );
                     mode='open'
-                    return "_close";
                 }
+            }
+            
+            def viewCheckPayment() {
+                if(! entity.collector) throw new Exception("Please select a collector.  ");
+            
+                return InvokerUtil.lookupOpener('subcollector_remittance:noncash', [mode:mode, remittanceid: entity.objid, collectorid:entity.collector.objid] )
             }
         }      
        ]]>

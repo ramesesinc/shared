@@ -67,6 +67,9 @@ def actpath = "templates/html/action_param_";
                                             case "var":
                                                  out.print( cons.var.name );
                                                  break;
+                                            case "date":
+                                                 out.print( "'" + cons.datevalue + "'" );
+                                                 break;
                                             default:
                                                 out.print( "'" + cons.stringvalue + "'" );
                                         }
