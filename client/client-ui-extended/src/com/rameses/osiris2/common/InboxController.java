@@ -85,6 +85,12 @@ public class InboxController extends ListController
         
         return wudynamicColumns.booleanValue();
     }
+    
+    public boolean isAutoSelect() {
+        if (wuautoSelect == null) return true; 
+        
+        return wuautoSelect.booleanValue(); 
+    }
 
     public int getRows() { return 20; } 
     public List getFormActions() 
@@ -158,6 +164,10 @@ public class InboxController extends ListController
         public boolean isRootVisible() { 
             return root.isRootVisible(); 
         } 
+
+        public boolean isAutoSelect() {
+            return root.isAutoSelect(); 
+        }
         
         public String getIcon() { 
             String icon = root.getIcon();
@@ -688,6 +698,7 @@ public class InboxController extends ListController
     private String wuserviceName;
     private String wuentityName;
     private Boolean wudynamicColumns;
+    private Boolean wuautoSelect;
     
     protected void handleWorkunitProperties(Map props) {
         if (props == null) return;
@@ -698,6 +709,7 @@ public class InboxController extends ListController
         wuserviceName = getString(props, "serviceName");
         wuentityName = getString(props, "entityName");
         wudynamicColumns = getBoolean(props, "dynamicColumns"); 
+        wuautoSelect = getBoolean(props, "autoSelect"); 
     }
     
     // </editor-fold>
