@@ -9,9 +9,9 @@
          <invoker type="formActions" caption="Next" name="start" visibleWhen="#{mode == 'initial'}" mnemonic="n" shortcut="ctrl N" icon="images/toolbars/arrow_right.png"/>
          <invoker type="formActions" caption="Back" name="back" visibleWhen="#{mode == 'create'}" mnemonic="b" shortcut="ctrl B" icon="images/toolbars/arrow_left.png"/>
          <invoker type="formActions" caption="Submit" name="submit" visibleWhen="#{mode == 'create' }" mnemonic="s" shortcut="ctrl S" icon="images/toolbars/save.png"/>
+         <invoker type="formActions" caption="Reports" name="popupReports" visibleWhen="#{mode == 'read' }" category="remittance:reports" />
+         <invoker type="formActions" caption="Export" name="doExport" visibleWhen="#{mode == 'read' }" mnemonic="e" index="100"/>
          
-         <invoker type="formActions" caption="Reports" name="popupReports"   
-            visibleWhen="#{mode == 'read' }" category="remittance:reports" />
      </invokers>
    
    <code>
@@ -22,6 +22,8 @@
         import java.rmi.server.*;
         import com.rameses.osiris2.client.*;
         import com.rameses.util.*;
+        import javax.swing.*
+        import com.rameses.io.*
         
         class RemittanceController {
         
@@ -30,6 +32,9 @@
             
             @Service("RemittanceService")
             def service;
+            
+            @Service("RemittanceImportExportService")
+            def exportSvc;
         
             String title = "Remittance";
             
@@ -107,6 +112,17 @@
                     entity = o;
                     MsgBox.alert("Posting successful");
                 }
+            }
+            
+            
+            void doExport(){
+                def chooser = new JFileChooser();
+                chooser.setSelectedFile(new File(entity.txnno + '.rem'));
+                int i = chooser.showSaveDialog(null);
+                if(i==0) {
+                    FileUtil.writeObject( chooser.selectedFile, exportSvc.exportRemittance(entity.objid) );
+                    MsgBox.alert("Remittance has been successfully exported!");
+                }   
             }
             
         }      
