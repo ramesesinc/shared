@@ -35,7 +35,9 @@ public abstract class ListController extends BasicListController implements Page
        
     // <editor-fold defaultstate="collapsed" desc=" Getter/Setter ">        
             
-    public String getTag() { return tag; } 
+    public String getTag() { 
+        return (wutag == null? tag: wutag); 
+    } 
     public void setTag(String tag) { 
         this.tag = tag; 
     } 
@@ -341,6 +343,7 @@ public abstract class ListController extends BasicListController implements Page
     protected String wuserviceName;    
     private String wuformName;
     private String wuformTarget = "popup";    
+    private String wutag;
     private Integer wurows;
     private Boolean wuallowClose;
     private Boolean wuallowCreate;
@@ -366,7 +369,7 @@ public abstract class ListController extends BasicListController implements Page
             wuformTarget = "popup"; 
         }
         
-        setTag(getString(props, "tag")); 
+        wutag = getString(props, "tag"); 
         wuallowColumnEditing = getBoolean(props, "allowColumnEditing");
     }
     
