@@ -185,6 +185,8 @@ public abstract class ListController extends BasicListController implements Page
         return opener;
     }
     
+    protected String getEntityName(Map data) { return null; } 
+    
     public Object open() throws Exception 
     {
         Map data = (Map) getSelectedEntity(); 
@@ -195,7 +197,9 @@ public abstract class ListController extends BasicListController implements Page
         if (filetype != null && filetype.length() > 0) { 
             params.put("listModelHandler", new ListModelHandlerProxy()); 
         } else {
-            filetype = getEntityName();
+            filetype = getEntityName(); 
+            String en = getEntityName(data); 
+            if (en != null && en.length() > 0) filetype = en;
         }
         
         params.put("entity", data); 
@@ -203,7 +207,8 @@ public abstract class ListController extends BasicListController implements Page
         
         Opener opener = null; 
         try {
-            opener = InvokerUtil.lookupOpener(filetype+":open", params);
+            String invtype = filetype + ":open";
+            opener = InvokerUtil.lookupOpener(invtype.toLowerCase(), params);
         } catch(Throwable t) {
             System.out.println("[WARN] error lookup opener caused by " + t.getMessage());
             MsgBox.alert("No access privilege for this item. Please contact your administrator.");            
