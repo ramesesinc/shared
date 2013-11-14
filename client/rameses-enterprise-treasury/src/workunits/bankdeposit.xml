@@ -7,7 +7,7 @@
          <invoker type="bankdeposit:open" caption="Bank Deposit (Open)" action="open" target="window"/>
          
          <invoker type="formActions" caption="Close" name="_close"  icon="images/toolbars/cancel.png" mnemonic="c" shortcut="ctrl C"/>
-         <invoker type="formActions" caption="Next" name="start" visibleWhen="#{state == 'initial'}" mnemonic="n" shortcut="ctrl N"/>
+         <invoker type="formActions" caption="Next" name="start" visibleWhen="#{state == 'initial'}" mnemonic="n" shortcut="ctrl N" icon="images/toolbars/arrow_right.png"/>
          <invoker type="formActions" caption="Submit" name="submit" visibleWhen="#{state == 'processing'}" icon="images/toolbars/save.png" mnemonic="s" shortcut="ctrl S"/>
          
          
