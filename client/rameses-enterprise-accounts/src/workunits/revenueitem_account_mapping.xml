@@ -1,8 +1,8 @@
 <workunit extends="wtemplates/ListController.xml">
     <invokers>
-        <invoker type="revenueitem-list:formActions" caption="Account Mapping View" srole="MASTER_ENCODER"/>
+        <invoker type="revenueitem-list:formActions" caption="Account Mapping View" srole="MASTER_ENCODER" />
         
-        <invoker type="formActions" caption="Back" action="_close"/>
+        <invoker type="formActions" caption="Back" action="_close" icon="images/toolbars/arrow_left.png"/>
    </invokers>
    <code>
        <![CDATA[
@@ -18,6 +18,8 @@
             
             String title = "Revenue Account Mapping";
         
+            def queryForm = new Opener(outcome:"queryform")
+            
             def query = [:];
             def selectedEntity;
             def formActions;    
@@ -29,7 +31,7 @@
                     return columns
                 },
                 fetchList: { o->
-                    return service.getList(o);
+                    return service.getList(query);
                 },
                 onColumnUpdate: { o,col->
                     if( !o[col] ) {
@@ -38,8 +40,16 @@
                         def m = [segment: col, objid:selectedEntity.objid, acctid:null ];
                         service.addSegment( m );
                     }
+                    if( col == 'code') {
+                        service.updateRevenueItemCode( o )
+                    }
                 }
             ] as EditorListModel             
+            
+            void search() {
+                listHandler.reload();
+            }
+            
             
             def getLookupSegment() {
                 String name = listHandler.getSelectedColumn();
