@@ -43,7 +43,6 @@
                     ClientContext.currentContext.taskManager.addTask(task);
                     return '_close'; 
                 } catch(e) { 
-                    e.printStackTrace();
                     MsgBox.err('No appropriate handler found for this particular barcode. [global:barcode:'+prefixid+']-> '+ barcodeid);
                     return null; 
                 } 
