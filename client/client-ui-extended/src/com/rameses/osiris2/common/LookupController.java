@@ -276,27 +276,33 @@ public abstract class LookupController extends LookupModel
     {
         LookupController root = LookupController.this;
         
-        public void select(Object o) {
-            invokeCallbackHandler(root.getOnselect(), o);
-                        
+        public Object select(Object o) {
+            Object outcome = invokeCallbackHandler(root.getOnselect(), o);
+            if (outcome == null || "_close".equals(outcome)) return "_close"; 
+            
             Object callerHandler = root.getHandler();
             if (callerHandler != null) invokeCallbackHandler(callerHandler, o);
+            
+            return null; 
         } 
 
         public void cancelSelection() {
         }
         
-        private void invokeCallbackHandler(Object callback, Object item)
+        private Object invokeCallbackHandler(Object callback, Object item)
         {
-            if (callback == null) return;
+            if (callback == null) return null;
 
             Method method = null;         
             Class clazz = callback.getClass();
             try { method = clazz.getMethod("call", new Class[]{Object.class}); }catch(Exception ign){;} 
 
             try {
-                if (method != null) 
-                    method.invoke(callback, new Object[]{item}); 
+                if (method != null) { 
+                    return method.invoke(callback, new Object[]{item}); 
+                } else {
+                    return null; 
+                }
             } catch(RuntimeException re) {
                 throw re;
             } catch(Exception ex) {

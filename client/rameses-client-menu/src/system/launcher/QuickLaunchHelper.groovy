@@ -42,7 +42,7 @@ public class QuickLaunchHelper
         if( inv ) 
             InvokerUtil.invoke( inv );
         else
-            MsgBox.alert("Lancher key not available.");
+            MsgBox.alert("Launcher key not available.");
     }
 
     /**
