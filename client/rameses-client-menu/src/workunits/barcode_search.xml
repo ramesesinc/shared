@@ -1,8 +1,11 @@
 <workunit>
     <invokers>
         <invoker type="toolbar" icon="images/toolbars/barcode.png" caption="" 
-            tooltip="Barcode Search" index="-17" permission="system" action="init" 
-            target="popup" windowmode="glasspane"/> 
+            action="init" target="popup" permission="system" windowmode="glasspane" 
+            tooltip="Barcode Search" index="-17"/> 
+            
+        <invoker type="barcode" icon="images/toolbars/barcode.png" caption="Barcode" 
+            action="init" target="popup" permission="system" windowmode="glasspane"/>
     </invokers>
     
     <code>
@@ -10,12 +13,17 @@
         import com.rameses.rcp.common.*;
         import com.rameses.rcp.annotations.*;
         import com.rameses.osiris2.client.*;
+        import com.rameses.rcp.framework.ClientContext;
         
-        public class BarcodeSearchController 
+        class BarcodeSearchController 
         { 
+            @Binding
+            def binding;
+            
             @FormTitle
             def formTitle = "Barcode Search"; 
         
+            def prefix;
             String barcode;
             
             void init() { 
@@ -25,13 +33,18 @@
             def search() {                 
                 if (barcode == null || barcode.length() <= 5) return null; 
                 
-                def prefix = barcode.substring(0,5); 
-                def id = barcode.substring(6);
-                try {
-                    return InvokerUtil.lookupOpener("global:barcode:"+prefix, [barcodeid: id]);
+                def prefixid = barcode.substring(0,5); 
+                def barcodeid = barcode.substring(6);
+                if (prefix != null) prefixid = prefix;
+                
+                try { 
+                    def invoker = InvokerUtil.lookup('global:barcode:'+ prefixid)[0]; 
+                    def task = new OpenerTask(binding, invoker, barcodeid);
+                    ClientContext.currentContext.taskManager.addTask(task);
+                    return '_close'; 
                 } catch(e) { 
-                    MsgBox.err('No appropriate handler found for this particular barcode. [global:barcode:'+prefix+']-> '+ id);
-                    return null;
+                    MsgBox.err('No appropriate handler found for this particular barcode. [global:barcode:'+prefixid+']-> '+ barcodeid);
+                    return null; 
                 } 
             } 
             
@@ -39,6 +52,31 @@
                 return '_close';
             } 
         }
+        
+        class OpenerTask extends Task 
+        {
+            def binding;
+            def invoker;
+            def barcodeid;
+            
+            OpenerTask(def binding, def invoker, def barcodeid) {
+                this.binding = binding;
+                this.invoker = invoker;
+                this.barcodeid = barcodeid;
+            } 
+        
+            boolean accept() { return true; } 
+            
+            void execute() { 
+                def runnable = [
+                    run: {
+                        InvokerUtil.invoke(invoker, [barcodeid: barcodeid]); 
+                    } 
+                ] as Runnable;
+                
+                java.awt.EventQueue.invokeLater(runnable); 
+            } 
+        } 
     ]]>
     </code>
     
