@@ -1,0 +1,49 @@
+<workunit>
+    <invokers>
+        <invoker type="toolbar" icon="images/toolbars/barcode.png" caption="" 
+            tooltip="Barcode Search" index="-17" permission="system" action="init" 
+            target="popup" windowmode="glasspane"/> 
+    </invokers>
+    
+    <code>
+    <![CDATA[    
+        import com.rameses.rcp.common.*;
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.osiris2.client.*;
+        
+        public class BarcodeSearchController 
+        { 
+            @FormTitle
+            def formTitle = "Barcode Search"; 
+        
+            String barcode;
+            
+            void init() { 
+                barcode = null; 
+            }
+            
+            def search() {                 
+                if (barcode == null || barcode.length() <= 5) return null; 
+                
+                def prefix = barcode.substring(0,5); 
+                def id = barcode.substring(6);
+                try {
+                    return InvokerUtil.lookupOpener("global:barcode:"+prefix, [barcodeid: id]);
+                } catch(e) { 
+                    MsgBox.err('No appropriate handler found for this particular barcode. [global:barcode:'+prefix+']-> '+ id);
+                    return null;
+                } 
+            } 
+            
+            def cancel() {
+                return '_close';
+            } 
+        }
+    ]]>
+    </code>
+    
+    <pages>
+        <page template="system.tools.ui.BarcodeSearchPage"/> 
+    </pages>
+    
+</workunit>
