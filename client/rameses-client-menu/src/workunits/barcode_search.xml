@@ -1,11 +1,11 @@
 <workunit>
     <invokers>
         <invoker type="toolbar" icon="images/toolbars/barcode_global.png" caption="" 
-            action="init" target="popup" permission="system" windowmode="glasspane" 
+            action="init" target="window" permission="system" windowmode="glasspane" 
             tooltip="Barcode Search" index="-17"/> 
             
         <invoker type="barcode" icon="images/toolbars/barcode.png" caption="Barcode" 
-            action="init" target="popup" permission="system" windowmode="glasspane"/>
+            action="init" target="window" permission="system" windowmode="glasspane"/>
     </invokers>
     
     <code>

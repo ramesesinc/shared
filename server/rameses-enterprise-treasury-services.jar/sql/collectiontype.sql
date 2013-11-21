@@ -37,3 +37,6 @@ select * from afserial
 
 [getFormTypesCashticket]
 select * from cashticket
+
+[findCollectionTypeByBarcode]
+SELECT * FROM collectiontype WHERE barcodekey=$P{barcode}
