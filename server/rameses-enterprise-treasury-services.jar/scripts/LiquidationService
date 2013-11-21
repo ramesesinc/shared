@@ -68,7 +68,6 @@ class LiquidationService  {
 
 		//update cashbook to add new entry
 		o.fundsummary.each {
-				println  "it-> " + it
 				it.objid = "LIQFUND"+new UID();
 				it.liquidationid = o.objid;
 				em.create( it, "cashier_fund");
