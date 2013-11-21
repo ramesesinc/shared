@@ -57,7 +57,7 @@ public abstract class AbstractCashReceipt {
                 entity.balancedue = amt - entity.totalcash;
             }
         }
-        binding.refresh('entity.(amount|totalcash|totalnoncash|totalcredit|balancedue|cashchange)');
+        if(binding) binding.refresh('entity.(amount|totalcash|totalnoncash|totalcredit|balancedue|cashchange)');
     }
 
     def paymentListModel = [
@@ -92,7 +92,7 @@ public abstract class AbstractCashReceipt {
             [entity: entity, saveHandler: handler ] );
     }
 
-    public void payerChanged( o ) {
+    public def payerChanged( o ) {
         //for overrides
     }
 
@@ -103,7 +103,11 @@ public abstract class AbstractCashReceipt {
                 entity.paidby = o.name;
                 entity.paidbyaddress = o.address;
                 binding.refresh("entity.(payer.*|paidby.*)");
-                payerChanged( o );
+                def opener = payerChanged( o );
+                if( opener != null ) 
+                    return opener;
+                else        
+                    return "_close";
             }
         ]);
     }

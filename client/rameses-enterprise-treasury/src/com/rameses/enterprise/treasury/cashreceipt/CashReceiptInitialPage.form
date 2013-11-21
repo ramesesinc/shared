@@ -102,6 +102,7 @@
             </Component>
             <Component class="com.rameses.rcp.control.XComboBox" name="xComboBox3">
               <Properties>
+                <Property name="allowNull" type="boolean" value="false"/>
                 <Property name="caption" type="java.lang.String" value="Mode"/>
                 <Property name="expression" type="java.lang.String" value="#{item.caption}"/>
                 <Property name="items" type="java.lang.String" value="modeOpeners"/>

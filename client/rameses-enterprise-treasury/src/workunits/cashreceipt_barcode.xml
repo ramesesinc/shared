@@ -16,7 +16,7 @@
                 def p = MsgBox.prompt("Enter barcode");
                 if( p == null || p.toString().length() <= 5 ) return;
                 def prefix = p.substring(0,5); 
-                def barcodeid = p.substring(5);
+                def barcodeid = p.substring(6);
                 try {
                     return InvokerUtil.lookupOpener( "cashreceipt:barcode:"+prefix, [barcodeid: barcodeid]);
                 }
