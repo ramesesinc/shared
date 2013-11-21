@@ -58,6 +58,7 @@ public class CashReceiptInitialPage extends javax.swing.JPanel {
         xComboBox2.setRequired(true);
         xFormPanel1.add(xComboBox2);
 
+        xComboBox3.setAllowNull(false);
         xComboBox3.setCaption("Mode");
         xComboBox3.setExpression("#{item.caption}");
         xComboBox3.setItems("modeOpeners");

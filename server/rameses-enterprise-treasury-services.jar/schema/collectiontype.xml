@@ -7,6 +7,7 @@
 		<field name="title" required="true"/>
 		<field name="formno" required="true"/>
 		<field name="handler" required="true"/>
+		<field name="barcodekey" />
 	</element>
 
 </schema>
