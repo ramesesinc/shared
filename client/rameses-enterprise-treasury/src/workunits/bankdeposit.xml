@@ -23,6 +23,7 @@
         import java.rmi.server.*;
         import com.rameses.osiris2.client.*;
         import com.rameses.util.*;
+        import com.rameses.osiris2.reports.*;
         
         class BankDepositController {
         
@@ -34,6 +35,9 @@
             @Service("BankDepositService")
             def service;
         
+            @Service("NumberService")
+            def numSvc; 
+            
             String title = "New Bank Deposit (Initial)";
             def entity;
             
@@ -142,6 +146,89 @@
                 }
                 return null;
             }
+            
+            def depositslippath = "com/rameses/enterprise/treasury/bankdeposit/"
+            
+            void printCashDepositSlip() {
+                if( selectedDeposit.totalcash == 0.0 ) throw new Exception('There is no cash for deposit.')
+            
+                def reportname = depositslippath + "cash.jasper" 
+                if( selectedDeposit.bank.code ) {
+                    def file = depositslippath + "cash" + selectedDeposit.bank.code.toString().toLowerCase() + ".jasper"
+                    URL u = getClass().getClassLoader().getResource(file);
+                    if (u != null) reportname = file;
+                }
+                
+                def reportdata = [
+                    txndate: entity.dtposted, 
+                    bankacctname: selectedDeposit.bankaccount.title, 
+                    bankacctno: selectedDeposit.bankaccount.code, 
+                    branchname :selectedDeposit.branchname,
+                    depositedbyname: entity.cashier.name,
+                    cash : selectedDeposit.totalcash,
+                    denominations: selectedDeposit.cashbreakdown,
+                    accttype : selectedDeposit.accttype,
+                    amountinwords: numSvc.doubleToWords( selectedDeposit.totalcash ).toUpperCase()
+                ]
+                
+                def report = [
+                    getReportName : { return reportname },
+                    getReportData : { return reportdata }
+                ] as ReportModel
+                report.viewReport()
+                ReportUtil.print( report.report, true )
+            }
+            
+            void printCashBreakdown() {
+                if( selectedDeposit.totalcash == 0.0 ) throw new Exception('There is no cash for deposit.')
+            
+                def report = [
+                    getReportName : { return  depositslippath + "cashbreakdownitem.jasper"  },
+                    getReportData : { return selectedDeposit.cashbreakdown }
+                ] as ReportModel
+                report.viewReport()
+                ReportUtil.print( report.report, true )
+            }
+            
+            void printCheckDepositSlip() {
+                if(! selectedDeposit.checks) throw new Exception("There are no checks for deposit.")
+                    
+            
+                def reportname = depositslippath + "check.jasper" 
+                def subreport =  depositslippath + "checkbreakdownitem.jasper" 
+                if( selectedDeposit.bank.code ) {
+                    def file = depositslippath + "check" + selectedDeposit.bank.code.toString().toLowerCase() + ".jasper"
+                    URL u = getClass().getClassLoader().getResource(file);
+                    if (u != null) reportname = file;
+                    
+                    def sub2 = depositslippath + "checkbreakdownitem" + selectedDeposit.bank.code.toString().toLowerCase() + ".jasper"
+                    u = getClass().getClassLoader().getResource(sub2);
+                    if (u != null) subreport = sub2;
+                } 
+                def reportdata = [
+                    txndate: entity.dtposted, 
+                    bankacctname: selectedDeposit.bankaccount.title, 
+                    bankacctno: selectedDeposit.bankaccount.code, 
+                    branchname :selectedDeposit.branchname,
+                    depositedbyname: entity.cashier.name,
+                    noncash : selectedDeposit.totalnoncash,
+                    noncashpayments : selectedDeposit.checks,
+                    amountinwords: numSvc.doubleToWords( selectedDeposit.totalnoncash ).toUpperCase()
+               ]
+               
+               def report = [
+                    getReportName : { return reportname },
+                    getReportData : { return reportdata }, 
+                    getSubReports : {
+                        return [
+                            new SubReport("checkbreakdownitem", subreport)
+                        ] as SubReport[]
+                    }
+                ] as ReportModel
+                report.viewReport()
+                ReportUtil.print( report.report, true ) 
+            }
+            
             
         }      
        ]]>

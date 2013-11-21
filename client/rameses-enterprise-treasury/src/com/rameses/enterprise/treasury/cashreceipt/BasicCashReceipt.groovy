@@ -16,6 +16,7 @@ public class BasicCashReceipt extends AbstractCashReceipt {
             return entity.items;
         },
         onAddItem: {o-> 
+            o.objid = 'RCTI' + new java.rmi.server.UID();
             entity.items << o;
             entity.amount += o.amount;
             updateBalances();

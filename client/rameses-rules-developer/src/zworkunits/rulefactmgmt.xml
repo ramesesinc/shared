@@ -1,6 +1,0 @@
-<workunit extends="wtemplates/ListController.xml" serviceName="RuleFactDevService" 
-    entityName="rulefactdef" formTarget="popup">
-    <invokers>
-        <invoker type="ruleelement:list" caption="Facts" index="2"/>
-    </invokers>
-</workunit>

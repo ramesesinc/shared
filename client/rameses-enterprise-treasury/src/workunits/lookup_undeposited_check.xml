@@ -1,4 +1,4 @@
-<workunit extends="wtemplates/LookupController.xml">
+<workunit >
     <invokers>
         <invoker type="undepositedcheck:lookup" caption="Lookup Checks" target="popup"/>
     </invokers>
@@ -12,25 +12,53 @@
         import com.rameses.util.*;
         import com.rameses.osiris2.reports.*;
         
-        class UndepositedCheckLookupController extends LookupController {
+        class UndepositedCheckLookupController  {
+        
+            @Binding 
+            def binding 
         
             def undepositedChecks;
             
-            boolean multiSelect = true;
+            def onselect 
+            def totalamount = 0.0
             
-            public List getColumnList() {
-                return [
-                    [name:'checkno', caption:'Check No', width:80],
-                    [name:'particulars', caption:'Particulars'],
-                    [name:'amount', caption:'Amount', type:'decimal', width:80],
-                ]
+            def checkModel = [
+                fetchList: { o-> return undepositedChecks },
+                onColumnUpdate: {item, colname-> 
+                    if (colname == 'selected'){
+                        if( item.selected == true) {
+                            totalamount += item.amount
+                        } else {
+                            totalamount -= item.amount
+                        }
+                        binding.refresh("totalamount")
+                    }
+                        
+                }
+            ] as EditorListModel;
+            
+            def select() {
+                if( onselect) onselect( undepositedChecks.findAll{it.selected == true } )
+                return "_close" 
             }
             
-            public List fetchList( Map m ) {
-                return undepositedChecks;
+            def deselectAll() {
+                undepositedChecks.each{ it.selected = false } 
+                totalamount= 0.0 
+                binding.refresh("totalamount") 
             }
+            
+            def selectAll() {
+                undepositedChecks.each{ it.selected = true } 
+                totalamount = undepositedChecks.amount.sum() 
+                binding.refresh("totalamount") 
+            }
+            
             
         }      
        ]]>
     </code>
+    <pages>
+        <page template="com.rameses.enterprise.treasury.bankdeposit.BankDepositCheckLookupPage"/>
+    </pages>
 </workunit>
