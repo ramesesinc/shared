@@ -43,20 +43,30 @@ INNER JOIN liquidation_cashier_fund lcf ON lr.liquidationid=lr.liquidationid
 INNER JOIN liquidation l ON lcf.liquidationid=l.objid 
 INNER JOIN liquidation_checkpayment lc ON lc.liquidationid=lr.liquidationid
 INNER JOIN cashreceiptpayment_check crp ON crp.objid=lc.objid
+LEFT JOIN bankdeposit_entry_check bec on bec.objid = crp.objid
 LEFT JOIN cashreceipt_void cv ON crp.receiptid = cv.receiptid 
 WHERE lcf.cashier_objid=$P{cashierid}
 	AND state = 'OPEN'
+	and bec.objid is null 
 AND cv.objid IS NULL 
 
 [getDepositSummaries]
-SELECT  be.*,
-	ba.fund_objid,
-	ba.fund_code,
-	ba.fund_title
+SELECT 
+	 be.*,ba.fund_objid, ba.fund_code, ba.fund_title,
+	 ba.bank_code, ba.bank_name, ba.bank_objid, b.branchname, ba.accttype   
 FROM bankdeposit_entry be
 	INNER JOIN bankaccount ba ON be.bankaccount_objid = ba.objid
+	left join bank b on b.objid = ba.bank_objid 
 WHERE be.parentid = $P{objid}
 ORDER BY ba.fund_title 
+
+[getDepositedChecks]
+select 
+	crp.* 
+from bankdeposit_entry_check bec
+  inner join cashreceiptpayment_check crp on crp.objid = bec.objid 
+where bec.parentid=$P{objid} 
+
 
 [getFundSummaries]
 SELECT a.fund_objid,
