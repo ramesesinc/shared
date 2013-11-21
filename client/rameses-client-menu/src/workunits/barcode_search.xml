@@ -1,6 +1,6 @@
 <workunit>
     <invokers>
-        <invoker type="toolbar" icon="images/toolbars/barcode.png" caption="" 
+        <invoker type="toolbar" icon="images/toolbars/barcode_global.png" caption="" 
             action="init" target="popup" permission="system" windowmode="glasspane" 
             tooltip="Barcode Search" index="-17"/> 
             
@@ -13,7 +13,6 @@
         import com.rameses.rcp.common.*;
         import com.rameses.rcp.annotations.*;
         import com.rameses.osiris2.client.*;
-        import com.rameses.rcp.framework.ClientContext;
         
         class BarcodeSearchController 
         { 
@@ -36,12 +35,11 @@
                 def prefixid = barcode.substring(0,5); 
                 def barcodeid = barcode.substring(6);
                 if (prefix != null) prefixid = prefix;
-                
+
                 try { 
-                    def invoker = InvokerUtil.lookup('global:barcode:'+ prefixid)[0]; 
-                    def task = new OpenerTask(binding, invoker, barcodeid);
-                    ClientContext.currentContext.taskManager.addTask(task);
-                    return '_close'; 
+                    def opener = InvokerUtil.lookupOpener('global:barcode:'+ prefixid, [barcodeid: barcodeid]); 
+                    opener.properties.closeBehindOnStart = true;
+                    return opener;
                 } catch(e) { 
                     MsgBox.err('No appropriate handler found for this particular barcode. [global:barcode:'+prefixid+']-> '+ barcodeid);
                     return null; 
@@ -52,31 +50,6 @@
                 return '_close';
             } 
         }
-        
-        class OpenerTask extends Task 
-        {
-            def binding;
-            def invoker;
-            def barcodeid;
-            
-            OpenerTask(def binding, def invoker, def barcodeid) {
-                this.binding = binding;
-                this.invoker = invoker;
-                this.barcodeid = barcodeid;
-            } 
-        
-            boolean accept() { return true; } 
-            
-            void execute() { 
-                def runnable = [
-                    run: {
-                        InvokerUtil.invoke(invoker, [barcodeid: barcodeid]); 
-                    } 
-                ] as Runnable;
-                
-                java.awt.EventQueue.invokeLater(runnable); 
-            } 
-        } 
     ]]>
     </code>
     
