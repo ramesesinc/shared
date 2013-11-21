@@ -1,11 +1,11 @@
 <workunit>
     <invokers>
         <invoker type="toolbar" icon="images/toolbars/barcode_global.png" caption="" 
-            action="init" target="popup" permission="system" windowmode="glasspane" 
+            action="init" target="window" permission="system" windowmode="glasspane" 
             tooltip="Barcode Search" index="-17"/> 
             
         <invoker type="barcode" icon="images/toolbars/barcode.png" caption="Barcode" 
-            action="init" target="popup" permission="system" windowmode="glasspane"/>
+            action="init" target="window" permission="system" windowmode="glasspane"/>
     </invokers>
     
     <code>
@@ -23,25 +23,55 @@
             def formTitle = "Barcode Search"; 
         
             def prefix;
+            def handler;
             String barcode;
             
             void init() { 
                 barcode = null; 
             }
             
-            def search() {                 
-                if (barcode == null || barcode.length() <= 5) return null; 
+            def search() { 
+                if (barcode == null || barcode.length() == 0) return null; 
+                
+                if (!barcode.matches('[0-9a-zA-Z]{5,5}-[0-9a-zA-Z:_\\-]{1,}')) {
+                    MsgBox.alert("Invalid format. Please verify."); 
+                    return;
+                } 
                 
                 def prefixid = barcode.substring(0,5); 
                 def barcodeid = barcode.substring(6);
-                if (prefix != null) prefixid = prefix;
+                if (prefix != null) {
+                    if (prefix != prefixid) 
+                        throw new Exception('Barcode '+ barcode + ' is not allowed for this transaction'); 
+                        
+                    prefixid = prefix; 
+                } 
 
                 try { 
-                    def opener = InvokerUtil.lookupOpener('global:barcode:'+ prefixid, [barcodeid: barcodeid]); 
+                    def opener = null; 
+                    if (handler == null) { 
+                        opener = InvokerUtil.lookupOpener('global:barcode:'+ prefixid, [barcodeid: barcodeid]); 
+                    } else { 
+                        try { 
+                            if (prefix == null) { 
+                                opener = handler(barcode); 
+                            } else { 
+                                opener = handler(barcodeid); 
+                            } 
+                            
+                            if (opener == null)  
+                                throw new Exception('No available handler found for this particular barcode'); 
+                                
+                        } catch(e) { 
+                            MsgBox.err(e); 
+                            return; 
+                        } 
+                    } 
+                    
                     opener.properties.closeBehindOnStart = true;
                     return opener;
                 } catch(e) { 
-                    MsgBox.err('No appropriate handler found for this particular barcode. [global:barcode:'+prefixid+']-> '+ barcodeid);
+                    MsgBox.err('No appropriate handler found for this particular barcode. [global:barcode:'+ prefixid +']');
                     return null; 
                 } 
             } 
