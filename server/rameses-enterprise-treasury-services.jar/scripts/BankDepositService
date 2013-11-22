@@ -44,6 +44,9 @@ class BankDepositService  {
 		o.deposits = [];
 		o.undepositedChecks = em.sqlContext.createNamedQuery("bankdeposit:getUndepositedChecks")
 			.setParameters( [cashierid: env.USERID]).resultList;
+
+		o.dtposted = dateSvc.serverDate;
+		o.cashier = [ objid:env.USERID, name:env.FULLNAME, title:env.JOBTITLE ];	
 		return o;
 	}
 
@@ -65,8 +68,6 @@ class BankDepositService  {
 		if(z?.usertxncode) txncode = z.usertxncode; 	
 
 		o.txnno = txncode + seqSvc.getNextFormattedSeries(txncode);
-		o.dtposted = dateSvc.serverDate;
-		o.cashier = [ objid:env.USERID, name:env.FULLNAME, title:env.JOBTITLE ];
 		o.totalcash = o.deposits.sum{it.totalcash};
 		o.totalnoncash = o.deposits.sum{it.totalnoncash};
 		o.amount = o.totalcash+o.totalnoncash;
@@ -114,6 +115,7 @@ class BankDepositService  {
 			m.particulars = "DEPOSITED BY " + env.FULLNAME;
 			bankBook.postDR( m );
 		}
+		o.deposits = loadDepositEntry( o )
 		return o;
 
 	}
@@ -124,11 +126,19 @@ class BankDepositService  {
 		deposit = em.read('bankdeposit', deposit)	
 		deposit.fundsummary = em.sqlContext.createNamedQuery('bankdeposit:getFundSummaries')
 				.setParameters(deposit).resultList
-		deposit.deposits = em.sqlContext.createNamedQuery('bankdeposit:getDepositSummaries')
-				.setParameters(deposit).resultList
+		deposit.deposits = loadDepositEntry( deposit )
 		deposit.liquidations = em.sqlContext.createNamedQuery('bankdeposit:getPostedLiquidations')
 				.setParameters(deposit).resultList
 		return deposit
+	}
+
+	private def loadDepositEntry( deposit )
+	{
+		return em.sqlContext.createNamedQuery('bankdeposit:getDepositSummaries')
+				.setParameters(deposit).resultList.each {
+						it.checks = em.sqlContext.createNamedQuery('bankdeposit:getDepositedChecks').setParameters(it).resultList
+						it.cashbreakdown = em.serializer.read( it.cashbreakdown ).each { it.qty = it.qty.toString() }
+					}
 	}
 
 }

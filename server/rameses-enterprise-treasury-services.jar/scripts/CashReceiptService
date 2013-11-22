@@ -75,6 +75,9 @@ class CashReceiptService  {
 	public def post( def p ) {
 		if(!p.formtype)
 			throw new Exception("Form type is required");
+		if( p.amount != p.items.amount.sum() )	
+			throw new Exception('A data problem is encountered during validation of Receipt No. ' + p.receiptno + '.\nThe Receipt Amount is not equal to item amount total.\nClose the form and recreate the transaction to correct the problem.')
+
 		//check if there are payment items with no type. throw error
 		def test = p.paymentitems.findAll{ !it.type };
 		if(test) throw new Exception("All payment items must have a type. Please review the code");
@@ -88,7 +91,7 @@ class CashReceiptService  {
 
 		em.create("cashreceipt", p ); 
 		p.items.each { x->
-			x.objid = "RCTI"+ new UID();
+			if(! x.objid  ) x.objid = "RCTI"+ new UID();
 			x.receiptid = p.objid;
 			em.create("cashreceipt:item", x);
 		}

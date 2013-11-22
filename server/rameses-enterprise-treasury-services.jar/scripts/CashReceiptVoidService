@@ -31,7 +31,6 @@ class CashReceiptVoidService  {
 		//summarize receipts by fund, locate the fund and update 
 		def z = p.receipt.items.groupBy{ it.item.fund.objid };
 		z.each { k, c->
-			println k ;
 			def entry = [:]
 			entry.fundid = k;
 			entry.fundtitle = c[0].item.fund.title;   //get the first element 

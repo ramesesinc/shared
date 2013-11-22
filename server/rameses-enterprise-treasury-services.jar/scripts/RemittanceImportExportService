@@ -29,29 +29,36 @@ class RemittanceExportService
 		data.rem_funds = adb.getRemittanceFunds(rem)
 
 		
-		def afcontrols = adb.getUniqueAfControls(rem)
+		def afcontrols = adb.getUniqueAfSerialControls(rem)
 
 		//afserialcontrols
 		data.afserialinventories = [] 
 		data.afserialcontrols = [] 
 		data.afserialinvdetails = []
 
-		afcontrols.findAll{it.formtype == 'serial'}.each{ afc -> 
-			afc.remittanceid = rem.remittanceid 
+		afcontrols.each{ afc -> 
 			data.afserialcontrols << adb.findAfSerialControl(afc)
 			data.afserialinventories << adb.findAFSerialInventory(afc)
-			data.afserialinvdetails += adb.getAFSerialInventoryDetails(afc)
+		}
+
+		data.rem_afserials.each{ 
+			data.afserialinvdetails += adb.getAFSerialInventoryDetails(it)
 		}
 
 		//cashtickets
+		def ctcontrols = adb.getUniqueCashTicketControls(rem)
+
 		data.ctinventories = []
 		data.ctcontrols = []
 		data.ctinvdetails = [] 
-		afcontrols.findAll{it.formtype == 'cashticket'}.each{ ct -> 
+
+		ctcontrols.each{ ct -> 
 			ct.remittanceid = rem.remittanceid
 			data.ctinventories << adb.findCashTicketInventory(ct)
 			data.ctcontrols << adb.findCashTicketControl(ct)
-			data.ctinvdetails += adb.getCashtTicketInventoryDetails(ct)
+		}
+		data.rem_cashtickets.each{
+			data.ctinvdetails += adb.getCashTicketInventoryDetails(ct)
 		}
 
 		//cashreceipts
@@ -70,11 +77,20 @@ class RemittanceExportService
 		checkDuplicatePosting(data.entity)
 
 		//afserialcontrols
-		data.afserialinventories.each{  adb.updateAfSerialInventory(EntityUtil.mapToField(it)) }
+		data.afserialinventories.each{  
+			adb.updateAfSerialInventory(EntityUtil.mapToField(it)) 
+		}
 		data.afserialcontrols.each{  
 			adb.updateAFSerialControl(EntityUtil.mapToField(it)) 
 		}
-		data.afserialinvdetails.each{  adb.insertAfSerialInventoryDetail(EntityUtil.mapToField(it)) }
+		data.afserialinvdetails.each{  
+			try{
+				adb.insertAfSerialInventoryDetail(EntityUtil.mapToField(it)) 
+			}
+			catch(e){
+				//ignore possible duplicates
+			}
+		}
 
 
 		//cashtickets
@@ -82,7 +98,14 @@ class RemittanceExportService
 		data.ctcontrols.each{  
 			adb.updateCashTicketControl(EntityUtil.mapToField(it)) 
 		}
-		data.ctinvdetails.each{  adb.insertCashTicketInventoryDetail(EntityUtil.mapToField(it)) }
+		data.ctinvdetails.each{  
+			try{
+				adb.insertCashTicketInventoryDetail(EntityUtil.mapToField(it)) 
+			}
+			catch(e){
+				//ignore possible duplicates
+			}
+		}
 		
 		//cashreceipts
 		data.cashreceipts.each{  adb.insertCashReceipt(EntityUtil.mapToField(it)) }
@@ -96,8 +119,12 @@ class RemittanceExportService
 				adb.insertRemittanceAfSerial(EntityUtil.mapToField(it)) 
 			}
 		}
-		data.rem_cashreceipts.each{  adb.insertRemittanceCashReceipt(EntityUtil.mapToField(it)) }
-		data.rem_cashtickets.each{  adb.insertRemittanceCashTicket(EntityUtil.mapToField(it)) }
+		data.rem_cashreceipts.each{  
+			adb.insertRemittanceCashReceipt(EntityUtil.mapToField(it)) 
+		}
+		data.rem_cashtickets.each{  
+			adb.insertRemittanceCashTicket(EntityUtil.mapToField(it)) 
+		}
 		data.rem_checks.each{  adb.insertRemittanceCheck(EntityUtil.mapToField(it)) }
 		data.rem_funds.each{  adb.insertRemittanceFund(EntityUtil.mapToField(it)) }
 	}
