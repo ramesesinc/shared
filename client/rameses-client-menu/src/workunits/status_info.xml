@@ -20,6 +20,17 @@
             public void init() {
                 OsirisContext.clientContext.taskManager.addTask( new TimerTask(controller:this) );
             }
+            
+            def getInfo() {
+                def pi = System.properties.get('platform.identity'); 
+                if (pi == null) return null; 
+                
+                if (pi['platform.type'] == 'community') {
+                    return 'Community Version'; 
+                } else {
+                    return null; 
+                } 
+            } 
         }        
         
         public class TimerTask extends ScheduledTask {
