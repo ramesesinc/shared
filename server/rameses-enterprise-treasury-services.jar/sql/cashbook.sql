@@ -14,7 +14,7 @@ ORDER BY subacct_name, fund_code
 UPDATE cashbook SET state='APPROVED' WHERE objid=$P{objid}
 
 [findBySubAcctFund]
-SELECT * FROM cashbook WHERE fund_objid=$P{fundid} AND subacct_objid=$P{subacctid}
+SELECT * FROM cashbook WHERE fund_objid=$P{fundid} AND subacct_objid=$P{subacctid} AND type = $P{type}
 
 [getEntries]
 SELECT refdate,refno,reftype,particulars,dr,cr,runbalance,lineno 

@@ -95,6 +95,7 @@ class BankDepositService  {
 			def m = [:];
 			m.subacctid = x.liquidatingofficer.objid;
 			m.fundid = x.fund.objid;
+			m.type = 'LIQUIDATING_OFFICER'
 			m.refid = o.objid;
 			m.refno = o.txnno;
 			m.refdate = o.dtposted;

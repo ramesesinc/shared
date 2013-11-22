@@ -73,6 +73,7 @@ class RemittanceService  {
 				def detail = [:];
 				detail.fundid = it.fund.objid;
 				detail.subacctid = o.collector.objid; 
+				detail.type = 'COLLECTOR'
 				detail.refid = o.objid;
 				detail.refno = o.txnno;
 				detail.refdate = o.dtposted;

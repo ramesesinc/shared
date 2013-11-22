@@ -19,7 +19,7 @@ class RevenueItemLookupInterceptor {
 		def funds = list.groupBy{ it.fund.objid };
 		funds.each { k,v->
 			//check fund per collector. attach fund code in each item.
-			def p = [subacctid: param.collectorid];
+			def p = [subacctid: param.collectorid, type:'COLLECTOR'];
 			p.fundid = k; 
 			def cb = cashbook.findBySubAcctFund(p);
 			if(cb) {
