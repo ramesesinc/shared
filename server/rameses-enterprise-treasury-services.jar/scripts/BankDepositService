@@ -6,7 +6,9 @@ import com.rameses.services.extended.*
 
 class BankDepositService  {
 
-	
+	@ActiveDB('bankdeposit')
+	def adb 
+
 	@PersistenceContext("main")
 	def em; 
 
@@ -90,6 +92,21 @@ class BankDepositService  {
 			}
 		}
 
+		//debit cashbook of cashier (Treasury)
+		for( x in o.deposits ) {
+			def m = [:];
+			m.subacctid = o.cashier.objid;
+			def fund = adb.findFundByBankEntryId(x)
+			m.fundid = fund?.objid 
+			m.type = 'CASHIER'
+			m.refid = x.objid;
+			m.refno = o.txnno + '-' + fund?.title;
+			m.refdate = o.dtposted;
+			m.reftype = "DEPOSIT";
+			m.amount = x.amount;
+			m.particulars = "DEPOSITED BY " + env.FULLNAME;
+			cashBook.postDR( m );
+		}
 		//credit cashbook of liquidating officer (Treasury)
 		for( x in o.liquidations ) {
 			def m = [:];
