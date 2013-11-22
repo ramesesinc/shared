@@ -67,11 +67,10 @@ public class PageFlowController
     } 
     
     private final PageFlowController getRootCaller() {
-        if(caller==null)
+        if (caller instanceof PageFlowController)
+            return (PageFlowController) caller;
+        else 
             return this;
-        else {
-            return ((PageFlowController)caller).getRootCaller();
-        }
     }
     
     private final void buildStackClosed(StringBuilder sb) {
@@ -88,6 +87,7 @@ public class PageFlowController
             workunit.getWorkunit().signal(msg);
         
         if(workunit.getWorkunit().isPageFlowCompleted()) {
+            /*
             if(caller!=null && (caller instanceof PageFlowController)) {
                 Object _out = null;
                 if(tag!=null) {
@@ -107,6 +107,7 @@ public class PageFlowController
                     }
                 }
             }
+             */
             return "_close";
         }
         AbstractNode node = workunit.getWorkunit().getCurrentNode();
