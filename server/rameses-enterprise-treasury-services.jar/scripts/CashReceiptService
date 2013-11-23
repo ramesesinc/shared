@@ -115,6 +115,7 @@ class CashReceiptService  {
 			entry.fundid = k;
 			entry.fundtitle = v[0].item.fund.title;   //get the first element
 			entry.subacctid = p.collector.objid;
+			entry.type = 'COLLECTOR'
 			entry.refid = p.objid;
 			entry.refno = p.receiptno;
 			entry.refdate = p.receiptdate;

@@ -99,3 +99,11 @@ FROM bankdeposit_liquidation bdl
 INNER join liquidation_cashier_fund lcf on lcf.objid = bdl.objid 
 INNER JOIN liquidation l ON lcf.liquidationid=l.objid
 WHERE bdl.bankdepositid=$P{objid}
+
+
+
+[findFundByBankEntryId]
+SELECT ba.fund_objid AS objid, ba.fund_title AS title
+FROM bankdeposit_entry be
+	INNER JOIN bankaccount ba ON be.bankaccount_objid = ba.objid 
+WHERE be.objid = $P{objid}	

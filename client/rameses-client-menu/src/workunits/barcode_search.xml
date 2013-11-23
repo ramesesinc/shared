@@ -33,7 +33,7 @@
             def search() { 
                 if (barcode == null || barcode.length() == 0) return null; 
                 
-                if (!barcode.matches('[0-9a-zA-Z]{5,5}-[0-9a-zA-Z:_\\-]{1,}')) {
+                if (!barcode.matches('[0-9a-zA-Z]{5,5}.[0-9a-zA-Z:_\\-]{1,}')) {
                     MsgBox.alert("Invalid format. Please verify."); 
                     return;
                 } 

@@ -208,7 +208,7 @@ public abstract class ListController extends BasicListController implements Page
         Opener opener = null; 
         try {
             String invtype = filetype + ":open";
-            opener = InvokerUtil.lookupOpener(invtype.toLowerCase(), params);
+            opener = InvokerUtil.lookupOpener(invtype, params);
         } catch(Throwable t) {
             System.out.println("[WARN] error lookup opener caused by " + t.getMessage());
             MsgBox.alert("No access privilege for this item. Please contact your administrator.");            

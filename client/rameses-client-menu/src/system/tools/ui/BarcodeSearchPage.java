@@ -6,10 +6,13 @@
 
 package system.tools.ui;
 
+import com.rameses.rcp.ui.annotations.StyleSheet; 
+
 /**
  *
  * @author  wflores
  */
+@StyleSheet
 public class BarcodeSearchPage extends javax.swing.JPanel 
 {
     
@@ -24,15 +27,27 @@ public class BarcodeSearchPage extends javax.swing.JPanel
      */
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
     private void initComponents() {
+        xLabel1 = new com.rameses.rcp.control.XLabel();
         xTextField1 = new com.rameses.rcp.control.XTextField();
         jPanel1 = new javax.swing.JPanel();
         xButton1 = new com.rameses.rcp.control.XButton();
         xButton2 = new com.rameses.rcp.control.XButton();
+        xImage1 = new com.rameses.rcp.control.XImage();
+
+        setLayout(null);
+
+        setPreferredSize(new java.awt.Dimension(446, 201));
+        xLabel1.setFontStyle("font-size:16;");
+        xLabel1.setText("Enter or Scan Barcode");
+        add(xLabel1);
+        xLabel1.setBounds(30, 27, 235, 25);
 
         xTextField1.setFont(new java.awt.Font("Courier New", 1, 24));
         xTextField1.setForeground(new java.awt.Color(60, 60, 60));
         xTextField1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         xTextField1.setName("barcode");
+        add(xTextField1);
+        xTextField1.setBounds(30, 55, 375, 50);
 
         xButton1.setMnemonic('k');
         xButton1.setDefaultCommand(true);
@@ -49,46 +64,30 @@ public class BarcodeSearchPage extends javax.swing.JPanel
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel1Layout.createSequentialGroup()
-                .add(94, 94, 94)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(103, Short.MAX_VALUE)
                 .add(xButton1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 80, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(xButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(98, Short.MAX_VALUE))
+                .add(87, 87, 87))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
-                .add(24, 24, 24)
+            .add(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(xButton2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
                     .add(xButton1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
                 .addContainerGap())
         );
+        add(jPanel1);
+        jPanel1.setBounds(30, 119, 355, 60);
 
-        org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .add(xTextField1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 357, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
-                        .add(27, 27, 27)
-                        .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(33, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
-                .add(36, 36, 36)
-                .add(xTextField1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 44, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
-        );
+        xImage1.setIconResource("com/rameses/rcp/icons/loading16.gif");
+        xImage1.setName("icon");
+        add(xImage1);
+        xImage1.setBounds(405, 55, 30, 50);
+
     }// </editor-fold>//GEN-END:initComponents
     
     
@@ -96,6 +95,8 @@ public class BarcodeSearchPage extends javax.swing.JPanel
     private javax.swing.JPanel jPanel1;
     private com.rameses.rcp.control.XButton xButton1;
     private com.rameses.rcp.control.XButton xButton2;
+    private com.rameses.rcp.control.XImage xImage1;
+    private com.rameses.rcp.control.XLabel xLabel1;
     private com.rameses.rcp.control.XTextField xTextField1;
     // End of variables declaration//GEN-END:variables
     
