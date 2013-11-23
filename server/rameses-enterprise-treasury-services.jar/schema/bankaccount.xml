@@ -15,6 +15,7 @@
 		<field name="fund_title" required="true"/>
 		
 		<field name="currency" required="true"/>
+		<field name="cashreport"/>
 		<field name="cashbreakdownreport"/>
 		<field name="checkreport"/>
 
