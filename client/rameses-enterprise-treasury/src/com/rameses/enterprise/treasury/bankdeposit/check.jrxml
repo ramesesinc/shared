@@ -37,6 +37,8 @@
 	<field name="checktype" class="java.lang.String"/>
 	<field name="branchname" class="java.lang.String"/>
 	<field name="cash" class="java.math.BigDecimal"/>
+	<field name="pagecount" class="java.lang.Integer"/>
+	<field name="pagenumber" class="java.lang.Integer"/>
 
 	<variable name="RETURNTOTALAMT" class="java.math.BigDecimal" resetType="Report" calculation="System">
 	</variable>
@@ -185,6 +187,19 @@
 					</textElement>
 				<text><![CDATA[X]]></text>
 				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="293"
+						y="248"
+						width="167"
+						height="12"
+						key="textField-6"/>
+					<box></box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["PAGE " + $F{pagenumber} + " of " + $F{pagecount}]]></textFieldExpression>
+				</textField>
 			</band>
 		</title>
 		<pageHeader>
