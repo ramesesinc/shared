@@ -153,8 +153,8 @@
                 if( selectedDeposit.totalcash == 0.0 ) throw new Exception('There is no cash for deposit.')
             
                 def reportname = depositslippath + "cash.jasper" 
-                if( selectedDeposit.bank.code ) {
-                    def file = depositslippath + "cash" + selectedDeposit.bank.code.toString().toLowerCase() + ".jasper"
+                if( selectedDeposit.cashreport ) {
+                    def file = depositslippath + selectedDeposit.cashreport + ".jasper"
                     URL u = getClass().getClassLoader().getResource(file);
                     if (u != null) reportname = file;
                 }
@@ -182,29 +182,24 @@
             void printCashBreakdown() {
                 if( selectedDeposit.totalcash == 0.0 ) throw new Exception('There is no cash for deposit.')
             
+               def reportname = depositslippath + "cashbreakdownitem.jasper"
+               if( entity.cashbreakdownreport ) {
+                    def file = depositslippath + entity.cashbreakdownreport + ".jasper"
+                    URL u = getClass().getClassLoader().getResource(file);
+                    if (u != null) reportname = file;
+                }
+                
                 def report = [
-                    getReportName : { return  depositslippath + "cashbreakdownitem.jasper"  },
+                    getReportName : { return reportname   },
                     getReportData : { return selectedDeposit.cashbreakdown }
                 ] as ReportModel
                 report.viewReport()
                 ReportUtil.print( report.report, true )
             }
             
-            void printCheckDepositSlip() {
-                if(! selectedDeposit.checks) throw new Exception("There are no checks for deposit.")
-                    
-            
-                def reportname = depositslippath + "check.jasper" 
-                def subreport =  depositslippath + "checkbreakdownitem.jasper" 
-                if( selectedDeposit.bank.code ) {
-                    def file = depositslippath + "check" + selectedDeposit.bank.code.toString().toLowerCase() + ".jasper"
-                    URL u = getClass().getClassLoader().getResource(file);
-                    if (u != null) reportname = file;
-                    
-                    def sub2 = depositslippath + "checkbreakdownitem" + selectedDeposit.bank.code.toString().toLowerCase() + ".jasper"
-                    u = getClass().getClassLoader().getResource(sub2);
-                    if (u != null) subreport = sub2;
-                } 
+            def printCheckDepositSlip() {
+                if(! selectedDeposit.checks ) throw new Exception("There are no checks for deposit.")
+                
                 def reportdata = [
                     txndate: entity.dtposted, 
                     bankacctname: selectedDeposit.bankaccount.title, 
@@ -212,21 +207,12 @@
                     branchname :selectedDeposit.branchname,
                     depositedbyname: entity.cashier.name,
                     noncash : selectedDeposit.totalnoncash,
-                    noncashpayments : selectedDeposit.checks,
+                    checks : selectedDeposit.checks,
+                    checktype : selectedDeposit.accttype,
                     amountinwords: numSvc.doubleToWords( selectedDeposit.totalnoncash ).toUpperCase()
                ]
+               return InvokerUtil.lookupOpener( "bankdeposit:printcheck" , [ reportdata: reportdata] ) 
                
-               def report = [
-                    getReportName : { return reportname },
-                    getReportData : { return reportdata }, 
-                    getSubReports : {
-                        return [
-                            new SubReport("checkbreakdownitem", subreport)
-                        ] as SubReport[]
-                    }
-                ] as ReportModel
-                report.viewReport()
-                ReportUtil.print( report.report, true ) 
             }
             
             

@@ -86,7 +86,9 @@
             void removeCheck() {
                 if(!selectedCheck) return;
                 entity.checks.remove( selectedCheck );
+                selectedCheck.selected = false
                 undepositedChecks << selectedCheck;
+                
                 if( entity.checks ) {
                     entity.totalnoncash = entity.checks.sum{it.amount};
                 }
