@@ -58,7 +58,7 @@ class RemittanceExportService
 			data.ctcontrols << adb.findCashTicketControl(ct)
 		}
 		data.rem_cashtickets.each{
-			data.ctinvdetails += adb.getCashTicketInventoryDetails(ct)
+			data.ctinvdetails += adb.getCashTicketInventoryDetails(it)
 		}
 
 		//cashreceipts
