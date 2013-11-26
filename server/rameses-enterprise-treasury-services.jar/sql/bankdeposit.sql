@@ -107,3 +107,7 @@ SELECT ba.fund_objid AS objid, ba.fund_title AS title
 FROM bankdeposit_entry be
 	INNER JOIN bankaccount ba ON be.bankaccount_objid = ba.objid 
 WHERE be.objid = $P{objid}	
+
+
+[getBankAccountsByFund]
+SELECT * FROM bankaccount WHERE fund_objid = $P{objid}
