@@ -20,7 +20,7 @@ SELECT
    MAX(cr.receiptno) AS endno,
    SUM( CASE WHEN cv.objid IS NULL THEN cr.amount ELSE 0 END ) AS amount
 FROM cashreceipt cr
-LEFT JOIN cashreceipt_void cv ON cr.objid=cv.objid
+LEFT JOIN cashreceipt_void cv ON cr.objid=cv.receiptid
 WHERE cr.state = 'DELEGATED'
 AND cr.collector_objid = $P{collectorid}
 AND cr.subcollector_objid=$P{subcollectorid}
@@ -34,7 +34,7 @@ SELECT
    SUM( CASE WHEN cv.objid IS NULL THEN cr.amount ELSE 0 END ) AS amount
 FROM subcollector_remittance_cashreceipt c 
 inner join cashreceipt cr on c.objid = cr.objid 
-LEFT JOIN cashreceipt_void cv ON cr.objid=cv.objid
+LEFT JOIN cashreceipt_void cv ON cr.objid=cv.receiptid
 WHERE c.remittanceid=$P{objid}
 GROUP BY cr.stub
 
@@ -44,7 +44,7 @@ SELECT
    SUM( CASE WHEN cv.objid IS NULL THEN cr.amount ELSE 0 END ) AS amount,
    SUM( CASE WHEN p.objid IS NULL THEN 0 ELSE p.amount END) AS totalnoncash
 FROM cashreceipt cr
-LEFT JOIN cashreceipt_void cv ON cr.objid=cv.objid
+LEFT JOIN cashreceipt_void cv ON cr.objid=cv.receiptid
 LEFT JOIN cashreceiptpayment_check p ON cr.objid = p.receiptid 
 WHERE cr.state = 'DELEGATED'
 AND cr.collector_objid = $P{collectorid}
