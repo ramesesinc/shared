@@ -1,5 +1,5 @@
 /*
- * TestPage.java
+ * StatusInfoPage.java
  *
  * Created on September 11, 2010, 2:13 PM
  */
@@ -8,7 +8,7 @@ package system.tools.ui;
 
 /**
  *
- * @author  compaq
+ * @author  wflores
  */
 public class StatusInfoPage extends javax.swing.JPanel {
     
@@ -36,21 +36,25 @@ public class StatusInfoPage extends javax.swing.JPanel {
         setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 3, 2, 3));
         xLabel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         xLabel1.setExpression("<div style=\"white-space:nowrap;\"><b>USER</b>: #{user.name}</div>");
+        xLabel1.setIconResource("images/user.png");
         xLabel1.setPreferredSize(new java.awt.Dimension(210, 22));
         xLabel1.setUseHtml(true);
 
         xLabel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         xLabel2.setExpression("<div style=\"white-space:nowrap;\"><b>ORG</b>: #{user.clientCode}</div>");
+        xLabel2.setIconResource("images/org.png");
         xLabel2.setPreferredSize(new java.awt.Dimension(151, 22));
         xLabel2.setUseHtml(true);
 
         xLabel3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         xLabel3.setExpression("<div style=\"white-space:nowrap;\"><b>TERMINAL</b>: #{user.terminalId}</div>");
+        xLabel3.setIconResource("images/terminal.png");
         xLabel3.setPreferredSize(new java.awt.Dimension(168, 22));
         xLabel3.setUseHtml(true);
 
         xLabel4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         xLabel4.setExpression("<div style=\"white-space:nowrap;\"><b>MODE</b>: #{user.mode}</div>");
+        xLabel4.setIconResource("images/online.png");
         xLabel4.setPreferredSize(new java.awt.Dimension(150, 22));
         xLabel4.setUseHtml(true);
 
