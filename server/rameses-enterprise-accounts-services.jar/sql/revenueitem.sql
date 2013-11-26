@@ -12,7 +12,7 @@ UPDATE revenueitem SET state='APPROVED' WHERE objid=$P{objid} AND state='DRAFT'
 UPDATE revenueitem SET state='APPROVED' WHERE objid=$P{objid} AND state='DRAFT'
 
 [updateCode]
-UPDATE revenueitem SET code=$P{code} WHERE objid=$P{objid} 
+UPDATE revenueitem SET code=$P{code}, title=$P{title} WHERE objid=$P{objid} 
 
 [getLookup]
 SELECT r.* FROM revenueitem r 

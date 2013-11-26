@@ -19,7 +19,7 @@ class RevenueAccountMappingService  {
 	public def getColumns( def o ) {
 		def list = [
 			[name:'code', caption:'Item Code', width:100, resizable:false, editable:true ],
-			[name:'title', caption:'Item Title', width:200 ],
+			[name:'title', caption:'Item Title', width:200, editable: true ],
 		];
 		em.getAccountColumns().each {
 			list << [name: it.name, caption:it.title, width:150, editable:true, depends:it.depends, 
