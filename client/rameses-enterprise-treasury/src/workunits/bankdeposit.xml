@@ -3,7 +3,7 @@
    <invokers>
          <invoker type="bankdeposit:create" caption="Bank Deposit" action="init" target="window"/>
          <invoker folderid="/menu/txn/treasury" caption="Bank Deposit" action="init" target="window" role="CASHIER" />
-         <invoker type="quick_launcher" code="BNKD" caption="Bank Deposits" action="init" target="window"/>
+         <invoker type="quick_launcher" code="BNKD" caption="Bank Deposits" action="init" target="window" role="CASHIER"/>
          <invoker type="bankdeposit:open" caption="Bank Deposit (Open)" action="open" target="window"/>
          
          <invoker type="formActions" caption="Close" name="_close"  icon="images/toolbars/cancel.png" mnemonic="c" shortcut="ctrl C"/>
@@ -204,6 +204,16 @@
                     accttype : selectedDeposit.accttype,
                     amountinwords: numSvc.doubleToWords( selectedDeposit.totalcash ).toUpperCase()
                 ]
+                selectedDeposit.cashbreakdown.each {
+                    def dqty = 'dqty' + it.caption.toString().replace('.00','')
+                    def damt = 'damt' + it.caption.toString().replace('.00','')
+                    reportdata."$dqty" = null
+                    reportdata."$damt" = null
+                    if( it.amount > 0 ) {
+                        reportdata."$dqty" = it.qty
+                        reportdata."$damt" = it.amount
+                    }            
+                }
                 
                 def report = [
                     getReportName : { return reportname },
@@ -217,8 +227,8 @@
                 if( selectedDeposit.totalcash == 0.0 ) throw new Exception('There is no cash for deposit.')
             
                def reportname = depositslippath + "cashbreakdownitem.jasper"
-               if( entity.cashbreakdownreport ) {
-                    def file = depositslippath + entity.cashbreakdownreport + ".jasper"
+               if( selectedDeposit.cashbreakdownreport ) {
+                    def file = depositslippath + selectedDeposit.cashbreakdownreport + ".jasper"
                     URL u = getClass().getClassLoader().getResource(file);
                     if (u != null) reportname = file;
                 }
@@ -234,6 +244,14 @@
             def printCheckDepositSlip() {
                 if(! selectedDeposit.checks ) throw new Exception("There are no checks for deposit.")
                 
+               def reportname = depositslippath + "check.jasper"
+               if( selectedDeposit.checkreport ) {
+                    def file = depositslippath + selectedDeposit.checkreport + ".jasper"
+                    URL u = getClass().getClassLoader().getResource(file);
+                    if (u != null) reportname = file;
+                }
+                println "reportname -> " + reportname
+                
                 def reportdata = [
                     txndate: entity.dtposted, 
                     bankacctname: selectedDeposit.bankaccount.title, 
@@ -245,7 +263,7 @@
                     checktype : selectedDeposit.accttype,
                     amountinwords: numSvc.doubleToWords( selectedDeposit.totalnoncash ).toUpperCase()
                ]
-               return InvokerUtil.lookupOpener( "bankdeposit:printcheck" , [ reportdata: reportdata] ) 
+               return InvokerUtil.lookupOpener( "bankdeposit:printcheck" , [ reportdata: reportdata, reportname: reportname, depositslippath:depositslippath] ) 
                
             }
             

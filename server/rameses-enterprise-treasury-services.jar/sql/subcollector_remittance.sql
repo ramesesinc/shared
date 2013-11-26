@@ -107,8 +107,8 @@ FROM (
      WHERE controlid = ai.objid AND subcollector_objid = ac.assignee_objid AND state = 'DELEGATED') AS issuedendseries,
     ai.currentseries AS endingstartseries,
     ai.endseries AS endingendseries,
-    (SELECT SUM(amount) FROM cashreceipt 
-     WHERE controlid = ai.objid AND subcollector_objid = ac.assignee_objid AND state = 'DELEGATED') AS amount
+    (SELECT SUM(c.amount) FROM cashreceipt c LEFT JOIN cashreceipt_void cv ON c.objid = cv.receiptid 
+     WHERE c.controlid = ai.objid AND c.subcollector_objid = ac.assignee_objid AND c.state = 'DELEGATED' AND cv.objid IS NULL ) AS amount
   FROM afserial_inventory ai
     INNER JOIN afserial_control ac ON ai.objid = ac.controlid
   WHERE ac.assignee_objid = $P{subcollectorid}

@@ -44,6 +44,7 @@ SELECT
    SUM( CASE WHEN cv.objid IS NULL THEN cr.amount ELSE 0 END ) AS amount
 FROM cashreceipt cr
 LEFT JOIN cashreceipt_void cv ON cr.objid=cv.receiptid
+LEFT JOIN cashreceiptpayment_check p ON cr.objid = p.receiptid 
 WHERE cr.state = 'DELEGATED'
 AND cr.collector_objid = $P{collectorid}
 AND cr.subcollector_objid=$P{subcollectorid}
@@ -82,3 +83,34 @@ where c.state='DELEGATED'
    and c.collector_objid=$P{collectorid}
    and c.subcollector_objid = $P{subcollectorid} 
     and cv.objid is null 
+
+
+[getCollectionSummaries]    
+SELECT 
+  x.formno,
+  CASE WHEN x.issuedstartseries IS NULL THEN x.receivedstartseries ELSE x.issuedstartseries END AS receivedstartseries,
+  x.receivedendseries,
+  x.issuedstartseries,
+  x.issuedendseries,
+  CASE WHEN x.issuedstartseries IS NULL THEN x.endingstartseries ELSE x.issuedendseries + 1 END AS endingstartseries,
+  x.endingendseries,
+  x.amount
+FROM (
+  SELECT 
+    ai.afid AS formno,
+    ai.currentseries AS receivedstartseries,
+    ai.endseries AS receivedendseries,
+    (SELECT MIN(series) FROM cashreceipt 
+     WHERE controlid = ai.objid AND subcollector_objid = ac.assignee_objid AND state = 'DELEGATED') AS issuedstartseries,
+    (SELECT MAX(series) FROM cashreceipt 
+     WHERE controlid = ai.objid AND subcollector_objid = ac.assignee_objid AND state = 'DELEGATED') AS issuedendseries,
+    ai.currentseries AS endingstartseries,
+    ai.endseries AS endingendseries,
+    (SELECT SUM(c.amount) FROM cashreceipt c LEFT JOIN cashreceipt_void cv ON c.objid = cv.receiptid 
+     WHERE c.controlid = ai.objid AND c.subcollector_objid = ac.assignee_objid AND c.state = 'DELEGATED' AND cv.objid IS NULL ) AS amount
+  FROM afserial_inventory ai
+    INNER JOIN afserial_control ac ON ai.objid = ac.controlid
+  WHERE ac.assignee_objid = $P{subcollectorid}
+) x
+
+

@@ -1,6 +1,6 @@
 <workunit extends="wtemplates/FolderExplorerView.xml">
     <invokers>
-        <invoker type="toolbar" icon="images/org.png" caption="" tooltip="Main Menu"
+        <invoker type="toolbar" icon="images/explorer.png" caption="" tooltip="Main Menu"
             index="-18" permission="system" action="init" windowmode="explorer" />
     </invokers>
     <code>

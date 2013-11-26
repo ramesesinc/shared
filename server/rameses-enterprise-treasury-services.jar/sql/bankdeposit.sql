@@ -41,7 +41,7 @@ crp.objid, crp.checkno, crp.particulars, crp.amount
 FROM liquidation_remittance lr 
 INNER JOIN liquidation_cashier_fund lcf ON lr.liquidationid=lr.liquidationid
 INNER JOIN liquidation l ON lcf.liquidationid=l.objid 
-INNER JOIN liquidation_checkpayment lc ON lc.liquidationid=lr.liquidationid
+INNER JOIN liquidation_checkpayment lc ON lc.liquidationid=l.objid
 INNER JOIN cashreceiptpayment_check crp ON crp.objid=lc.objid
 LEFT JOIN bankdeposit_entry_check bec on bec.objid = crp.objid
 LEFT JOIN cashreceipt_void cv ON crp.receiptid = cv.receiptid 

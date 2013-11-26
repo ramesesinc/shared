@@ -22,9 +22,9 @@
         
             def entity 
             def reportdata 
-            def depositslippath = "com/rameses/enterprise/treasury/bankdeposit/"
             def reportname 
-           
+            def depositslippath
+            
             def totalcheck 
             
             @PropertyChangeListener
@@ -40,12 +40,6 @@
             def init() {
                 entity = [:]
                 entity.printrange = "all"
-                reportname = depositslippath + "check.jasper" 
-                if( entity.checkreport ) {
-                    def file = depositslippath + entity.checkreport + ".jasper"
-                    URL u = getClass().getClassLoader().getResource(file);
-                    if (u != null) reportname = file;
-                }
                 totalcheck  = reportdata.checks.size() 
             }
             
