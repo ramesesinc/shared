@@ -40,7 +40,7 @@
                         def m = [segment: col, objid:selectedEntity.objid, acctid:null ];
                         service.addSegment( m );
                     }
-                    if( col == 'code') {
+                    if( col == 'code' || col == 'title') {
                         service.updateRevenueItemCode( o )
                     }
                 }
