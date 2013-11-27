@@ -91,7 +91,7 @@
             def depositModel = [
                 fetchList: { o->
                     if(showSelected) {
-                        return entity.deposits.findAll{ it.fund.objid == selectedFund.fund.objid };
+                        return entity.deposits.findAll{ it.fund?.objid == selectedFund?.fund?.objid };
                     }
                     return entity.deposits; 
                 }
