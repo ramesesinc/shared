@@ -1,7 +1,7 @@
 <workunit>
     <invokers>
         <invoker type="usergroup-folder:formActions" caption="Security Group" 
-            target="popup" action="init" role="SYSADMIN"/>
+            target="popup" action="init" role="SYSADMIN" icon="images/securitygroup.png"/>
         
         <invoker type="formActions" caption="New"  action="addNew" visibleWhen="#{mode=='read'}" icon="images/toolbars/create.png"/>
         <invoker type="formActions" caption="Edit"  action="edit" visibleWhen="#{editVisible == true}"/>
