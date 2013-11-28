@@ -41,8 +41,7 @@ GROUP BY cr.stub
 [findSummaryTotals]
 SELECT 
    COUNT(*) AS itemcount,
-   SUM( CASE WHEN cv.objid IS NULL THEN cr.amount ELSE 0 END ) AS amount,
-   SUM( CASE WHEN p.objid IS NULL THEN 0 ELSE p.amount END) AS totalnoncash
+   SUM( CASE WHEN cv.objid IS NULL THEN cr.amount ELSE 0 END ) AS amount
 FROM cashreceipt cr
 LEFT JOIN cashreceipt_void cv ON cr.objid=cv.receiptid
 LEFT JOIN cashreceiptpayment_check p ON cr.objid = p.receiptid 
@@ -85,6 +84,7 @@ where c.state='DELEGATED'
    and c.subcollector_objid = $P{subcollectorid} 
     and cv.objid is null 
 
+
 [getCollectionSummaries]    
 SELECT 
   x.formno,
@@ -106,8 +106,8 @@ FROM (
      WHERE controlid = ai.objid AND subcollector_objid = ac.assignee_objid AND state = 'DELEGATED') AS issuedendseries,
     ai.currentseries AS endingstartseries,
     ai.endseries AS endingendseries,
-    (SELECT SUM(amount) FROM cashreceipt 
-     WHERE controlid = ai.objid AND subcollector_objid = ac.assignee_objid AND state = 'DELEGATED') AS amount
+    (SELECT SUM(c.amount) FROM cashreceipt c LEFT JOIN cashreceipt_void cv ON c.objid = cv.receiptid 
+     WHERE c.controlid = ai.objid AND c.subcollector_objid = ac.assignee_objid AND c.state = 'DELEGATED' AND cv.objid IS NULL ) AS amount
   FROM afserial_inventory ai
     INNER JOIN afserial_control ac ON ai.objid = ac.controlid
   WHERE ac.assignee_objid = $P{subcollectorid}

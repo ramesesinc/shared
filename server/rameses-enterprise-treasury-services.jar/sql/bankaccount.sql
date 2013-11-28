@@ -16,7 +16,17 @@ SELECT refdate,refno,reftype,particulars,dr,cr,runbalance,lineno
 FROM bankaccount_entry 
 WHERE parentid=$P{objid} order by lineno 
 
+
 [getListByFund]
 SELECT ba.*
 FROM bankaccount ba 
 WHERE ba.fund_objid = $P{fundid}
+
+
+
+[getListBySpecialFund]
+SELECT ba.*
+FROM bankaccount ba 
+	INNER JOIN fund f ON ba.fund_objid = f.objid 
+WHERE ba.fund_objid LIKE $P{fundid}
+  AND f.special = 1 

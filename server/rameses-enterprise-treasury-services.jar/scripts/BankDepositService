@@ -27,6 +27,9 @@ class BankDepositService  {
 	@Service("CashBookPostService")
 	def cashBook;
 
+	@Service('Var')
+	def var
+
 	@ProxyMethod
 	public def init() {
 		def list = em.sqlContext.createNamedQuery("bankdeposit:getUndeposited")
@@ -37,11 +40,11 @@ class BankDepositService  {
 
 		def o = [objid: "DEP"+new UID()];	
 		o.liquidations = list;
-		o.fundsummary = em.sqlContext.createNamedQuery("bankdeposit:getUndepositedByFund")
-			.setParameters( [cashierid: env.USERID]).resultList;
-		o.fundsummary.each {
+		o.fundsummaries = adb.getUndepositedByFund([cashierid:env.USERID])
+		o.fundsummaries.each {
 			it.allocated = 0;
 			it.balance = it.amount;
+			it.bankaccounts = adb.getBankAccountsByFund(it.fund)
 		}	
 		o.deposits = [];
 		o.undepositedChecks = em.sqlContext.createNamedQuery("bankdeposit:getUndepositedChecks")
@@ -49,6 +52,9 @@ class BankDepositService  {
 
 		o.dtposted = dateSvc.serverDate;
 		o.cashier = [ objid:env.USERID, name:env.FULLNAME, title:env.JOBTITLE ];	
+
+		o.depositbyaccount = var.getProperty("deposit_collection_by_bank_account", '0').toString().equals('1')
+		o.depositamt = o.fundsummaries.amount.sum()
 		return o;
 	}
 
@@ -142,7 +148,7 @@ class BankDepositService  {
 	@ProxyMethod
 	public def open( deposit ) {
 		deposit = em.read('bankdeposit', deposit)	
-		deposit.fundsummary = em.sqlContext.createNamedQuery('bankdeposit:getFundSummaries')
+		deposit.fundsummaries = em.sqlContext.createNamedQuery('bankdeposit:getFundSummaries')
 				.setParameters(deposit).resultList
 		deposit.deposits = loadDepositEntry( deposit )
 		deposit.liquidations = em.sqlContext.createNamedQuery('bankdeposit:getPostedLiquidations')

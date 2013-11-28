@@ -85,13 +85,13 @@
             ] as BasicListModel;
             
             def fundSummaryModel = [
-                fetchList: { o->return entity.fundsummary; }
+                fetchList: { o->return entity.fundsummaries; }
             ] as BasicListModel;
             
             def depositModel = [
                 fetchList: { o->
                     if(showSelected) {
-                        return entity.deposits.findAll{ it.fund.objid == selectedFund.fund.objid };
+                        return entity.deposits.findAll{ it.fund?.objid == selectedFund?.fund?.objid };
                     }
                     return entity.deposits; 
                 }
@@ -117,13 +117,47 @@
                 ]);
             }
             
+            
+            def addDepositByBankAccount() {
+                return InvokerUtil.lookupOpener( "bankdeposit:entrybybankacct", [
+                    undepositedChecks: entity.undepositedChecks,
+                    
+                    fundSummaries    : entity.fundsummaries.findAll{it.balance != 0.0},
+                    
+                    handler: { o->
+                        entity.deposits << o;
+                        o.bankaccount.fundsummaries.each{ dfs -> 
+                            def fs = entity.fundsummaries.find{it.fund.objid == dfs.fund.objid }
+                            if (fs ){
+                                fs.allocated = fs.balance;
+                                fs.balance = 0;
+                            }
+                        }
+                        fundSummaryModel.reload();    
+                        depositModel.reload();
+                    }
+                ]);
+            }
+            
+            
             def removeDeposit() {
                 if(!selectedDeposit) return;
                 //remove all checks also
                 entity.deposits.remove( selectedDeposit );
-                def fund = entity.fundsummary.find{ it.fund.objid == selectedDeposit.fund.objid };
-                fund.allocated -= selectedDeposit.amount;
-                fund.balance = fund.amount - fund.allocated;
+                
+                if (selectedDeposit.bankaccount ){
+                    selectedDeposit.bankaccount.fundsummaries.each{ fs ->
+                        def f= entity.fundsummaries.find{ it.fund.objid == fs.fund.objid };
+                        f.allocated = 0.0 ;
+                        f.balance = f.amount;
+                    }
+                }
+                else{
+                    def fund = entity.fundsummaries.find{ it.fund.objid == selectedDeposit.fund.objid };
+                    fund.allocated -= selectedDeposit.amount;
+                    fund.balance = fund.amount - fund.allocated;
+                }
+                
                 selectedDeposit.checks.each {
                     entity.undepositedChecks.add( it );    
                 }
@@ -133,7 +167,7 @@
             
             
             def submit() {
-                if( entity.fundsummary.find{ it.balance > 0 } )
+                if( entity.fundsummaries.find{ it.balance > 0 } )
                     throw new Exception("There should be no undeposited balance");
             
                 if( MsgBox.confirm("You are about to submit this deposit. Please ensure the entries are correct")) {
