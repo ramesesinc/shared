@@ -54,7 +54,7 @@ AND cv.objid IS NULL
 SELECT 
 	 be.*,ba.fund_objid, ba.fund_code, ba.fund_title,
 	 ba.bank_code, ba.bank_name, ba.bank_objid, b.branchname, ba.accttype, 
-	 ba.cashreport, ba.cashbreakdownreport, ba.checkreport 
+	 ba.cashreport, ba.cashbreakdownreport, ba.checkreport, ba.checkbreakdownreport
 FROM bankdeposit_entry be
 	INNER JOIN bankaccount ba ON be.bankaccount_objid = ba.objid
 	left join bank b on b.objid = ba.bank_objid 
@@ -67,6 +67,7 @@ select
 from bankdeposit_entry_check bec
   inner join cashreceiptpayment_check crp on crp.objid = bec.objid 
 where bec.parentid=$P{objid} 
+order by crp.bank 
 
 
 [getFundSummaries]

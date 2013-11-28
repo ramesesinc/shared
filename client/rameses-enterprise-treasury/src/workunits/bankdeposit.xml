@@ -214,9 +214,17 @@
                if( selectedDeposit.checkreport ) {
                     def file = depositslippath + selectedDeposit.checkreport + ".jasper"
                     URL u = getClass().getClassLoader().getResource(file);
-                    if (u != null) reportname = file;
+                    if (u != null) reportname = file; 
                 }
-                println "reportname -> " + reportname
+                
+                def subreportname = depositslippath + "checkbreakdownitem.jasper"
+                println "selectedDeposit.checkbreakdownreport  -> " + selectedDeposit.checkbreakdownreport 
+                if(  selectedDeposit.checkbreakdownreport ) {
+                   def f = depositslippath + selectedDeposit.checkbreakdownreport + ".jasper"
+                   URL ul = getClass().getClassLoader().getResource(f);
+                   if( ul != null ) subreportname = f 
+                }
+                println "selectedDeposit.checkbreakdownreport  -> " + subreportname
                 
                 def reportdata = [
                     txndate: entity.dtposted, 
@@ -229,7 +237,7 @@
                     checktype : selectedDeposit.accttype,
                     amountinwords: numSvc.doubleToWords( selectedDeposit.totalnoncash ).toUpperCase()
                ]
-               return InvokerUtil.lookupOpener( "bankdeposit:printcheck" , [ reportdata: reportdata, reportname: reportname, depositslippath:depositslippath] ) 
+               return InvokerUtil.lookupOpener( "bankdeposit:printcheck" , [ reportdata: reportdata, reportname: reportname, subreportname:subreportname] ) 
                
             }
             

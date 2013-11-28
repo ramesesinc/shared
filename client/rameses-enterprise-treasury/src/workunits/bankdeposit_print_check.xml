@@ -23,7 +23,7 @@
             def entity 
             def reportdata 
             def reportname 
-            def depositslippath
+            def subreportname
             
             def totalcheck 
             
@@ -94,7 +94,7 @@
                 getReportData : { return  reportdata }, 
                 getSubReports : {
                     return [
-                        new SubReport("checkbreakdownitem", depositslippath + "checkbreakdownitem.jasper" )
+                        new SubReport("checkbreakdownitem", subreportname )
                     ] as SubReport[]
                 }
             ] as ReportModel
