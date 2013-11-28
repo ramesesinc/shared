@@ -18,6 +18,7 @@
 		<field name="cashreport"/>
 		<field name="cashbreakdownreport"/>
 		<field name="checkreport"/>
+		<field name="checkbreakdownreport"/>
 
 		<field name="beginbalance" required="true"/>
 		<field name="forwardbalance" required="true"/>
