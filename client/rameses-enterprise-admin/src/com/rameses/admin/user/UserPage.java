@@ -137,6 +137,8 @@ public class UserPage extends javax.swing.JPanel {
         xButton1.setName("addUsergroup");
         xButton1.setText("Add");
 
+        xButton2.setDepends(new String[] {"selectedUsergroup"});
+        xButton2.setDisableWhen("#{selectedUsergroup == null}");
         xButton2.setName("removeUsergroup");
         xButton2.setText("Remove");
 
