@@ -489,7 +489,11 @@ public class CRUDController
             this.entity = (Map) data;
             open(); 
             
-            if (binding != null) binding.refresh(); 
+            if (binding != null) {
+                formActions.clear();
+                formActions = null;                
+                binding.refresh();
+            } 
         }
     }
     
@@ -504,7 +508,11 @@ public class CRUDController
             this.entity = (Map) data;
             open();          
             
-            if (binding != null) binding.refresh(); 
+            if (binding != null) {
+                formActions.clear();
+                formActions = null;
+                binding.refresh();
+            } 
         }
     }    
       
