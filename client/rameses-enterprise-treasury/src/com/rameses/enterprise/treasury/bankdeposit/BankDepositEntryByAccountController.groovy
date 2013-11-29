@@ -141,7 +141,8 @@ class BankDepositEntryByAccountController
             summaries = fundSummaries;
             if (entity.bankaccount){
                 summaries = getFundSummariesByAccount()
-                entity.bankaccount.fundsummaries = summaries
+                entity.summaries = summaries
+                entity.bankaccount.fundsummaries = entity.summaries
             }
             return summaries; 
         }
