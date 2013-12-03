@@ -39,14 +39,6 @@ class StatementOfRevenueService
 			reportdata.removeAll(reportdata.findAll{it.amount <= 0.0 })
 		}
 
-		//generate group totals 
-		/*
-		reportdata.findAll{it.leaf == null}.each{
-			it."total${it.level}" = it.amount
-			it.amount = 0.0
-		}
-		*/
-		
 		return [
 			title 		: 'STATEMENT OF REVENUE',
 			period 		: util.buildPeriod(params),
@@ -55,8 +47,12 @@ class StatementOfRevenueService
 	}
 
 
-	def padTitle(title, idx){
-		return (' ' * PADDING_SIZE * idx) + title
+	def padTitle(acct, idx){
+		def title = acct.title 
+		if (acct.leaf == 1){
+			title = acct.code + ' - ' + title 
+		}
+		return (' ' * PADDING_SIZE * idx) + title 
 	}
 
 
@@ -141,7 +137,6 @@ class StatementOfRevenueService
 
 	void doBuildStandardFormat(data, items, idx, acct){
 		idx += 1
-		acct.title = padTitle(acct.title, idx)
 		acct.amount = 0.0
 		acct.level = idx 
 		def collections = items.findAll{it.accountid == acct.objid}
@@ -149,6 +144,7 @@ class StatementOfRevenueService
 			acct.amount = collections.amount.sum()
 			acct.leaf = 1
 		}
+		acct.title = padTitle(acct, idx)
 		data << acct
 		db.getStandardSubAccounts([parentid:acct.objid]).each{
 			doBuildStandardFormat(data, items, idx, it )
@@ -158,7 +154,7 @@ class StatementOfRevenueService
 
 	void doBuildExtendedFormat(data, items, idx, acct){
 		idx += 1
-		acct.title = padTitle(acct.title, idx)
+		acct.title = padTitle(acct, idx)
 		acct.amount = 0.0
 		acct.level = idx 
 		def collections = items.findAll{it.accountid == acct.objid}
@@ -175,13 +171,13 @@ class StatementOfRevenueService
 
 	void doBuildDetailedFormat(data, items, idx, acct){
 		idx += 1
-		acct.title = padTitle(acct.title, idx)
+		acct.title = padTitle(acct, idx)
 		acct.amount = 0.0
 		acct.level = idx 
 		data << acct
 
 		def collections = items.findAll{it.parentid == acct.objid}.each{
-			it.title = padTitle(it.title, idx+1)
+			it.title = padTitle(it, idx+1)
 			it.leaf = 1
 		}
 		if (collections){

@@ -1,9 +1,9 @@
 [getRootAccounts]
-SELECT objid, title, type FROM account WHERE acctgroup IN ('LIABILITY', 'REVENUE') ORDER BY code 
+SELECT objid, code, title, type FROM account WHERE acctgroup IN ('LIABILITY', 'REVENUE') ORDER BY code 
 
 
 [getStandardSubAccounts]
-SELECT objid, parentid, title, type 
+SELECT objid, parentid, code, title, type 
 FROM account 
 WHERE parentid = $P{parentid} 
   AND type IN ('group', 'detail')
@@ -11,7 +11,7 @@ ORDER BY code
 
 
 [getExtendedSubAccounts]
-SELECT objid, parentid, title, type 
+SELECT objid, parentid, code, title, type 
 FROM account 
 WHERE parentid = $P{parentid} 
 ORDER BY code 
