@@ -1,8 +1,8 @@
 <workunit>
     
     <invokers>
-        <invoker type="rulefact:create" caption="Create Fact" action="create"/>
-        <invoker type="rulefact:edit" caption="Edit Fact" action="edit"/>
+        <invoker type="rulefact:create" caption="Create Fact" action="create" target="popup"/>
+        <invoker type="rulefact:edit" caption="Edit Fact" action="edit" target="popup"/>
         <invoker type="formActions" caption="Close" action="_close" immediate="true"/>
         <invoker type="formActions" caption="Save" action="saveFact"/>
     </invokers>
@@ -21,11 +21,15 @@
         
         class RuleFactController {
         
+            @Binding
+            def binding;
+        
             @Service("RuleDeveloperService")
             def service;
         
             def entity;
             def ruleset;
+            
             def field;
             def mode;
             def fieldmode;
@@ -77,7 +81,8 @@
                 mode = "create";
                 entity = [objid: "RULFACT" + new UID()];
                 entity.fields  = [];
-                entity.ruleset = ruleset;
+                entity.rulesets = [];
+                entity.rulesets << [ruleset: ruleset];
             }
             
             void edit() {
@@ -145,6 +150,23 @@
                 if(pos >= entity.fields.size()) pos = entity.fields.size()-1;
                 fieldModel.setSelectedItem(pos);
                 fieldModel.reload();
+            }
+            
+            def selectedRuleset;
+            void addRuleset() {
+                def o = MsgBox.prompt("Add ruleset");
+                if(!o) return;
+                entity.rulesets << [ruleset: o];
+               
+            }
+            
+            void removeRuleset() {
+                if(entity.rulesets.size()==1)
+                    throw new Exception("Cannot remove ruleset. There must be at least one");
+                if(!selectedRuleset) return null;
+                if(!entity._deleted_rulesets)entity._deleted_rulesets = [];
+                entity._deleted_rulesets << selectedRuleset;
+                entity.rulesets.remove( selectedRuleset );
             }
             
         }

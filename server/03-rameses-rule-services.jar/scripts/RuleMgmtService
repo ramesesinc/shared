@@ -99,6 +99,8 @@ class RuleMgmtService extends ActiveCrudListService {
 		return o;
 	}
 
+	
+
 	@ProxyMethod
 	public def getRulegroups(o) {
 		return em.getRulegroups( o );

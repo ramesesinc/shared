@@ -25,9 +25,11 @@ class RuleMigrationService  {
 		m.facts = em.getRuleFacts(o);
 		m.actiondefs = em.getRuleActionDefs(o);
 		m.facts.each {
+			it.rulesets = em.getFactRulesets(it);
 			it.fields = em.getRuleFactFields(it);
 		}		
 		m.actiondefs.each {
+			it.rulesets = em.getActionDefRulesets(it);
 			it.params = em.getRuleActionDefParams(it);
 		}		
 		return m;

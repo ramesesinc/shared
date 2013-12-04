@@ -103,10 +103,14 @@
 		<field name="sortorder" />
 	</element>
 
+	<element name="ruleset_fact" tablename="sys_ruleset_fact">
+		<field name="ruleset" primary="true"/>
+		<field name="rulefact" primary="true"/>
+	</element>
+
 	<element name="fact" tablename="sys_rule_fact">
 		<field name="objid" primary="true"/>
 		<field name="name" required="true"/>
-		<field name="ruleset" required="true"/>
 		<field name="title" required="true"/>
 		<field name="factclass" required="true"/>
 		<field name="sortorder" required="true"/>
@@ -139,12 +143,16 @@
 		<field name="multivalued" />
 	</element>	
 
+	<element name="ruleset_actiondef" tablename="sys_ruleset_actiondef">
+		<field name="ruleset" primary="true"/>
+		<field name="actiondef" primary="true"/>
+	</element>
+
 	<element name="actiondef" tablename="sys_rule_actiondef">
 		<field name="objid" primary="true"/>
 		<field name="name" required="true"/>
 		<field name="actionname" required="true"/>
 		<field name="sortorder" required="true"/>
-		<field name="ruleset" required="true"/>
 		<field name="title" required="true"/>
 	</element>	
 

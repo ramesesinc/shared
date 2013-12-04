@@ -14,16 +14,21 @@ WHERE ruleset=$P{ruleset}
 ORDER BY sortorder
 
 [getFacts]
-SELECT * 
-FROM sys_rule_fact 
-WHERE ruleset=$P{ruleset}
-ORDER BY sortorder
+SELECT f.* 
+FROM sys_rule_fact f
+INNER JOIN sys_ruleset_fact rf ON rf.rulefact=f.objid
+WHERE rf.ruleset=$P{ruleset}
+ORDER BY f.sortorder
 
 [getActionDefs]
-SELECT * 
-FROM sys_rule_actiondef 
-WHERE ruleset=$P{ruleset}
+SELECT ad.* 
+FROM sys_rule_actiondef ad
+INNER JOIN sys_ruleset_actiondef ra ON ra.actiondef=ad.objid 
+WHERE ra.ruleset=$P{ruleset}
 ORDER BY sortorder
+
+[getFactRulesets]
+SELECT * FROM sys_ruleset_fact WHERE rulefact=$P{objid} 
 
 [getFactFields]
 SELECT *
@@ -99,6 +104,9 @@ WHERE cond.parentid=$P{ruleid}
 ${filter}
 ORDER BY var.pos
 
+[getActionDefRulesets]
+SELECT * FROM sys_ruleset_actiondef WHERE actiondef=$P{objid} 
+
 [getActionDefParams]
 SELECT *
 FROM sys_rule_actiondef_param
@@ -148,12 +156,17 @@ DELETE FROM sys_rule_action_param WHERE parentid IN  ( SELECT objid FROM sys_rul
 [removeAllRuleActions]
 DELETE FROM sys_rule_action WHERE parentid=$P{objid} 
 
+[removeActionDefRulesets]
+DELETE FROM sys_ruleset_actiondef WHERE actiondef=$P{objid}
 
 [removeActionDefParams]
 DELETE FROM sys_rule_actiondef_param WHERE parentid=$P{objid}
 
 [removeActionDef]
 DELETE FROM sys_rule_actiondef WHERE objid=$P{objid}
+
+[removeFactRulesets]
+DELETE FROM sys_ruleset_fact WHERE rulefact=$P{objid}
 
 [removeFactFields]
 DELETE FROM sys_rule_fact_field WHERE parentid=$P{objid}

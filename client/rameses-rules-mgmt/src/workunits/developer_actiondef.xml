@@ -1,8 +1,8 @@
 <workunit>
     
     <invokers>
-        <invoker type="ruleactiondef:create" caption="Create Action Def" action="create"/>
-        <invoker type="ruleactiondef:edit" caption="Edit Action Def" action="edit"/>
+        <invoker type="ruleactiondef:create" caption="Create Action Def" action="create" target="popup"/>
+        <invoker type="ruleactiondef:edit" caption="Edit Action Def" action="edit" target="popup"/>
         
         <invoker type="formActions" caption="Close" action="_close" immediate="true"/>
         <invoker type="formActions" caption="Save" action="saveAction"/>
@@ -74,7 +74,8 @@
                 mode = "create";
                 entity = [objid: "RULADEF" + new UID()];
                 entity.params  = [];
-                entity.ruleset = ruleset;
+                entity.rulesets = [];
+                entity.rulesets << [ruleset: ruleset];
             }
             
             void edit() {
@@ -144,6 +145,24 @@
                 paramModel.setSelectedItem(pos);
                 paramModel.reload();
             }
+            
+            def selectedRuleset;
+            void addRuleset() {
+                def o = MsgBox.prompt("Add ruleset");
+                if(!o) return;
+                entity.rulesets << [ruleset: o];
+               
+            }
+            
+            void removeRuleset() {
+                if(entity.rulesets.size()==1)
+                    throw new Exception("Cannot remove ruleset. There must be at least one");
+                if(!selectedRuleset) return null;
+                if(!entity._deleted_rulesets)entity._deleted_rulesets = [];
+                entity._deleted_rulesets << selectedRuleset;
+                entity.rulesets.remove( selectedRuleset );
+            }
+
         }
         ]]>
     </code>

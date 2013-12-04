@@ -69,7 +69,7 @@
             }
             
             def addActionDef() {
-                return InvokerUtil.lookupOpener( "ruleactiondef:create", [ruleset:rule.ruleset] );
+                return InvokerUtil.lookupOpener( "ruleactiondef:create", [ruleset:rule.ruleset, domain:rule.domain] );
             }
             
             def editActionDef() {
@@ -78,6 +78,7 @@
             }
             
             void removeActionDef() {
+                if(!MsgBox.confirm("You are about to remove this actiondef permanently. Proceed?")) return;
                 if(!selectedActionDef) return;
                 devService.removeActionDef(selectedActionDef);
                 binding.refresh();

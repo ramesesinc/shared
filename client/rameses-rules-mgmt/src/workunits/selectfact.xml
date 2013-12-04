@@ -68,7 +68,7 @@
             }
             
             def addFact() {
-                return InvokerUtil.lookupOpener( "rulefact:create", [ruleset:rule.ruleset] );
+                return InvokerUtil.lookupOpener( "rulefact:create", [ruleset:rule.ruleset, domain:rule.domain] );
             }
             
             def editFact() {
@@ -77,6 +77,7 @@
             }
             
             void removeFact() {
+                if(!MsgBox.confirm("You are about to remove this fact permanently. Proceed?")) return;
                 if(!selectedFact) return;
                 devService.removeFact(selectedFact);
                 binding.refresh();
