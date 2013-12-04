@@ -112,5 +112,6 @@ FROM (
     INNER JOIN afserial_control ac ON ai.objid = ac.controlid
   WHERE ac.assignee_objid = $P{subcollectorid}
 ) x
+WHERE x.amount > 0.0 
 
 
