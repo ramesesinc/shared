@@ -1,6 +1,6 @@
 <workunit extends="wtemplates/ListController.xml" serviceName="BankService" entityName="bank">
     <invokers>
-        <invoker type="bankaccount:formActions" caption="Bank List" 
-            immediate="true" target="popup"/>
+        <invoker type="bankaccount:formActions" caption="Bank List" immediate="true" target="popup"/>
+        <invoker folderid="/explorer/master/treasury" caption="Banks" index="1"  role="TREASURY_DATAMGMT"/>
    </invokers>
 </workunit>

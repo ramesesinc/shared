@@ -13,8 +13,17 @@ class BankService extends ActiveCrudListService {
 			[name:"code", caption:"Bank Code"],
 			[name:"name", caption:"Bank Name"],
 			[name:"branchname", caption:"Branch Name"],
-			[name:"address", caption:"Address"],
+			[name:"depository", caption:"Depository", type:'boolean'],
+			[name:"deposittype", caption:"Check Deposit Type"],
 		];
+	}
+
+	@ProxyMethod
+	public def getList(Map params) {
+		if (!params.depository) params.depository = '%'
+		params.code = (params.searchtext ? params.searchtext : '') + '%'
+		params.name = (params.searchtext ? params.searchtext : '') + '%'
+		return  em.getList(params);
 	}
 	
 	

@@ -72,7 +72,7 @@ public class BankAccountPage extends javax.swing.JPanel {
 
         xLookupField1.setCaption("Bank");
         xLookupField1.setExpression("#{item.code} #{item.name}");
-        xLookupField1.setHandler("bank:lookup");
+        xLookupField1.setHandler("lookupBank");
         xLookupField1.setName("entity.bank");
         xLookupField1.setPreferredSize(new java.awt.Dimension(0, 19));
         xLookupField1.setRequired(true);

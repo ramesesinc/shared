@@ -35,6 +35,10 @@ public class BankPage extends javax.swing.JPanel {
         xTextField2 = new com.rameses.rcp.control.XTextField();
         xTextField3 = new com.rameses.rcp.control.XTextField();
         xTextField4 = new com.rameses.rcp.control.XTextField();
+        xSeparator1 = new com.rameses.rcp.control.XSeparator();
+        xCheckBox1 = new com.rameses.rcp.control.XCheckBox();
+        xSeparator2 = new com.rameses.rcp.control.XSeparator();
+        xComboBox1 = new com.rameses.rcp.control.XComboBox();
 
         setPreferredSize(new java.awt.Dimension(542, 498));
 
@@ -64,6 +68,55 @@ public class BankPage extends javax.swing.JPanel {
         xTextField4.setRequired(true);
         xFormPanel1.add(xTextField4);
 
+        xSeparator1.setCaption("Depository Information");
+        xSeparator1.setCaptionWidth(140);
+        xSeparator1.setCellPadding(new java.awt.Insets(10, 0, 0, 0));
+        xSeparator1.setPreferredSize(new java.awt.Dimension(0, 20));
+        org.jdesktop.layout.GroupLayout xSeparator1Layout = new org.jdesktop.layout.GroupLayout(xSeparator1);
+        xSeparator1.setLayout(xSeparator1Layout);
+        xSeparator1Layout.setHorizontalGroup(
+            xSeparator1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 371, Short.MAX_VALUE)
+        );
+        xSeparator1Layout.setVerticalGroup(
+            xSeparator1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 20, Short.MAX_VALUE)
+        );
+        xFormPanel1.add(xSeparator1);
+
+        xCheckBox1.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        xCheckBox1.setCheckValue(1);
+        xCheckBox1.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        xCheckBox1.setName("entity.depository");
+        xCheckBox1.setShowCaption(false);
+        xCheckBox1.setText(" Is this a Depository Bank of the LGU?");
+        xCheckBox1.setUncheckValue(0);
+        xFormPanel1.add(xCheckBox1);
+
+        xSeparator2.setCaption("Depository Information");
+        xSeparator2.setCaptionWidth(140);
+        xSeparator2.setCellPadding(new java.awt.Insets(10, 0, 0, 0));
+        xSeparator2.setPreferredSize(new java.awt.Dimension(0, 20));
+        org.jdesktop.layout.GroupLayout xSeparator2Layout = new org.jdesktop.layout.GroupLayout(xSeparator2);
+        xSeparator2.setLayout(xSeparator2Layout);
+        xSeparator2Layout.setHorizontalGroup(
+            xSeparator2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 371, Short.MAX_VALUE)
+        );
+        xSeparator2Layout.setVerticalGroup(
+            xSeparator2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 20, Short.MAX_VALUE)
+        );
+        xFormPanel1.add(xSeparator2);
+
+        xComboBox1.setCaption("Check Deposit Type");
+        xComboBox1.setDepends(new String[] {"entity.depository"});
+        xComboBox1.setDynamic(true);
+        xComboBox1.setItems("deposittypes");
+        xComboBox1.setName("entity.deposittype");
+        xComboBox1.setPreferredSize(new java.awt.Dimension(0, 20));
+        xFormPanel1.add(xComboBox1);
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -77,14 +130,18 @@ public class BankPage extends javax.swing.JPanel {
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 108, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(86, Short.MAX_VALUE))
+                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 213, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(274, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.rameses.rcp.control.XCheckBox xCheckBox1;
+    private com.rameses.rcp.control.XComboBox xComboBox1;
     private com.rameses.rcp.control.XFormPanel xFormPanel1;
+    private com.rameses.rcp.control.XSeparator xSeparator1;
+    private com.rameses.rcp.control.XSeparator xSeparator2;
     private com.rameses.rcp.control.XTextField xTextField1;
     private com.rameses.rcp.control.XTextField xTextField2;
     private com.rameses.rcp.control.XTextField xTextField3;

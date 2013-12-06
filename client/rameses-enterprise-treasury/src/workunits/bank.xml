@@ -2,7 +2,7 @@
     
    <invokers>
          <invoker type="bank:create" caption="Bank" action="create"/>
-         <invoker type="bank:open" caption="Bank" action="open"/>
+         <invoker type="bank:open" caption="Bank" action="open"  />
    </invokers>
    
    <code>
@@ -17,6 +17,29 @@
             String entityName = "bank";
             String title = "Bank";
             String prefixId = "BNK";
+            
+            def deposittypes = ['LOCAL', 'REGIONAL', 'OUT-OF-TOWN', 'OTHER-BRANCH']
+            
+            void afterOpen(Object data) {
+                if (data.depository == 1 ){
+                    deposittypes.add('ON-US');
+                }
+            } 
+            
+            
+            @PropertyChangeListener
+            def listener = [
+                'entity.depository' : {
+                    if (entity.depository == 1){
+                        deposittypes.add('ON-US')
+                        entity.deposittype = 'ON-US'
+                    }
+                    else {
+                        entity.deposittype = null
+                        deposittypes.remove('ON-US')
+                    }
+                }
+            ]
         }      
        ]]>
    </code>

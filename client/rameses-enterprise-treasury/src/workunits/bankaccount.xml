@@ -51,6 +51,11 @@
                 return page;
             }
             
+            
+            def getLookupBank(){
+                return InvokerUtil.lookupOpener('bank:lookup', ['query.depository': 1])
+            }
+            
         }      
        ]]>
    </code>

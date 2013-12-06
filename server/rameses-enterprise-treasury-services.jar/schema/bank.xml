@@ -4,6 +4,9 @@
 		<field name="code" required="true"/>
 		<field name="name" required="true"/>
 		<field name="branchname" required="true"/>
+		<!-- LOCAL, REGIONAL, OUT-OF-TOWN, OTHER-BRANCH -->
+		<field name="deposittype" />
+		<field name="depository" required="true" type="integer" />
 		<field name="address"/>
 		<field name="manager"/>
 	</element>
