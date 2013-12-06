@@ -18,11 +18,12 @@
             String title = "Bank";
             String prefixId = "BNK";
             
-            def deposittypes = ['LOCAL', 'REGIONAL', 'OUT-OF-TOWN', 'OTHER-BRANCH']
+            def deposittypes;
             
             void afterOpen(Object data) {
-                if (data.depository == 1 ){
-                    deposittypes.add('ON-US');
+                deposittypes = service.getDepositTypes()
+                if (data.depository == 0 ){
+                    deposittypes.remove('ON-US');
                 }
             } 
             

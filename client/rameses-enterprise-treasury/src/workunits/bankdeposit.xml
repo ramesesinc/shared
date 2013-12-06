@@ -265,11 +265,11 @@
                     branchname :selectedDeposit.branchname,
                     depositedbyname: entity.cashier.name,
                     noncash : selectedDeposit.totalnoncash,
-                    checks : selectedDeposit.checks,
+                    checks : [],
                     checktype : selectedDeposit.accttype,
                     amountinwords: numSvc.doubleToWords( selectedDeposit.totalnoncash ).toUpperCase()
                ]
-               return InvokerUtil.lookupOpener( "bankdeposit:printcheck" , [ reportdata: reportdata, reportname: reportname, subreportname:subreportname, depositslippath:depositslippath] ) 
+               return InvokerUtil.lookupOpener( "bankdeposit:printcheck" , [ checks:selectedDeposit.checks, reportdata: reportdata, reportname: reportname, subreportname:subreportname, depositslippath:depositslippath] ) 
                
             }
             

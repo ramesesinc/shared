@@ -32,6 +32,22 @@
                 return "_close";
             }
             
+            def getLookupBank(){
+                return InvokerUtil.lookupOpener('bank:lookup', [
+                    onselect : {
+                        check.bankid = it.objid;
+                        check.bank   = it.code;
+                        check.deposittype = it.deposittype;
+                    },
+                    
+                    onempty  : {
+                        check.bankid = null;
+                        check.bank   = null;
+                        check.deposittype = null;
+                    }
+                ])
+            }
+            
         }
         ]]>
     </code>

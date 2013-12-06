@@ -26,5 +26,10 @@ class BankService extends ActiveCrudListService {
 		return  em.getList(params);
 	}
 	
+
+	@ProxyMethod
+	public def getDepositTypes(  ) {
+		return ['ON-US', 'LOCAL', 'REGIONAL', 'OUT-OF-TOWN', 'OTHER-BRANCH']	
+	}
 	
 }

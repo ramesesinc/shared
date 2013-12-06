@@ -29,37 +29,42 @@ public class CheckPaymentPage extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
     private void initComponents() {
         xFormPanel1 = new com.rameses.rcp.control.XFormPanel();
+        xLookupField1 = new com.rameses.rcp.control.XLookupField();
         xTextField1 = new com.rameses.rcp.control.XTextField();
-        xTextField2 = new com.rameses.rcp.control.XTextField();
         xDateField1 = new com.rameses.rcp.control.XDateField();
         xDecimalField2 = new com.rameses.rcp.control.XDecimalField();
 
-        setPreferredSize(new java.awt.Dimension(418, 191));
+        setPreferredSize(new java.awt.Dimension(426, 164));
 
         xFormPanel1.setCaptionFont(new java.awt.Font("Tahoma", 0, 18));
-        xFormPanel1.setCaptionWidth(150);
+        xFormPanel1.setCaptionWidth(160);
+        xLookupField1.setCaption("Bank");
+        xLookupField1.setExpression("#{check.bank}");
+        xLookupField1.setFont(new java.awt.Font("Tahoma", 0, 18));
+        xLookupField1.setHandler("lookupBank");
+        xLookupField1.setPreferredSize(new java.awt.Dimension(0, 27));
+        xLookupField1.setRequired(true);
+        xFormPanel1.add(xLookupField1);
+
         xTextField1.setCaption("Check No");
         xTextField1.setFont(new java.awt.Font("Tahoma", 0, 18));
         xTextField1.setName("check.checkno");
-        xTextField1.setPreferredSize(new java.awt.Dimension(200, 27));
+        xTextField1.setPreferredSize(new java.awt.Dimension(0, 27));
+        xTextField1.setRequired(true);
         xFormPanel1.add(xTextField1);
-
-        xTextField2.setCaption("Bank");
-        xTextField2.setFont(new java.awt.Font("Tahoma", 0, 18));
-        xTextField2.setName("check.bank");
-        xTextField2.setPreferredSize(new java.awt.Dimension(0, 27));
-        xFormPanel1.add(xTextField2);
 
         xDateField1.setCaption("Check Date");
         xDateField1.setFont(new java.awt.Font("Tahoma", 0, 18));
         xDateField1.setName("check.checkdate");
-        xDateField1.setPreferredSize(new java.awt.Dimension(180, 27));
+        xDateField1.setPreferredSize(new java.awt.Dimension(0, 27));
+        xDateField1.setRequired(true);
         xFormPanel1.add(xDateField1);
 
         xDecimalField2.setCaption("Check Amount");
         xDecimalField2.setFont(new java.awt.Font("Tahoma", 0, 18));
         xDecimalField2.setName("check.amount");
-        xDecimalField2.setPreferredSize(new java.awt.Dimension(180, 27));
+        xDecimalField2.setPreferredSize(new java.awt.Dimension(0, 27));
+        xDecimalField2.setRequired(true);
         xFormPanel1.add(xDecimalField2);
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
@@ -74,9 +79,9 @@ public class CheckPaymentPage extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .add(30, 30, 30)
-                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 139, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .add(20, 20, 20)
+                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 133, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     
@@ -85,8 +90,8 @@ public class CheckPaymentPage extends javax.swing.JPanel {
     private com.rameses.rcp.control.XDateField xDateField1;
     private com.rameses.rcp.control.XDecimalField xDecimalField2;
     private com.rameses.rcp.control.XFormPanel xFormPanel1;
+    private com.rameses.rcp.control.XLookupField xLookupField1;
     private com.rameses.rcp.control.XTextField xTextField1;
-    private com.rameses.rcp.control.XTextField xTextField2;
     // End of variables declaration//GEN-END:variables
     
 }

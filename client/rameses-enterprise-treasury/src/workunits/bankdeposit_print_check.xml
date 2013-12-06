@@ -18,9 +18,13 @@
             
             @Binding
             def binding 
+            
+            @Service('BankService')
+            def bankSvc
         
         
             def entity 
+            def checks 
             def reportdata 
             def reportname 
             def subreportname
@@ -34,7 +38,12 @@
                     entity.topage = getTotalNoOfPages()
                     reportdata.pagecount = (Integer) getTotalNoOfPages();
                     binding.refresh("entity.frompage|entity.topage")
-                }   
+                },
+                
+                "deposittype" : {
+                    listHandler.reload();
+                    binding.refresh('numchecks');
+                }
             ] 
             
             def init() {
@@ -72,12 +81,11 @@
                     MsgBox.alert("Insert check deposit slip.\n Printing page $i of ${reportdata.pagecount}. " )
                     reportdata.pagenumber = i;
                     report.viewReport() 
-                    ReportUtil.print( report.report, false )
+                    ReportUtil.print( report.report, true )
                     
                     list.removeAll( reportdata.noncashpayments )
                     p++ 
                 }
-                return "_close"
             }
             
             def doCancel() { return "_close"}
@@ -100,6 +108,27 @@
             ] as ReportModel
             
             
+            
+            
+            
+            def deposittype
+            
+            def getDeposittypes(){
+                return bankSvc.getDepositTypes()
+            }
+            
+            def numchecks
+            
+            def listHandler = [
+                fetchList : { 
+                    reportdata.checks = []
+                    if (deposittype != null){
+                        reportdata.checks = checks.findAll{it.deposittype == deposittype }
+                    }
+                    numchecks = reportdata.checks.size();
+                    return reportdata.checks
+                }
+            ] as BasicListModel
         }      
        ]]>
    </code>

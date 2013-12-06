@@ -50,6 +50,8 @@
 	<element name="paymentitem-check" tablename="cashreceiptpayment_check">
 		<field name="objid" primary="true"/>
 		<field name="receiptid" required="true" />
+		<field name="bankid" />
+		<field name="deposittype" />
 		<field name="bank" required="true"/>
 		<field name="checkno" required="true"/>
 		<field name="checkdate" required="true"/>
