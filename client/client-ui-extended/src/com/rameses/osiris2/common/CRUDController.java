@@ -57,16 +57,23 @@ public class CRUDController
     
             
     // <editor-fold defaultstate="collapsed" desc=" Getter/Setter "> 
-        
-    public String getTitle() { 
-        String text = (invoker == null? "Title": invoker.getCaption()); 
-        if (MODE_CREATE.equals(getMode())) 
-            return text + " (New)";
-        else if (MODE_EDIT.equals(getMode())) 
-            return text + " (Edit)";
-        else
-            return text; 
+    
+    public String getPreferredTitle() {
+        return (invoker == null? null: invoker.getCaption()); 
     }
+    
+    public String getTitle() { 
+        //String text = (invoker == null? "Title": invoker.getCaption()); 
+        String text = getPreferredTitle();
+        if (text == null) text = "Title";
+        
+        if (MODE_CREATE.equals(getMode())) 
+            return text + " (New)"; 
+        else if (MODE_EDIT.equals(getMode())) 
+            return text + " (Edit)"; 
+        else 
+            return text; 
+    } 
     
     public final String getMode() { return mode; }
             
