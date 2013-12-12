@@ -9,6 +9,9 @@ class EntityIndividualMasterService
 	
 	@Service('SequenceService')
 	def seqSvc;
+
+	@Service('DateService')
+	def dtSvc 
 	
 	def SCHEMA_NAME = 'entityindividual'
 	
@@ -87,10 +90,20 @@ class EntityIndividualMasterService
 		entity.putAll( em.read( SCHEMA_NAME, entity ) )
 		entity.cards = loadCards( entity )
 		entity.contacts = loadContacts( entity )
-		
+		entity.seniorcitizen = getSeniorCitizenStatus(entity)
 		return entity
 	}
 	
+	@ProxyMethod
+	public def getSeniorCitizenStatus(entity){
+		if (entity.birthdate){
+			def birthyear = dtSvc.getYear( entity.birthdate )
+			def age = dtSvc.serverYear - birthyear
+			return (age >= 60)
+		}
+		return null
+	}
+
 	def loadCards( entity ) {
 		return em.sqlContext.createNamedQuery('entitycard:getCardByEntity').setParameter('entityid', entity.objid ).resultList
 	}
