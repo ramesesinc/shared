@@ -1,6 +1,6 @@
 [getList]
 SELECT * FROM liquidation 
-where o.liquidatingofficer_objid = $P{liquidationofficerid}
+where liquidatingofficer_objid = $P{liquidationofficerid}
 	and txnno like $P{txnno}
 
 [getUnliquidatedRemittances]
@@ -57,9 +57,9 @@ SELECT r.objid, $P{liquidationid}
 FROM remittance r WHERE r.objid IN (${ids})
 
 [postLiquidateChecks]
-INSERT INTO liquidation_checkpayment (objid, liquidationid  )
+INSERT INTO liquidation_checkpayment (objid, liquidationid , liquidationfundid  )
 SELECT 
-crp.objid, $P{liquidationid}
+crp.objid, $P{liquidationid}, $P{liquidationfundid}
 FROM cashreceiptpayment_check crp 
 INNER JOIN remittance_cashreceipt rc ON rc.objid=crp.receiptid
 WHERE rc.remittanceid IN (${ids})

@@ -1,5 +1,7 @@
 [getList]
 SELECT * FROM liquidation
+where liquidatingofficer_objid = $P{liquidationofficerid}
+	and txnno like $P{txnno}
 
 [getUnliquidatedRemittances]
 SELECT 
