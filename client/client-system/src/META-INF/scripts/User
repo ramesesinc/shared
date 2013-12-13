@@ -27,7 +27,7 @@ public class User
     }
 
     public String getClientCode() {
-        return OsirisContext.env.CLIENTCODE;
+        return OsirisContext.env.ORGID;
     }
 
     public void init( def usr, def pwd ) 
