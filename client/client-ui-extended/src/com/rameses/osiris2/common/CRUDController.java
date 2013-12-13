@@ -58,6 +58,8 @@ public class CRUDController
             
     // <editor-fold defaultstate="collapsed" desc=" Getter/Setter "> 
     
+    public String getIcon() { return null; } 
+    
     public String getPreferredTitle() {
         return (invoker == null? null: invoker.getCaption()); 
     }
