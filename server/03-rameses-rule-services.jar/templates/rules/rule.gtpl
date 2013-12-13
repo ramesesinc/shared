@@ -64,7 +64,7 @@
 					r = "false"	
 				break;
 			case "expression-expression":
-				String expr = o.expr.replace('\n', '').replace('\t', '');
+				String expr = o.expr.replace('\n', ' ').replace('\t', ' ');
 				r = "(new ActionExpression(\"${expr}\", bindings))" ;
 				break;
 			case "expression-range":

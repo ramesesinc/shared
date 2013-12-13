@@ -13,6 +13,9 @@ class EntityService extends AbstractCrudListService {
 	@Service('SequenceService')
 	def seqSvc;
 
+	@Service('DateService')
+	def dtSvc;
+
 	@Env
 	def env;
 
@@ -104,7 +107,18 @@ class EntityService extends AbstractCrudListService {
 		if (o) entity.putAll(o); 
 
 		if (type == 'multiple') afterOpenMultiple(entity);
+		if (type == 'individual') afterOpenIndividual(entity)
 	} 
+
+	def afterOpenIndividual(entity){
+		if (entity.birthdate){
+			def birthyear = dtSvc.getYear( entity.birthdate )
+			def age = dtSvc.serverYear - birthyear
+			return (age >= 60)
+		}
+	}
+
+
 
 	public def getList( params ) {
 		if (!params.name) params.name = params.searchtext; 

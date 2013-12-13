@@ -20,6 +20,10 @@
             
             def deposittypes;
             
+            def getDeposittypes() {
+                return service.getDepositTypes();
+            }   
+            
             void afterOpen(Object data) {
                 deposittypes = service.getDepositTypes()
                 if (data.depository == 0 ){

@@ -24,6 +24,7 @@
 	<element name="checkpayment" tablename="liquidation_checkpayment">
 		<field name="objid" primary="true"/>
 		<field name="liquidationid" required="true"/>
+		<field name="liquidationfundid" required="true"/>
 	</element>
 
 	<element name="cashier_fund" tablename="liquidation_cashier_fund">
@@ -34,6 +35,9 @@
 		<field name="cashier_objid" required="true"/>
 		<field name="cashier_name" required="true"/>
 		<field name="amount" />
+		<field name="totalcash" required="true"/>
+		<field name="totalnoncash" required="true"/>
+		<complex name="cashbreakdown" required="true" serializer="default" type="list"/>
 	</element>
 
 </schema>	
