@@ -1,0 +1,6 @@
+<workunit extends="wtemplates/ListController.xml" serviceName="LiquidationListService" entityName="liquidation" tag="all" allowCreate="false">
+    <invokers>
+        <invoker folderid="/explorer/txn/treasury" caption="Liquidations (All)" index="40" role="LIST_MGMT"/>
+        <invoker type="home.action" caption="Liquidations (All)" index="40" role="LIST_MGMT" target="window"/>
+    </invokers>
+</workunit>

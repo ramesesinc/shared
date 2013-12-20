@@ -3,7 +3,7 @@ SELECT r.*,
 CASE WHEN lr.objid IS NULL THEN 0 ELSE 1 END AS liquidated 
 FROM remittance r
 LEFT JOIN liquidation_remittance lr ON r.objid=lr.objid
-WHERE r.collector_objid = $P{collectorid} 
+WHERE r.collector_objid like $P{collectorid} 
 	and r.txnno like $P{txnno}
 ORDER BY r.collector_name, r.txnno DESC 
 

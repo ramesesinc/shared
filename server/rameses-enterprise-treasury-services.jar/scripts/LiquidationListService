@@ -28,7 +28,9 @@ class LiquidationListService extends AbstractListService {
 
 	void beforeList(o) {
 		o.txnno = (o.searchtext ? o.searchtext : '') +'%'
-		o.liquidationofficerid = env.USERID 
+		o.liquidationofficerid  = '%'
+		if( o._tag == 'byliquidatingofficer')
+			o.liquidationofficerid = env.USERID 
 	}
 	
 }

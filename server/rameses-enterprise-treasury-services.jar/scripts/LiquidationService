@@ -64,35 +64,24 @@ class LiquidationService  {
 		def m = [liquidationid:o.objid];
 		m.ids = ids;
 		em.postLiquidateRemittance(m);
+		em.postLiquidateChecks(m);
 
 		//update cashbook to add new entry
-		
-		for( item in o.fundsummary) { 
-				item.objid = "LIQFUND"+new UID();
-				item.liquidationid = o.objid;
-				em.create( item, "cashier_fund");
-
-				item.checks.each { 
-					println it
-					it.liquidationfundid = item.objid 
-					it.liquidationid = o.objid 
-					em.create( it, "checkpayment")	
-				}
-
-				
+		o.fundsummary.each {
+				it.objid = "LIQFUND"+new UID();
+				it.liquidationid = o.objid;
+				em.create( it, "cashier_fund");
 				def detail = [:];
-				detail.fundid = item.fund.objid;
-				detail.fundtitle = item.fund.title 
+				detail.fundid = it.fund.objid;
 				detail.subacctid = o.liquidatingofficer.objid; 
 				detail.type = 'LIQUIDATING_OFFICER' 
 				detail.refid = o.objid;
 				detail.refno = o.txnno;
 				detail.refdate = o.dtposted;
 				detail.reftype = "liquidation";
-				detail.amount = item.amount;
+				detail.amount = it.amount;
 				detail.particulars = "LIQUIDATION";
 				cashBook.postDR( detail );
-				
 		}
 		return o;		
 	}	

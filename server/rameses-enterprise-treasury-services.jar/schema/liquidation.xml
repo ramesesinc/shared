@@ -35,9 +35,6 @@
 		<field name="cashier_objid" required="true"/>
 		<field name="cashier_name" required="true"/>
 		<field name="amount" />
-		<field name="totalcash" required="true"/>
-		<field name="totalnoncash" required="true"/>
-		<complex name="cashbreakdown" required="true" serializer="default" type="list"/>
 	</element>
 
 </schema>	

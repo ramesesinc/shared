@@ -31,7 +31,9 @@ class RemittanceListService extends AbstractListService {
 
 	void beforeList(o) {
 		o.txnno = (o.searchtext ? o.searchtext : '') +'%'
-		o.collectorid = env.USERID 
+		o.collectorid  = '%'
+		if( o._tag == 'bycollector')
+			o.collectorid = env.USERID 
 	}
 	
 }
