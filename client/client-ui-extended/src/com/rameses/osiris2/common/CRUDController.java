@@ -143,7 +143,7 @@ public class CRUDController
     // </editor-fold>    
         
     // <editor-fold defaultstate="collapsed" desc=" Options "> 
-          
+        
     public boolean isAllowCreate() { return true; } 
     public boolean isAllowOpen() { return true; } 
     public boolean isAllowEdit() { return true; } 
@@ -166,6 +166,7 @@ public class CRUDController
     public Map getDeletePermission() { return null; } 
     public Map getApprovePermission() { return null; } 
     
+    public boolean isDynamic() { return true; } 
     
     /*
      *  use as a prefix value in generating the UID key 
@@ -192,31 +193,28 @@ public class CRUDController
             
             formActions = new ArrayList();
             formActions.add(createAction("close", "Close", "images/toolbars/cancel.png", "ctrl C", 'c', "#{mode=='read'}", true));  
-            if (isAllowCreate()) { 
-                Action a = createAction("init", "New", "images/toolbars/create.png", "ctrl N", 'n', "#{mode=='read'}", true); 
-                Map perm = getCreatePermission(); 
-                loadPermission(a, perm); 
-                formActions.add(a); 
-            } 
-            if (isAllowEdit()) { 
-                Action a = createAction("edit", "Edit", "images/toolbars/edit.png", "ctrl E", 'e',  "#{mode=='read' && entity.state=='DRAFT'}", true); 
-                Map perm = getEditPermission(); 
-                loadPermission(a, perm); 
-                formActions.add(a); 
-            }
-            if (isAllowDelete()) { 
-                Action a = createAction("delete", "Delete", "images/toolbars/trash.png", null, 'd', "#{mode=='read' && entity.state=='DRAFT'}", true); 
-                Map perm = getDeletePermission(); 
-                loadPermission(a, perm); 
-                formActions.add(a); 
-            }
-            if (isAllowApprove()) {
-                Action a = createAction("approve", "Approve", "images/toolbars/approve.png", null, 'v', "#{mode=='read' && entity.state=='DRAFT'}", true); 
-                Map perm = getApprovePermission(); 
-                loadPermission(a, perm); 
-                formActions.add(a); 
-            }
             
+            //load create action
+            Action a = createAction("init", "New", "images/toolbars/create.png", "ctrl N", 'n', "#{mode=='read' && allowCreate==true}", true); 
+            loadPermission(a, getCreatePermission()); 
+            formActions.add(a); 
+            
+            //load edit action
+            a = createAction("edit", "Edit", "images/toolbars/edit.png", "ctrl E", 'e',  "#{mode=='read' && allowEdit==true && entity.state=='DRAFT'}", true); 
+            loadPermission(a, getEditPermission()); 
+            formActions.add(a); 
+            
+            //load delete action
+            a = createAction("delete", "Delete", "images/toolbars/trash.png", null, 'd', "#{mode=='read' && allowDelete==true && entity.state=='DRAFT'}", true); 
+            loadPermission(a, getDeletePermission()); 
+            formActions.add(a); 
+            
+            //load approve action
+            a = createAction("approve", "Approve", "images/toolbars/approve.png", null, 'v', "#{mode=='read' && allowApprove==true && entity.state=='DRAFT'}", true); 
+            loadPermission(a, getApprovePermission()); 
+            formActions.add(a); 
+            
+            //load supporting actions
             formActions.add(createAction("cancel", "Cancel", "images/toolbars/cancel.png", "ctrl C", 'c', "#{mode!='read'}", true)); 
             formActions.add(createAction("save", "Save", "images/toolbars/save.png", "ctrl S", 's', "#{mode!='read' && allowSave==true}", false)); 
             formActions.add(createAction("undo", "Undo", "images/toolbars/undo.png", "ctrl Z", 'u', "#{mode=='edit'}", true)); 
@@ -499,8 +497,10 @@ public class CRUDController
             open(); 
             
             if (binding != null) {
-                formActions.clear();
-                formActions = null;                
+                if (isDynamic()) { 
+                    formActions.clear();
+                    formActions = null;
+                } 
                 binding.refresh();
             } 
         }
@@ -518,8 +518,10 @@ public class CRUDController
             open();          
             
             if (binding != null) {
-                formActions.clear();
-                formActions = null;
+                if (isDynamic()) { 
+                    formActions.clear();
+                    formActions = null;
+                } 
                 binding.refresh();
             } 
         }
