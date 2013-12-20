@@ -206,6 +206,19 @@ class StatementOfRevenueService
 			else {
 				throw new Exception('Report type ' + params.type + ' is not supported.')
 			}
+		} else if (params.charttype.equalsIgnoreCase('sre')){
+			if (params.type.equalsIgnoreCase('standard')) {
+				return db.getSREStandardRevenueItemSummaries(params)
+			}
+			else if (params.type.equalsIgnoreCase('extended')) {
+				return db.getSREExtendedRevenueItemSummaries(params)
+			}
+			else if (params.type.equalsIgnoreCase('detailed')) {
+				return db.getSREDetailedRevenueItemSummaries(params)
+			}
+			else {
+				throw new Exception('Report type ' + params.type + ' is not supported.')
+			}
 		}
 	}
 
