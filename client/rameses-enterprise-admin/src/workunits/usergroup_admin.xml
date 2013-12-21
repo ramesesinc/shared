@@ -1,7 +1,7 @@
 <workunit>
     <invokers>
-        <invoker type="usergroup-folder:formActions" 
-            caption="Admins" target="popup" action="init" role="SYSADMIN"/>
+        <invoker type="usergroup-folder:formActions" caption="Admins" action="init" 
+            role="SYSADMIN" target="popup" icon="images/admins.png"/>
     </invokers>
     <code>
         

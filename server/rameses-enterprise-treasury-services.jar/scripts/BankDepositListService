@@ -27,8 +27,10 @@ class BankDepositListService extends AbstractListService {
 	}	
 
 	void beforeList(o) {
-		o.txnno = o.searchtext 
-		o.searchtext = (o.searchtext ? o.searchtext : '') +'%'
+		o.txnno = (o.searchtext ? o.searchtext : '') +'%'
+		o.cashierid = '%'
+		if( o._tag == "bycashier")
+			o.cashierid = env.USERID 
 	}
 
 	

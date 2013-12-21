@@ -46,12 +46,12 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Group type="102" alignment="0" attributes="1">
                           <Component id="xButton1" min="-2" pref="51" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="xButton2" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Component id="xFormPanel4" min="-2" pref="244" max="-2" attributes="1"/>
                       </Group>
                       <Component id="jLabel1" alignment="0" min="-2" pref="324" max="-2" attributes="1"/>
@@ -80,13 +80,15 @@
                       <Component id="xDataTable1" alignment="0" pref="257" max="32767" attributes="1"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                          <Component id="xButton2" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                          <Component id="xButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="xFormPanel4" min="-2" pref="26" max="-2" attributes="1"/>
+                      <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                              <Component id="xButton2" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                              <Component id="xButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="xFormPanel3" alignment="0" max="32767" attributes="3"/>
                       </Group>
-                      <Component id="xFormPanel3" alignment="0" max="32767" attributes="3"/>
-                      <Component id="xFormPanel4" alignment="0" min="-2" pref="26" max="-2" attributes="1"/>
                   </Group>
               </Group>
           </Group>

@@ -1,5 +1,9 @@
 [getList]
 SELECT * FROM bankdeposit 
+where cashier_objid like $P{cashierid}
+	and txnno like $P{txnno} 
+order by dtposted desc 
+
 
 [getUndeposited]
 SELECT  lcf.objid, 
@@ -47,6 +51,22 @@ LEFT JOIN bankdeposit_entry_check bec on bec.objid = crp.objid
 LEFT JOIN cashreceipt_void cv ON crp.receiptid = cv.receiptid 
 WHERE lcf.cashier_objid=$P{cashierid}
 	AND state = 'OPEN'
+	and bec.objid is null 
+AND cv.objid IS NULL 
+
+
+[getUndepositedChecksByFund]
+SELECT DISTINCT
+crp.objid, crp.checkno, crp.particulars, crp.amount  
+FROM  liquidation_cashier_fund lcf  
+INNER JOIN liquidation_checkpayment lc ON lc.liquidationfundid=lcf.objid
+inner join liquidation l on l.objid = lcf.liquidationid 
+INNER JOIN cashreceiptpayment_check crp ON crp.objid=lc.objid 
+LEFT JOIN bankdeposit_entry_check bec on bec.objid = crp.objid
+LEFT JOIN cashreceipt_void cv ON crp.receiptid = cv.receiptid 
+WHERE lcf.cashier_objid=$P{cashierid}
+	AND lcf.fund_objid in ( ${fundids} )
+	and l.state = 'OPEN'
 	and bec.objid is null 
 AND cv.objid IS NULL 
 

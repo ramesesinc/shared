@@ -151,9 +151,9 @@ public class ExplorerViewListController extends ListController
             }            
             if (invoker != null) { 
                 Action a = createAction("listHandler.edit", "", "images/toolbars/edit.png", "ctrl E", 'e', null, true); 
-                nodeActions.add(a);
+                nodeActions.add(a); 
             } 
-        }
+        } 
 
         List children = node.getPropertyList("children");
         if (children == null) children = new ArrayList(); 

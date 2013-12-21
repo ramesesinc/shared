@@ -156,6 +156,9 @@ public abstract class ListController extends BasicListController implements Page
         return wuallowColumnEditing.booleanValue(); 
     }
     
+    public boolean isAllowAdvancedSearch() { return false; }
+    public Object getAdvancedSearch() { return null; } 
+    
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc=" Action Methods ">        
