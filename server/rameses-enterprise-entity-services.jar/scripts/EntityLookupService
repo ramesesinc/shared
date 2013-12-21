@@ -11,6 +11,8 @@ class EntityLookupService extends ActiveListService {
 	public def getColumns(def o) {
 		return [
 			[name:"name", caption:"Name"], 
+			[name:"address", caption:"Address"], 
+			[name:"entityno", caption:"Entity No", width:80], 
 			[name:"type", caption:"Type", maxWidth:100] 
 		];	
 	}

@@ -29,6 +29,8 @@
             boolean showConfirmOnSave = false; 
             
             def orgTypes;
+            def initial;
+            def saveHandler;
             
             void beforeCreate( entity ) { 
                 entity.type = entityType;
@@ -36,8 +38,15 @@
                     orgTypes = orgTypeSvc.getList(); 
                     orgTypes.remove( orgTypes.find{ it.key == "SING" } );
                 }
+                if( initial ) {
+                    entity.putAll( initial );
+                }
             }   
             
+            void afterSave(Object data){
+                if(saveHandler) saveHandler(data);
+            }
+
             void entityChanged() { 
                 contactListHandler?.reload();  
             }            
