@@ -1,0 +1,40 @@
+import com.rameses.annotations.*
+import com.rameses.common.*
+import java.rmi.server.UID;
+import com.rameses.util.*;
+import com.rameses.io.*;
+
+class EntityPhysicalService {
+
+	@ActiveDB("entity")
+	def	em; 
+
+	private void savePhoto(p) {
+		if(!p.photo?.image) return;
+		def m = [objid:p.photo.objid];
+		m.dtfiled = dateSvc.serverDate;
+		m.entityid = p.objid;
+		m.image = p.photo.image;
+		em.create( m, "photo" );
+	}
+
+	@ProxyMethod
+	public def save(entity) {
+		entity = em.save(entity, "physical");
+		savePhoto(entity);
+	}
+
+	@ProxyMethod
+	public def open(o) {
+		def entity = em.read( o, "physical");
+		if(!entity) {
+			entity = [objid:o.objid];
+		}
+		if( entity.photo?.objid ) {
+			entity.photo= em.read( [objid:entity.photo.objid], "photo");
+		}
+		return entity;
+	}
+
+
+}

@@ -37,6 +37,7 @@ public class IndividualEntityPage extends javax.swing.JPanel {
         xTextField4 = new com.rameses.rcp.control.XTextField();
         xTextField6 = new com.rameses.rcp.control.XTextField();
         xComboBox1 = new com.rameses.rcp.control.XComboBox();
+        xComboBox2 = new com.rameses.rcp.control.XComboBox();
         xTextField7 = new com.rameses.rcp.control.XTextField();
         xTextField8 = new com.rameses.rcp.control.XTextField();
         xTextField9 = new com.rameses.rcp.control.XTextField();
@@ -106,8 +107,17 @@ public class IndividualEntityPage extends javax.swing.JPanel {
         xComboBox1.setItemKey("name");
         xComboBox1.setItems("genderList");
         xComboBox1.setName("entity.gender");
-        xComboBox1.setPreferredSize(new java.awt.Dimension(100, 22));
+        xComboBox1.setPreferredSize(new java.awt.Dimension(150, 22));
         xFormPanel1.add(xComboBox1);
+
+        xComboBox2.setCaption("Civil Status");
+        xComboBox2.setCaptionWidth(100);
+        xComboBox2.setExpression("#{item.caption}");
+        xComboBox2.setItemKey("name");
+        xComboBox2.setItems("civilStatusList");
+        xComboBox2.setName("entity.civilstatus");
+        xComboBox2.setPreferredSize(new java.awt.Dimension(150, 22));
+        xFormPanel1.add(xComboBox2);
 
         xTextField7.setCaption("Profession");
         xTextField7.setCaptionWidth(100);
@@ -189,22 +199,19 @@ public class IndividualEntityPage extends javax.swing.JPanel {
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(layout.createSequentialGroup()
-                        .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .add(layout.createSequentialGroup()
-                        .add(xFormPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE)
-                        .add(29, 29, 29))))
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, xFormPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 303, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
     
@@ -212,6 +219,7 @@ public class IndividualEntityPage extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private com.rameses.rcp.control.XComboBox xComboBox1;
+    private com.rameses.rcp.control.XComboBox xComboBox2;
     private com.rameses.rcp.control.XDataTable xDataTable1;
     private com.rameses.rcp.control.XDateField xDateField1;
     private com.rameses.rcp.control.XFormPanel xFormPanel1;

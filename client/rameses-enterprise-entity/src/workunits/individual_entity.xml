@@ -29,9 +29,17 @@
             def initial;
             
             def genderList = [
-                [name:'M', caption:'Male'],
-                [name:'F', caption:'Female']
+                [name:'M', caption:'MALE'],
+                [name:'F', caption:'FEMALE']
             ];
+            
+            def civilStatusList = [
+                [name: 'SINGLE', caption:'SINGLE'],
+                [name: 'MARRIED', caption:'MARRIED'],
+                [name: 'COUPLE', caption:'COUPLE'],
+                [name: 'SEPARATED', caption:'SEPARATED'],
+                [name: 'WIDOW', caption:'WIDOW/WIDOWER'],
+            ]
             
             void beforeCreate( entity ) {
                 entity.type = entityType;
