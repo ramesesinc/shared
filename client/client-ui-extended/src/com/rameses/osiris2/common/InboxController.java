@@ -530,7 +530,7 @@ public class InboxController extends ListController
             for (String filetype: filetypes) {
                 String invtype = filetype + ":formActions";
                 list.addAll(actionsProvider.getInvokers(node, invtype)); 
-            }                            
+            } 
             node.setProperty("Invoker.formActions", list);
         } 
         
