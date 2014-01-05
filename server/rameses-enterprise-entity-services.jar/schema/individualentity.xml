@@ -12,7 +12,5 @@
 		<field name="profession" />
 		<field name="tin" />
 		<field name="sss" />
-		<field name="height" />
-		<field name="weight" />
 	</element>
 </schema>

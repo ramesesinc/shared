@@ -30,15 +30,13 @@
 		<field name="profession" />
 		<field name="tin" />
 		<field name="sss" />
-		<field name="height" />
-		<field name="weight" />
 	</element>	
 	
 	<element name="juridical" tablename="entityjuridical">
 		<field name="objid" required="true" primary="true"/>
 		<field name="tin" />
 		<field name="dtregistered" />
-		<field name="placeregistered" />
+		<!--<field name="placeregistered" />-->
 		<field name="orgtype" /> <!-- SINGLEPROPERTORSHIP, CORPORATION, etc -->
 		<field name="nature" /> <!-- RETAILER, WHOLESALER -->
 	</element>
@@ -57,6 +55,36 @@
 		<field name="taxpayer_name"  required="true"/>
 		<field name="taxpayer_address"  required="true"/>
 		<field name="suffix" />
+	</element>
+
+
+	<!-- added for physical attributes -->
+	<element name="physical" tablename="entityindividual_physical">
+		<field name="objid" primary="true"/>
+		<field name="height"/>
+		<field name="weight"/>
+		<field name="eyecolor"/>
+		<field name="haircolor"/>
+		<field name="photo_objid"/>
+		<field name="fingerprint_objid"/>
+		<field name="signature_objid"/>
+	</element>
+
+	<element name="photo" tablename="entity_photo">
+		<field name="objid" primary="true"/>
+		<field name="entityid"  />
+		<field name="dtfiled" />
+		<field name="image" />
+	</element>
+		
+	<element name="fingerprint" tablename="entity_fingerprint">
+		<field name="objid" primary="true"/>
+		<field name="entityid"  />
+		<field name="dtfiled" />
+		<field name="leftthumb_image" />
+		<field name="leftthumb_fmd" />
+		<field name="rightthumb_image" />
+		<field name="rightthumb_fmd" />
 	</element>
 
 </schema>

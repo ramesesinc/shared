@@ -25,15 +25,35 @@
             boolean allowApprove = false; 
             boolean showConfirmOnSave = false; 
             
+            def saveHandler;
+            def initial;
+            
             def genderList = [
-                [name:'M', caption:'Male'],
-                [name:'F', caption:'Female']
+                [name:'M', caption:'MALE'],
+                [name:'F', caption:'FEMALE']
             ];
+            
+            def civilStatusList = [
+                [name: 'SINGLE', caption:'SINGLE'],
+                [name: 'MARRIED', caption:'MARRIED'],
+                [name: 'COUPLE', caption:'COUPLE'],
+                [name: 'SEPARATED', caption:'SEPARATED'],
+                [name: 'WIDOW', caption:'WIDOW/WIDOWER'],
+            ]
             
             void beforeCreate( entity ) {
                 entity.type = entityType;
                 entity.contacts = [];
+                if(initial) {
+                    entity.putAll( initial );
+                }
             } 
+            
+            void afterSave(Object data){
+                entity.name = entity.lastname+', '+entity.firstname;
+		if (entity.middlename) entity.name += ' '+entity.middlename;            
+                if(saveHandler) saveHandler(data);
+            }
             
             void entityChanged() { 
                 contactListHandler?.reload();  

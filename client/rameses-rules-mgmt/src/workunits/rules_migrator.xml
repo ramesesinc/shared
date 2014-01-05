@@ -24,10 +24,13 @@
             
                 
                 def exportFile() {
+                    def domain = MsgBox.prompt( "Enter domain" );
+                    if(!domain) return null;
+                    
                     def chooser = new JFileChooser();
                     int i = chooser.showSaveDialog(null);
                     if(i==0) {
-                        def m = service.downloadDef( [ruleset:ruleset] );
+                        def m = service.downloadDef( [domain:domain] );
                         FileUtil.writeObject( chooser.selectedFile, m );
                         MsgBox.alert("downloaded!");
                     }
