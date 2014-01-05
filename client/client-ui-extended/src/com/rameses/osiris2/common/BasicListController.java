@@ -131,7 +131,7 @@ public abstract class BasicListController extends PageListModel
         }
         return actions;  
     } 
-        
+            
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc=" helper methods ">      

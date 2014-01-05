@@ -25,7 +25,7 @@
         
             def entity 
             def checks 
-            def reportdata 
+            def reportdata = [:]
             def reportname 
             def subreportname
             
@@ -41,15 +41,24 @@
                 },
                 
                 "deposittype" : {
+                    reportdata.checks = []
+                    if (deposittype != null){
+                        reportdata.checks = checks.findAll{it.deposittype == deposittype }
+                    }
+                    numchecks = reportdata.checks.size();
                     listHandler.reload();
-                    binding.refresh('numchecks');
+                    entity.frompage = 1
+                    entity.topage = 1
+                    reportdata.pagecount = 1;
+                    binding.refresh("numchecks|entity.frompage|entity.topage");
                 }
             ] 
             
             def init() {
                 entity = [:]
-                entity.printrange = "all"
-                totalcheck  = reportdata.checks.size() 
+                entity.printrange = "all" 
+                reportdata = [:]
+                numchecks  = 0 
             }
             
             def doOk() {
@@ -91,10 +100,10 @@
             def doCancel() { return "_close"}
             
             def getTotalNoOfPages( ) {
-                if( entity.noofchecksperpage >= totalcheck) return 1 
+                if( entity.noofchecksperpage >= numchecks) return 1 
             
-                def rem = entity.noofchecksperpage - (  totalcheck.mod(entity.noofchecksperpage)  ) 
-                return (totalcheck + rem) / entity.noofchecksperpage
+                def rem = entity.noofchecksperpage - ( numchecks.mod(entity.noofchecksperpage)  ) 
+                return (numchecks + rem) / entity.noofchecksperpage
             }
             
             def report = [
@@ -108,9 +117,6 @@
             ] as ReportModel
             
             
-            
-            
-            
             def deposittype
             
             def getDeposittypes(){
@@ -121,11 +127,6 @@
             
             def listHandler = [
                 fetchList : { 
-                    reportdata.checks = []
-                    if (deposittype != null){
-                        reportdata.checks = checks.findAll{it.deposittype == deposittype }
-                    }
-                    numchecks = reportdata.checks.size();
                     return reportdata.checks
                 }
             ] as BasicListModel
