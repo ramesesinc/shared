@@ -48,6 +48,8 @@ class RemittanceService  {
 		if( o.amount == 0 ) 
 			throw new Exception("There is no amount to remit");
 
+		if(! o.cashbreakdown ) throw new Exception("Cash breakdown has been change during the submission.Please recreate transaction");
+
 		//compare checksum. deny if changed
 		def checksum = o.checksum;
 		def checktest = em.getUnremittedTotals( [collectorid: env.USERID] );
