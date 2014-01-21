@@ -44,7 +44,8 @@ class CashReceiptVoidService  {
 			entry.amount = c.sum{ it.amount };
 			cashBookSvc.postCR( entry ); 
 		}
-		return p;
+		v.receipt = p.receipt;
+		return v;
 	}	
 		
 		
