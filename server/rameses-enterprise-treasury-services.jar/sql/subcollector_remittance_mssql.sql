@@ -41,7 +41,8 @@ GROUP BY cr.stub
 [findSummaryTotals]
 SELECT 
    COUNT(*) AS itemcount,
-   SUM( CASE WHEN cv.objid IS NULL THEN cr.amount ELSE 0 END ) AS amount
+   SUM( CASE WHEN cv.objid IS NULL THEN cr.amount ELSE 0 END ) AS amount,
+   SUM( CASE WHEN cv.objid IS NULL and p.objid is not null THEN p.amount ELSE 0 END ) AS totalnoncash
 FROM cashreceipt cr
 LEFT JOIN cashreceipt_void cv ON cr.objid=cv.receiptid
 LEFT JOIN cashreceiptpayment_check p ON cr.objid = p.receiptid 

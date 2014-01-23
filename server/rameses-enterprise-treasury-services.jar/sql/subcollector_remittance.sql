@@ -43,9 +43,9 @@ GROUP BY cr.stub
 SELECT 
    COUNT(*) AS itemcount,
    SUM( CASE WHEN cv.objid IS NULL THEN cr.amount ELSE 0 END ) AS amount,
-   SUM( CASE WHEN p.objid IS NULL THEN 0 ELSE p.amount END) AS totalnoncash
+   SUM( CASE WHEN cv.objid IS NULL and p.objid is not null THEN p.amount ELSE 0 END ) AS totalnoncash
 FROM cashreceipt cr
-LEFT JOIN cashreceipt_void cv ON cr.objid=cv.objid
+LEFT JOIN cashreceipt_void cv ON cr.objid=cv.receiptid
 LEFT JOIN cashreceiptpayment_check p ON cr.objid = p.receiptid 
 WHERE cr.state = 'DELEGATED'
 AND cr.collector_objid = $P{collectorid}
