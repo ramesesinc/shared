@@ -1,3 +1,7 @@
+"entity.username" [mode=='edit' || mode == 'read'] {
+    enabled: false;
+}
+
 "addUsergroup|removeUsergroup" [mode == 'read'] {
     visible: true;
     enabled: true;
