@@ -11,6 +11,8 @@ ORDER BY r.collector_name, r.txnno DESC
 SELECT c.formno, c.collector_objid, c.controlid, 
   MIN(series) as startseries, 
   MAX(series) as endseries,
+  SUM( CASE WHEN c.state = 'POSTED' then 1 else 0 end ) as qty ,  
+  SUM( CASE WHEN c.state = 'CANCELLED' then 1 else 0 end ) as cqty , 
   SUM(CASE WHEN v.objid IS NULL THEN c.amount ELSE 0 END) AS amount,
   SUM(CASE WHEN v.objid IS NULL THEN c.totalcash-c.cashchange ELSE 0 END) AS totalcash,
   SUM(CASE WHEN v.objid IS NULL THEN c.totalnoncash ELSE 0 END) AS totalnoncash
@@ -18,9 +20,20 @@ FROM cashreceipt c
 LEFT JOIN remittance_cashreceipt r ON c.objid=r.objid
 LEFT JOIN cashreceipt_void v ON c.objid=v.receiptid
 WHERE r.objid IS NULL
-AND c.state = 'POSTED'
+AND c.state in  ('POSTED', 'CANCELLED') 
 AND c.collector_objid = $P{collectorid}
 GROUP by c.collector_objid, c.formno, c.controlid
+
+[getUnremittedCancelSeries]
+SELECT 
+  cs.*, c.series 
+FROM cashreceipt c 
+INNER JOIN cashreceipt_cancelseries cs on cs.receiptid = c.objid
+LEFT JOIN remittance_cashreceipt r ON c.objid=r.objid
+WHERE r.objid IS NULL
+AND c.state = 'CANCELLED' 
+AND c.collector_objid = $P{collectorid}
+and c.controlid = $P{controlid}
 
 [getUnremittedTotals]
 SELECT COUNT(*) AS itemcount, 
@@ -66,8 +79,9 @@ SELECT c.objid, $P{remittanceid}
 FROM cashreceipt c 
 LEFT JOIN remittance_cashreceipt r ON c.objid=r.objid
 WHERE r.objid IS NULL 
-AND c.state = 'POSTED'
+AND c.state in ('POSTED', 'CANCELLED')
 AND c.collector_objid = $P{collectorid}
+
 
 [collectChecks]
 INSERT INTO remittance_checkpayment (objid, remittanceid, amount, voided )

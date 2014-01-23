@@ -28,6 +28,9 @@ class RemittanceService  {
 	public def init() {
 		def o = [objid: "REM"+new UID()];	
 		o.items = em.getUnremittedForCollector([collectorid: env.USERID]);
+		o.items.each {
+			it.cancelSeriesList = em.getUnremittedCancelSeries( [collectorid:it.collector.objid, controlid: it.controlid ])
+		}
 		o.amount = 0;
 		o.totalcash = 0;
 		o.totalnoncash = 0;
