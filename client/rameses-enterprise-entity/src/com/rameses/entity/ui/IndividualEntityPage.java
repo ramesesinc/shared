@@ -38,6 +38,7 @@ public class IndividualEntityPage extends javax.swing.JPanel {
         xTextField6 = new com.rameses.rcp.control.XTextField();
         xComboBox1 = new com.rameses.rcp.control.XComboBox();
         xComboBox2 = new com.rameses.rcp.control.XComboBox();
+        xTextField11 = new com.rameses.rcp.control.XTextField();
         xTextField7 = new com.rameses.rcp.control.XTextField();
         xTextField8 = new com.rameses.rcp.control.XTextField();
         xTextField9 = new com.rameses.rcp.control.XTextField();
@@ -118,6 +119,12 @@ public class IndividualEntityPage extends javax.swing.JPanel {
         xComboBox2.setName("entity.civilstatus");
         xComboBox2.setPreferredSize(new java.awt.Dimension(150, 22));
         xFormPanel1.add(xComboBox2);
+
+        xTextField11.setCaption("Religion");
+        xTextField11.setCaptionWidth(100);
+        xTextField11.setName("entity.religion");
+        xTextField11.setPreferredSize(new java.awt.Dimension(0, 20));
+        xFormPanel1.add(xTextField11);
 
         xTextField7.setCaption("Profession");
         xTextField7.setCaptionWidth(100);
@@ -225,6 +232,7 @@ public class IndividualEntityPage extends javax.swing.JPanel {
     private com.rameses.rcp.control.XFormPanel xFormPanel1;
     private com.rameses.rcp.control.XLabel xLabel1;
     private com.rameses.rcp.control.XTextField xTextField10;
+    private com.rameses.rcp.control.XTextField xTextField11;
     private com.rameses.rcp.control.XTextField xTextField2;
     private com.rameses.rcp.control.XTextField xTextField3;
     private com.rameses.rcp.control.XTextField xTextField4;
