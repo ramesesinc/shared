@@ -58,17 +58,26 @@ class StatementOfRevenueService
 
 	def buildChartOfAccountFormat(params, items){
 		def data = []
-		data += items.findAll{it.objid == 'unmapped'}.each{ it.leaf = 1}
+		data += items.findAll{it.objid == 'unmapped' || it.parentid == 'unmapped'}.each{ it.leaf = 1}
 		def idx = -1
-		db.getRootAccounts().each{ 
+
+		def rootaccts = null
+		if (params.charttype.equalsIgnoreCase('ngas')){
+			rootaccts = db.getNgasRootAccounts()
+		}
+		else {
+			rootaccts = db.getSreRootAccounts()
+		}
+		
+		rootaccts.each{ 
 			if (params.type.equalsIgnoreCase('standard')) {
-				doBuildStandardFormat(data, items, idx, it)
+				doBuildStandardFormat(params, data, items, idx, it)
 			}
 			else if (params.type.equalsIgnoreCase('extended')){
-				doBuildExtendedFormat(data, items, idx, it)
+				doBuildExtendedFormat(params, data, items, idx, it)
 			}
 			else if (params.type.equalsIgnoreCase('detailed')){
-				doBuildDetailedFormat(data, items, idx, it)
+				doBuildDetailedFormat(params, data, items, idx, it)
 			}
 		}
 		if (!params.type.equalsIgnoreCase('detailed'))
@@ -135,7 +144,7 @@ class StatementOfRevenueService
 
 	}
 
-	void doBuildStandardFormat(data, items, idx, acct){
+	void doBuildStandardFormat(params, data, items, idx, acct){
 		idx += 1
 		acct.amount = 0.0
 		acct.level = idx 
@@ -146,13 +155,20 @@ class StatementOfRevenueService
 		}
 		acct.title = padTitle(acct, idx)
 		data << acct
-		db.getStandardSubAccounts([parentid:acct.objid]).each{
-			doBuildStandardFormat(data, items, idx, it )
+
+		def subaccts = null 
+		if (params.charttype.equalsIgnoreCase('ngas'))
+			subaccts = db.getNgasSubAccounts([parentid:acct.objid])
+		else
+			subaccts = db.getSreSubAccounts([parentid:acct.objid])
+
+		subaccts.each{
+			doBuildStandardFormat(params, data, items, idx, it )
 		}
 	}
 
 
-	void doBuildExtendedFormat(data, items, idx, acct){
+	void doBuildExtendedFormat(params, data, items, idx, acct){
 		idx += 1
 		acct.title = padTitle(acct, idx)
 		acct.amount = 0.0
@@ -163,13 +179,20 @@ class StatementOfRevenueService
 			acct.leaf = 1
 		}
 		data << acct
-		db.getExtendedSubAccounts([parentid:acct.objid]).each{
-			doBuildExtendedFormat(data, items, idx, it )
+
+		def subaccts = null 
+		if (params.charttype.equalsIgnoreCase('ngas'))
+			subaccts = db.getNgasExtendedSubAccounts([parentid:acct.objid])
+		else
+			subaccts = db.getSreExtendedSubAccounts([parentid:acct.objid])
+
+		subaccts.each{
+			doBuildExtendedFormat(params, data, items, idx, it )
 		}
 	}
 
 
-	void doBuildDetailedFormat(data, items, idx, acct){
+	void doBuildDetailedFormat(params, data, items, idx, acct){
 		idx += 1
 		acct.title = padTitle(acct, idx)
 		acct.amount = 0.0
@@ -186,8 +209,14 @@ class StatementOfRevenueService
 			data.addAll(collections)
 		}
 		
-		db.getExtendedSubAccounts([parentid:acct.objid]).each{
-			doBuildDetailedFormat(data, items, idx, it )
+		def subaccts = null 
+		if (params.charttype.equalsIgnoreCase('ngas'))
+			subaccts = db.getNgasExtendedSubAccounts([parentid:acct.objid])
+		else
+			subaccts = db.getSreExtendedSubAccounts([parentid:acct.objid])
+
+		subaccts.each{
+			doBuildDetailedFormat(params, data, items, idx, it )
 		}
 	}
 
@@ -206,7 +235,9 @@ class StatementOfRevenueService
 			else {
 				throw new Exception('Report type ' + params.type + ' is not supported.')
 			}
-		} else if (params.charttype.equalsIgnoreCase('sre')){
+		} 
+		else
+		{
 			if (params.type.equalsIgnoreCase('standard')) {
 				return db.getSREStandardRevenueItemSummaries(params)
 			}
