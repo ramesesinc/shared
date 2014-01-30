@@ -14,7 +14,7 @@ public abstract class AbstractCashReceipt {
     
     @Service("CashReceiptService")
     def service;
-        
+
     def entity;
    
     String title;
@@ -140,6 +140,16 @@ public abstract class AbstractCashReceipt {
             completed = true;
             return "completed";
         }
+    }
+
+    def cancelSeries(){
+        def cseries = entity.clone() 
+        return InvokerUtil.lookupOpener( "cashreceipt:cancelseries", [entity:entity,
+            handler: { o-> 
+                entity = service.init( o ) 
+                binding.refresh("entity.*") ;
+            }
+        ]); 
     }
 
     def findReportOpener(def reportData) {

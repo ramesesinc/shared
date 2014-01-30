@@ -16,6 +16,8 @@
         private String entityName;
         private String tag;
         
+        private def allowSearch;
+        
         String getServiceName() {
             if (serviceName == null) {
                 serviceName = controllerProperties?.serviceName;
@@ -40,6 +42,13 @@
             } 
             return tag; 
         } 
-    }        
+        
+        boolean isAllowSearch() {
+            if (allowSearch == null) {
+                allowSearch = "true".equals(controllerProperties?.allowSearch);
+            } 
+            return allowSearch; 
+        } 
+    } 
     </code>
 </workunit>

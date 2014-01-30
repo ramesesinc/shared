@@ -68,7 +68,11 @@ class BankDepositService  {
 
 	@ProxyMethod
 	public def post( def o ) {
-		
+
+		if(o.undepositedChecks) 
+			throw new Exception("There are still undeposited non-cash payment. Please verify. ")
+
+
 		def z = em.sqlContext.createNamedQuery("cashier:getUserTxnCode")
 			.setParameters( [userid: env.USERID]).singleResult;
 

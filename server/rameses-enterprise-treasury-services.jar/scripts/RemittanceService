@@ -28,6 +28,9 @@ class RemittanceService  {
 	public def init() {
 		def o = [objid: "REM"+new UID()];	
 		o.items = em.getUnremittedForCollector([collectorid: env.USERID]);
+		o.items.each {
+			it.cancelSeriesList = em.getUnremittedCancelSeries( [collectorid:it.collector.objid, controlid: it.controlid ])
+		}
 		o.amount = 0;
 		o.totalcash = 0;
 		o.totalnoncash = 0;
@@ -47,6 +50,8 @@ class RemittanceService  {
 	public def post( o ) {
 		if( o.amount == 0 ) 
 			throw new Exception("There is no amount to remit");
+
+		if(! o.cashbreakdown ) throw new Exception("Cash breakdown has been change during the submission.Please recreate transaction");
 
 		//compare checksum. deny if changed
 		def checksum = o.checksum;

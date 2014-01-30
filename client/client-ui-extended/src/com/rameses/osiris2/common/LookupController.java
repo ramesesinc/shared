@@ -45,6 +45,7 @@ public abstract class LookupController extends LookupModel
     @Controller
     protected WorkUnitUIController controller;    
     
+    private boolean allowSearch;
     private Object selectedEntity;
     private Object onselect;
     private Object onempty;
@@ -143,6 +144,11 @@ public abstract class LookupController extends LookupModel
     
     // <editor-fold defaultstate="collapsed" desc="  Getters/Setters  ">
 
+    public boolean isAllowSearch() { return allowSearch; }
+    public void setAllowSearch(boolean allowSearch) {
+        this.allowSearch = allowSearch;
+    }
+    
     public Object getOnselect() { return onselect; }    
     public void setOnselect(Object onselect) { this.onselect = onselect; }
     
@@ -158,7 +164,15 @@ public abstract class LookupController extends LookupModel
     
     public com.rameses.rcp.framework.Binding getBinding() { return binding; }  
     
-    public Opener getQueryForm() { return null; }        
+    public Opener getQueryForm() { 
+        if (isAllowSearch()) { 
+            Opener o = new Opener();
+            o.setOutcome("queryform");
+            return o; 
+        } else { 
+            return null; 
+        } 
+    }    
     
     public List getFormActions() { 
         return new ArrayList(); 

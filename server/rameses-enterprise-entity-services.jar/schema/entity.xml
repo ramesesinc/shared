@@ -27,6 +27,7 @@
 		<field name="citizenship" />
 		<field name="gender" />
 		<field name="civilstatus" />
+		<field name="religion" />		
 		<field name="profession" />
 		<field name="tin" />
 		<field name="sss" />
