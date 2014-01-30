@@ -22,6 +22,9 @@ class StatementOfRevenueService
 
 	def PADDING_SIZE = 10
 
+	@Service('NumberService')
+	def numSvc
+
 
 	@ProxyMethod
 	public def generateReport( params ) {
@@ -34,6 +37,8 @@ class StatementOfRevenueService
 
 		buildDateFilter(params)
 		def items = getSummarizedRevenueItems(params)
+		if(! items ) throw new Exception("No record(s) found.               ");
+
 		def reportdata = buildChartOfAccountFormat(params, items)
 		if (params.hidezeroamount) {
 			reportdata.removeAll(reportdata.findAll{it.amount <= 0.0 })
@@ -151,16 +156,22 @@ class StatementOfRevenueService
 		def collections = items.findAll{it.accountid == acct.objid}
 		if (collections){
 			acct.amount = collections.amount.sum()
+			acct.target = collections[0]?.target ? collections[0]?.target : 0.0
+			acct.percentage = 0.00 + " %"
+			if( acct.target  > 0.0 ) {  
+				acct.percentage = numSvc.format( '#,##0.00', (acct.target / acct.amount ) * 100 ) + " %"
+			}
 			acct.leaf = 1
 		}
 		acct.title = padTitle(acct, idx)
-		data << acct
+		data << acct 
 
 		def subaccts = null 
 		if (params.charttype.equalsIgnoreCase('ngas'))
 			subaccts = db.getNgasSubAccounts([parentid:acct.objid])
 		else
 			subaccts = db.getSreSubAccounts([parentid:acct.objid])
+
 
 		subaccts.each{
 			doBuildStandardFormat(params, data, items, idx, it )

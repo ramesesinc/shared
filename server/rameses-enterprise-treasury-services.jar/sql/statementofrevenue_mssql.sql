@@ -38,7 +38,8 @@ SELECT * FROM account WHERE objid = $P{objid}
 
 
 [getNgasStandardRevenueItemSummaries]
-SELECT t.*
+SELECT t.*,
+	(SELECT TOP 1 target FROM account_incometarget WHERE objid=t.objid AND year=$P{year}) AS target
 FROM (
 	SELECT 
 		CASE WHEN acct.objid IS NULL THEN 'unmapped' ELSE acct.objid END AS objid,
@@ -306,7 +307,8 @@ ORDER BY t.acctcode, t.subacctcode, t.code
 #*****************************************
 
 [getSREStandardRevenueItemSummaries]
-SELECT t.*
+SELECT t.*,
+	(SELECT TOP 1 target FROM sreaccount_incometarget WHERE objid=t.objid AND year=$P{year}) AS target
 FROM (
 	SELECT 
 		CASE WHEN acct.objid IS NULL THEN 'unmapped' ELSE acct.objid END AS objid,
@@ -364,9 +366,7 @@ FROM (
 		acct.title,
 		acct.type	
 )t 
-ORDER BY t.code   		
-
-
+ORDER BY t.code  
 
 
 
