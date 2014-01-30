@@ -28,23 +28,28 @@ public class CashReceiptInfoPage extends javax.swing.JPanel {
      */
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
     private void initComponents() {
+        jScrollPane1 = new javax.swing.JScrollPane();
         xLabel1 = new com.rameses.rcp.control.XLabel();
 
         setLayout(new java.awt.BorderLayout());
 
         setPreferredSize(new java.awt.Dimension(550, 496));
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         xLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         xLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         xLabel1.setBackground(new java.awt.Color(255, 255, 255));
         xLabel1.setExpression("#{infoHtml}");
         xLabel1.setOpaque(true);
         xLabel1.setUseHtml(true);
-        add(xLabel1, java.awt.BorderLayout.CENTER);
+        jScrollPane1.setViewportView(xLabel1);
+
+        add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
     }// </editor-fold>//GEN-END:initComponents
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane1;
     private com.rameses.rcp.control.XLabel xLabel1;
     // End of variables declaration//GEN-END:variables
     
