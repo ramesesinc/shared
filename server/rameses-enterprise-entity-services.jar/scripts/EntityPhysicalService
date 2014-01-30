@@ -9,19 +9,33 @@ class EntityPhysicalService {
 	@ActiveDB("entity")
 	def	em; 
 
-	private void savePhoto(p) {
-		if(!p.photo?.image) return;
-		def m = [objid:p.photo.objid];
-		m.dtfiled = dateSvc.serverDate;
-		m.entityid = p.objid;
-		m.image = p.photo.image;
-		em.create( m, "photo" );
-	}
+	@Service('DateService')
+	def dateSvc;
+
+	private void savePhoto(o) {
+		if (!o.photo?.image) return;
+
+		def data = o.photo;
+		data.dtfiled = dateSvc.serverDate;
+		data.entityid = o.objid;
+		em.save(data, "photo");
+	} 
+
+	private void saveFingerprint(o) {
+		if (!o.fingerprint?.objid) return;
+
+		def data = o.fingerprint; 
+		data.dtfiled = dateSvc.serverDate; 
+		data.entityid = o.objid; 
+		em.save(data, "fingerprint"); 
+	} 
 
 	@ProxyMethod
 	public def save(entity) {
 		entity = em.save(entity, "physical");
 		savePhoto(entity);
+		saveFingerprint(entity);
+		return entity;
 	}
 
 	@ProxyMethod
@@ -33,8 +47,25 @@ class EntityPhysicalService {
 		if( entity.photo?.objid ) {
 			entity.photo= em.read( [objid:entity.photo.objid], "photo");
 		}
+		if( entity.fingerprint?.objid ) {
+			entity.fingerprint = em.read( [objid:entity.fingerprint.objid], "fingerprint");
+		}
 		return entity;
 	}
 
+	@ProxyMethod 
+	public def getFingerprintMedia(params) {
+		def o = em.findFingerprint(params)
+		def bytes = null;
+		if (params.type == 'left') { 
+			bytes = o?.leftthumb?.image; 
+		} else if (params.type == 'right') { 
+			bytes = o?.rightthumb?.image; 
+		} 
 
+		def mf = new MediaFile();
+		mf.contentType = "image/gif";
+		mf.content = (bytes == null? new byte[0]: bytes);
+		return mf;
+	}
 }
