@@ -159,7 +159,7 @@ class StatementOfRevenueService
 			acct.target = collections[0]?.target ? collections[0]?.target : 0.0
 			acct.percentage = 0.00 + " %"
 			if( acct.target  > 0.0 ) {  
-				acct.percentage = numSvc.format( '#,##0.00', (acct.target / acct.amount ) * 100 ) + " %"
+				acct.percentage = numSvc.format( '#,##0.00', ( acct.amount / acct.target ) * 100 ) + " %"
 			}
 			acct.leaf = 1
 		}
@@ -187,6 +187,11 @@ class StatementOfRevenueService
 		def collections = items.findAll{it.accountid == acct.objid}
 		if (collections){
 			acct.amount = collections.amount.sum()
+			acct.target = collections[0]?.target ? collections[0]?.target : 0.0
+			acct.percentage = 0.00 + " %"
+			if( acct.target  > 0.0 ) {  
+				acct.percentage = numSvc.format( '#,##0.00', ( acct.amount / acct.target )  * 100 ) + " %"
+			}
 			acct.leaf = 1
 		}
 		data << acct
