@@ -113,9 +113,8 @@ public class ExplorerViewListController extends ListController
         
         buildActions(); 
         Binding binding = getBinding();
-        if (binding != null) {
-            binding.refresh("formActions");
-        } 
+        if (binding != null) binding.refresh("formActions");
+
         reloadAll(); 
     }
     
@@ -311,6 +310,7 @@ public class ExplorerViewListController extends ListController
         Node node = getNode(); 
         Object item = (node == null? null: node.getItem());             
         if (item instanceof Map) params.putAll((Map) item); 
+        if (parentController != null) parentController.beforeFetchList(params); 
     }
     
     public Column[] initColumns(Column[] columns) { 
@@ -481,6 +481,16 @@ public class ExplorerViewListController extends ListController
         Map params = super.createOpenerParams(); 
         params.put("listModelHandler", new ListModelHandlerImpl()); 
         return params; 
+    }
+
+    protected void dataChanged(Object stat) {
+        super.dataChanged(stat); 
+        if (parentController == null) return;
+        
+        com.rameses.rcp.framework.Binding binding = parentController.getBinding();
+        if (binding == null) return;
+        
+        binding.refresh("title");
     }
     
     // </editor-fold>

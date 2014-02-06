@@ -12,8 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FormController {
-    
+public class FormController 
+{    
     @Invoker
     protected com.rameses.osiris2.Invoker invoker;
 

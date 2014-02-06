@@ -446,7 +446,7 @@ public class InboxController extends ListController
         if (node == null && allowCreate) {
             List<Invoker> invokers = getDefaultCreateInvokers();
             if (!invokers.isEmpty()) { 
-                Action a = createAction("create", "New", "images/toolbars/create.png", "ctrl N", 'n', null, true); 
+                Action a = createAction("create", "New", "images/toolbars/create.png", "ctrl N", 'n', "#{allowCreate==true}", true); 
                 formActions.add(a); 
             } 
             //exit
@@ -476,7 +476,7 @@ public class InboxController extends ListController
             }
             
             if (!list.isEmpty()) { 
-                Action a = createAction("create", "New", "images/toolbars/create.png", "ctrl N", 'n', null, true); 
+                Action a = createAction("create", "New", "images/toolbars/create.png", "ctrl N", 'n', "#{allowCreate==true}", true); 
                 formActions.add(a); 
             }
         }   
