@@ -1,5 +1,5 @@
 /*
- * ExplorerViewController2.java
+ * ExplorerViewController.java
  *
  * Created on July 30, 2013, 6:47 PM
  *
@@ -48,6 +48,7 @@ public class ExplorerViewController
     private TreeNodeModel nodeModel; 
     private Node selectedNode;   
     private ExplorerViewService service;
+    private Object serviceObject;
         
     public ExplorerViewController() {
     } 
@@ -84,18 +85,17 @@ public class ExplorerViewController
         }
         return nodeModel;
     }
-    
-    public ExplorerViewService getService() 
-    {
-        String name = getServiceName();
-        if (name == null || name.trim().length() == 0)
-            throw new IllegalStateException("Please specify a serviceName"); 
-            
-        if (service == null) {
-            service = (ExplorerViewService) InvokerProxy.getInstance().create(name, ExplorerViewService.class);
-        }
-        return service;
-    }     
+        
+    public ExplorerViewService getService() {
+        if (service == null) { 
+            String name = getServiceName();
+            if (name == null || name.trim().length() == 0) { 
+                throw new IllegalStateException("Please specify a serviceName"); 
+            } 
+            service = (ExplorerViewService) InvokerProxy.getInstance().create(name, ExplorerViewService.class); 
+        } 
+        return service; 
+    } 
     
     public String getIcon() { 
         return null; 
@@ -108,6 +108,15 @@ public class ExplorerViewController
     }
     public boolean isAutoSelect() {
         return wuautoSelect;
+    }
+    
+    protected void beforeNodes(Map params) {
+        //this is invoke before invoking service.getNodes() 
+    } 
+    
+    protected List<Map> getNodes(Map params) {
+        beforeNodes(params); 
+        return getService().getNodes(params); 
     }
     
     // </editor-fold>     
@@ -144,7 +153,7 @@ public class ExplorerViewController
             
             params.put("root", (node.getParent() == null));
             params.put("caption", node.getCaption()); 
-            List<Map> nodes = getService().getNodes(params); 
+            List<Map> nodes = root.getNodes(params); 
             if (nodes == null) nodes = new ArrayList();
             
             if (node.getParent() == null && root.isAllowSearch()) {
@@ -311,6 +320,15 @@ public class ExplorerViewController
     private Opener _queryform; 
     private ExplorerViewListController listHandler; 
     
+    public com.rameses.rcp.framework.Binding getBinding() {
+        Object ob = (nodeModel == null? null: nodeModel.getBinding());
+        if (ob instanceof com.rameses.rcp.framework.Binding) {
+            return (com.rameses.rcp.framework.Binding) ob;
+        } else {
+            return null; 
+        }
+    }
+    
     public ExplorerViewListController getListHandler() {
         if (listHandler == null) {
             listHandler = new ExplorerViewListController();
@@ -324,7 +342,13 @@ public class ExplorerViewController
     }
     
     public Opener getQueryForm() {
-        if (!isAllowSearch()) return null;
+        if (!isAllowSearch()) {
+            Object o = getNode();
+            if (o instanceof Map) {
+                Object value = ((Map) o).get("allowSearch"); 
+                if (!"true".equals(value+"")) return null; 
+            }
+        }
         
         if (isQueryFormVisible()) {
             Opener o = new Opener();
@@ -346,6 +370,9 @@ public class ExplorerViewController
     public Object getNode() {
         Node node = getListHandler().getNode(); 
         return (node == null? null: node.getItem()); 
+    }
+    
+    public void beforeFetchList(Map params) {
     }
     
     // </editor-fold>
