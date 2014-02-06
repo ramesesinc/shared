@@ -1,22 +1,38 @@
-<workunit extends="wtemplates/ServiceLookupController.xml" serviceName="OrgLookupService">
+<workunit extends="wtemplates/ServiceLookupController.xml" serviceName="OrgLookupService" allowSearch="true">
     <invokers>
-        <invoker type="org:lookup" caption="Lookup Org" target="popup"/>
+        <invoker type="org:lookup" caption="Lookup Org" target="popup" action="init"/>
     </invokers>
     <code>
-         <![CDATA[
-       
-        import com.rameses.rcp.annotations.*;
+        <![CDATA[
         import com.rameses.rcp.common.*;
+        import com.rameses.rcp.annotations.*;
         import com.rameses.osiris2.client.*;
         import com.rameses.osiris2.common.*;
-        import com.rameses.util.*;
-        
-        class OrgLookupController {
+    
+        class OrgLookupController extends ServiceLookupController {
             
+            @Service("OrgLookupService")
+            def orgLookupSvc;
         
+            def orgTypes;
+            
+            void init() {
+                orgTypes = orgLookupSvc.getOrgclasses()*.title;
+            }
+            
+            @PropertyChangeListener 
+            def listener = [
+                "query.orgclass" : { o->
+                    if( o ) super.reload(); 
+                }
+            ];
+            
         }
         
-        ]]>
-        
+        ]]>    
     </code>
+    <pages>
+        <page name="queryform" template="com.rameses.admin.org.OrgQueryForm"/>
+    </pages>
+
 </workunit>

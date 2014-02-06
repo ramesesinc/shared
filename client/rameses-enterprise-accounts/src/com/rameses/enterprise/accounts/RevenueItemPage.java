@@ -36,6 +36,7 @@ public class RevenueItemPage extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         xTextArea1 = new com.rameses.rcp.control.XTextArea();
         xLookupField2 = new com.rameses.rcp.control.XLookupField();
+        xLookupField3 = new com.rameses.rcp.control.XLookupField();
 
         setPreferredSize(new java.awt.Dimension(542, 498));
         com.rameses.rcp.control.border.XTitledBorder xTitledBorder1 = new com.rameses.rcp.control.border.XTitledBorder();
@@ -71,6 +72,13 @@ public class RevenueItemPage extends javax.swing.JPanel {
         xLookupField2.setPreferredSize(new java.awt.Dimension(0, 19));
         xLookupField2.setRequired(true);
         xFormPanel1.add(xLookupField2);
+
+        xLookupField3.setCaption("Org Unit");
+        xLookupField3.setExpression("#{item.name}");
+        xLookupField3.setHandler("org:lookup");
+        xLookupField3.setName("entity.orgunit");
+        xLookupField3.setPreferredSize(new java.awt.Dimension(0, 19));
+        xFormPanel1.add(xLookupField3);
 
         org.jdesktop.layout.GroupLayout jPanel2Layout = new org.jdesktop.layout.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -112,6 +120,7 @@ public class RevenueItemPage extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private com.rameses.rcp.control.XFormPanel xFormPanel1;
     private com.rameses.rcp.control.XLookupField xLookupField2;
+    private com.rameses.rcp.control.XLookupField xLookupField3;
     private com.rameses.rcp.control.XTextArea xTextArea1;
     private com.rameses.rcp.control.XTextField xTextField1;
     private com.rameses.rcp.control.XTextField xTextField2;
