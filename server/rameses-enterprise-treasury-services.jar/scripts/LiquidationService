@@ -73,6 +73,7 @@ class LiquidationService  {
 				em.create( it, "cashier_fund");
 				def detail = [:];
 				detail.fundid = it.fund.objid;
+				detail.fundtitle = it.fund.title 
 				detail.subacctid = o.liquidatingofficer.objid; 
 				detail.type = 'LIQUIDATING_OFFICER' 
 				detail.refid = o.objid;
