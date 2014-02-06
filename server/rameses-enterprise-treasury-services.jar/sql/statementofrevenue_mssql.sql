@@ -1,8 +1,11 @@
-[getRootAccounts]
-SELECT objid, code, title, type FROM account WHERE acctgroup IN ('LIABILITY', 'REVENUE') ORDER BY code 
+[getNgasRootAccounts]
+SELECT objid, code, title, type FROM account WHERE parentid is null  ORDER BY code 
+
+[getSreRootAccounts]
+SELECT objid, code, title, type FROM sreaccount WHERE parentid is null ORDER BY code
 
 
-[getStandardSubAccounts]
+[getNgasSubAccounts]
 SELECT objid, parentid, code, title, type 
 FROM account 
 WHERE parentid = $P{parentid} 
@@ -10,9 +13,23 @@ WHERE parentid = $P{parentid}
 ORDER BY code 
 
 
-[getExtendedSubAccounts]
+[getSreSubAccounts]
+SELECT objid, parentid, code, title, type 
+FROM sreaccount 
+WHERE parentid = $P{parentid} 
+  AND type IN ('group', 'detail')
+ORDER BY code 
+
+
+[getNgasExtendedSubAccounts]
 SELECT objid, parentid, code, title, type 
 FROM account 
+WHERE parentid = $P{parentid} 
+ORDER BY code 
+
+[getSreExtendedSubAccounts]
+SELECT objid, parentid, code, title, type 
+FROM sreaccount 
 WHERE parentid = $P{parentid} 
 ORDER BY code 
 
@@ -21,7 +38,8 @@ SELECT * FROM account WHERE objid = $P{objid}
 
 
 [getNgasStandardRevenueItemSummaries]
-SELECT t.*
+SELECT t.*,
+	(SELECT TOP 1 target FROM account_incometarget WHERE objid=t.objid AND year=$P{year}) AS target
 FROM (
 	SELECT 
 		CASE WHEN acct.objid IS NULL THEN 'unmapped' ELSE acct.objid END AS objid,
@@ -31,10 +49,14 @@ FROM (
 		CASE WHEN acct.title IS NULL THEN 'unmapped' ELSE acct.title END AS title,
 		CASE WHEN acct.type IS NULL THEN 'unmapped' ELSE acct.type END AS type,
 		SUM(cri.amount) AS amount
-	FROM bankdeposit bd 
-		INNER JOIN bankdeposit_liquidation bl ON bd.objid = bl.bankdepositid
-		INNER JOIN liquidation_cashier_fund lcf ON bl.objid = lcf.objid 
-		INNER JOIN liquidation l ON lcf.liquidationid = l.objid 
+	FROM (
+		SELECT DISTINCT lcf.liquidationid
+		FROM bankdeposit bd 
+			INNER JOIN bankdeposit_liquidation bl ON bd.objid = bl.bankdepositid
+			INNER JOIN liquidation_cashier_fund lcf ON bl.objid = lcf.objid 
+		WHERE bd.dtposted BETWEEN $P{fromdate} AND $P{todate}
+		) ll
+		INNER JOIN liquidation l ON ll.liquidationid = l.objid 
 		INNER JOIN liquidation_remittance lr ON l.objid = lr.liquidationid
 		INNER JOIN remittance r ON lr.objid = r.objid 
 		INNER JOIN remittance_cashreceipt rc ON r.objid = rc.remittanceid
@@ -44,16 +66,14 @@ FROM (
 		LEFT JOIN revenueitem_account rngas ON ri.objid = rngas.objid 
 		LEFT JOIN account acct ON rngas.acctid = acct.objid 
 		LEFT JOIN cashreceipt_void vr ON cr.objid = vr.receiptid  
-	WHERE bd.dtposted BETWEEN $P{fromdate} AND $P{todate}
-	  AND lcf.fund_objid = ri.fund_objid 
-	  AND vr.objid IS NULL 
+	WHERE vr.objid IS NULL 
 	GROUP BY 
 		acct.objid,
 		acct.parentid,
 		acct.code,
 		acct.title,
 		acct.type
-
+		
 	UNION ALL
 
 	SELECT 
@@ -75,9 +95,9 @@ FROM (
 		acct.parentid,
 		acct.code,
 		acct.title,
-		acct.type
-) t
-ORDER BY t.code   
+		acct.type	
+)t 
+ORDER BY t.code   		
 
 
 
@@ -115,10 +135,14 @@ FROM (
 			ELSE 'unmapped' 
 		END AS type,
 		SUM(cri.amount) AS amount
-	FROM bankdeposit bd 
-		INNER JOIN bankdeposit_liquidation bl ON bd.objid = bl.bankdepositid
-		INNER JOIN liquidation_cashier_fund lcf ON bl.objid = lcf.objid 
-		INNER JOIN liquidation l ON lcf.liquidationid = l.objid 
+	FROM (
+		SELECT DISTINCT lcf.liquidationid
+		FROM bankdeposit bd 
+			INNER JOIN bankdeposit_liquidation bl ON bd.objid = bl.bankdepositid
+			INNER JOIN liquidation_cashier_fund lcf ON bl.objid = lcf.objid 
+		WHERE bd.dtposted BETWEEN $P{fromdate} AND $P{todate}
+		) ll
+		INNER JOIN liquidation l ON ll.liquidationid = l.objid 
 		INNER JOIN liquidation_remittance lr ON l.objid = lr.liquidationid
 		INNER JOIN remittance r ON lr.objid = r.objid 
 		INNER JOIN remittance_cashreceipt rc ON r.objid = rc.remittanceid
@@ -130,9 +154,7 @@ FROM (
 		LEFT JOIN revenueitem_subaccount rsubacct ON ri.objid = rsubacct.objid
 		LEFT JOIN account subacct ON rsubacct.acctid = subacct.objid 
 		LEFT JOIN cashreceipt_void vr ON cr.objid = vr.receiptid  
-	WHERE bd.dtposted BETWEEN $P{fromdate} AND $P{todate}
-	  AND lcf.fund_objid = ri.fund_objid 
-	  AND vr.objid IS NULL 
+	WHERE vr.objid IS NULL 
 	GROUP BY 
 		acct.objid,
 		acct.parentid,
@@ -200,10 +222,14 @@ FROM (
 		ri.title,
 		'revenueitem' AS type,
 		SUM(cri.amount) AS amount
-	FROM bankdeposit bd 
-		INNER JOIN bankdeposit_liquidation bl ON bd.objid = bl.bankdepositid
-		INNER JOIN liquidation_cashier_fund lcf ON bl.objid = lcf.objid 
-		INNER JOIN liquidation l ON lcf.liquidationid = l.objid 
+	FROM (
+		SELECT DISTINCT lcf.liquidationid
+		FROM bankdeposit bd 
+			INNER JOIN bankdeposit_liquidation bl ON bd.objid = bl.bankdepositid
+			INNER JOIN liquidation_cashier_fund lcf ON bl.objid = lcf.objid 
+		WHERE bd.dtposted BETWEEN $P{fromdate} AND $P{todate}
+		) ll
+		INNER JOIN liquidation l ON ll.liquidationid = l.objid 
 		INNER JOIN liquidation_remittance lr ON l.objid = lr.liquidationid
 		INNER JOIN remittance r ON lr.objid = r.objid 
 		INNER JOIN remittance_cashreceipt rc ON r.objid = rc.remittanceid
@@ -215,9 +241,7 @@ FROM (
 		LEFT JOIN revenueitem_subaccount rsubacct ON ri.objid = rsubacct.objid
 		LEFT JOIN account subacct ON rsubacct.acctid = subacct.objid 
 		LEFT JOIN cashreceipt_void vr ON cr.objid = vr.receiptid  
-	WHERE bd.dtposted BETWEEN $P{fromdate} AND $P{todate}
-	  AND lcf.fund_objid = ri.fund_objid 
-	  AND vr.objid IS NULL 
+	WHERE vr.objid IS NULL 
 	GROUP BY 
 		acct.objid,
 		acct.parentid,
@@ -229,7 +253,7 @@ FROM (
 		ri.code,
 		ri.title 
 	  
-	UNION
+	UNION ALL
 
 	SELECT 
 		ri.objid,
@@ -283,7 +307,8 @@ ORDER BY t.acctcode, t.subacctcode, t.code
 #*****************************************
 
 [getSREStandardRevenueItemSummaries]
-SELECT t.*
+SELECT t.*,
+	(SELECT TOP 1 target FROM sreaccount_incometarget WHERE objid=t.objid AND year=$P{year}) AS target
 FROM (
 	SELECT 
 		CASE WHEN acct.objid IS NULL THEN 'unmapped' ELSE acct.objid END AS objid,
@@ -293,10 +318,14 @@ FROM (
 		CASE WHEN acct.title IS NULL THEN 'unmapped' ELSE acct.title END AS title,
 		CASE WHEN acct.type IS NULL THEN 'unmapped' ELSE acct.type END AS type,
 		SUM(cri.amount) AS amount
-	FROM bankdeposit bd 
-		INNER JOIN bankdeposit_liquidation bl ON bd.objid = bl.bankdepositid
-		INNER JOIN liquidation_cashier_fund lcf ON bl.objid = lcf.objid 
-		INNER JOIN liquidation l ON lcf.liquidationid = l.objid 
+	FROM (
+		SELECT DISTINCT lcf.liquidationid
+		FROM bankdeposit bd 
+			INNER JOIN bankdeposit_liquidation bl ON bd.objid = bl.bankdepositid
+			INNER JOIN liquidation_cashier_fund lcf ON bl.objid = lcf.objid 
+		WHERE bd.dtposted BETWEEN $P{fromdate} AND $P{todate}
+		) ll
+		INNER JOIN liquidation l ON ll.liquidationid = l.objid 
 		INNER JOIN liquidation_remittance lr ON l.objid = lr.liquidationid
 		INNER JOIN remittance r ON lr.objid = r.objid 
 		INNER JOIN remittance_cashreceipt rc ON r.objid = rc.remittanceid
@@ -306,16 +335,14 @@ FROM (
 		LEFT JOIN revenueitem_sreaccount rngas ON ri.objid = rngas.objid 
 		LEFT JOIN sreaccount acct ON rngas.acctid = acct.objid 
 		LEFT JOIN cashreceipt_void vr ON cr.objid = vr.receiptid  
-	WHERE bd.dtposted BETWEEN $P{fromdate} AND $P{todate}
-	  AND lcf.fund_objid = ri.fund_objid 
-	  AND vr.objid IS NULL 
+	WHERE vr.objid IS NULL 
 	GROUP BY 
 		acct.objid,
 		acct.parentid,
 		acct.code,
 		acct.title,
 		acct.type
-
+		
 	UNION ALL
 
 	SELECT 
@@ -337,9 +364,9 @@ FROM (
 		acct.parentid,
 		acct.code,
 		acct.title,
-		acct.type
-) t
-ORDER BY t.code   
+		acct.type	
+)t 
+ORDER BY t.code  
 
 
 
@@ -377,10 +404,14 @@ FROM (
 			ELSE 'unmapped' 
 		END AS type,
 		SUM(cri.amount) AS amount
-	FROM bankdeposit bd 
-		INNER JOIN bankdeposit_liquidation bl ON bd.objid = bl.bankdepositid
-		INNER JOIN liquidation_cashier_fund lcf ON bl.objid = lcf.objid 
-		INNER JOIN liquidation l ON lcf.liquidationid = l.objid 
+	FROM (
+		SELECT DISTINCT lcf.liquidationid
+		FROM bankdeposit bd 
+			INNER JOIN bankdeposit_liquidation bl ON bd.objid = bl.bankdepositid
+			INNER JOIN liquidation_cashier_fund lcf ON bl.objid = lcf.objid 
+		WHERE bd.dtposted BETWEEN $P{fromdate} AND $P{todate}
+		) ll
+		INNER JOIN liquidation l ON ll.liquidationid = l.objid 
 		INNER JOIN liquidation_remittance lr ON l.objid = lr.liquidationid
 		INNER JOIN remittance r ON lr.objid = r.objid 
 		INNER JOIN remittance_cashreceipt rc ON r.objid = rc.remittanceid
@@ -392,9 +423,7 @@ FROM (
 		LEFT JOIN revenueitem_sresubacct rsubacct ON ri.objid = rsubacct.objid
 		LEFT JOIN sreaccount subacct ON rsubacct.acctid = subacct.objid 
 		LEFT JOIN cashreceipt_void vr ON cr.objid = vr.receiptid  
-	WHERE bd.dtposted BETWEEN $P{fromdate} AND $P{todate}
-	  AND lcf.fund_objid = ri.fund_objid 
-	  AND vr.objid IS NULL 
+	WHERE vr.objid IS NULL 
 	GROUP BY 
 		acct.objid,
 		acct.parentid,
@@ -433,6 +462,7 @@ FROM (
 ORDER BY t.parentcode, t.code
   
 
+
 [getSREDetailedRevenueItemSummaries]
 SELECT t.* 
 FROM (
@@ -462,10 +492,14 @@ FROM (
 		ri.title,
 		'revenueitem' AS type,
 		SUM(cri.amount) AS amount
-	FROM bankdeposit bd 
-		INNER JOIN bankdeposit_liquidation bl ON bd.objid = bl.bankdepositid
-		INNER JOIN liquidation_cashier_fund lcf ON bl.objid = lcf.objid 
-		INNER JOIN liquidation l ON lcf.liquidationid = l.objid 
+	FROM (
+		SELECT DISTINCT lcf.liquidationid
+		FROM bankdeposit bd 
+			INNER JOIN bankdeposit_liquidation bl ON bd.objid = bl.bankdepositid
+			INNER JOIN liquidation_cashier_fund lcf ON bl.objid = lcf.objid 
+		WHERE bd.dtposted BETWEEN $P{fromdate} AND $P{todate}
+		) ll
+		INNER JOIN liquidation l ON ll.liquidationid = l.objid 
 		INNER JOIN liquidation_remittance lr ON l.objid = lr.liquidationid
 		INNER JOIN remittance r ON lr.objid = r.objid 
 		INNER JOIN remittance_cashreceipt rc ON r.objid = rc.remittanceid
@@ -477,9 +511,7 @@ FROM (
 		LEFT JOIN revenueitem_sresubacct rsubacct ON ri.objid = rsubacct.objid
 		LEFT JOIN sreaccount subacct ON rsubacct.acctid = subacct.objid 
 		LEFT JOIN cashreceipt_void vr ON cr.objid = vr.receiptid  
-	WHERE bd.dtposted BETWEEN $P{fromdate} AND $P{todate}
-	  AND lcf.fund_objid = ri.fund_objid 
-	  AND vr.objid IS NULL 
+	WHERE vr.objid IS NULL 
 	GROUP BY 
 		acct.objid,
 		acct.parentid,
@@ -491,7 +523,7 @@ FROM (
 		ri.code,
 		ri.title 
 	  
-	UNION
+	UNION ALL
 
 	SELECT 
 		ri.objid,
@@ -537,5 +569,3 @@ FROM (
 		ri.title 
 ) t
 ORDER BY t.acctcode, t.subacctcode, t.code 
-
-
