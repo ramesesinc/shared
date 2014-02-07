@@ -1,0 +1,29 @@
+import com.rameses.annotations.*
+import com.rameses.common.*
+import java.rmi.server.UID;
+import com.rameses.util.*;
+import com.rameses.io.*;
+import com.rameses.services.extended.*;
+
+class OrgService extends ActiveCrudListService {
+
+	@ActiveDB("org")
+	def	em; 
+
+	@Env
+	def env;
+
+	@ProxyMethod
+	public def getOrgClasses() {
+		return em.getOrgClasses();
+	}
+
+	@ProxyMethod
+	public def getColumns(o) {
+		return[
+			[name:'name', caption:'Name' ], 
+			[name:'title', caption:'Title' ], 
+		];
+	}
+
+}
