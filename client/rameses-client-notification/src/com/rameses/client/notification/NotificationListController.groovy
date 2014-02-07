@@ -6,41 +6,65 @@ import com.rameses.osiris2.client.*;
 import com.rameses.osiris2.common.*;
 import com.rameses.rcp.framework.ClientContext;
 
-class NotificationListController extends ExplorerViewController 
+class NotificationListController extends ListController 
 {
     @Notification
     def notifier;
     
+    @FormTitle
+    def title = 'Notifications';
+    
     String serviceName  = 'NotificationService';
-    String entityName   = '';
     boolean allowSearch = false;
+    boolean allowCreate = false;
     
-    private List groups = [];
-    
+    def categories = [];
+
     void init() {
         println 'notifier-> ' + notifier;
         
+        categories << [name:'user', caption:'My Notifications', type:'user'];        
         Inv.lookup('notification-group').each{
             def groupname = it.properties.group;
             if (groupname) {
                 def caption = (it.caption == null? groupname: it.caption);
-                groups << [name: groupname.toUpperCase(), caption:caption, type:'group'];
+                categories << [name: groupname.toUpperCase(), caption:caption, type:'group'];
             } 
         } 
     }
     
     public void beforeFetchList(Map params) {
         params.userid = ClientContext.currentContext.headers.USERID;
-        //params.groupnames = groupnames;
+        if (selectedMenu) { 
+            params.putAll(selectedMenu); 
+            if (selectedMenu.type == 'user') {
+                params.recipientid = params.userid;
+            } else if (selectedMenu.type == 'group') { 
+                params.groupid = selectedMenu.name; 
+            } 
+        }
     } 
     
-    protected List getNodes(Map params) {
-        if (params.root == true) return [];
-        
-        def nodes = [
-            [name:'user', caption:'My Notifications', type:'user'] 
-        ];
-        nodes.addAll(groups);
-        return nodes; 
+    public def open() {
+        def item = selectedEntity;
+        if (item != null && item.filetype==null) {
+            item.filetype = 'notification-item'; 
+        } 
+        item.type = selectedMenu?.type;
+        return super.open();
     }
+    
+    def selectedMenu;    
+    def menuHandler = [
+        getDefaultIcon: {
+            return 'Tree.closedIcon'; 
+        },         
+        getItems: { 
+            return categories;
+        }, 
+        onselect: {o->
+            selectedMenu = o;
+            reload();
+        } 
+    ] as ListPaneModel;     
 } 

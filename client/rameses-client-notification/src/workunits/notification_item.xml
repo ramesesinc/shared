@@ -1,0 +1,49 @@
+<workunit> 
+    <invokers>
+        <invoker type="notification-item:open" caption="Notification" action="init"/>
+        
+        <invoker type="formActions" caption="Close" action="closeForm"/> 
+    </invokers>
+    
+    <code>
+    <![CDATA[ 
+    import com.rameses.rcp.common.*;
+    import com.rameses.rcp.annotations.*; 
+    import com.rameses.osiris2.client.*;
+    import com.rameses.osiris2.common.*;
+    import com.rameses.client.notification.*;
+    
+    class NotificationItemController 
+    {   
+        def listModelHandler; 
+        def entity;
+        def htmlview;
+        
+        def init() {
+            if (entity == null) return '_close';
+
+            def svc = null;
+            if (entity.type == 'user') { 
+                svc = new UserNotificationService(); 
+            } else if (entity.type == 'group') { 
+                svc = new GroupNotificationService(); 
+            } 
+            
+            if (svc != null) svc.removeMessage([objid: entity.objid]); 
+            if (listModelHandler) listModelHandler.removeItem(entity); 
+            
+            htmlview = entity.message;
+            return null;
+        } 
+        
+        def closeForm() {
+            return '_close';
+        } 
+    } 
+    ]]> 
+    </code>
+    
+    <pages>
+        <page template="com.rameses.client.notification.NotificationItemPage"/> 
+    </pages>
+</workunit>

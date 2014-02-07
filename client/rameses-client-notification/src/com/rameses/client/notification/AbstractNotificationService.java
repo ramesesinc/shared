@@ -13,6 +13,7 @@ import com.rameses.rcp.framework.ClientContext;
 import com.rameses.service.ScriptServiceContext;
 import com.rameses.service.ServiceProxy;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,7 +42,13 @@ public abstract class AbstractNotificationService
         invoke("getNotified", params);
     }
     
+    public void removeMessage(Map params) {
+        invoke("removeMessage", params);
+    }
     
+    public List<Map> getList(Map params) {
+        return (List<Map>) invoke("getList", params);
+    }
     
     public Object invoke(String action) {
         return invoke(action, null); 

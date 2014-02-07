@@ -1,7 +1,10 @@
-<workunit extends="wtemplates/ExplorerViewController.xml" autoSelect="true">
+<workunit extends="wtemplates/ListController.xml">
     <invokers>
         <invoker type="notification-list:open" caption="Notifications" action="init" target="window" permission="system"/>
     </invokers>
     
     <code class="com.rameses.client.notification.NotificationListController"/> 
+    <pages>
+        <page template="com.rameses.client.notification.NotificationListPage"/> 
+    </pages>
 </workunit>

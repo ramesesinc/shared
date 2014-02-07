@@ -405,12 +405,8 @@ public class NotificationButton extends JButton implements ActionListener, Toolb
             }
             if (opener == null) return;
             
-            String target = opener.getTarget();
-            if (target == null || target.length() == 0) {
-                opener.setTarget("window"); 
-            } else if ("popup".equals(target)) {
-                opener.getProperties().put("immediate", true); 
-            } 
+            opener.setTarget("window");
+            opener.getProperties().put("immediate", true); 
             root.getPopup().setVisible(false); 
             EventQueue.invokeLater(new ShowOpenerProcess(opener));            
         }
