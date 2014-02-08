@@ -44,7 +44,7 @@
                 onmessage   : {o-> 
                     if (!o?.groupid) return;
                     if (groups.contains(o.groupid.toUpperCase())) { 
-                        Notification.publish(o); 
+                        Notification.sendMessage(o); 
                     } 
                 } 
             ]); 

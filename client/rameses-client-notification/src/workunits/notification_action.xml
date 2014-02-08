@@ -14,7 +14,6 @@
         public class NotificationTaskActionController 
         {
             def invoke() { 
-                //return Inv.lookupOpener('notification-list', [:]); 
                 println 'invoking notification button...';
                 return null;
             } 

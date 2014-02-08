@@ -22,14 +22,7 @@
         def init() {
             if (entity == null) return '_close';
 
-            def svc = null;
-            if (entity.type == 'user') { 
-                svc = new UserNotificationService(); 
-            } else if (entity.type == 'group') { 
-                svc = new GroupNotificationService(); 
-            } 
-            
-            if (svc != null) svc.removeMessage([objid: entity.objid]); 
+            NotificationService.removeMessage(entity);
             if (listModelHandler) listModelHandler.removeItem(entity); 
             
             htmlview = entity.message;

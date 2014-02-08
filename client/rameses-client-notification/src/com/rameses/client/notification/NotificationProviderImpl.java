@@ -52,11 +52,11 @@ public final class NotificationProviderImpl implements NotificationProvider
         } 
     } 
     
-    public void publish(Object data) {
+    public void sendMessage(Object data) {
         new Thread(new NotifyProcess(handlers, data)).start(); 
     } 
     
-    public void markAsRead(Object data) {
+    public void removeMessage(Object data) {
         new Thread(new ReadProcess(handlers, data)).start(); 
     }
     
