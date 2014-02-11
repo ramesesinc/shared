@@ -1,0 +1,30 @@
+=============================== 
+ Notification Proxy Setup      
+===============================
+1. Create the following connection files setting
+
+	[notification_proxy]	
+	provider=script
+	app.host=192.168.254.21:8070
+	app.cluster=osiris3
+	app.context=notification
+	readTimeout=30000
+
+	[ws_group_listener]
+	provider=websocket
+	ws.host=192.168.254.21:8060
+	ws.protocol=group
+
+	[ws_user_listener]
+	provider=websocket
+	ws.host=192.168.254.21:8060
+	ws.protocol=user
+
+	[ws_sender]
+	provider=http
+	http.host=localhost:8060/wschannel
+	http.action=post
+
+2. Install the rameses-notification-proxy-services.jar to your app modules directory 
+
+3. Restart your server.

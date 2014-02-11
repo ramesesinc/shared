@@ -1,0 +1,13 @@
+import com.rameses.annotations.*;
+import com.rameses.util.*;
+
+class TestServiceProxy 
+{	
+    @Service(value='TestService', connection="local_proxy")
+    def svc; 
+
+    @ProxyMethod 
+    public void ping() {
+        svc.ping();
+    }
+}

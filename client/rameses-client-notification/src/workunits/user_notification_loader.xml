@@ -1,0 +1,53 @@
+<workunit>
+    <invokers>
+        <invoker type="loader:after" caption="user-notification-loader" action="init" target="process" index="0"/>
+    </invokers>
+    
+    <code>
+    <![CDATA[ 
+    import com.rameses.rcp.common.*;
+    import com.rameses.rcp.annotations.*;
+    import com.rameses.osiris2.client.*;
+    import com.rameses.osiris2.common.*;
+    import com.rameses.rcp.framework.ClientContext;
+    import com.rameses.client.notification.*;
+    
+    class UserNotificationLoaderController 
+    {   
+        def recipientid;
+        
+        def init() { 
+            def env = ClientContext.currentContext.appEnv;
+            if (!env['ws.host']) return;
+            
+            def headers = ClientContext.currentContext.headers;
+            recipientid = headers.USERID;
+            
+            WebsocketClient.open([ 
+                protocol        : 'user', 
+                host            : env['ws.host'], 
+                maxConnection   : env['ws.maxConnection'],
+                reconnectDelay  : env['ws.reconnectDelay'],
+                maxIdleTime     : env['ws.maxIdleTime'], 
+                
+                onstart     : { 
+                    try { 
+                        def svc = new UserNotificationService();
+                        svc.getNotified([recipientid: recipientid]); 
+                    } catch(Throwable t) { 
+                        t.printStackTrace(); 
+                    } 
+                }, 
+                
+                onmessage   : {o-> 
+                    if (o?.recipientid == recipientid) { 
+                        Notification.sendMessage(o); 
+                    } 
+                } 
+            ]);             
+            return '_close'; 
+        }         
+    } 
+    ]]> 
+    </code>
+</workunit>
