@@ -36,6 +36,7 @@ public class OrgQueryForm extends javax.swing.JPanel {
         setLayout(new java.awt.BorderLayout());
 
         xFormPanel1.setCaption("Select Org Class");
+        xComboBox1.setAllowNull(false);
         xComboBox1.setCaption("Select an Org Class");
         xComboBox1.setCaptionWidth(120);
         xComboBox1.setItems("orgTypes");
@@ -48,14 +49,15 @@ public class OrgQueryForm extends javax.swing.JPanel {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
                 .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 262, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(202, Short.MAX_VALUE))
+                .addContainerGap(192, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel2Layout.createSequentialGroup()
-                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(13, Short.MAX_VALUE))
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE))
         );
         add(jPanel2, java.awt.BorderLayout.CENTER);
 

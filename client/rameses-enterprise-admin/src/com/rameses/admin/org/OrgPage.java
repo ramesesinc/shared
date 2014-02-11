@@ -34,6 +34,7 @@ public class OrgPage extends javax.swing.JPanel {
         xLabel1 = new com.rameses.rcp.control.XLabel();
         xTextField1 = new com.rameses.rcp.control.XTextField();
         xLookupField1 = new com.rameses.rcp.control.XLookupField();
+        xLabel2 = new com.rameses.rcp.control.XLabel();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -58,7 +59,16 @@ public class OrgPage extends javax.swing.JPanel {
         xLookupField1.setHandler("lookupOrgclass");
         xLookupField1.setName("entity.parent");
         xLookupField1.setPreferredSize(new java.awt.Dimension(0, 20));
+        xLookupField1.setRequired(true);
+        xLookupField1.setVisibleWhen("#{parentclass!=null && parentclass.trim().length()>0}");
         xFormPanel1.add(xLookupField1);
+
+        xLabel2.setCaption("Parent Org");
+        xLabel2.setDepends(new String[] {"entity.parent"});
+        xLabel2.setExpression("#{entity.parent.orgclass}");
+        xLabel2.setPreferredSize(new java.awt.Dimension(0, 16));
+        xLabel2.setVisibleWhen("#{parentclass!=null && parentclass.trim().length()>0}");
+        xFormPanel1.add(xLabel2);
 
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -102,6 +112,7 @@ public class OrgPage extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private com.rameses.rcp.control.XFormPanel xFormPanel1;
     private com.rameses.rcp.control.XLabel xLabel1;
+    private com.rameses.rcp.control.XLabel xLabel2;
     private com.rameses.rcp.control.XLookupField xLookupField1;
     private com.rameses.rcp.control.XTextField xTextField1;
     // End of variables declaration//GEN-END:variables

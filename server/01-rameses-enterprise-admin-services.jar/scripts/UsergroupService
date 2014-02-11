@@ -51,14 +51,14 @@ class UsergroupService extends ActiveCrudListService {
 			[name:'user.lastname', caption:'Last Name' ],
 			[name:'user.firstname', caption:'First Name' ],
 			[name:'org.name', caption:'Org' ],
-			[name:'securitygroup', caption:'Security Group' ],
+			[name:'securitygroup.name', caption:'Security Group' ],
 		];
 	}
 	
 	public void beforeList( def o ) {	
 		o.userid = env.USERID;
 		o.usergroupfilter = "";
-		if (o.usergroupid) o.usergroupfilter = ' AND ugm.usergroupid=$P{usergroupid} ';
+		if (o.usergroupid) o.usergroupfilter = ' AND ugm.usergroup_objid=$P{usergroupid} ';
 	}
 	
 	@ProxyMethod 
@@ -74,6 +74,12 @@ class UsergroupService extends ActiveCrudListService {
 
 
 	public void approve ( data ) {} 	
+
+	@ProxyMethod
+	public def getPermissions(o) {
+		return em.getPermissions(o);
+	}
+
 }
 
 

@@ -4,19 +4,15 @@
  * Created on August 16, 2013, 11:30 AM
  */
 
-package com.rameses.admin.user;
-
-import com.rameses.osiris2.themes.OKCancelPage;
-import com.rameses.rcp.ui.annotations.Template;
+package bak;
 
 /**
  *
  * @author  wflores
  */
-@Template(OKCancelPage.class)
-public class UsergroupInfoPage extends javax.swing.JPanel {
+public class UsergroupOrgPage extends javax.swing.JPanel {
     
-    public UsergroupInfoPage() {
+    public UsergroupOrgPage() {
         initComponents(); 
     }
     
@@ -29,34 +25,51 @@ public class UsergroupInfoPage extends javax.swing.JPanel {
     private void initComponents() {
         jPanel1 = new javax.swing.JPanel();
         xFormPanel1 = new com.rameses.rcp.control.XFormPanel();
-        xLabel1 = new com.rameses.rcp.control.XLabel();
-        xLookupField2 = new com.rameses.rcp.control.XLookupField();
+        xTextField1 = new com.rameses.rcp.control.XTextField();
+        xTextField2 = new com.rameses.rcp.control.XTextField();
+        xLookupField1 = new com.rameses.rcp.control.XLookupField();
+        xTextField3 = new com.rameses.rcp.control.XTextField();
         xFormPanel2 = new com.rameses.rcp.control.XFormPanel();
         xComboBox2 = new com.rameses.rcp.control.XComboBox();
         xButton1 = new com.rameses.rcp.control.XButton();
-        xLookupField1 = new com.rameses.rcp.control.XLookupField();
-        xTextField3 = new com.rameses.rcp.control.XTextField();
         xTextField4 = new com.rameses.rcp.control.XTextField();
 
-        setPreferredSize(new java.awt.Dimension(510, 299));
         com.rameses.rcp.control.border.XTitledBorder xTitledBorder1 = new com.rameses.rcp.control.border.XTitledBorder();
         xTitledBorder1.setTitle("General Information");
         jPanel1.setBorder(xTitledBorder1);
 
-        xLabel1.setCaption("User name");
-        xLabel1.setCaptionWidth(110);
-        xLabel1.setExpression("#{usergroup.user.lastname}, #{usergroup.user.firstname}");
-        xLabel1.setPreferredSize(new java.awt.Dimension(0, 16));
-        xFormPanel1.add(xLabel1);
+        xTextField1.setCaption("User group");
+        xTextField1.setCaptionWidth(110);
+        xTextField1.setEnabled(false);
+        xTextField1.setName("entity.title");
+        xTextField1.setPreferredSize(new java.awt.Dimension(300, 20));
+        xTextField1.setReadonly(true);
+        xFormPanel1.add(xTextField1);
 
-        xLookupField2.setCaption("User Group");
-        xLookupField2.setCaptionWidth(110);
-        xLookupField2.setExpression("#{usergroup.usergroupid}");
-        xLookupField2.setHandler("lookupUsergroup");
-        xLookupField2.setName("usergroup.usergroupid");
-        xLookupField2.setPreferredSize(new java.awt.Dimension(300, 20));
-        xLookupField2.setRequired(true);
-        xFormPanel1.add(xLookupField2);
+        xTextField2.setCaption("Security group");
+        xTextField2.setCaptionWidth(110);
+        xTextField2.setEnabled(false);
+        xTextField2.setName("entity.user.fullname");
+        xTextField2.setPreferredSize(new java.awt.Dimension(300, 20));
+        xTextField2.setReadonly(true);
+        xFormPanel1.add(xTextField2);
+
+        xLookupField1.setCaption("Org. Name");
+        xLookupField1.setCaptionWidth(110);
+        xLookupField1.setExpression("#{entity.org.name}");
+        xLookupField1.setHandler("lookupOrg");
+        xLookupField1.setName("entity.org");
+        xLookupField1.setPreferredSize(new java.awt.Dimension(300, 20));
+        xFormPanel1.add(xLookupField1);
+
+        xTextField3.setCaption("Org. Class");
+        xTextField3.setCaptionWidth(110);
+        xTextField3.setDepends(new String[] {"entity.org"});
+        xTextField3.setEnabled(false);
+        xTextField3.setName("entity.org.orgclass");
+        xTextField3.setPreferredSize(new java.awt.Dimension(300, 20));
+        xTextField3.setReadonly(true);
+        xFormPanel1.add(xTextField3);
 
         xFormPanel2.setOrientation(com.rameses.rcp.constant.UIConstants.HORIZONTAL);
         xFormPanel2.setPadding(new java.awt.Insets(0, 0, 5, 5));
@@ -64,13 +77,12 @@ public class UsergroupInfoPage extends javax.swing.JPanel {
         xFormPanel2.setShowCaption(false);
         xComboBox2.setCaption("Security Group");
         xComboBox2.setCaptionWidth(110);
-        xComboBox2.setDepends(new String[] {"usergroup.usergroupid"});
-        xComboBox2.setDynamic(true);
         xComboBox2.setExpression("#{item.name}");
         xComboBox2.setItemKey("objid");
         xComboBox2.setItems("securitygroups");
-        xComboBox2.setName("usergroup.securitygroupid");
+        xComboBox2.setName("entity.securitygroupid");
         xComboBox2.setPreferredSize(new java.awt.Dimension(200, 22));
+        xComboBox2.setRequired(true);
         xFormPanel2.add(xComboBox2);
 
         xButton1.setFocusable(false);
@@ -84,26 +96,9 @@ public class UsergroupInfoPage extends javax.swing.JPanel {
 
         xFormPanel1.add(xFormPanel2);
 
-        xLookupField1.setCaption("Org. Name");
-        xLookupField1.setCaptionWidth(110);
-        xLookupField1.setExpression("#{usergroup.org.name}");
-        xLookupField1.setHandler("lookupOrg");
-        xLookupField1.setName("usergroup.org");
-        xLookupField1.setPreferredSize(new java.awt.Dimension(300, 20));
-        xFormPanel1.add(xLookupField1);
-
-        xTextField3.setCaption("Org. Class");
-        xTextField3.setCaptionWidth(110);
-        xTextField3.setDepends(new String[] {"entity.org"});
-        xTextField3.setEnabled(false);
-        xTextField3.setName("usergroup.org.orgclass");
-        xTextField3.setPreferredSize(new java.awt.Dimension(300, 20));
-        xTextField3.setReadonly(true);
-        xFormPanel1.add(xTextField3);
-
         xTextField4.setCaption("User Txn Code");
         xTextField4.setCaptionWidth(110);
-        xTextField4.setName("usergroup.usertxncode");
+        xTextField4.setName("entity.usertxncode");
         xTextField4.setPreferredSize(new java.awt.Dimension(200, 20));
         xFormPanel1.add(xTextField4);
 
@@ -113,8 +108,8 @@ public class UsergroupInfoPage extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 438, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 515, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(52, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -131,7 +126,7 @@ public class UsergroupInfoPage extends javax.swing.JPanel {
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -149,9 +144,9 @@ public class UsergroupInfoPage extends javax.swing.JPanel {
     private com.rameses.rcp.control.XComboBox xComboBox2;
     private com.rameses.rcp.control.XFormPanel xFormPanel1;
     private com.rameses.rcp.control.XFormPanel xFormPanel2;
-    private com.rameses.rcp.control.XLabel xLabel1;
     private com.rameses.rcp.control.XLookupField xLookupField1;
-    private com.rameses.rcp.control.XLookupField xLookupField2;
+    private com.rameses.rcp.control.XTextField xTextField1;
+    private com.rameses.rcp.control.XTextField xTextField2;
     private com.rameses.rcp.control.XTextField xTextField3;
     private com.rameses.rcp.control.XTextField xTextField4;
     // End of variables declaration//GEN-END:variables

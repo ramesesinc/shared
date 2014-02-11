@@ -26,4 +26,11 @@ class OrgService extends ActiveCrudListService {
 		];
 	}
 
+	public void afterOpen(o) {
+		if(o.parent?.objid) {
+			def p = em.read( [objid: o.parent.objid] );
+			o.parent.name = p.name;
+		}
+	}
+
 }

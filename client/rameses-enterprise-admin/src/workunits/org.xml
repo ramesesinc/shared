@@ -22,11 +22,11 @@
             String title;
             
             def getLookupOrgclass() {
-                return Inv.lookupOpener( "org:lookup", [:] );
+                return Inv.lookupOpener( "org:lookup", [includes:parentclass] );
             }
             
             Map createEntity() {
-                return [orgclass:entityName];
+                 return [orgclass:entityName];
             }
             
         }

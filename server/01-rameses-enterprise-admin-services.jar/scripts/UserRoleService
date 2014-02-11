@@ -1,0 +1,32 @@
+import com.rameses.annotations.*;
+import com.rameses.util.*;
+
+class UserRoleService {
+
+	@ActiveDB(value='userrole', em='admin') 
+	def em;
+
+	@ProxyMethod 
+	public def getUsers( def o ) {
+		//specify list of roles and return list of users
+		//return objid of user, lastname, firstname, txncode, and jobtitle
+		def roles = [];
+		if(o.roles) {
+			roles.addAll( o.roles );
+		}
+		if( o._tag) {
+			roles.addAll( o._tag.split(","));
+		}
+		o.roles = "'" + roles.join( "','" ) + "'";
+		return em.getUsers(o);
+	}
+
+	@ProxyMethod 
+	public def findTxnCode( def o ) {
+		if(!o.userid) throw new Exception("userid is required on UserRoleService.findTxnCode");
+		if(!o.role) throw new Exception("role is required on UserRoleService.findTxnCode");
+		return em.findUserTxnCode( o );
+	}
+
+
+}

@@ -1,5 +1,6 @@
 [getList]
-SELECT * FROM sys_org WHERE orgclass=$P{orgclass} ORDER BY name 
+SELECT * FROM sys_org 
+WHERE orgclass=$P{orgclass} ORDER BY name 
 
 [getOrgClasses]
 SELECT * FROM sys_orgclass

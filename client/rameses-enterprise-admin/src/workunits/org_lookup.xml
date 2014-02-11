@@ -11,13 +11,19 @@
     
         class OrgLookupController extends ServiceLookupController {
             
-            @Service("OrgLookupService")
-            def orgLookupSvc;
+            @Service("OrgService")
+            def orgSvc;
         
+            def includes;
             def orgTypes;
             
             void init() {
-                orgTypes = orgLookupSvc.getOrgclasses()*.title;
+                def list = orgSvc.getOrgClasses();
+                if(includes) {
+                    includes = includes.replace(",", "|");
+                    list = list.findAll{ it.name.matches( includes ) }
+                }
+                orgTypes = list*.title;
             }
             
             @PropertyChangeListener 
@@ -34,5 +40,4 @@
     <pages>
         <page name="queryform" template="com.rameses.admin.org.OrgQueryForm"/>
     </pages>
-
 </workunit>

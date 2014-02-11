@@ -14,6 +14,7 @@
         import com.rameses.rcp.common.*;
         import com.rameses.osiris2.client.*;
         import com.rameses.osiris2.common.*;
+        import java.rmi.server.*;
 
         public class UserController extends BasicCRUDController {
             String prefixId = "USR";
@@ -27,16 +28,26 @@
             
             def addUsergroup() { 
                 def params = [
-                    entity:entity, 
+                    entity:[objid:"UGM"+ new UID(), user: entity], 
+                    view: 'user',
                     saveHandler:{ o->
                         if( !entity.usergroups ) entity.usergroups = [];
-                        service.addUsergroup(o); 
                         entity.usergroups << o; 
                         usergroupHandler.reload(); 
                     }
                 ]; 
-                return InvokerUtil.lookupOpener('user-usergroup:add', params); 
+                return InvokerUtil.lookupOpener('usergroup:add', params); 
             } 
+            
+            def editUsergroup() { 
+                if(!selectedUsergroup) return;
+                def params = [
+                    view: 'user',
+                    entity: selectedUsergroup
+                ];
+                return InvokerUtil.lookupOpener( 'usergroup:edit', params );
+            }
+            
             
             void removeUsergroup() { 
                 if(!selectedUsergroup) return;

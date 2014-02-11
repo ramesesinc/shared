@@ -25,10 +25,6 @@ class OrgLookupService extends ActiveCrudListService {
 		o._listMethod = "getLookup";
 	}
 	
-	@ProxyMethod
-	public def getOrgclasses() {
-		return em.getOrgClasses();
-	}
 
 }
 
