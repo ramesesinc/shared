@@ -32,6 +32,14 @@ public abstract class StockIssueController {
         return "initial";
     }
 
+    def open() {
+        entity = issueSvc.open( entity ) 
+        if( entity.items )  selectedItem = entity.items[0] 
+        getRenderer()
+        mode = 'read'
+        return "default"
+    }
+
     def enterQty() {
         def r = stockReqSvc.open([objid: request.objid]);
         entity.request = request;
