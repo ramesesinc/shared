@@ -18,9 +18,9 @@ SELECT
 	ug.domain, ug.role AS role, 
 	sg.exclude AS security_exclude, um.exclude AS custom_exclude 
 FROM sys_usergroup_member um 
-	INNER JOIN sys_usergroup ug ON um.usergroupid = ug.objid 
+	INNER JOIN sys_usergroup ug ON um.usergroup_objid = ug.objid 
 	INNER JOIN sys_user u ON um.user_objid = u.objid 
-	LEFT JOIN sys_securitygroup sg ON um.securitygroupid=sg.objid 
+	LEFT JOIN sys_securitygroup sg ON um.securitygroup_objid=sg.objid 
 WHERE u.objid = $P{userid} AND um.org_objid IS NULL 	
 
 [getPermissionsByOrg]
@@ -29,8 +29,8 @@ SELECT
 	sg.exclude AS security_exclude, um.exclude AS custom_exclude, 
 	o.objid AS orgid, o.name AS orgname  
 FROM sys_usergroup_member um  
-	INNER JOIN sys_usergroup ug ON um.usergroupid = ug.objid 
+	INNER JOIN sys_usergroup ug ON um.usergroup_objid = ug.objid 
 	INNER JOIN sys_user u ON um.user_objid = u.objid 
 	INNER JOIN sys_org o ON um.org_objid=o.objid 
-	LEFT JOIN sys_securitygroup sg ON um.securitygroupid=sg.objid 	
+	LEFT JOIN sys_securitygroup sg ON um.securitygroup_objid=sg.objid 	
 WHERE u.objid = $P{userid} AND o.name = $P{orgname} 

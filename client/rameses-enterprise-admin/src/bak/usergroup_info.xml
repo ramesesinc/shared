@@ -1,6 +1,7 @@
 <workunit>
     <invokers>
         <invoker type="user-usergroup:add" caption="Add User Group" action="create" target="popup"/>
+        <invoker type="user-usergroup:edit" caption="Edit User Group" action="edit" target="popup"/>
         <!--
         <invoker type="formActions" caption="Cancel" action="doCancel" shortcut="ctrl X" immediate="true"/>
         <invoker type="formActions" caption="Back" action="doShowDefault" mnemonic="b" immediate="true" visibleWhen="#{openerObject != null}"/>
@@ -31,6 +32,10 @@
                 mode = "create";
                 usergroup = [objid:"UGM"+ new UID()];
                 usergroup.user = entity;
+            }
+            
+            void edit() {
+                mode = "edit";
             }
             
             def getLookupUsergroup() {

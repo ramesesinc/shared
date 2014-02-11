@@ -5,23 +5,15 @@ import com.rameses.util.*;
 import com.rameses.io.*;
 import com.rameses.services.extended.*;
 
-class UserSecuritygroupService {
+class UserSecuritygroupService extends ActiveCrudService {
 
-	@PersistenceContext('admin')
+	@ActiveDB(value='usersecuritygroup', em='admin')
 	def em;
 
-
 	@ProxyMethod 
-	public List getUsergroups() {
-		return em.sqlContext.createNamedQuery('usersecuritygroup:getUsergroups').resultList;
-	}
-
-	@ProxyMethod 
-	public List getSecuritygroups( params ) {
-		if (!params.usergroupid) throw new Exception('Please specify usergroupid');
-
-		return em.sqlContext.createNamedQuery('usersecuritygroup:getSecuritygroups')
-				.setParameters(params).resultList;
+	public List getList( params ) {
+		if (!params.objid) throw new Exception('Please specify usergroupid');
+		return em.getList([usergroupid: params.objid]);
 	}
 
 	@ProxyMethod 
@@ -33,36 +25,11 @@ class UserSecuritygroupService {
 		if (!params.userid) 
 			throw new Exception('Please specify userid');
 
-		def qry = em.sqlContext.createNamedQuery('usersecuritygroup:getSecuritygroup');
-		def info = qry.setParameters([
-						objid: params.securitygroupid, 
-						usergroupid: params.usergroupid 
-					]).singleResult; 
-
-		if (!info) throw new Exception("'"+params.objid+"' security group not found"); 
-
-		def entity = [
-			objid: 				'USGRP'+new UID(), 
-			usergroupid: 		params.usergroupid, 
-			securitygroupid: 	params.securitygroupid 
-		];
-
-		if (params.orgid) {			
-			qry = em.sqlContext.createNamedQuery('usersecuritygroup:getOrg');
-			entity.org = qry.setParameters([
-							objid: params.orgid, 
-							orgclass: params.orgclass
-						]).singleResult; 
-
-			if (!entity.org) throw new Exception("'"+params.orgid+"' org not found"); 
-		} 
-
-		qry = em.sqlContext.createNamedQuery('usersecuritygroup:getUser');
-		entity.user = qry.setParameters([objid: params.userid]).singleResult; 
-		if (!entity.user) throw new Exception("'"+params.userid+"' user not found"); 
+		def info = em.read([objid: params.securitygroupid]);
+		if (!info) throw new Exception("'"+params.securitygroupid+"' security group not found"); 
 
 		entity.jobtitle = entity.user.jobtitle;
-		em.create('usergroup:member', entity); 
+		em.create(entity); 
 	}
 
 	@ProxyMethod 
@@ -70,8 +37,6 @@ class UserSecuritygroupService {
 		if (!params.objid) throw new Exception('Please specify objid'); 
 		if (!params.userid) throw new Exception('Please specify userid'); 
 
-		params.user_objid = params.userid;
-		def qry = em.sqlContext.createNamedExecutor('usersecuritygroup:removeMembership');
-		qry.setParameters(params).execute();
+		em.removeMembership(params);
 	} 
 }

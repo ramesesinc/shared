@@ -1,10 +1,97 @@
 <workunit>
     <invokers>
-        <invoker type="usergroup:open" action="open"/>
-        <invoker type="usergroup:create" action="create"/>
+        <!-- caller is the user -->
+        <invoker type="usergroup:add" caption="Add User Group" target="popup"/>
+        <invoker type="usergroup:edit" caption="Edit User Group" action="edit" target="popup"/>
+        
+        <!-- caller is usergroup -->
+        <invoker type="usergroup:create" caption="Create User Group" action="create"/>
     </invokers>
-    <code class="com.rameses.admin.controller.UsergroupController"/>
+   
+    <code>
+    <![CDATA[
+        import com.rameses.rcp.annotations.*;
+        import com.rameses.rcp.common.*;
+        import com.rameses.osiris2.client.*;
+        import com.rameses.osiris2.common.*;
+        import java.rmi.server.*;
+
+        public class UserGroupMemberController {
+        
+            @Service('UsergroupMemberService') 
+            def service;
+
+            @Service('UserSecuritygroupService')
+            def secSvc;
+
+            def saveHandler;
+            def entity;
+            def node;
+            def view = "user";   //user or usergroup
+
+            void create() {
+                view = "usergroup";
+                entity = [objid:"UGM"+ new UID(), usergroupid: node.usergroupid];
+            }
+            
+            void edit() {
+                entity = service.open( entity );
+                MsgBox.alert( entity );
+            }
+            
+            def getLookupUsergroup() {
+                return InvokerUtil.lookupOpener( "usergroup:lookup", [
+                    onselect: { o->
+                        entity.usergroupid = o.objid;
+                        entity.domain = o.domain;
+                        entity.role = o.role;
+                    }
+                ]);
+            }
+            
+            def getLookupOrg() {
+                return InvokerUtil.lookupOpener( "org:lookup", [
+                    onselect:{o->
+                        entity.org = o;
+                    }
+                ] );
+            }
+            
+            //used for usergroup. 
+            def getLookupUser() {
+                return InvokerUtil.lookupOpener("user:lookup", [
+                    onselect: { u->
+                        entity.user = [objid:u.objid, username:u.username, firstname:u.firstname, lastname:u.lastname];
+                        entity.jobtitle = u.jobtitle;
+                    }
+                ]);
+            }
+            
+            def getSecuritygroups() {
+                def usergroupid = entity.usergroupid;
+                if (!usergroupid) return null;
+                return secSvc.getList([usergroupid: usergroupid]);             
+            }
+
+            def showPermissions() {
+                return InvokerUtil.lookupOpener( "usergrouppermission", [usergroup:entity, securitygroup: entity.securitygroup] );
+            }
+            
+            def doOk() {
+                if(saveHandler) saveHandler(entity);
+                service.save( entity );
+                return "_close";
+            }
+            
+            def doCancel() {
+                return "_close";
+            }
+            
+        }
+    ]]>
+    </code>
+    
     <pages>
-        <page template="com.rameses.admin.usergroup.UsergroupPage"/> 
+        <page name="user" template="com.rameses.admin.usergroup.UsergroupMemberPage"/>
     </pages>
 </workunit>

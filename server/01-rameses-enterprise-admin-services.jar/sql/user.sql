@@ -18,7 +18,7 @@ SELECT
 	sg.objid AS securitygroup_objid, sg.name AS securitygroup_name, 
 	ug.objid AS usergroup_objid, ug.title AS usergroup_title  
 FROM sys_usergroup_member ugm 
-	INNER JOIN sys_usergroup ug ON ugm.usergroupid=ug.objid 
-	LEFT JOIN sys_securitygroup sg ON ugm.securitygroupid=sg.objid AND ugm.usergroupid=sg.usergroupid 
+	INNER JOIN sys_usergroup ug ON ugm.usergroup_objid=ug.objid 
+	LEFT JOIN sys_securitygroup sg ON ugm.securitygroup_objid=sg.objid AND ugm.usergroup_objid=sg.usergroupid 
 WHERE ugm.user_objid=$P{objid}  
  

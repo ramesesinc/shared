@@ -6,7 +6,7 @@
 
 package com.rameses.admin.usergroup;
 
-import com.rameses.osiris2.themes.FormPage;
+import com.rameses.osiris2.themes.OKCancelPage;
 import com.rameses.rcp.ui.annotations.StyleSheet;
 import com.rameses.rcp.ui.annotations.Template;
 
@@ -14,12 +14,12 @@ import com.rameses.rcp.ui.annotations.Template;
  *
  * @author  Elmo
  */
-@Template(value=FormPage.class)
+@Template(value=OKCancelPage.class)
 @StyleSheet
-public class SecurityGroupInfoPage extends javax.swing.JPanel {
+public class UsergroupPermissionPage extends javax.swing.JPanel {
     
     /** Creates new form SecurityGroupPage */
-    public SecurityGroupInfoPage() {
+    public UsergroupPermissionPage() {
         initComponents();
     }
     
@@ -35,10 +35,6 @@ public class SecurityGroupInfoPage extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         xList1 = new com.rameses.rcp.control.XList();
         xDataTable1 = new com.rameses.rcp.control.XDataTable();
-        xFormPanel1 = new com.rameses.rcp.control.XFormPanel();
-        xTextField1 = new com.rameses.rcp.control.XTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        xTextArea1 = new com.rameses.rcp.control.XTextArea();
 
         com.rameses.rcp.control.border.XTitledBorder xTitledBorder1 = new com.rameses.rcp.control.border.XTitledBorder();
         xTitledBorder1.setTitle("Object Permissions");
@@ -52,8 +48,33 @@ public class SecurityGroupInfoPage extends javax.swing.JPanel {
         jSplitPane1.setLeftComponent(jScrollPane2);
 
         xDataTable1.setColumns(new com.rameses.rcp.common.Column[]{
-            new com.rameses.rcp.common.Column("checked", null, 20, 20, 20, false, true, true, true, null, new com.rameses.rcp.common.CheckBoxColumnHandler(java.lang.Boolean.class, true, false)),
-            new com.rameses.rcp.common.Column("title", "Permission", 100, 0, 0, false, true, true, false, null, new com.rameses.rcp.common.TextColumnHandler())
+            new com.rameses.rcp.common.Column(new Object[]{
+                new Object[]{"name", "checked"}
+                , new Object[]{"caption", null}
+                , new Object[]{"width", 20}
+                , new Object[]{"minWidth", 20}
+                , new Object[]{"maxWidth", 20}
+                , new Object[]{"required", false}
+                , new Object[]{"resizable", true}
+                , new Object[]{"nullWhenEmpty", true}
+                , new Object[]{"editable", true}
+                , new Object[]{"editableWhen", null}
+                , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.CheckBoxColumnHandler(java.lang.Boolean.class, true, false)}
+            }),
+            new com.rameses.rcp.common.Column(new Object[]{
+                new Object[]{"name", "permission"}
+                , new Object[]{"caption", "Permission"}
+                , new Object[]{"width", 100}
+                , new Object[]{"minWidth", 0}
+                , new Object[]{"maxWidth", 0}
+                , new Object[]{"required", false}
+                , new Object[]{"resizable", true}
+                , new Object[]{"nullWhenEmpty", true}
+                , new Object[]{"editable", false}
+                , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.UPPER}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
+            })
         });
         xDataTable1.setDepends(new String[] {"selectedObject"});
         xDataTable1.setDynamic(true);
@@ -73,27 +94,9 @@ public class SecurityGroupInfoPage extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jSplitPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
+                .add(jSplitPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
                 .addContainerGap())
         );
-
-        com.rameses.rcp.control.border.XTitledBorder xTitledBorder2 = new com.rameses.rcp.control.border.XTitledBorder();
-        xTitledBorder2.setPadding(new java.awt.Insets(25, 10, 10, 10));
-        xTitledBorder2.setTitle("Security Group Info");
-        xFormPanel1.setBorder(xTitledBorder2);
-        xTextField1.setCaption("Name");
-        xTextField1.setName("entity.name");
-        xTextField1.setPreferredSize(new java.awt.Dimension(0, 19));
-        xTextField1.setSpaceChar('_');
-        xFormPanel1.add(xTextField1);
-
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(0, 42));
-        xTextArea1.setCaption("Description");
-        xTextArea1.setName("entity.description");
-        xTextArea1.setPreferredSize(new java.awt.Dimension(0, 40));
-        jScrollPane1.setViewportView(xTextArea1);
-
-        xFormPanel1.add(jScrollPane1);
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
@@ -101,17 +104,13 @@ public class SecurityGroupInfoPage extends javax.swing.JPanel {
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, xFormPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 105, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -120,14 +119,10 @@ public class SecurityGroupInfoPage extends javax.swing.JPanel {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSplitPane jSplitPane1;
     private com.rameses.rcp.control.XDataTable xDataTable1;
-    private com.rameses.rcp.control.XFormPanel xFormPanel1;
     private com.rameses.rcp.control.XList xList1;
-    private com.rameses.rcp.control.XTextArea xTextArea1;
-    private com.rameses.rcp.control.XTextField xTextField1;
     // End of variables declaration//GEN-END:variables
     
 }

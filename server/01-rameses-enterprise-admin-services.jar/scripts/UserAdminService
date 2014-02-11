@@ -56,6 +56,11 @@ class UserAdminService extends ActiveCrudListService {
 		usergroup.create( entity, "member" );
 	}
 
+	@ProxyMethod 
+	public def openUsergroup( entity ) {
+		return usergroup.read( entity, "member" );
+	}
+
 }
 
 
