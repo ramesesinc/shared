@@ -29,4 +29,15 @@ class UserRoleService {
 	}
 
 
+	@ProxyMethod 
+	public def getRolesByUser( def o ) {
+		if(!o.userid) throw new Exception("userid is required on UserRoleService.findTxnCode");
+		o.filter = '';
+		if( o.orgid ) {
+			o.filter = ''' AND ugm.org_objid=$P{orgid} ''';
+		}
+		return em.getRolesByUser( o );
+	}
+	
+
 }

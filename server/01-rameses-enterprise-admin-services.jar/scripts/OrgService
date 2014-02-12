@@ -33,4 +33,19 @@ class OrgService extends ActiveCrudListService {
 		}
 	}
 
+	@ProxyMethod
+	public def getRoot() {
+		return em.findRoot();
+	}
+
+	@ProxyMethod
+	public def findByName(def o) {
+		return em.findByName(o);
+	}
+
+	@ProxyMethod
+	public def findByCode(def o) {
+		return em.findByCode(o);
+	}
+
 }

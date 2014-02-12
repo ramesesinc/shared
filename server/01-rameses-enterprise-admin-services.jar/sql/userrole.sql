@@ -20,3 +20,13 @@ FROM sys_usergroup_member ugm
 INNER JOIN sys_usergroup ug ON ug.objid=ugm.usergroup_objid
 WHERE ugm.user_objid = $P{userid}
 AND ug.role = $P{role}
+
+[getRolesByUser]
+SELECT ug.domain,ug.role,
+ugm.exclude AS custom_exclude, 
+sg.exclude AS security_exclude
+FROM sys_usergroup_member ugm
+INNER JOIN sys_usergroup ug ON ugm.usergroup_objid=ug.objid
+LEFT JOIN sys_securitygroup sg ON sg.objid=ugm.securitygroup_objid 
+WHERE ugm.user_objid=$P{userid} 
+${filter}

@@ -1,109 +1,74 @@
 <workunit>
     <invokers>
-        <invoker type="usergroup-folder:formActions" caption="Security Group" 
-            target="popup" action="init" role="SYSADMIN" icon="images/securitygroup.png"/>
-        
-        <invoker type="formActions" caption="New"  action="addNew" visibleWhen="#{mode=='read'}" icon="images/toolbars/create.png"/>
-        <invoker type="formActions" caption="Edit"  action="edit" visibleWhen="#{editVisible == true}"/>
-        <invoker type="formActions" caption="Save"  action="save" visibleWhen="#{mode!='read'}"/>
-        <invoker type="formActions" caption="Cancel"  action="cancel" visibleWhen="#{mode!='read'}"/>
-    </invokers>
-    
-    <code>
-    <![CDATA[ 
+        <invoker type="securitygroup:create" action="create" caption="Create Security Group" 
+            resizable="false" target="popup" />
+        <invoker type="securitygroup:edit" action="edit" caption="Edit Security Group" 
+            resizable="false" target="popup" />
+        <invoker type="securitygroup:custom" action="customize" caption="Customize Security Group" 
+            resizable="false" target="popup" />
+            
+   </invokers>
+   
+   <code>
+        <![CDATA[
+
         import com.rameses.rcp.annotations.*;
         import com.rameses.rcp.common.*;
         import com.rameses.osiris2.client.*;
         import com.rameses.osiris2.common.*;
         import java.rmi.server.*;
+
+        public class SecurityGroupPermissionController {
         
-        class SecurityGroupController {
-        
-            @Service("SecuritygroupAdminService")
-            def sgSvc;
+            @Service('UsergroupService')
+            def svc; 
             
-            def node, filetype;
-            
-            def title = "Security Group"; 
-            def entity = [:]
-            def usergroupid;            
-            def selectedEntity;
-            def mode = "read";
+            def usergroup;
             def permissions;
+            def securitygroup;
+            def securitygroupname;
+            
             def objectList;
-            def selectedObject;            
+            def selectedObject;
+
+            def securitygroupExclude;
+            def customExclude;
             
-            void init() {
-                mode = "read";            
-                usergroupid =  node.usergroupid;
-                permissions = sgSvc.getPermissions([usergroupid:usergroupid]);
-                objectList = permissions.collect{ it.object }.unique();
-                if(objectList.size()>0) selectedObject = objectList[0];
-            }
-            
-            def listHandler = [
-                fetchList: { o->
-                    def m = [usergroupid:usergroupid];
-                    return sgSvc.getList(m);
-                }
-            ] as BasicListModel;
-            
-            
-            //the editing page
-            def addNew() {
-                entity = [usergroupid:usergroupid];
-                entity.objid = "USG-"+new UID();
-                permissions.each {
-                    it.checked = true;
-                }
-                mode = "create";
-                return "info";
-            }
-            
-            boolean isEditVisible(){
-                return (mode == 'read' && selectedEntity != null); 
-            }
-            
-            def edit() {
-                entity = sgSvc.open(selectedEntity);
-                def _exclude = entity.exclude;
-                permissions.each {
-                    it.checked = true;
-                    if (_exclude) { 
-                        it.checked = (it.code.matches(_exclude)? false: true);
-                    } 
-		}
-                mode = "edit";
-                return "info";
-            }   
-            
-            def save() {
-                entity.exclude = buildExclude();
-                if (mode == 'create')
-                    sgSvc.create(entity);    
+            void init() { 
+                if(!securitygroup) 
+                    securitygroupname = 'DEFAULT';
                 else
-                    sgSvc.update(entity);
-                    
-                listHandler.reload();
-                mode="read";
-                return "default";
+                    securitygroupname = securitygroup.name;
+                permissions = svc.getPermissions(usergroup); 
+                permissions.each {
+                    it.checked = (!customExclude || !it.code.matches(customExclude));
+                }
+                objectList = permissions*.object.unique();
+            } 
+            
+            void create() {
+                securitygroup = [usergroup:usergroup, objid:"SECGRP"+new UID()];
+                init();
             }
             
+            void open() {
+                init();
+            }
             
-            def cancel() {
-                if(MsgBox.confirm("Any changes made will be discared. Confirm?")) {
-                    mode = "read";
-                    return "default";
-                }
+            void customize() {
+                init();
             }
             
             def permissionListModel = [
-                fetchList: { o->
-                    if(!selectedObject) return  [];
-                    return permissions.findAll{ it.object == selectedObject };
+                fetchList: {o-> 
+                    if (!selectedObject) return []; 
+                    def list = permissions.findAll {
+                        it.object == selectedObject;
+                    };
+                    return list;
                 }
             ] as EditorListModel;
-        
+            
             def buildExclude() {
                 def excludes = [];
                 permissions.groupBy{ it.object }.each{ k,v->
@@ -119,14 +84,23 @@
                     } 
                 }
                 return excludes.join("|");
-            }
+            }             
             
+            def doOk() {
+                entity.exclude = buildExclude(); 
+                svc.updatePermission([objid: entity.objid, exclude: entity.exclude]); 
+                return '_close';
+            } 
+            
+            def doCancel() {
+                return '_close';
+            }
         }
-    ]]> 
-    </code>
         
-    <pages>
-        <page template="com.rameses.admin.usergroup.SecurityGroupSelectionPage"/> 
-        <page name="info" template="com.rameses.admin.usergroup.SecurityGroupInfoPage"/> 
-    </pages>    
+       ]]>
+   </code>
+   
+   <pages>
+       <page template="com.rameses.admin.usergroup.SecurityGroupPage"/>
+   </pages>
 </workunit>

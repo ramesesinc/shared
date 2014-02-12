@@ -48,7 +48,7 @@ public class UsergroupMemberPage extends javax.swing.JPanel {
 
         xLabel2.setCaption("User Group");
         xLabel2.setCaptionWidth(110);
-        xLabel2.setExpression("#{entity.usergroupid}");
+        xLabel2.setExpression("#{entity.usergroup.objid}");
         xLabel2.setVisibleWhen("#{view != 'user'}");
         xFormPanel1.add(xLabel2);
 
@@ -72,9 +72,9 @@ public class UsergroupMemberPage extends javax.swing.JPanel {
 
         xLookupField2.setCaption("User Group");
         xLookupField2.setCaptionWidth(110);
-        xLookupField2.setExpression("#{entity.usergroupid}");
+        xLookupField2.setExpression("#{entity.usergroup.objid}");
         xLookupField2.setHandler("lookupUsergroup");
-        xLookupField2.setName("entity.usergroupid");
+        xLookupField2.setName("entity.usergroup");
         xLookupField2.setPreferredSize(new java.awt.Dimension(300, 20));
         xLookupField2.setRequired(true);
         xLookupField2.setVisibleWhen("#{view == 'user'}");
@@ -167,7 +167,7 @@ public class UsergroupMemberPage extends javax.swing.JPanel {
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     

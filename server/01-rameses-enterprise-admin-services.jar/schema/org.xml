@@ -2,6 +2,7 @@
 
 	<element name="org" tablename="sys_org">
 		<field name="objid" primary="true"/>
+		<field name="code" />
 		<field name="name" />
 		<field name="orgclass" />
 		<field name="parent_objid" />

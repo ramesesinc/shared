@@ -15,9 +15,10 @@ class UsergroupMemberService extends ActiveCrudService {
 
 	String subSchemaName = "member";
 	
+	
 	public void afterOpen( def o ) {
-		if(o.securitygroupid) {
-			o.securitygroup = secGrp.read( [objid: o.securitygroupid] );
+		if(o.securitygroup?.objid) {
+			o.securitygroup = secGrp.read( [objid: o.securitygroup.objid] );
 		}
 	}
 }

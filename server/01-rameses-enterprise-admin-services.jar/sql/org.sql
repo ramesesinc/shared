@@ -8,13 +8,13 @@ SELECT * FROM sys_orgclass
 [getLookup]
 SELECT o.* FROM sys_org o WHERE o.orgclass=$P{orgclass} ORDER BY o.name 
 
-[getLookup1]
-SELECT o.* FROM sys_org o 
-WHERE o.name LIKE $P{name} AND o.parent_objid IS NOT NULL 
-ORDER BY o.name 
 
-[getInfo]
+
+[findRoot]
+SELECT * FROM sys_org WHERE parent_objid IS NULL
+
+[findByName]
 SELECT * FROM sys_org WHERE name=$P{name} 
 
-[getRoot]
-SELECT * FROM sys_org WHERE parent_objid IS NULL
+[findByCode]
+SELECT * FROM sys_org WHERE code=$P{code} 

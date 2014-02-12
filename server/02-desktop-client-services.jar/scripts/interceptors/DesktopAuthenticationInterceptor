@@ -1,12 +1,12 @@
 import com.rameses.annotations.*;
 import com.rameses.util.*;
 
-class WebAuthenticationInterceptor
+class DesktopAuthenticationInterceptor
 {
 	@Service('AdminAuthService')
 	def authSvc;
 
-	@After(pattern="AuthenticationService.authenticate", eval="env.CLIENTTYPE=='web'") 
+	@After(pattern="AuthenticationService.authenticate", eval="env.CLIENTTYPE=='desktop'") 
 	public void authenticate( evt ) {
 		def username = evt.args[0];
 		def password = evt.args[1];

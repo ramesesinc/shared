@@ -5,15 +5,15 @@ import com.rameses.util.*;
 import com.rameses.io.*;
 import com.rameses.services.extended.*;
 
-class UserSecuritygroupService extends ActiveCrudService {
+class SecuritygroupService extends ActiveCrudService {
 
 	@ActiveDB(value='usersecuritygroup', em='admin')
 	def em;
 
 	@ProxyMethod 
 	public List getList( params ) {
-		if (!params.objid) throw new Exception('Please specify usergroupid');
-		return em.getList([usergroupid: params.objid]);
+		if (!params.usergroupid) throw new Exception('Please specify usergroupid');
+		return em.getList([usergroupid: params.usergroupid]);
 	}
 
 	@ProxyMethod 

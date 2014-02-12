@@ -6,20 +6,17 @@ WHERE objid LIKE $P{searchtext}
 SELECT DISTINCT
 	ug.domain as caption, ug.domain as domain, '' as usergroupid, 'domain' as filetype 
 FROM sys_usergroup ug 
-	LEFT JOIN sys_usergroup_admin uga ON ug.objid=uga.usergroupid 
 WHERE 
-	(uga.user_objid=$P{userid} OR 'root'=$P{userid} OR 'sa'=$P{userid}) 
+	('root'=$P{userid} OR 'sa'=$P{userid}) 
 
 [getChildNodes]
 SELECT DISTINCT
 	ug.title as caption, ug.domain as domain, ug.objid as usergroupid, 
 	'usergroup-folder' as filetype, ug.orgclass 
 FROM sys_usergroup ug 
-	LEFT JOIN sys_usergroup_admin uga ON ug.objid=uga.usergroupid 
 WHERE 
 	ug.domain=$P{domain} AND 
-	(uga.user_objid=$P{userid} OR 'root'=$P{userid} OR 'sa'=$P{userid}) 
-
+	('root'=$P{userid} OR 'sa'=$P{userid}) 
 
 [getList]
 SELECT DISTINCT
@@ -49,4 +46,4 @@ WHERE su.name like $P{name}
 UPDATE sys_usergroup_member SET state='APPROVED' WHERE objid=$P{objid} AND state='DRAFT' 
 
 [getPermissions]
-SELECT * FROM sys_usergroup_permission WHERE usergroup_objid=$P{usergroupid}
+SELECT * FROM sys_usergroup_permission WHERE usergroup_objid=$P{objid}
