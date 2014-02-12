@@ -554,6 +554,11 @@ public class ExplorerViewListController extends ListController
             if (bool != null) this.setShowCaption(bool.booleanValue());
             
             this.getProperties().putAll(invoker.getProperties()); 
+            
+            String depends = getString("depends");
+            if (depends == null || depends.length() == 0) {
+                this.getProperties().put("depends", "listHandler.selectedEntity"); 
+            }
         }
 
         public Object execute() { 
