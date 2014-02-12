@@ -372,6 +372,10 @@ public class ExplorerViewController
         return (node == null? null: node.getItem()); 
     }
     
+    public Object getSelectedEntity() {
+        return (listHandler==null? null: listHandler.getSelectedEntity()); 
+    }
+    
     public void beforeFetchList(Map params) {
     }
     
