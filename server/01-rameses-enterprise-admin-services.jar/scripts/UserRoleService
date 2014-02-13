@@ -27,6 +27,8 @@ class UserRoleService {
 		o.filter = '';
 		if( o.orgid ) {
 			o.filter = ''' AND ugm.org_objid=$P{orgid} ''';
+		} else {
+			o.filter = ''' AND ugm.org_objid is null ''';
 		}
 		return em.getRolesByUser( o );
 	}
