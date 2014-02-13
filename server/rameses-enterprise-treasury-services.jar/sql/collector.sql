@@ -7,21 +7,21 @@ ugm.user_firstname as firstname,
 ugm.jobtitle as title,
 ugm.jobtitle 
 FROM sys_usergroup_member ugm 
-INNER JOIN sys_usergroup ug ON ugm.usergroupid=ug.objid
+INNER JOIN sys_usergroup ug ON ugm.usergroup_objid=ug.objid
 WHERE ug.role = 'COLLECTOR'
 
 
 [getUserTxnCode]
 SELECT ugm.usertxncode 
 FROM sys_usergroup_member ugm 
-INNER JOIN sys_usergroup ug ON ugm.usergroupid=ug.objid
+INNER JOIN sys_usergroup ug ON ugm.usergroup_objid=ug.objid
 WHERE ugm.user_objid = $P{userid}
 AND ug.role = 'COLLECTOR'
 
 [findUserTxnCode]
 SELECT ugm.usertxncode 
 FROM sys_usergroup_member ugm 
-INNER JOIN sys_usergroup ug ON ugm.usergroupid=ug.objid
+INNER JOIN sys_usergroup ug ON ugm.usergroup_objid=ug.objid
 WHERE ugm.user_objid = $P{userid}
 AND ug.role = 'COLLECTOR'
 
@@ -33,7 +33,7 @@ ugm.user_lastname as lastname,
 ugm.user_firstname as firstname,
 ugm.jobtitle as title
 FROM sys_usergroup_member ugm
-INNER JOIN sys_usergroup ug ON ugm.usergroupid=ug.objid
+INNER JOIN sys_usergroup ug ON ugm.usergroup_objid=ug.objid
 WHERE ugm.user_objid = $P{userid}
 AND ug.role = 'COLLECTOR'
 
@@ -45,6 +45,6 @@ ugm.user_lastname as lastname,
 ugm.user_firstname as firstname,
 ugm.jobtitle as title
 FROM sys_usergroup_member ugm
-INNER JOIN sys_usergroup ug ON ugm.usergroupid=ug.objid
+INNER JOIN sys_usergroup ug ON ugm.usergroup_objid=ug.objid
 WHERE ugm.user_objid = $P{userid}
 AND ug.role = 'SUBCOLLECTOR' 

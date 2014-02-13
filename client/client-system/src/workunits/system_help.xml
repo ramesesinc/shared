@@ -1,7 +1,7 @@
 <workunit>
     
     <invokers>
-        <invoker folderid="/menu/help" caption="Help Contents" action="init" separator="before" index="18000" target="popup" modal="false" permission="system"/>
+        <invoker xfolderid="/menu/help" caption="Help Contents" action="init" separator="before" index="18000" target="popup" modal="false" permission="system"/>
         
         <invoker type="formActions" caption="Back" action="back" icon="system/images/arrowleft.gif" shortcut="ctrl B"/>
         <invoker type="formActions" caption="Forward" action="forward" icon="system/images/arrowright.gif" shortcut="ctrl F"/>

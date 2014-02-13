@@ -27,7 +27,7 @@ public class User
     }
 
     public String getClientCode() {
-        return OsirisContext.env.ORGID;
+        return OsirisContext.env.CLIENTCODE;
     }
 
     public void init( def usr, def pwd ) 
@@ -68,7 +68,11 @@ public class User
     }
     
     public String getOrgCode() {
-        return OsirisContext.env.ORG?.code;
+        return OsirisContext.env.ORGCODE;
+    }
+
+    public String getOrgName() {
+        return OsirisContext.env.ORGNAME;
     }
 
     public String getClientTime() {

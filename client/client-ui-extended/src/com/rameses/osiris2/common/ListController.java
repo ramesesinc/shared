@@ -383,8 +383,17 @@ public abstract class ListController extends BasicListController implements Page
     
     // </editor-fold>
     
-    protected void onbeforeFetchList(Map params) {}
-    protected void onafterFetchList(List list) {}
+    @Deprecated
+    protected void onbeforeFetchList(Map params) {
+        beforeFetchList(params);
+    }
+    @Deprecated
+    protected void onafterFetchList(List list) {
+        afterFetchList(list);
+    }
+    
+    protected void beforeFetchList(Map params) {}
+    protected void afterFetchList(List list) {}
     
     public List fetchList(Map m) {
         String stag = getTag();

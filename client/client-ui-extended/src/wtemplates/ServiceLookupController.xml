@@ -4,51 +4,6 @@
         <page name="queryform" template="com.rameses.osiris2.themes.DefaultQueryFormPanel"/>
     </pages>
     
-    <code>
-    import com.rameses.rcp.common.*;
-    import com.rameses.rcp.annotations.*;
-    import com.rameses.osiris2.client.*;
-    import com.rameses.osiris2.common.*;
+    <code class="com.rameses.osiris2.common.ServiceLookupController" />
 
-    class ServiceLookupController extends LookupController
-    {
-        private String serviceName;
-        private String entityName;
-        private String tag;
-        
-        private def allowSearch;
-        
-        String getServiceName() {
-            if (serviceName == null) {
-                serviceName = controllerProperties?.serviceName;
-                
-                if (serviceName == null) 
-                    throw new Exception('Please specify a serviceName attribute in your workunit'); 
-            } 
-            return serviceName;
-        } 
-        
-        String getEntityName() {
-            if (entityName == null) {
-                entityName = controllerProperties?.entityName;
-            } 
-            return entityName; 
-        } 
-        
-        String getTag() {
-            if (tag == null) {
-                tag = controllerProperties?.tag;
-                if (tag == null) tag = super.getTag();
-            } 
-            return tag; 
-        } 
-        
-        boolean isAllowSearch() {
-            if (allowSearch == null) {
-                allowSearch = "true".equals(controllerProperties?.allowSearch);
-            } 
-            return allowSearch; 
-        } 
-    } 
-    </code>
 </workunit>

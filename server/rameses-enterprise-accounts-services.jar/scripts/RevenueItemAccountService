@@ -16,7 +16,7 @@ class RevenueItemAccountService extends ActiveCrudListService {
 			[name:'title', caption:'Item Title' ],
 			[name:'fund.code', caption:'Fund Account' ],
 			[name:'fund.title', caption:'Fund Title' ],
-			[name:'state', caption:'State' ],
+			[name:'org.name', caption:'Org' ],
 		];
 	}	
 

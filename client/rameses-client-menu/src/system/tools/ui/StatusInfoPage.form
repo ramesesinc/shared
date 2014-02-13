@@ -22,7 +22,7 @@
           <Group type="102" attributes="0">
               <Component id="xLabel1" min="-2" pref="210" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="xLabel2" min="-2" pref="151" max="-2" attributes="0"/>
+              <Component id="xLabel2" min="-2" pref="220" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="xLabel3" min="-2" pref="168" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -35,8 +35,8 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="103" groupAlignment="3" attributes="0">
               <Component id="xLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-              <Component id="xLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
               <Component id="xLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Component id="xLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
           </Group>
           <Component id="xLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
       </Group>
@@ -65,10 +65,10 @@
             <BevelBorder bevelType="1"/>
           </Border>
         </Property>
-        <Property name="expression" type="java.lang.String" value="&lt;div style=&quot;white-space:nowrap;&quot;&gt;&lt;b&gt;ORG&lt;/b&gt;: #{user.clientCode}&lt;/div&gt;"/>
+        <Property name="expression" type="java.lang.String" value="&lt;div style=&quot;white-space:nowrap;&quot;&gt;&lt;b&gt;CLIENT&lt;/b&gt;: #{user.orgCode} - #{user.orgName}&lt;/div&gt;"/>
         <Property name="iconResource" type="java.lang.String" value="images/org.png"/>
         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[151, 22]"/>
+          <Dimension value="[220, 22]"/>
         </Property>
         <Property name="useHtml" type="boolean" value="true"/>
       </Properties>

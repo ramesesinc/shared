@@ -1,7 +1,0 @@
-"entity.name"[mode!='create'] {
-    editable: false;
-}
-
-"entity.name"[mode=='create'] {
-    editable: true;
-}
