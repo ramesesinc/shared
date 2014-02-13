@@ -1,5 +1,5 @@
 EXEC sp_rename 'sys_org.parentid', 'parent_objid', 'COLUMN';
-EXEC sp_rename 'sys_org.parentclass', 'parent_class', 'COLUMN';
+EXEC sp_rename 'sys_org.parentclass', 'parent_orgclass', 'COLUMN';
 
 ALTER TABLE sys_org ADD code varchar(50);
 UPDATE sys_org SET code=REPLACE(name,' ', '_');
@@ -9,6 +9,7 @@ UPDATE sys_org SET name=objid WHERE objid='169'
 ALTER TABLE sys_orgclass ADD parentclass varchar(255);
 ALTER TABLE sys_orgclass ADD handler varchar(50);
 alter table sys_orgclass DROP COLUMN childnodes; 
+update sys_orgclass set parentclass = 'DISTRICT' where name='BARANGAY';
 
 ALTER TABLE sys_usergroup_permission ADD title varchar(50);
 UPDATE sys_usergroup_permission SET title=permission;
