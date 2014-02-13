@@ -38,7 +38,7 @@
             }
             
             void initList() {
-                domainList = entity.usergroups*.domain.unique();
+                domainList = entity.usergroups*.domain?.unique();
             }
             
             def resetPassword() {
@@ -88,8 +88,6 @@
             ] as BasicListModel;
             
            
-            
-
         }
         
        ]]>
