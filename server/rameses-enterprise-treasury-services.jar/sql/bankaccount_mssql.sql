@@ -2,9 +2,27 @@
 SELECT ba.*, b.branchname, ba.fund_code, ba.fund_title 
 FROM bankaccount ba 
 INNER JOIN bank b ON ba.bank_objid=b.objid
+ORDER BY ba.code
+
+[getListByBankAccountCode]
+SELECT ba.*, b.branchname, ba.fund_code, ba.fund_title 
+FROM bankaccount ba 
+INNER JOIN bank b ON ba.bank_objid=b.objid
 WHERE ba.code LIKE $P{searchtext}
-   OR ba.bank_code LIKE $P{searchtext}
-   OR ba.bank_name LIKE $P{searchtext}
+ORDER BY ba.code
+
+[getListByBankCode]
+SELECT ba.*, b.branchname, ba.fund_code, ba.fund_title 
+FROM bankaccount ba 
+INNER JOIN bank b ON ba.bank_objid=b.objid
+WHERE ba.bank_code LIKE $P{searchtext}
+ORDER BY ba.code
+
+[getListByBankName]
+SELECT ba.*, b.branchname, ba.fund_code, ba.fund_title 
+FROM bankaccount ba 
+INNER JOIN bank b ON ba.bank_objid=b.objid
+WHERE ba.bank_name LIKE $P{searchtext}
 ORDER BY ba.code
 
 [approve]
