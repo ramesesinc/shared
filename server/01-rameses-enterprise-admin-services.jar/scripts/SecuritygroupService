@@ -7,7 +7,7 @@ import com.rameses.services.extended.*;
 
 class SecuritygroupService extends ActiveCrudService {
 
-	@ActiveDB(value='usersecuritygroup', em='admin')
+	@ActiveDB(value='securitygroup', em='admin')
 	def em;
 
 	@ProxyMethod 
@@ -16,27 +16,4 @@ class SecuritygroupService extends ActiveCrudService {
 		return em.getList([usergroupid: params.usergroupid]);
 	}
 
-	@ProxyMethod 
-	public void addSecuritygroup( params ) {
-		if (!params.usergroupid) 
-			throw new Exception('Please specify usergroupid');
-		if (!params.securitygroupid) 
-			throw new Exception('Please specify securitygroupid');
-		if (!params.userid) 
-			throw new Exception('Please specify userid');
-
-		def info = em.read([objid: params.securitygroupid]);
-		if (!info) throw new Exception("'"+params.securitygroupid+"' security group not found"); 
-
-		entity.jobtitle = entity.user.jobtitle;
-		em.create(entity); 
-	}
-
-	@ProxyMethod 
-	public void removeMembership( params ) { 
-		if (!params.objid) throw new Exception('Please specify objid'); 
-		if (!params.userid) throw new Exception('Please specify userid'); 
-
-		em.removeMembership(params);
-	} 
 }

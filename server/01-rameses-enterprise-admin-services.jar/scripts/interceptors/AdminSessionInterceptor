@@ -74,6 +74,7 @@ class AdminSessionInterceptor
             JOBTITLE 	: info.jobtitle,
             EMAIL 		: info.email,
             TERMINALID 	: env.TERMINALID,              
+            TXNCODE		: info.txncode,
 			ROLES 		: [ALLOWED: 'system.*'] 
 		];
 

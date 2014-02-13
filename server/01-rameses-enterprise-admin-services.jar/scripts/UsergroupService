@@ -77,7 +77,6 @@ class UsergroupService extends ActiveCrudListService {
 
 	@ProxyMethod
 	public def getPermissions(o) {
-		println "permissions " + o;
 		return em.getPermissions(o);
 	}
 

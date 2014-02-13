@@ -1,11 +1,8 @@
 <workunit>
     <invokers>
-        <invoker type="securitygroup:create" action="create" caption="Create Security Group" 
-            resizable="false" target="popup" />
-        <invoker type="securitygroup:edit" action="edit" caption="Edit Security Group" 
-            resizable="false" target="popup" />
-        <invoker type="securitygroup:custom" action="customize" caption="Customize Security Group" 
-            resizable="false" target="popup" />
+       
+         <invoker type="usergroup-folder:formActions" action="init" caption="Manage Security Group" 
+            resizable="false" target="popup" />    
             
    </invokers>
    
@@ -23,6 +20,12 @@
             @Service('UsergroupService')
             def svc; 
             
+            @Service('SecuritygroupService')
+            def secSvc; 
+            
+            @Binding
+            def binding;
+            
             def usergroup;
             def permissions;
             def securitygroup;
@@ -30,33 +33,26 @@
             
             def objectList;
             def selectedObject;
+            def securityGroups;
 
-            def securitygroupExclude;
-            def customExclude;
+            def node;
             
             void init() { 
-                if(!securitygroup) 
-                    securitygroupname = 'DEFAULT';
-                else
-                    securitygroupname = securitygroup.name;
-                permissions = svc.getPermissions(usergroup); 
-                permissions.each {
-                    it.checked = (!customExclude || !it.code.matches(customExclude));
-                }
+                usergroup = [objid:node.usergroupid, title:node.caption, domain:node.domain];
+                permissions = svc.getPermissions(usergroup);
                 objectList = permissions*.object.unique();
+                securityGroups = secSvc.getList( [usergroupid: usergroup.objid] );
             } 
             
-            void create() {
-                securitygroup = [usergroup:usergroup, objid:"SECGRP"+new UID()];
-                init();
-            }
-            
-            void open() {
-                init();
-            }
-            
-            void customize() {
-                init();
+            void viewPermissions() {
+                def customExclude = securitygroup.exclude;
+                permissions.each {
+                    it.checked = true;
+                    String n = it.object +"."+it.permission;
+                    if( customExclude && n.matches(customExclude)) {
+                        it.checked = false;
+                    }
+                }
             }
             
             def permissionListModel = [
@@ -86,21 +82,59 @@
                 return excludes.join("|");
             }             
             
-            def doOk() {
-                entity.exclude = buildExclude(); 
-                svc.updatePermission([objid: entity.objid, exclude: entity.exclude]); 
-                return '_close';
-            } 
+            def addSecurityGroup() {
+                def n = MsgBox.prompt("Enter new name of security group");
+                if(!n || n.equalsIgnoreCase('null')) return;
+                n = n.toUpperCase().replaceAll( "\\s{1,}", "_" );
+                securitygroup = [usergroup:usergroup, objid:"SECGRP"+new UID(), name:n, exclude: null];
+                securitygroupname = securitygroup.name;
+                viewPermissions();
+                return "form";
+            }
+            
+            def editSecurityGroup() {
+                securitygroupname = securitygroup.name;
+                viewPermissions();
+                return "form";
+            }
+    
+            def removeSecurityGroup() {
+                if(!securitygroup) throw new Exception("Please select a security group");
+                if( MsgBox.confirm("You are about to remove this entry. Proceed?")) {
+                    secSvc.removeEntity( securitygroup );
+                    securityGroups = secSvc.getList( [usergroupid: usergroup.objid] );
+                    if(securityGroups) {
+                        securitygroup = securityGroups[0];
+                    }
+                }
+            }
             
             def doCancel() {
-                return '_close';
+                if(securityGroups) {
+                    securitygroup = securityGroups[0];
+                }
+                return "default";
             }
+            
+            def doOk() {
+                securitygroup.exclude = buildExclude();
+                secSvc.save( securitygroup );
+                securityGroups = secSvc.getList( [usergroupid: usergroup.objid] );
+                binding.refresh();
+                return "default";
+            }
+            
+            def doClose() {
+                return "_close";
+            }
+            
         }
         
        ]]>
    </code>
    
    <pages>
-       <page template="com.rameses.admin.usergroup.SecurityGroupPage"/>
+        <page template="com.rameses.admin.usergroup.SecurityGroupSelectionPage"/>       
+        <page name="form" template="com.rameses.admin.usergroup.SecurityGroupPage"/>
    </pages>
 </workunit>

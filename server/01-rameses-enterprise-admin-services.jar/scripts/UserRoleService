@@ -22,14 +22,6 @@ class UserRoleService {
 	}
 
 	@ProxyMethod 
-	public def findTxnCode( def o ) {
-		if(!o.userid) throw new Exception("userid is required on UserRoleService.findTxnCode");
-		if(!o.role) throw new Exception("role is required on UserRoleService.findTxnCode");
-		return em.findUserTxnCode( o );
-	}
-
-
-	@ProxyMethod 
 	public def getRolesByUser( def o ) {
 		if(!o.userid) throw new Exception("userid is required on UserRoleService.findTxnCode");
 		o.filter = '';

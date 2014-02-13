@@ -4,7 +4,7 @@
  * Created on July 29, 2013, 7:30 PM
  */
 
-package com.rameses.admin.usergroup;
+package bak;
 
 import com.rameses.osiris2.themes.FormPage;
 import com.rameses.rcp.ui.annotations.StyleSheet;

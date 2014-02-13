@@ -39,7 +39,6 @@ public class UsergroupMemberPage extends javax.swing.JPanel {
         xButton2 = new com.rameses.rcp.control.XButton();
         xLookupField1 = new com.rameses.rcp.control.XLookupField();
         xTextField3 = new com.rameses.rcp.control.XTextField();
-        xTextField4 = new com.rameses.rcp.control.XTextField();
 
         setPreferredSize(new java.awt.Dimension(510, 299));
         com.rameses.rcp.control.border.XTitledBorder xTitledBorder1 = new com.rameses.rcp.control.border.XTitledBorder();
@@ -86,7 +85,7 @@ public class UsergroupMemberPage extends javax.swing.JPanel {
         xFormPanel2.setShowCaption(false);
         xComboBox2.setCaption("Security Group");
         xComboBox2.setCaptionWidth(110);
-        xComboBox2.setDepends(new String[] {"entity.usergroupid"});
+        xComboBox2.setDepends(new String[] {"entity.usergroup", "entity.user"});
         xComboBox2.setDynamic(true);
         xComboBox2.setEmptyText("DEFAULT");
         xComboBox2.setExpression("#{item.name}");
@@ -123,18 +122,12 @@ public class UsergroupMemberPage extends javax.swing.JPanel {
 
         xTextField3.setCaption("Org. Class");
         xTextField3.setCaptionWidth(110);
-        xTextField3.setDepends(new String[] {"usergroup.org"});
+        xTextField3.setDepends(new String[] {"entity.org"});
         xTextField3.setEnabled(false);
         xTextField3.setName("entity.org.orgclass");
         xTextField3.setPreferredSize(new java.awt.Dimension(300, 20));
         xTextField3.setReadonly(true);
         xFormPanel1.add(xTextField3);
-
-        xTextField4.setCaption("User Txn Code");
-        xTextField4.setCaptionWidth(110);
-        xTextField4.setName("entity.usertxncode");
-        xTextField4.setPreferredSize(new java.awt.Dimension(200, 20));
-        xFormPanel1.add(xTextField4);
 
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -185,7 +178,6 @@ public class UsergroupMemberPage extends javax.swing.JPanel {
     private com.rameses.rcp.control.XLookupField xLookupField2;
     private com.rameses.rcp.control.XLookupField xLookupField3;
     private com.rameses.rcp.control.XTextField xTextField3;
-    private com.rameses.rcp.control.XTextField xTextField4;
     // End of variables declaration//GEN-END:variables
     
 }

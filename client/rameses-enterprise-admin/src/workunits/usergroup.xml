@@ -67,7 +67,6 @@
                 return InvokerUtil.lookupOpener("user:lookup", [
                     onselect: { u->
                         entity.user = [objid:u.objid, username:u.username, firstname:u.firstname, lastname:u.lastname];
-                        entity.jobtitle = u.jobtitle;
                     }
                 ]);
             }
@@ -79,7 +78,13 @@
             }
 
             def showPermissions() {
-                return InvokerUtil.lookupOpener( "securitygroup:custom", [usergroup:entity.usergroup, securitygroup: entity.securitygroup] );
+                def h = { o->
+                    entity.exclude = o;
+                }
+                return InvokerUtil.lookupOpener( "securitygroup:custom", 
+                    [usergroup:entity.usergroup, securitygroup: entity.securitygroup, 
+                    handler:h, customExclude: entity.exclude, forceExclude: entity.securitygroup?.exclude ] 
+                );
             }
             
             def doOk() {

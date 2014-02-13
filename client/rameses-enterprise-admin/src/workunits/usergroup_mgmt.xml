@@ -5,5 +5,6 @@
     <invokers>
         <invoker folderid="/explorer/admin" caption="User Groups" role="SYSADMIN" 
                 permission="system" index="2" action="init"/>
+        <invoker type="home.action" caption="User Groups" action="init" role="SYSADMIN" permission="system" index="0"/>                
    </invokers>
 </workunit>

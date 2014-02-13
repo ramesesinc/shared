@@ -1,4 +1,4 @@
-<workunit serviceName="UserAdminService" entityName="user">
+<workunit serviceName="UserService" entityName="user">
     <invokers>
         <invoker type="user:create" action="init" caption="User Information" resizable="false"/>
         <invoker type="user:open" action="open" caption="User Information" resizable="false"/>
@@ -17,11 +17,30 @@
         import java.rmi.server.*;
 
         public class UserController extends BasicCRUDController {
+        
             String prefixId = "USR";
          
             def selectedUsergroup;
             def pwd = [:];
+            def domainList;
+            def selectedDomain;
         
+            @Binding
+            def binding;
+            
+            public void afterOpen(p) {
+                initList();
+            }
+            
+            void entityChanged() {
+                initList();
+                usergroupList.reload(); 
+            }
+            
+            void initList() {
+                domainList = entity.usergroups*.domain.unique();
+            }
+            
             def resetPassword() {
                 return InvokerUtil.lookupOpener("user:resetpwd", [entity:entity]);
             }
@@ -33,7 +52,9 @@
                     saveHandler:{ o->
                         if( !entity.usergroups ) entity.usergroups = [];
                         entity.usergroups << o; 
-                        usergroupHandler.reload(); 
+                        initList();
+                        binding.refresh();
+                        usergroupList.reload(); 
                     }
                 ]; 
                 return InvokerUtil.lookupOpener('usergroup:add', params); 
@@ -51,20 +72,23 @@
             
             void removeUsergroup() { 
                 if(!selectedUsergroup) return;
-                service.removeUsergroup(selectedUsergroup);
-                entity.usergroups.remove(selectedUsergroup);
-                usergroupHandler.reload(); 
+                if( MsgBox.confirm("You are about to remove this entry. Continue?")) {
+                    service.removeUsergroup(selectedUsergroup);
+                    entity.usergroups.remove(selectedUsergroup);
+                    initList();
+                    usergroupList.reload(); 
+                }
             }
             
-            def usergroupHandler = [
+            def usergroupList = [
                 fetchList: { 
-                    return entity?.usergroups; 
+                    if(!selectedDomain ) return [];
+                    return entity.usergroups.findAll{ it.domain == selectedDomain };
                 }
             ] as BasicListModel;
             
-            void entityChanged() {
-                usergroupHandler.reload(); 
-            }
+           
+            
 
         }
         

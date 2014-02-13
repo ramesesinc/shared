@@ -2,12 +2,12 @@
     enabled: false;
 }
 
-"addUsergroup|removeUsergroup" [mode == 'read'] {
+"addUsergroup|removeUsergroup|editUsergroup" [mode == 'read'] {
     visible: true;
     enabled: true;
 }
 
-"addUsergroup|removeUsergroup" [mode != 'read'] {
+"addUsergroup|removeUsergroup|editUsergroup" [mode != 'read'] {
     visible:false;
 }
 
