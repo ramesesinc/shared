@@ -15,6 +15,18 @@ class StockIssueService extends ActiveCrudService {
 	@Service("DateService") 
 	def dateSvc;
 
+	@Service("StockRequestService")
+	def reqSvc
+
+	@ActiveDB("stockitem")
+	def stockitem;
+
+	@ActiveDB("afserial_inventory")
+	def afInventorySvc;
+
+	@ActiveDB("cashticket_inventory")
+	def cashticketSvc;
+
 	@Env
 	def env;
 
@@ -37,7 +49,23 @@ class StockIssueService extends ActiveCrudService {
 	}
 
 	void afterOpen( o ) {
-		o.items = em.getItems(o);
+		o.items = em.getItems(o).each{
+			def aftype = stockitem.findItemType(it.item);
+			if(! aftype) aftype = [ type : 'AFSERIAL']
+
+			def params = [afid: it.item.objid, stockissueid: it.parentid ]
+			if(aftype.type == 'AFSERIAL') 
+				it.items = afInventorySvc.getAFSerialDetails(params ) 
+			else {
+				it.items = 	cashticketSvc.getCashticketDetails(params ).each { 
+					it.startstub = it.remarks[it.remarks.indexOf('-') - 1]
+					it.endstub = it.remarks[it.remarks.indexOf('-') + 1]
+				}
+			}
+			it.handler =  aftype.type.toLowerCase() 
+		}
+		println o.items;
+		o.request = reqSvc.open( o.request )
 	}
 
 

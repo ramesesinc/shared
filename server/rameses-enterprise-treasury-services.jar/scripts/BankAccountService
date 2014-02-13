@@ -23,12 +23,23 @@ class BankAccountService extends ActiveCrudListService {
 			[name:"endbalance", caption:"End Bal.", type:"decimal"],
 		];
 	}
+
+	public def getList(params ){
+		params._pagingKeys = 'ba.objid'
+		if(! params.searchtext)	return em.getList(params);
+
+		params.searchtext = params.searchtext + '%'
+		def list = em.getListByBankAccountCode(params)
+		if(!list) list = em.getListByBankCode(params)
+		if(!list) list = em.getListByBankName(params)
+		return list;
+	}
 	
 	public void beforeList( params ) {
 		params.code = params.searchtext
 		params.bank_code = params.searchtext
 		params.bank_name = params.searchtext
-		params.searchtext = (params.searchtext ? params.searchtext : '') + '%'
+		
 	}
 	
 	@ProxyMethod
