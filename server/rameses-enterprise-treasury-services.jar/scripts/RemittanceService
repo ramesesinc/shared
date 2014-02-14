@@ -9,9 +9,6 @@ class RemittanceService  {
 	@ActiveDB("remittance")
 	def em; 
 
-	@ActiveDB("collector")
-	def collector; 
-
 	@Env
 	def env;
 
@@ -25,7 +22,7 @@ class RemittanceService  {
 	def cashBook;
 	
 	@ProxyMethod
-	public def init() {
+	public def init() { 
 		def o = [objid: "REM"+new UID()];	
 		o.items = em.getUnremittedForCollector([collectorid: env.USERID]);
 		o.items.each {
@@ -59,9 +56,8 @@ class RemittanceService  {
 		if(checksum!=checktest)
 			throw new Exception("Changes have been made prior to remittance. Please redo transaction");
 
-		def z = collector.findUserTxnCode( [userid: o.collector.objid] );
 		def txncode = "REM";	
-		if(z?.usertxncode) txncode = z.usertxncode; 	
+		if(env.TXNCODE) txncode = env.TXNCODE; 	
 		o.txnno = txncode + seqSvc.getNextFormattedSeries(txncode);
 		o.state = "OPEN";
 		o.dtposted = dateSvc.serverDate;

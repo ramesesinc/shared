@@ -21,9 +21,6 @@ class LiquidationService  {
 	@Service("CashBookPostService")
 	def cashBook;
 	
-	@ActiveDB("liquidatingofficer")
-	def liqOfficer;
-
 	@ProxyMethod
 	public def init() {
 		def o = [objid: "LIQ"+new UID(), cashier:[:]];	
@@ -52,10 +49,8 @@ class LiquidationService  {
 		if( o.fundsummary.find{ !it.cashier }   )
 			throw new Exception("There must be a cashier associated");
 
-
-		def z = liqOfficer.findUserTxnCode( [userid: o.liquidatingofficer.objid ] );
 		def txncode = "LIQ";	
-		if(z?.usertxncode) txncode = z.usertxncode; 	
+		if(env.TXNCODE) txncode = env.TXNCODE; 	
 		o.txnno = txncode + seqSvc.getNextFormattedSeries(txncode);
 
 		em.create( o );

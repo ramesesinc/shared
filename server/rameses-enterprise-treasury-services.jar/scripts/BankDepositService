@@ -72,12 +72,8 @@ class BankDepositService  {
 		if(o.undepositedChecks) 
 			throw new Exception("There are still undeposited non-cash payment. Please verify. ")
 
-
-		def z = em.sqlContext.createNamedQuery("cashier:getUserTxnCode")
-			.setParameters( [userid: env.USERID]).singleResult;
-
 		def txncode = "DEP";	
-		if(z?.usertxncode) txncode = z.usertxncode; 	
+		if(env.TXNCODE) txncode = env.TXNCODE; 	
 
 		o.txnno = txncode + seqSvc.getNextFormattedSeries(txncode);
 		o.totalcash = o.deposits.sum{it.totalcash};
