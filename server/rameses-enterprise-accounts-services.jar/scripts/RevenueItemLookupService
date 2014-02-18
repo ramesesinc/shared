@@ -29,7 +29,6 @@ class RevenueItemLookupService  {
 		m.title = m.searchtext.trim() + "%";
 		m._pagingKeys = "r.objid";
 		m._limit = 50;
-		println m;
 		return em.getLookup(m);	
 	}
 	
