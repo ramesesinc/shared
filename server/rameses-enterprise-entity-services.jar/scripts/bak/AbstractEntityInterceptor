@@ -34,36 +34,6 @@ class AbstractEntityInterceptor  {
 		entity.entityname = entity.name.substring(0, len)
 	}
 
-	@After(pattern="EntityService.create" )
-	public void afterCreate( evt ) {
-		def entity = evt.result;
-		entity.contacts?.each{
-			it.entityid = entity.objid;
-			em.create(it, 'contact'); 
-		}
-	}
-
-	@After(pattern="EntityService.update" )
-	public void afterUpdate( evt ) {
-		def entity = evt.result;
-		em.removeContacts([objid: entity.objid]);
-		entity.contacts?.each{
-			it.entityid = entity.objid;
-			em.create(it,'contact'); 
-		}
-	}
-
-	@Before(pattern="EntityService.open", index=-1 )
-	private void beforeOpen( evt ) {
-		def entity = evt.args[0];
-		if(!entity.type) throw new Exception("Please indicate type")
-	}	
-
-	@After(pattern="EntityService.open" )
-	private void afterOpen( evt ) {
-		def entity = evt.result;
-		entity.contacts = em.getContacts([objid: entity.objid]); 
-	}	
 
 
 }

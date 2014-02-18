@@ -1,8 +1,12 @@
 <workunit>
     <invokers>
+        <!--
         <invoker type="individualentity:create" caption="Individual" action="create" target="popup" permission="system"/>
         <invoker type="quick_launcher" code="TP01" caption="Individual" action="create" target="popup" permission="system"/>
+        -->
+        <!--
          <invoker type="individualentity:open" caption="Individual" action="open" target="popup" permission="system"/>
+         -->
     </invokers>
     
     <code>
@@ -42,8 +46,7 @@
             ]
             
             void beforeCreate( entity ) {
-                entity.type = entityType;
-                entity.contacts = [];
+                entity.type = 'INDIVIDUAL';
                 if(initial) {
                     entity.putAll( initial );
                 }
@@ -55,38 +58,8 @@
                 if(saveHandler) saveHandler(data);
             }
             
-            void entityChanged() { 
-                contactListHandler?.reload();  
-            } 
             
-            def selectedContact;
-            def contactTypes = [
-                [key: 'MOBILE', value:'Mobile Phone'], 
-                [key: 'HOME', value:'Home Phone'], 
-                [key: 'WORK', value:'Work Phone'], 
-                [key: 'EMAIL', value:'Email'] 
-            ]; 
-            def contactListHandler = [
-                fetchList: {o-> 
-                    if (!entity) return null; 
-                    if (!entity.contacts) entity.contacts = [];
-                    
-                    return entity.contacts;
-                },
-                
-                onAddItem: {item-> 
-                    item.objid = 'CONT'+new UID();
-                    item.entityid = entity.objid; 
-                    entity.contacts.add(item); 
-                }, 
-                
-                onRemoveItem: {item-> 
-                    if (!MsgBox.confirm('Are you sure you want to remove this item?')) return false;
-                    
-                    entity.contacts.remove(item); 
-                    return true;
-                }                
-            ] as EditorListModel;
+            
         }        
    ]]>
    </code>
