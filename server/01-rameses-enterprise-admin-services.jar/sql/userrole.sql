@@ -7,12 +7,11 @@ u.firstname as firstname,
 ug.role as role,
 ugm.org_name,
 u.jobtitle as title,
-ugm.usertxncode
+u.txncode
 FROM sys_usergroup_member ugm
 INNER JOIN sys_usergroup ug ON ug.objid=ugm.usergroup_objid
 INNER JOIN sys_user u ON u.objid=ugm.user_objid 
-WHERE u.lastname LIKE '%'
-AND ug.role IN (${roles})
+WHERE ug.role IN (${roles})
 
 [getRolesByUser]
 SELECT ug.domain,ug.role,

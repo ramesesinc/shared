@@ -6,8 +6,6 @@ WHERE objid LIKE $P{searchtext}
 SELECT DISTINCT
 	ug.domain as caption, ug.domain as domain, '' as usergroupid, 'domain' as filetype 
 FROM sys_usergroup ug 
-WHERE 
-	('root'=$P{userid} OR 'sa'=$P{userid}) 
 
 [getChildNodes]
 SELECT DISTINCT
@@ -15,8 +13,7 @@ SELECT DISTINCT
 	'usergroup-folder' as filetype, ug.orgclass 
 FROM sys_usergroup ug 
 WHERE 
-	ug.domain=$P{domain} AND 
-	('root'=$P{userid} OR 'sa'=$P{userid}) 
+	ug.domain=$P{domain} 
 
 [getList]
 SELECT DISTINCT

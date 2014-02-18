@@ -41,8 +41,9 @@ class UserService extends ActiveCrudListService {
 		o.pwd = Encoder.MD5.encode('etracs1234', o.username); 
 	}
 
-	public void afterOpen( entity ) {
-		entity.usergroups = em.getUsergroups(entity); 
+	@ProxyMethod 
+	public def getUsergroups( entity ) {
+		return em.getUsergroups(entity); 
 	}
 
 	@ProxyMethod 
@@ -55,10 +56,6 @@ class UserService extends ActiveCrudListService {
 		usergroup.create( entity, "member" );
 	}
 
-	@ProxyMethod 
-	public def openUsergroup( entity ) {
-		return usergroup.read( entity, "member" );
-	}
 
 }
 

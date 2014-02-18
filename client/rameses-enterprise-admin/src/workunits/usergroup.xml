@@ -88,8 +88,8 @@
             }
             
             def doOk() {
-                if(saveHandler) saveHandler(entity);
                 service.save( entity );
+                if(saveHandler) saveHandler(entity);
                 return "_close";
             }
             
