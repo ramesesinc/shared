@@ -35,6 +35,8 @@
             }
             
             def save() {
+                entity.name = entity.lastname + ", " + entity.firstname;
+                if( entity.middlename ) entity.name += ' ' + entity.middlename;
                 if(mode=='create') {
                     if( MsgBox.confirm("You are about to save this record. Proceed?")) {
                         service.create( entity );

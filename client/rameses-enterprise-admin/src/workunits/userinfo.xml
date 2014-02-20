@@ -21,6 +21,9 @@
             @Binding
             def binding;
             
+            @FormTitle
+            def title;
+            
             def entity;
             def optionList;
             def selectedOption;
@@ -33,9 +36,14 @@
                 }
             }
             
+            void refresh() {
+                title = entity.name;
+            }
+            
             void open() {
                 entity = service.open( [objid: entity.objid]);
                 initList();
+                refresh();
             }
             
            

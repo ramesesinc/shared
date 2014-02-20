@@ -22,6 +22,7 @@
             void edit() {
                 def h = { o->
                     entity.putAll( o );
+                    caller.refresh();
                 }
                 caller.binding.fireNavigation( Inv.lookupOpener( "user:edit", [entity: entity, handler: h] ) );
             }
