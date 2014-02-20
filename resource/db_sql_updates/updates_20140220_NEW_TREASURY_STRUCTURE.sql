@@ -48,7 +48,7 @@ ALTER TABLE revenueitem ADD org_objid varchar(50);
 ALTER TABLE revenueitem ADD org_name varchar(50);
 
 ALTER TABLE fund ADD system int;
-UPDATE fund SET system=1 WHERE objid IN ('GENERAL','SEF','TRUST')
+UPDATE fund SET system=1 WHERE objid IN ('GENERAL','SEF','TRUST');
 
 
 
@@ -85,6 +85,9 @@ ALTER TABLE revenueitem_attribute ADD CONSTRAINT IX_revitemid_attribute_objid UN
 go
 
 alter table revenueitem_attribute add constraint FX_revenueitem_attribute_objid foreign key( attribute_objid) references revenueitem_attribute_type(objid) ;
+go
+
+alter table revenueitem_attribute add constraint FX_revenueitem_attribute_revenueitemitem foreign key( revitemid) references revenueitem(objid) ;
 go
 
 INSERT INTO revenueitem_attribute_type (objid, title, handler ) VALUES ( 'ngasstandard', 'NGAS Standard', 'accountdetail:lookup' );
