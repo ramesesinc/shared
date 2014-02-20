@@ -1,6 +1,6 @@
 <schema>
 
-	<element name="fund" tablename="fund">
+	<element tablename="fund">
 		<field name="objid" primary="true"/>	
 		<field name="parentid" />
 		<field name="state" required="true"/>
@@ -8,7 +8,7 @@
 		<field name="title" required="true"/>
 		<field name="type" />
 		<field name="special" type="integer"/>
+		<field name="system" type="integer"/>
 	</element>
 
-	
 </schema>

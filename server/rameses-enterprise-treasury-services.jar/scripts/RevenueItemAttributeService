@@ -1,0 +1,34 @@
+import com.rameses.annotations.*;
+import com.rameses.util.*;
+import java.rmi.server.*;
+import com.rameses.common.*;
+import com.rameses.services.extended.*;
+
+class RevenueItemAttributeService extends ActiveCrudService {
+
+	@ActiveDB("revenueitem")
+	def em;
+
+	String subSchemaName = "attribute";
+
+	@ProxyMethod 
+	public def getList(o) {
+		return em.getAttributeList(o);
+	}
+
+	@ProxyMethod 
+	public def getMappingList(o) {
+		if(!o.searchtext) 
+			o.searchtext = '%';
+		else
+			o.searchtext += "%";	
+		return em.getMappingList( o );
+	}
+
+
+	@ProxyMethod 
+	public def getAttributeTypes() {
+		return em.getAttributeTypes();
+	}
+
+}

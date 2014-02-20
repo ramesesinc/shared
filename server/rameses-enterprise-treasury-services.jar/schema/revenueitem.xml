@@ -12,7 +12,19 @@
 		<field name="fund_title" required="true"/>
 		<field name="defaultvalue" />
 		<field name="valuetype"  />
+		<field name="org_objid"  />
+		<field name="org_name"  />
 	</element>
+
+	<element name="attribute" tablename="revenueitem_attribute">
+		<field name="objid" primary="true"/>	
+		<field name="revitemid" required="true"/>
+		<field name="attribute_objid" required="true"/>
+		<field name="account_objid" required="true" />
+		<field name="account_code" required="true"/>
+		<field name="account_title" required="true"/>
+	</element>
+
 
 	<!-- ACCOUNT SEGMENTS - called by AccountSegmentService -->
 	<element name="account-segment" tablename="revenueitem_account">

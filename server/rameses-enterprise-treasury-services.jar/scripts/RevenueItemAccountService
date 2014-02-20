@@ -12,9 +12,9 @@ class RevenueItemAccountService extends ActiveCrudListService {
 	@ProxyMethod
 	public def getColumns( def o ) {
 		return[
-			[name:'code', caption:'Item Code' ],
+			[name:'code', caption:'Item Code', maxWidth:90 ],
 			[name:'title', caption:'Item Title' ],
-			[name:'fund.code', caption:'Fund Account' ],
+			[name:'fund.code', caption:'Fund Account', maxWidth:90 ],
 			[name:'fund.title', caption:'Fund Title' ],
 			[name:'org.name', caption:'Org' ],
 		];

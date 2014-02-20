@@ -1,0 +1,60 @@
+<workunit>
+    <invokers>
+        <invoker type="revenueitem:create" caption="Revenue Item (New)" action="create"/>
+        <invoker type="revenueitem:edit" caption="Revenue Item (Edit)" action="edit"/>
+        <invoker type="formActions" caption="Cancel" action="_close" immediate="true"/>
+        <invoker type="formActions" caption="Save" action="save"/>
+    </invokers>
+    
+   <code>
+    <![CDATA[
+    import com.rameses.osiris2.common.*;
+    import com.rameses.rcp.common.*;
+    import com.rameses.rcp.annotations.*;
+    import com.rameses.osiris2.client.*;
+    import com.rameses.common.*;
+    import java.rmi.server.UID;
+
+    public class RevenueItemAccountController  {
+    
+        @Service("RevenueItemAccountService")
+        def service;
+        
+        def saveHandler;
+        def mode;
+        def entity;
+        
+        def valueTypes = [ "ANY", "FIXED", "FIXEDUNIT" ];
+        
+        void create() {
+            this.mode = 'create'
+            this.entity = [objid: 'REVITEM' + new UID()];
+        }
+        
+        void edit() {
+            this.mode = 'edit'
+            this.entity = service.open( [objid: entity.objid] );
+        }
+        
+        def save() {
+            if( mode == 'create' ) {
+                if(MsgBox.confirm( "You are about to  save this item. Proceed?")) {
+                    service.create( entity );
+                    if(saveHandler) saveHandler(entity);
+                }
+            }
+            else {
+                service.update( entity );
+                if(saveHandler) saveHandler(entity);
+                return "_close";
+            }
+        }
+    }    
+    ]]>
+   </code>
+   
+   <pages>
+       <page template="com.rameses.enterprise.treasury.revitem.RevenueItemEditPage"/>
+   </pages>
+   
+</workunit>
