@@ -69,6 +69,21 @@ public class ExplorerViewListController extends ListController
         return _showQueryForm; 
     }
     
+    public boolean isAllowCreate() {
+        if (parentController == null) {
+            return super.isAllowCreate(); 
+        } else { 
+            return parentController.isAllowCreate(); 
+        } 
+    }
+    public boolean isAllowOpen() {
+        if (parentController == null) {
+            return super.isAllowOpen(); 
+        } else { 
+            return parentController.isAllowOpen(); 
+        } 
+    }    
+    
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc=" ExplorerViewHandler implementation ">
