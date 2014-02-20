@@ -34,7 +34,7 @@
 
             void create() {
                 mode = 'create';
-                entity = [ objid:'FUND'+new UID(), parentid:node.objid, state:'DRAFT', type:'subfund'];
+                entity = [ objid:'FUND'+new UID(), parentid:node.objid, state:'DRAFT', type:'subfund', special:0 ];
             }
             
             void edit() {

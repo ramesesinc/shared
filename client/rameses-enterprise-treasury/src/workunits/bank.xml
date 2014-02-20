@@ -1,8 +1,8 @@
 <workunit>
     
    <invokers>
-         <invoker type="bank:create" caption="Bank" action="create"/>
-         <invoker type="bank:open" caption="Bank" action="open"  />
+         <invoker type="bank:create" caption="Bank" action="create" role="MASTER" permission="bank.create"/>
+         <invoker type="bank:open" caption="Bank" action="open"  role="MASTER" permission="bank.open"/>
    </invokers>
    
    <code>

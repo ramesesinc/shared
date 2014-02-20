@@ -1,8 +1,8 @@
 <workunit>
     
    <invokers>
-         <invoker type="collectiontype:open" caption="Collection Type" action="open"/>
-         <invoker type="collectiontype:create" caption="Collection Type" action="create"/>
+         <invoker type="collectiontype:open" caption="Collection Type" action="open" role="MASTER" permission="collectiontype.open"/>
+         <invoker type="collectiontype:create" caption="Collection Type" action="create" role="MASTER" permission="collectiontype.create"/>
    </invokers>
    
    <code>
