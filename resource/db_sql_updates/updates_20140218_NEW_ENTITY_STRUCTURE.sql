@@ -21,6 +21,15 @@ EXEC sp_rename 'entitymember.taxpayer_objid', 'member_objid', 'COLUMN';
 EXEC sp_rename 'entitymember.taxpayer_name', 'member_name', 'COLUMN';
 EXEC sp_rename 'entitymember.taxpayer_address', 'member_address', 'COLUMN';
 
+update sys_usergroup_member 
+	SET usergroup_objid = 'ENTITY.MASTER', securitygroup_objid = null 
+WHERE usergroup_objid = 'DATAMGMT.ENTITY_ENCODER';
+
+delete from sys_securitygroup where objid='ENTITY_ENCODER';
+delete from sys_usergroup_permission where usergroup_objid='DATAMGMT.ENTITY_ENCODER';
+delete from sys_usergroup where objid ='DATAMGMT.ENTITY_ENCODER';
+
+
 INSERT INTO sys_usergroup (objid, title, domain, userclass, orgclass, role ) VALUES ( 'ENTITY.MASTER', 'ENTITY MASTER', 'ENTITY', 'usergroup', NULL, 'MASTER')
 INSERT INTO sys_usergroup_permission (objid,usergroup_objid,object,permission,title)VALUES ( 'ENTITY-MASTER-createIndividual', 'ENTITY.MASTER', 'individualentity', 'create', 'Create');
 INSERT INTO sys_usergroup_permission (objid,usergroup_objid,object,permission,title) VALUES ( 'ENTITY-MASTER-editIndividual', 'ENTITY.MASTER', 'individualentity', 'edit', 'Edit');

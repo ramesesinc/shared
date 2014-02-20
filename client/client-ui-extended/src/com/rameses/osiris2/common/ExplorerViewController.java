@@ -109,6 +109,12 @@ public class ExplorerViewController
     public boolean isAutoSelect() {
         return wuautoSelect;
     }
+    public boolean isAllowCreate() {
+        return wuallowCreate; 
+    }
+    public boolean isAllowOpen() {
+        return wuallowOpen;
+    }
     
     protected void beforeNodes(Map params) {
         //this is invoke before invoking service.getNodes() 
@@ -289,6 +295,8 @@ public class ExplorerViewController
     private boolean wuallowSearch;
     private boolean wurootVisible;
     private boolean wuautoSelect;
+    private boolean wuallowCreate;
+    private boolean wuallowOpen;
     
     public void setupWorkunitProperties() {
         Map map = getWorkunitProperties(); 
@@ -301,7 +309,9 @@ public class ExplorerViewController
         String sval = getString(map, "allowSearch");
         wuallowSearch = ("false".equals(sval)? false: true);
         wurootVisible = "true".equals(getString(map, "rootVisible")); 
-        wuautoSelect = "true".equals(getString(map, "autoSelect"));
+        wuautoSelect = ("false".equals(getString(map, "autoSelect"))? false: true); 
+        wuallowCreate = ("false".equals(getString(map, "allowCreate"))? false: true);
+        wuallowOpen = ("false".equals(getString(map, "allowOpen"))? false: true);
     } 
     
     private String getString(Map map, String name) { 
