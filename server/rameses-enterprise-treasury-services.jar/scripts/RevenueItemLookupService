@@ -9,9 +9,6 @@ class RevenueItemLookupService  {
 	@ActiveDB("revenueitem")
 	def em;
 
-	@Env
-	def env;
-	
 	@ProxyMethod
 	public def getColumns( def o ) {
 		return[
