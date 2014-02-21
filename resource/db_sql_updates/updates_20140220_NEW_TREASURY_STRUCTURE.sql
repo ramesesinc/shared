@@ -90,6 +90,34 @@ go
 alter table revenueitem_attribute add constraint FX_revenueitem_attribute_revenueitemitem foreign key( revitemid) references revenueitem(objid) ;
 go
 
-INSERT INTO revenueitem_attribute_type (objid, title, handler ) VALUES ( 'ngasstandard', 'NGAS Standard', 'accountdetail:lookup' );
-INSERT INTO revenueitem_attribute_type (objid, title, handler ) VALUES ( 'srestandard', 'SRE Standard', 'sreaccount:lookup' );
-INSERT INTO revenueitem_attribute_type (objid, title, handler ) VALUES ( 'businessaccounttype', 'Business Account Types', 'businessaccounttype:lookup' );
+INSERT INTO revenueitem_attribute_type (objid, title, handler ) VALUES ( 'ngasstandard', 'NGAS Standard', 'accountdetail:lookup' )
+go
+INSERT INTO revenueitem_attribute_type (objid, title, handler ) VALUES ( 'srestandard', 'SRE Standard', 'sreaccount:lookup' )
+go
+INSERT INTO revenueitem_attribute_type (objid, title, handler ) VALUES ( 'businessaccounttype', 'Business Account Types', 'businessaccounttype:lookup' )
+go
+-- sre standard 
+insert into revenueitem_attribute
+( objid, revitemid, attribute_objid, account_objid, account_code, account_title)
+select 
+	('SRESTANDARD:' + c.objid) as objid, 
+	c.objid as revitemid, 'srestandard' as attibute_objid,
+	c.acctid as account_objid, 	s.code as account_code, s.title as account_title 
+from revenueitem_sreaccount c 
+	inner join sreaccount s on s.objid = c.acctid 
+go
+	
+-- sre subaccount  	
+insert into revenueitem_attribute_type 
+(objid, title, handler) values ('sresubaccount','SRE Sub Account', 'sresubacct:lookup')
+go
+
+insert into revenueitem_attribute
+( objid, revitemid, attribute_objid, account_objid, account_code, account_title)
+select 
+	('SRESUBACCOUNT:' + c.objid) as objid, 
+	c.objid as revitemid, 'sresubaccount' as attibute_objid,
+	c.acctid as account_objid, 	s.code as account_code, s.title as account_title 
+from revenueitem_sresubacct c 
+	inner join sreaccount s on s.objid = c.acctid 
+go
