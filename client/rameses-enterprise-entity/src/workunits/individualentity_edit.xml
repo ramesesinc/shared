@@ -23,13 +23,18 @@
             def saveHandler;
             def mode;
             def entity;
+            def initial;
             
             def genderList = LOV.GENDER.collect{[name:it.key, caption:it.value]};
             def civilStatusList = LOV.CIVIL_STATUS.collect{[name:it.key, caption:it.value]};
             
             void create() {
                 mode = "create";
-                entity = [objid: "INDI"+new UID(), type: 'INDIVIDUAL'];
+                entity = [objid: "INDI"+new UID()];
+                if( initial ) {
+                    entity.putAll( initial );
+                }
+                entity.type =  'INDIVIDUAL';
             }
             
             void edit() {
@@ -43,7 +48,10 @@
                 if(mode=='create'){
                     if( MsgBox.confirm("You are about to save this record. Proceed?")) {
                         service.create( entity );
-                         if(saveHandler) saveHandler(entity);
+                        if(saveHandler) {
+                            def r = saveHandler(entity);
+                            if( r == '_close' ) return '_close'; 
+                        }    
                         def opener = Inv.lookupOpener( "individualentity:open", [entity: entity, initiator:'create'] );
                         opener.target = 'self';
                         return opener;
@@ -51,7 +59,10 @@
                 }
                 else {
                     service.update( entity );
-                    if(saveHandler) saveHandler(entity);
+                    if(saveHandler) {
+                        def r =  saveHandler(entity);
+                        if( r == '_close' ) return '_close'; 
+                    }    
                     return "_close";
                 }
             }
