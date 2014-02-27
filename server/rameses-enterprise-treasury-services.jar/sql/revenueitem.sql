@@ -38,7 +38,7 @@ SELECT r.* FROM revenueitem r
 WHERE  (r.title LIKE $P{title}  OR r.code LIKE $P{code} ) 
 ORDER BY r.title
 
-[findSingleEntry]
+[findAccount]
 SELECT r.objid, r.code, r.title, r.fund_objid, r.fund_code, r.fund_title 
 FROM revenueitem r WHERE objid=$P{objid}
 
