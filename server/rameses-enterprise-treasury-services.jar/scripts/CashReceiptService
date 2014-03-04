@@ -26,7 +26,7 @@ class CashReceiptService  {
 	
 	@ActiveDB("collector")
 	def collector;
-
+   
 	/**
 	* note: setting of collector is in the CashReceiptInterceptor of gov. module.
 	* it is gotten during getNextReceiptInfo
@@ -130,7 +130,11 @@ class CashReceiptService  {
 	@ProxyMethod
 	public def formatReport( def p ) {
 		p.payerdetails = p.paidby + "\n" + p.paidbyaddress;
-		p.amountinwords = numSvc.doubleToWords( p.amount ).toUpperCase() + " PESOS ONLY";
+		if( p.amount < 1 ) { 
+			def amount = Long.parseLong( p.amount.toString().split("\\.")[1] )
+			p.amountinwords = numSvc.doubleToWords( amount ).toUpperCase() + " CENTAVOS";
+		} else 
+			p.amountinwords = numSvc.doubleToWords( p.amount ).toUpperCase() + " PESOS ONLY";
 		return p;
 	}
 	
