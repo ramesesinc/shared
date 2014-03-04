@@ -28,24 +28,33 @@
         
         void create() {
             this.mode = 'create'
-            this.entity = [objid: 'REVITEM' + new UID()];
+            this.entity = [objid: 'REVITEM' + new UID(), defaultvalue:0.0];
         }
         
         void edit() {
             this.mode = 'edit'
             this.entity = service.open( [objid: entity.objid] );
+            if(! entity.defaultvalue ) entity.defaultvalue = 0.0 
         }
         
         def save() {
             if( mode == 'create' ) {
                 if(MsgBox.confirm( "You are about to  save this item. Proceed?")) {
-                    service.create( entity );
-                    if(saveHandler) saveHandler(entity);
+                    entity = service.create( entity );
+                    if(saveHandler) {
+                        def r = saveHandler(entity);
+                        if ( r != null) return r
+                    }    
+                    return Inv.lookupOpener("revenueitem:open", [entity:entity])
                 }
             }
             else {
-                service.update( entity );
-                if(saveHandler) saveHandler(entity);
+                println entity
+                entity = service.update( entity );
+                if(saveHandler) {
+                    def r = saveHandler(entity);
+                    if ( r != null) return r
+                }    
                 return "_close";
             }
         }
