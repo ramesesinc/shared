@@ -1,8 +1,33 @@
 [getList]
-SELECT * FROM bankdeposit 
-where cashier_objid like $P{cashierid}
-	and txnno like $P{txnno} 
+SELECT * FROM bankdeposit b 
+where b.cashier_objid like $P{cashierid}
+	and b.txnno like $P{searchtext} 
 order by dtposted desc 
+
+[getListByLiquidationNo]
+SELECT distinct b.* FROM bankdeposit b
+	inner join bankdeposit_liquidation bl on bl.bankdepositid = b.objid 
+	inner join liquidation_cashier_fund lcf on lcf.objid = bl.objid
+	inner join liquidation l on lcf.liquidationid = l.objid 
+where b.cashier_objid like $P{cashierid}
+	and l.txnno like $P{searchtext} 
+order by b.dtposted desc 
+
+[getUndepositedLiquidation]
+SELECT  distinct 
+	l.objid, 
+	l.txnno as liquidationno,
+	l.dtposted as liquidationdate,
+	l.liquidatingofficer_objid, 
+	l.liquidatingofficer_name, 	
+	l.liquidatingofficer_title, 
+	l.amount
+FROM liquidation l
+INNER JOIN liquidation_cashier_fund lcf ON lcf.liquidationid=l.objid
+LEFT JOIN bankdeposit_liquidation bdl ON bdl.objid=lcf.objid
+WHERE lcf.cashier_objid = $P{cashierid}
+	and l.state = 'OPEN'
+AND bdl.objid IS NULL
 
 
 [getUndeposited]
@@ -18,7 +43,7 @@ SELECT  lcf.objid,
 FROM liquidation_cashier_fund lcf
 INNER JOIN liquidation l ON lcf.liquidationid=l.objid
 LEFT JOIN bankdeposit_liquidation bdl ON bdl.objid=lcf.objid
-WHERE lcf.cashier_objid = $P{cashierid}
+WHERE l.objid in ( ${liquidationids} )
 	and l.state = 'OPEN'
 AND bdl.objid IS NULL
 
@@ -31,24 +56,23 @@ FROM
 	lcf.fund_objid,
 	lcf.fund_title,
 	lcf.amount
-FROM liquidation_cashier_fund lcf
-INNER JOIN liquidation l ON lcf.liquidationid=l.objid
+FROM liquidation l
+INNER JOIN liquidation_cashier_fund lcf ON lcf.liquidationid=l.objid
 LEFT JOIN bankdeposit_liquidation bdl ON bdl.objid=lcf.objid
 WHERE l.state = 'OPEN'
-AND lcf.cashier_objid = $P{cashierid}
+AND l.objid in ( ${liquidationids} )
 AND bdl.objid IS NULL) a
 GROUP BY a.fund_objid, a.fund_title
 
 [getUndepositedChecks]
 SELECT DISTINCT
 crp.objid, crp.checkno, crp.particulars, crp.amount  
-FROM  liquidation_cashier_fund lcf 
-INNER JOIN liquidation l ON lcf.liquidationid=l.objid 
-INNER JOIN liquidation_checkpayment lc ON lc.liquidationid=lcf.liquidationid 
+FROM   liquidation l  
+INNER JOIN liquidation_checkpayment lc ON lc.liquidationid=l.objid 
 INNER JOIN cashreceiptpayment_check crp ON crp.objid=lc.objid
 LEFT JOIN bankdeposit_entry_check bec on bec.objid = crp.objid
 LEFT JOIN cashreceipt_void cv ON crp.receiptid = cv.receiptid 
-WHERE lcf.cashier_objid=$P{cashierid}
+WHERE l.objid  in ( ${liquidationids} )
 	 AND l.state = 'OPEN'
 	 and bec.objid is null 
 AND cv.objid IS NULL 

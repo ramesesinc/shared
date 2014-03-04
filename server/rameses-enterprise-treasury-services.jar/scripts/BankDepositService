@@ -32,29 +32,34 @@ class BankDepositService  {
 
 	@ProxyMethod
 	public def init() {
-		def list = em.sqlContext.createNamedQuery("bankdeposit:getUndeposited")
-			.setParameters( [cashierid: env.USERID]).resultList;
+		def list = em.sqlContext.createNamedQuery("bankdeposit:getUndepositedLiquidation")
+			.setParameters( [cashierid: env.USERID]).resultList.each { it.selected = true };
 		
 		if(!list)
 			throw new Exception("No pending transactions to deposit");
 
 		def o = [objid: "DEP"+new UID()];	
 		o.liquidations = list;
-		o.fundsummaries = adb.getUndepositedByFund([cashierid:env.USERID])
+		o.deposits = [];
+		o.dtposted = dateSvc.serverDate;
+		o.cashier = [ objid:env.USERID, name:env.FULLNAME, title:env.JOBTITLE ];
+		o.depositbyaccount = var.getProperty("deposit_collection_by_bank_account", '0').toString().equals('1')
+		return o
+	} 
+	
+	@ProxyMethod 
+	public def process( params ) {
+		println params;
+		def o = [:]	
+		o.fundsummaries = adb.getUndepositedByFund(params)
 		o.fundsummaries.each {
 			it.allocated = 0;
 			it.balance = it.amount;
 			it.bankaccounts = adb.getBankAccountsByFund(it.fund)
 		}	
-		o.deposits = [];
-		o.undepositedChecks = em.sqlContext.createNamedQuery("bankdeposit:getUndepositedChecks")
-			.setParameters( [cashierid: env.USERID]).resultList;
-
-		o.dtposted = dateSvc.serverDate;
-		o.cashier = [ objid:env.USERID, name:env.FULLNAME, title:env.JOBTITLE ];	
-
-		o.depositbyaccount = var.getProperty("deposit_collection_by_bank_account", '0').toString().equals('1')
-		o.depositamt = o.fundsummaries.amount.sum()
+		
+		o.undepositedChecks = adb.getUndepositedChecks(params)
+		println o
 		return o;
 	}
 
@@ -81,7 +86,9 @@ class BankDepositService  {
 		o.amount = o.totalcash+o.totalnoncash;
 		em.create("bankdeposit", o);
 
-		for( x in o.liquidations ) {
+		def liquidationfunds = adb.getUndeposited( [liquidationids: "'" + o.liquidations.objid.join("','") + "'"  ] )	
+
+		for( x in liquidationfunds ) {
 			def m = [:];	
 			m.objid = x.objid;
 			m.bankdepositid = o.objid;	
@@ -115,7 +122,7 @@ class BankDepositService  {
 			cashBook.postDR( m );
 		}
 		//credit cashbook of liquidating officer (Treasury)
-		for( x in o.liquidations ) {
+		for( x in liquidationfunds ) {
 			def m = [:];
 			m.subacctid = x.liquidatingofficer.objid;
 			m.fundid = x.fund.objid;

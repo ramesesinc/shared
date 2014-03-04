@@ -6,7 +6,7 @@ import com.rameses.services.extended.*
 
 class BankDepositListService extends AbstractListService {
 
-	@PersistenceContext("main")
+	@ActiveDB("bankdeposit")
 	def em; 
 
 	String schemaName = "bankdeposit";
@@ -26,12 +26,17 @@ class BankDepositListService extends AbstractListService {
 		];	
 	}	
 
-	void beforeList(o) {
-		o.txnno = (o.searchtext ? o.searchtext : '') +'%'
-		o.cashierid = '%'
-		if( o._tag == "bycashier")
-			o.cashierid = env.USERID 
-	}
 
+	public def getList(params) {
+		params._pagingKeys = 'b.objid'
+		params.searchtext = (params.searchtext ? params.searchtext : '') +'%'
+		params.cashierid = '%'
+		if( params._tag == "bycashier")
+			params.cashierid = env.USERID 
+				
+		def list = em.getList(params)
+		if(! list ) list = em.getListByLiquidationNo(params)
+		return list
+	}	
 	
 }
