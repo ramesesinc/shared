@@ -64,11 +64,34 @@
             def init() {
                 state = "initial";
                 entity = service.init();
+                entity.depositamt = entity.liquidations.amount.sum();
                 return "initial";
+            }
+            
+             def selectAll() {
+                if( entity.liquidations ){
+                    entity.liquidations.each{it.selected = true} 
+                    liquidationListModel.load();
+                    entity.depositamt = entity.liquidations.amount.sum()   
+                    binding.refresh()
+                 }
+            }
+            
+            def deselectAll() {
+                entity.liquidations.each{it.selected = false} 
+                liquidationListModel.load();
+                entity.depositamt = 0.0
+                binding.refresh()
             }
             
             def start() {
                 state = "processing";
+                entity.liquidations = entity.liquidations.findAll{it.selected == true}
+                if( ! entity.liquidations) throw new Exception("Please select a liquidation.  ")
+                def info = service.process( [liquidationids: "'" + entity.liquidations.objid.join("','") + "'" ] ) 
+                if(! info ) throw new Exception("Selected liquidation does not exists.   ")
+                entity.fundsummaries = info.fundsummaries;
+                entity.undepositedChecks = info.undepositedChecks
                 return "default";
             }
             
@@ -81,8 +104,19 @@
             }
             
             def liquidationListModel = [
-                fetchList: { o->return entity.liquidations; }
-            ] as BasicListModel;
+                fetchList: { o->return entity.liquidations; },
+                 onColumnUpdate: {item, colname-> 
+                    if (colname == 'selected'){
+                        if( item.selected == true) {
+                            entity.depositamt += item.amount
+                        } else {
+                            entity.depositamt -= item.amount
+                        }
+                        binding.refresh("entity.depositamt")
+                    }
+                        
+                }
+            ] as EditorListModel;
             
             def fundSummaryModel = [
                 fetchList: { o->return entity.fundsummaries; }
