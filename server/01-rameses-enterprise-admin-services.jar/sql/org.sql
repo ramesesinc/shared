@@ -11,7 +11,7 @@ SELECT o.* FROM sys_org o WHERE o.orgclass=$P{orgclass} ORDER BY o.name
 
 
 [findRoot]
-SELECT * FROM sys_org WHERE parent_objid IS NULL
+SELECT * FROM sys_org WHERE root = 1
 
 [findByName]
 SELECT * FROM sys_org WHERE name=$P{name} 

@@ -7,6 +7,7 @@
 		<field name="orgclass" />
 		<field name="parent_objid" />
 		<field name="parent_orgclass" />
+		<field name="root" />
 	</element>
 	
 	<element name="orgclass" tablename="sys_orgclass">
