@@ -36,6 +36,8 @@ UPDATE revenueitem SET code=$P{code}, title=$P{title} WHERE objid=$P{objid}
 [getLookup]
 SELECT r.* FROM revenueitem r 
 WHERE  (r.title LIKE $P{title}  OR r.code LIKE $P{code} ) 
+	and r.state  = 'APPROVED' 
+	${filter}
 ORDER BY r.title
 
 [findSingleEntry]

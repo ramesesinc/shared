@@ -80,7 +80,7 @@ public class RevenueItemEditPage extends javax.swing.JPanel {
         xLookupField3.setCaption("Org Unit");
         xLookupField3.setExpression("#{item.name}");
         xLookupField3.setHandler("org:lookup");
-        xLookupField3.setName("entity.orgunit");
+        xLookupField3.setName("entity.org");
         xLookupField3.setPreferredSize(new java.awt.Dimension(0, 19));
         xFormPanel1.add(xLookupField3);
 

@@ -11,6 +11,9 @@ class RevenueItemLookupService  {
 
 	@Env
 	def env;
+
+	@Service("OrgService")
+	def orgSvc
 	
 	@ProxyMethod
 	public def getColumns( def o ) {
@@ -29,7 +32,14 @@ class RevenueItemLookupService  {
 		m.title = m.searchtext.trim() + "%";
 		m._pagingKeys = "r.objid";
 		m._limit = 50;
-		return em.getLookup(m);	
+
+		m.orgid = env.ORGID 
+		m.filter = ''
+		def rootOrg = orgSvc.root 
+		if( rootOrg.objid != m.orgid ) 	
+			m.filter = ' and r.org_objid=$P{orgid} ' 
+		def list = em.getLookup(m);	
+		return list;
 	}
 	
 }

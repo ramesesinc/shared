@@ -80,7 +80,8 @@ public class RevenueItemPage extends javax.swing.JPanel {
         xLookupField3.setCaption("Org Unit");
         xLookupField3.setExpression("#{item.name}");
         xLookupField3.setHandler("org:lookup");
-        xLookupField3.setName("entity.orgunit");
+        xLookupField3.setName("entity.org");
+        xLookupField3.setNullWhenEmpty(false);
         xLookupField3.setPreferredSize(new java.awt.Dimension(0, 19));
         xFormPanel1.add(xLookupField3);
 
@@ -91,7 +92,7 @@ public class RevenueItemPage extends javax.swing.JPanel {
             .add(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 381, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -145,7 +146,7 @@ public class RevenueItemPage extends javax.swing.JPanel {
             .add(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(xDataTable1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
+                    .add(xDataTable1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
                     .add(jPanel1Layout.createSequentialGroup()
                         .add(xButton1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
