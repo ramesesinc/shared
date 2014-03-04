@@ -1,6 +1,6 @@
 <workunit>
     <invokers>
-        <invoker folderid="/explorer/master/treasury"  caption="Revenue Item Mapping" index="2" />
+        <invoker folderid="/explorer/master/treasury"  caption="Revenue Item Mapping" index="2" role="MASTER" />
    </invokers>
    <code>
     <![CDATA[
