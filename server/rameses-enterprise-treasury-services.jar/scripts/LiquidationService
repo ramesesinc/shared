@@ -23,6 +23,9 @@ class LiquidationService  {
 	
 	@ProxyMethod
 	public def init() {
+		def ud = em.getUndepositedLiquidations([liquidatingofficerid: env.USERID] )
+		if(ud ) throw new Exception("There are still undeposited liquidations. ");	
+
 		def o = [objid: "LIQ"+new UID(), cashier:[:]];	
 		o.remittances = em.getUnliquidatedRemittances( [liquidatingofficerid: env.USERID]);
 		if(!o.remittances)

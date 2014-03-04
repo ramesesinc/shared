@@ -4,6 +4,13 @@ where liquidatingofficer_objid like $P{liquidationofficerid}
 	and txnno like $P{txnno}
 order by dtposted desc 
 
+[getUndepositedLiquidations]
+select * from liquidation l 
+	inner join liquidation_cashier_fund lcf on lcf.liquidationid = l.objid 
+	left join bankdeposit_liquidation bl on bl.objid = lcf.objid
+where l.liquidatingofficer_objid =$P{liquidatingofficerid} and 
+	bl.objid is null 
+
 [getUnliquidatedRemittances]
 SELECT 
 	r.objid, 
