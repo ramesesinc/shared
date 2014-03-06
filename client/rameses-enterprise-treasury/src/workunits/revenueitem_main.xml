@@ -50,7 +50,7 @@
             def remove() {
                 if( MsgBox.confirm("You are about to remove this record. Continue?")) {
                     service.removeEntity( entity );
-                    return "_close";
+                    return "_exit";
                 }
             }
             
