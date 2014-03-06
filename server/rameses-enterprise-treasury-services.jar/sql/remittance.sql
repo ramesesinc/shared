@@ -2,10 +2,30 @@
 SELECT r.*,
 CASE WHEN lr.objid IS NULL THEN 0 ELSE 1 END AS liquidated 
 FROM remittance r
-LEFT JOIN liquidation_remittance lr ON r.objid=lr.objid
+LEFT JOIN liquidation_remittance lr ON r.objid=lr.objid 
 WHERE r.collector_objid like $P{collectorid} 
-	and r.txnno like $P{txnno}
+	and r.txnno like $P{searchtext}
 ORDER BY r.collector_name, r.txnno DESC 
+
+[getListBySeries]
+SELECT distinct r.*,
+CASE WHEN lr.objid IS NULL THEN 0 ELSE 1 END AS liquidated 
+FROM remittance r 
+INNER JOIN remittance_cashreceipt rc on rc.remittanceid = r.objid
+inner join cashreceipt c on c.objid = rc.objid 
+LEFT JOIN liquidation_remittance lr ON r.objid=lr.objid 
+WHERE r.collector_objid like $P{collectorid}  
+  and c.receiptno like $P{searchtext} 
+ORDER BY r.collector_name, r.txnno DESC 
+
+[getListByCollector]
+SELECT r.*,
+CASE WHEN lr.objid IS NULL THEN 0 ELSE 1 END AS liquidated 
+FROM remittance r 
+LEFT JOIN liquidation_remittance lr ON r.objid=lr.objid 
+WHERE r.collector_name like $P{searchtext} 
+ORDER BY r.collector_name, r.txnno DESC 
+
 
 [getUnremittedForCollector]
 SELECT c.formno, c.collector_objid, c.controlid, 
