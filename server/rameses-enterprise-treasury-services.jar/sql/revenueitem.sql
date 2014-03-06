@@ -24,6 +24,16 @@ LEFT JOIN (
 WHERE r.title LIKE $P{searchtext} 
 ORDER BY r.code
 
+[getMappingListByCode]
+SELECT r.objid,r.code,r.title,
+a.account_objid, a.account_title, a.account_code, a.objid AS attributeid
+FROM revenueitem r 
+LEFT JOIN (
+	SELECT * FROM revenueitem_attribute WHERE attribute_objid = $P{attributeid}
+) a ON r.objid=a.revitemid
+WHERE r.code LIKE $P{searchtext} 
+ORDER BY r.code
+
 [changeState-approved]
 UPDATE revenueitem SET state='APPROVED' WHERE objid=$P{objid} AND state='DRAFT'
 
@@ -57,3 +67,8 @@ ${sources}
 where (r.title LIKE $P{title}  or r.code LIKE $P{code} ) 
 	and r.state  = 'APPROVED'
 ORDER BY r.code
+
+[deleteRevenueAccountMapping]
+delete from revenueitem_attribute
+where revitemid =$P{revitemid} 
+	and attribute_objid=$P{attributeid}	
