@@ -1,6 +1,32 @@
-<workunit extends="wtemplates/ExplorerViewController.xml" 
-    serviceName="AccountService" context="account" defaultFileType="account">
+<workunit extends="wtemplates/ExplorerViewController.xml" >
     <invokers>
         <invoker folderid="/explorer/master/account" caption="NGAS" index="1" action="init" role="ACCOUNT_DATAMGMT"/>
+        
+        <invoker type="formActions" action="sync" caption="Sync From Cloud" role="ACCOUNT_DATAMGMT" />
    </invokers>
+   <code>
+       import com.rameses.rcp.common.*;
+       import com.rameses.rcp.annotations.*;
+       import com.rameses.osiris2.client.*;
+       import com.rameses.osiris2.common.*;
+       
+       class AccountMgmtController extends ExplorerViewController {
+       
+         String serviceName = 'AccountService'
+         String defaultFileType = 'account'
+         String context = 'account'
+         
+         
+         @Service("AccountService") 
+         def svc
+        
+         
+         void sync() {
+            if(! MsgBox.confirm("This will update your current records. Continue? ")) return;
+         
+            svc.syncFromCloud();
+         }
+            
+       }
+   </code>
 </workunit>
