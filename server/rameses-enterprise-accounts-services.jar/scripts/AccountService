@@ -10,6 +10,9 @@ class AccountService extends ActiveCrudNodeService {
 	@ActiveDB('account')
 	def em;
 
+	@Service(value='AccountService', connection='etracsorg.osiris3')
+	def acctSvc;
+
 	public void afterNode( def selectedNode, def list ) {
 		list.each { 
 			it.caption = it.code + " (" + it.title + ") ";
@@ -67,6 +70,21 @@ class AccountService extends ActiveCrudNodeService {
 	@ProxyMethod
     public def changeParent(o) {
     	return em.changeParent( o );
+    }
+
+    @ProxyMethod 
+    public void syncFromCloud() {
+    	def list = []
+    	def start = 0
+    	while(true){
+    		list = acctSvc.getList([searchtext: '%', _start:start, _limit: 25]);
+    		if(! list ) break;
+
+    		list.each { 
+    			em.save(it);
+    		}
+    		start += 25
+    	}
     }
 
 }
