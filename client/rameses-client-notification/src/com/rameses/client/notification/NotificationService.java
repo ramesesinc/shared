@@ -10,7 +10,7 @@
 package com.rameses.client.notification;
 
 import com.rameses.rcp.framework.ClientContext;
-import com.rameses.rcp.framework.NotificationManager;
+import com.rameses.rcp.framework.NotificationProvider;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,12 +24,12 @@ public final class NotificationService
     
     private NotificationService() {}
     
-    public static NotificationManager getManager() {
-        return ClientContext.getCurrentContext().getNotificationManager(); 
+    public static NotificationProvider getProvider() {
+        return ClientContext.getCurrentContext().getNotificationProvider();
     }
 
     public static synchronized void sendMessage(Object data) {
-        getManager().sendMessage(data);
+        getProvider().sendMessage(data);
     }
 
     public static synchronized void removeMessage(Object data) {
@@ -37,17 +37,17 @@ public final class NotificationService
 
         String objid = getBeanValueAsString(data, "objid");
         String fileid = getBeanValueAsString(data, "fileid");
-        String type = getBeanValueAsString(data, "type");
+        String recipientid = getBeanValueAsString(data, "recipientid");
+        String groupid = getBeanValueAsString(data, "groupid");
         Map params = new HashMap();
-        params.put("type", type);            
         params.put("objid", objid);
         params.put("fileid", fileid);
-        if ("user".equals(type)) { 
+        if (recipientid != null && recipientid.trim().length() > 0) { 
             new UserNotificationService().removeMessage(params);
-        } else if ("group".equals(type)) { 
+        } else if (groupid != null && groupid.trim().length() > 0) { 
             new GroupNotificationService().removeMessage(params); 
         } 
-        getManager().removeMessage(data); 
+        getProvider().removeMessage(data); 
     } 
  
     private static String getBeanValueAsString(Object bean, String name) {

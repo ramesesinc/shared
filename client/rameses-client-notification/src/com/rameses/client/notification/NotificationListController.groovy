@@ -8,7 +8,7 @@ import com.rameses.rcp.framework.ClientContext;
 
 class NotificationListController extends ListController 
 {
-    @Notification
+    @Notifier
     def notifier;
     
     @FormTitle
@@ -19,10 +19,14 @@ class NotificationListController extends ListController
     boolean allowCreate = false;
     
     def categories = [];
+    def eventhandle;
 
+    @Close
+    void onclose() { 
+        eventhandle?.unregister(); 
+    } 
+    
     void init() {
-        println 'notifier-> ' + notifier;
-        
         categories << [name:'user', caption:'My Notifications', type:'user'];        
         Inv.lookup('notification-group').each{
             def groupname = it.properties.group;
@@ -31,6 +35,8 @@ class NotificationListController extends ListController
                 categories << [name: groupname.toUpperCase(), caption:caption, type:'group'];
             } 
         } 
+        
+        eventhandle = notifier.register({ reload(); });
     }
     
     public void beforeFetchList(Map params) {
@@ -47,10 +53,10 @@ class NotificationListController extends ListController
     
     public def open() {
         def item = selectedEntity;
-        if (item != null && item.filetype==null) {
-            item.filetype = 'notification-item'; 
-        } 
-        item.type = selectedMenu?.type;
+        if (item != null) {
+            item.type = selectedMenu?.type;
+            if (!item.filetype) item.filetype='notification-item';
+        }        
         return super.open();
     }
     

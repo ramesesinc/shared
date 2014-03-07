@@ -15,7 +15,7 @@ import com.rameses.osiris2.client.ToolbarUtil;
 import com.rameses.rcp.common.MsgBox;
 import com.rameses.rcp.common.Opener;
 import com.rameses.rcp.framework.ClientContext;
-import com.rameses.rcp.framework.NotificationManager;
+import com.rameses.rcp.framework.NotificationProvider;
 import com.rameses.rcp.framework.UIController;
 import com.rameses.rcp.support.ImageIconSupport;
 import com.rameses.rcp.util.OpenerUtil;
@@ -75,8 +75,16 @@ public class NotificationButton extends JButton implements ActionListener, Toolb
         messages = new LinkedHashMap();
         initComponent(); 
         
-        NotificationManager mgr = ClientContext.getCurrentContext().getNotificationManager();
-        mgr.add(new NotificationHandlerImpl()); 
+        NotificationProvider np = ClientContext.getCurrentContext().getNotificationProvider();
+        if (np != null) np.add(new NotificationHandlerImpl()); 
+        
+        Runnable runnable = new Runnable() {
+            public void run() {
+                NotificationLoader.execute();
+                updateCount();
+            }
+        };
+        EventQueue.invokeLater(runnable);
     } 
 
     protected void initComponent() {
@@ -369,7 +377,7 @@ public class NotificationButton extends JButton implements ActionListener, Toolb
             if (filetype == null || filetype.length() == 0) filetype = "notification-item";
             
             Map params = new HashMap();
-            params.put("message", data);
+            params.put("entity", data);
             Opener opener = null;
             try { 
                 opener = InvokerUtil.lookupOpener(filetype+":open", params);
