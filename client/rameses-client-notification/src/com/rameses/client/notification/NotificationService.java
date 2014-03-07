@@ -36,12 +36,12 @@ public final class NotificationService
         if (data == null) return;
 
         String objid = getBeanValueAsString(data, "objid");
-        String fileid = getBeanValueAsString(data, "fileid");
+        String notificationid = getBeanValueAsString(data, "notificationid");
         String recipientid = getBeanValueAsString(data, "recipientid");
         String groupid = getBeanValueAsString(data, "groupid");
         Map params = new HashMap();
         params.put("objid", objid);
-        params.put("fileid", fileid);
+        params.put("notificationid", notificationid);
         if (recipientid != null && recipientid.trim().length() > 0) { 
             new UserNotificationService().removeMessage(params);
         } else if (groupid != null && groupid.trim().length() > 0) { 
@@ -62,7 +62,7 @@ public final class NotificationService
         }
         
         Class beanClass = bean.getClass();
-        Method method = findGetMethod(beanClass, "objid"); 
+        Method method = findGetMethod(beanClass, "notificationid"); 
         if (method == null) return null;
         
         try { 

@@ -136,7 +136,7 @@ public class NotificationButton extends JButton implements ActionListener, Toolb
             synchronized (LOCK) { 
                 if (data == null) return; 
                 
-                String objid = getBeanValueAsString(data, "objid");
+                String objid = getBeanValueAsString(data, "notificationid");
                 if (objid == null) return;
                 
                 String status = getBeanValueAsString(data, "status");
@@ -161,7 +161,7 @@ public class NotificationButton extends JButton implements ActionListener, Toolb
             synchronized (LOCK) { 
                 if (data == null) return; 
 
-                String objid = getBeanValueAsString(data, "objid");
+                String objid = getBeanValueAsString(data, "notificationid");
                 if (objid != null) remove(objid);
             }
         }
@@ -180,13 +180,13 @@ public class NotificationButton extends JButton implements ActionListener, Toolb
         private int indexOf(Object data) {
             if (data == null) return -1;
             
-            String objid = getBeanValueAsString(data, "objid");
+            String objid = getBeanValueAsString(data, "notificationid");
             for (int i=0; i<root.messages.size(); i++) {
                 Object o = root.messages.get(i);
                 if (o == null) continue;
                 if (o.equals(data)) return i;
                 
-                String sid = getBeanValueAsString(o, "objid");
+                String sid = getBeanValueAsString(o, "notificationid");
                 if (objid != null && objid.equals(sid)) return i;
             }
             return -1;
@@ -210,7 +210,7 @@ public class NotificationButton extends JButton implements ActionListener, Toolb
         }
         
         Class beanClass = bean.getClass();
-        Method method = findGetMethod(beanClass, "objid"); 
+        Method method = findGetMethod(beanClass, "notificationid"); 
         if (method == null) return null;
         
         try { 

@@ -356,7 +356,7 @@ public class NotificationPopup extends JPopupMenu
         }
         
         Class beanClass = bean.getClass();
-        Method method = findGetMethod(beanClass, "objid"); 
+        Method method = findGetMethod(beanClass, "notificationid"); 
         if (method == null) return null;
         
         try { 

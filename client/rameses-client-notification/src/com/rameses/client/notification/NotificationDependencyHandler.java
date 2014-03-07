@@ -47,7 +47,7 @@ public class NotificationDependencyHandler implements DependencyHandler
         }
         
         Class beanClass = bean.getClass();
-        Method method = findGetMethod(beanClass, "objid"); 
+        Method method = findGetMethod(beanClass, "notificationid"); 
         if (method == null) return null;
         
         try { 
@@ -108,13 +108,13 @@ public class NotificationDependencyHandler implements DependencyHandler
 
             String type = root.getBeanValueAsString(data, "type");            
             String objid = root.getBeanValueAsString(data, "objid");
-            String fileid = root.getBeanValueAsString(data, "fileid");
+            String notificationid = root.getBeanValueAsString(data, "notificationid");
             String groupid = root.getBeanValueAsString(data, "groupid");            
             String recipientid = root.getBeanValueAsString(data, "recipientid");
             
             Map params = new HashMap();
             params.put("objid", objid);
-            params.put("fileid", fileid);
+            params.put("notificationid", notificationid);
             if (recipientid != null && recipientid.trim().length() > 0) { 
                 new UserNotificationService().removeMessage(params);
             } else if (groupid != null && groupid.trim().length() > 0) { 
