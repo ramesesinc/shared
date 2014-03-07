@@ -1,7 +1,7 @@
 <workunit extends="wtemplates/ListController.xml">
         
     <invokers>
-        <invoker folderid="/explorer/master/account" caption="Annual Income Targets" index="1" action="init" />
+        <invoker folderid="/explorer/master/account" caption="NGAS Annual Income Targets" index="1" action="init" role="ACCOUNT_DATAMGMT"/>
    </invokers>
    
    <code>

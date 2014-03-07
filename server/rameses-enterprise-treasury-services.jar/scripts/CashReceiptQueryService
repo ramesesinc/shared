@@ -6,14 +6,10 @@ import com.rameses.services.extended.*
 
 class CashReceiptQueryService extends AbstractListService {
 
-	@PersistenceContext("main")
+	@ActiveDB("cashreceipt")
 	def em;
-
-	@Env
-	def env;
 	
 	String schemaName = "cashreceipt";
-	String pagingKeys = "c.objid"
 	
 	@ProxyMethod
 	public def getColumns(def m) {
@@ -30,10 +26,18 @@ class CashReceiptQueryService extends AbstractListService {
 			[name:"remitted", caption:"Remitted", type:'checkbox', checkedValue:1, uncheckedValue: 0],
 		];
 	}
-	
-	void beforeList(o) {
-		o.searchtext = (o.searchtext ? o.searchtext : '') +'%'
-	}
+
+
+	public def getList(params) { 
+		params._pagingKeys = 'c.objid'
+		params.searchtext = (params.searchtext ? params.searchtext : '') +'%'
+				
+		def list = em.getList(params)
+		if(! list ) list = em.getListByPaidBy(params) 
+		if(! list ) list = em.getListByPayer(params) 
+		return list
+	}	
+
 		
 
 		

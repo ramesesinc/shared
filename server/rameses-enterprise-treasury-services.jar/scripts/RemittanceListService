@@ -6,13 +6,11 @@ import com.rameses.services.extended.*
 
 class RemittanceListService extends AbstractListService {
 
-	@PersistenceContext("main")
+	@ActiveDB("remittance")
 	def em; 
 
 	String schemaName = "remittance";
-	String pagingKeys = "r.objid"
-
-
+	
 	@Env
 	def env;
 
@@ -29,11 +27,20 @@ class RemittanceListService extends AbstractListService {
 		];	
 	}	
 
-	void beforeList(o) {
-		o.txnno = (o.searchtext ? o.searchtext : '') +'%'
-		o.collectorid  = '%'
-		if( o._tag == 'bycollector')
-			o.collectorid = env.USERID 
-	}
+
+	public def getList(params) {
+		params._pagingKeys = 'r.objid'
+		params.searchtext = (params.searchtext ? params.searchtext : '') +'%'
+		params.collectorid  = '%'
+		if( params._tag == 'bycollector')
+			params.collectorid = env.USERID 
+				
+		def list = em.getList(params)
+		if(! list ) list = em.getListBySeries(params)
+		if(!list && params._tag == 'all') list = em.getListByCollector( params ) 
+
+
+		return list
+	}	
 	
 }

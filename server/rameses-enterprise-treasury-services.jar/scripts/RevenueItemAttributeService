@@ -22,13 +22,20 @@ class RevenueItemAttributeService extends ActiveCrudService {
 			o.searchtext = '%';
 		else
 			o.searchtext += "%";	
-		return em.getMappingList( o );
+		def list  = em.getMappingList( o );
+		if(! list ) list = em.getMappingListByCode(o)
+		return list;
 	}
 
 
 	@ProxyMethod 
 	public def getAttributeTypes() {
 		return em.getAttributeTypes();
+	}
+
+	public def create( o ) {
+		em.deleteRevenueAccountMapping([revitemid: o.revitemid, attributeid: o.attribute.objid])
+		return super.create(o);
 	}
 
 }

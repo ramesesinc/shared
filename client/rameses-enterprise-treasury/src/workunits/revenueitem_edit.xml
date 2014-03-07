@@ -28,7 +28,7 @@
         
         void create() {
             this.mode = 'create'
-            this.entity = [objid: 'REVITEM' + new UID(), defaultvalue:0.0];
+            this.entity = [objid: 'REVITEM' + new UID(), defaultvalue:0.0, state:'APPROVED'];
         }
         
         void edit() {
