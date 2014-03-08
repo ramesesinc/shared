@@ -45,11 +45,10 @@
                         def r = saveHandler(entity);
                         if ( r != null) return r
                     }    
-                    return Inv.lookupOpener("revenueitem:open", [entity:entity])
+                    return Inv.lookupOpener("revenueitem:open", [entity:entity, initiator: 'create']);
                 }
             }
             else {
-                println entity
                 entity = service.update( entity );
                 if(saveHandler) {
                     def r = saveHandler(entity);
