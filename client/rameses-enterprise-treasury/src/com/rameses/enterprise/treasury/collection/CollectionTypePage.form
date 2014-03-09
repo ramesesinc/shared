@@ -17,14 +17,12 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="xFormPanel1" alignment="0" pref="459" max="32767" attributes="1"/>
                   <Group type="102" alignment="1" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="xSubFormPanel1" alignment="0" pref="449" max="32767" attributes="1"/>
-                          <Component id="xFormPanel1" alignment="0" pref="449" max="32767" attributes="1"/>
-                      </Group>
+                      <Component id="xSubFormPanel1" pref="449" max="32767" attributes="1"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
                   <Component id="jLabel1" alignment="0" min="-2" pref="90" max="-2" attributes="0"/>
@@ -36,11 +34,11 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="xFormPanel1" min="-2" pref="99" max="-2" attributes="0"/>
+              <Component id="xFormPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="xSubFormPanel1" pref="153" max="32767" attributes="0"/>
+              <Component id="xSubFormPanel1" pref="84" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -103,6 +101,27 @@
             <Property name="required" type="boolean" value="true"/>
           </Properties>
         </Component>
+        <Component class="com.rameses.rcp.control.XCheckBox" name="xCheckBox1">
+          <Properties>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder bottom="0" left="0" right="0" top="0"/>
+              </Border>
+            </Property>
+            <Property name="caption" type="java.lang.String" value=""/>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[0, 0, 0, 0]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="entity.allowbatch"/>
+            <Property name="text" type="java.lang.String" value="Allow batch"/>
+          </Properties>
+        </Component>
+        <Component class="com.rameses.rcp.control.XTextField" name="xTextField3">
+          <Properties>
+            <Property name="caption" type="java.lang.String" value="Barcode Key"/>
+            <Property name="name" type="java.lang.String" value="entity.barcodekey"/>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="com.rameses.rcp.control.XSubFormPanel" name="xSubFormPanel1">
@@ -124,7 +143,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="153" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="84" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>

@@ -21,10 +21,15 @@ class OrgService extends ActiveCrudListService {
 	@ProxyMethod
 	public def getColumns(o) {
 		return[
+			[name:'code', caption:'Code', maxWidth:150 ], 
 			[name:'name', caption:'Name' ], 
-			[name:'title', caption:'Title' ], 
 		];
 	}
+
+
+	public void beforeCreate(o) {
+		o.root = 0;
+	}	
 
 	public void afterOpen(o) {
 		if(o.parent?.objid) {
