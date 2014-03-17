@@ -15,7 +15,7 @@ import com.rameses.osiris2.client.ToolbarUtil;
 import com.rameses.rcp.common.MsgBox;
 import com.rameses.rcp.common.Opener;
 import com.rameses.rcp.framework.ClientContext;
-import com.rameses.rcp.framework.NotificationManager;
+import com.rameses.rcp.framework.NotificationProvider;
 import com.rameses.rcp.framework.UIController;
 import com.rameses.rcp.support.ImageIconSupport;
 import com.rameses.rcp.util.OpenerUtil;
@@ -75,8 +75,16 @@ public class NotificationButton extends JButton implements ActionListener, Toolb
         messages = new LinkedHashMap();
         initComponent(); 
         
-        NotificationManager mgr = ClientContext.getCurrentContext().getNotificationManager();
-        mgr.add(new NotificationHandlerImpl()); 
+        NotificationProvider np = ClientContext.getCurrentContext().getNotificationProvider();
+        if (np != null) np.add(new NotificationHandlerImpl()); 
+        
+        Runnable runnable = new Runnable() {
+            public void run() {
+                NotificationLoader.execute();
+                updateCount();
+            }
+        };
+        EventQueue.invokeLater(runnable);
     } 
 
     protected void initComponent() {
@@ -128,7 +136,7 @@ public class NotificationButton extends JButton implements ActionListener, Toolb
             synchronized (LOCK) { 
                 if (data == null) return; 
                 
-                String objid = getBeanValueAsString(data, "objid");
+                String objid = getBeanValueAsString(data, "notificationid");
                 if (objid == null) return;
                 
                 String status = getBeanValueAsString(data, "status");
@@ -153,7 +161,7 @@ public class NotificationButton extends JButton implements ActionListener, Toolb
             synchronized (LOCK) { 
                 if (data == null) return; 
 
-                String objid = getBeanValueAsString(data, "objid");
+                String objid = getBeanValueAsString(data, "notificationid");
                 if (objid != null) remove(objid);
             }
         }
@@ -172,13 +180,13 @@ public class NotificationButton extends JButton implements ActionListener, Toolb
         private int indexOf(Object data) {
             if (data == null) return -1;
             
-            String objid = getBeanValueAsString(data, "objid");
+            String objid = getBeanValueAsString(data, "notificationid");
             for (int i=0; i<root.messages.size(); i++) {
                 Object o = root.messages.get(i);
                 if (o == null) continue;
                 if (o.equals(data)) return i;
                 
-                String sid = getBeanValueAsString(o, "objid");
+                String sid = getBeanValueAsString(o, "notificationid");
                 if (objid != null && objid.equals(sid)) return i;
             }
             return -1;
@@ -202,7 +210,7 @@ public class NotificationButton extends JButton implements ActionListener, Toolb
         }
         
         Class beanClass = bean.getClass();
-        Method method = findGetMethod(beanClass, "objid"); 
+        Method method = findGetMethod(beanClass, "notificationid"); 
         if (method == null) return null;
         
         try { 
@@ -369,7 +377,7 @@ public class NotificationButton extends JButton implements ActionListener, Toolb
             if (filetype == null || filetype.length() == 0) filetype = "notification-item";
             
             Map params = new HashMap();
-            params.put("message", data);
+            params.put("entity", data);
             Opener opener = null;
             try { 
                 opener = InvokerUtil.lookupOpener(filetype+":open", params);

@@ -1,6 +1,6 @@
 <workunit>
     <invokers>
-        <invoker type="loader:after" caption="group-notification-loader" action="init" target="process" index="0"/>
+        <invoker type="loader" caption="group-notification-loader" action="init" target="process" index="100"/>
     </invokers>
     
     <code>
@@ -12,14 +12,26 @@
     import com.rameses.rcp.framework.ClientContext;
     import com.rameses.client.notification.*;
     
-    class GroupNotificationLoaderController 
+    class GroupNotificationLoaderController implements Runnable
     {   
+        @Notifier
+        def notifier;
+        
         def groups = [];
         
-        def init() { 
+        def init() {
+            NotificationLoader.add(this); 
+            return '_close';        
+        } 
+        
+        void run() { 
             def env = ClientContext.currentContext.appEnv;
-            if (!env['ws.host']) return;
-            
+            if (!env['ws.host']) {
+                println 'ws.host env not set';
+                return;
+            } 
+
+            println 'group-notification-loader started...';            
             Inv.lookup('notification-group').each{
                 def groupname = it.properties.group;
                 if (groupname) groups.add(groupname.toUpperCase()); 
@@ -44,11 +56,10 @@
                 onmessage   : {o-> 
                     if (!o?.groupid) return;
                     if (groups.contains(o.groupid.toUpperCase())) { 
-                        Notification.sendMessage(o); 
+                        notifier.sendMessage(o); 
                     } 
                 } 
             ]); 
-            return '_close'; 
         }         
     } 
     ]]> 

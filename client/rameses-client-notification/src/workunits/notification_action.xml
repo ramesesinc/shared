@@ -14,8 +14,7 @@
         public class NotificationTaskActionController 
         {
             def invoke() { 
-                println 'invoking notification button...';
-                return null;
+                return null; 
             } 
         }
     ]]>

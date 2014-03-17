@@ -1,6 +1,6 @@
 <workunit>
     <invokers>
-        <invoker type="loader:after" caption="user-notification-loader" action="init" target="process" index="0"/>
+        <invoker type="loader" caption="user-notification-loader" action="init" target="process" index="100"/>
     </invokers>
     
     <code>
@@ -12,16 +12,28 @@
     import com.rameses.rcp.framework.ClientContext;
     import com.rameses.client.notification.*;
     
-    class UserNotificationLoaderController 
+    class UserNotificationLoaderController implements Runnable
     {   
+        @Notifier
+        def notifier;
+    
         def recipientid;
         
-        def init() { 
+        def init() {
+            NotificationLoader.add(this); 
+            return '_close';
+        } 
+        
+        void run() { 
             def env = ClientContext.currentContext.appEnv;
-            if (!env['ws.host']) return;
-            
+            if (!env['ws.host']) {
+                println 'ws.host env not set';
+                return;
+            }
+
+            println 'user-notification-loader started...';            
             def headers = ClientContext.currentContext.headers;
-            recipientid = headers.USERID;
+            recipientid = headers.USERID; 
             
             WebsocketClient.open([ 
                 protocol        : 'user', 
@@ -41,11 +53,10 @@
                 
                 onmessage   : {o-> 
                     if (o?.recipientid == recipientid) { 
-                        Notification.sendMessage(o); 
+                        notifier.sendMessage(o); 
                     } 
                 } 
             ]);             
-            return '_close'; 
         }         
     } 
     ]]> 
