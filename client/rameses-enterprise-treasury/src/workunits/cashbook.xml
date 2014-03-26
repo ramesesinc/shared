@@ -1,7 +1,7 @@
 <workunit>
     
    <invokers>
-         <invoker type="cashbook:open" caption="Cashbook" action="open" role="MASTER" permission="cashbook.open"/>
+         <invoker type="cashbook:open" caption="Cashbook" action="open" role="MASTER,COLLECTOR,LIQUIDATING_OFFICER,CASHIER" permission="cashbook.open"/>
          <invoker type="cashbook:create" caption="Cashbook" action="create" role="MASTER" permission="cashbook.create"/>
          
          <invoker type="formActions" caption="Details" action="showDetails" visibleWhen="#{page=='default' &amp;&amp; entity.state=='APPROVED'}"/>
