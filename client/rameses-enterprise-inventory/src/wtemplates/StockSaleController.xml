@@ -11,8 +11,8 @@
     </invokers>
     
     <pages>
-       <page name="enterqty" template="com.rameses.enterprise.inventory.stock.StockIssuePage"/>
-        <page name="default" template="com.rameses.enterprise.inventory.stock.StockIssueResultPage"/>
+        <page name="enterqty" template="com.rameses.enterprise.inventory.stock.StockSalePage"/>
+        <page name="default" template="com.rameses.enterprise.inventory.stock.StockSaleResultPage"/>    
     </pages>
     
 </workunit>
