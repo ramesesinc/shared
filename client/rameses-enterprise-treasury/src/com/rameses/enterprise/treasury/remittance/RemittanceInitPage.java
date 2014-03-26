@@ -36,6 +36,7 @@ public class RemittanceInitPage extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         formPanel3 = new com.rameses.rcp.util.FormPanel();
         xLookupField1 = new com.rameses.rcp.control.XLookupField();
+        xLabel1 = new com.rameses.rcp.control.XLabel();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -143,6 +144,13 @@ public class RemittanceInitPage extends javax.swing.JPanel {
         jPanel1.add(jPanel2);
         jPanel2.setBounds(10, 10, 560, 70);
 
+        xLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        xLabel1.setExpression("#{entity.message}");
+        xLabel1.setFont(new java.awt.Font("Tahoma", 1, 12));
+        xLabel1.setForeground(new java.awt.Color(204, 0, 0));
+        jPanel1.add(xLabel1);
+        xLabel1.setBounds(10, 380, 560, 40);
+
         add(jPanel1, java.awt.BorderLayout.CENTER);
 
     }// </editor-fold>//GEN-END:initComponents
@@ -154,6 +162,7 @@ public class RemittanceInitPage extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private com.rameses.rcp.control.XDataTable xDataTable1;
+    private com.rameses.rcp.control.XLabel xLabel1;
     private com.rameses.rcp.control.XLookupField xLookupField1;
     private com.rameses.rcp.control.XNumberField xNumberField1;
     // End of variables declaration//GEN-END:variables
