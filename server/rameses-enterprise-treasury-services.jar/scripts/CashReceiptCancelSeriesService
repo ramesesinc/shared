@@ -22,7 +22,12 @@ class CashReceiptCancelSeriesService  {
 		receipt.paidbyaddress = "-"
 		receipt.txndate = dateService.serverDate;
 		receipt.state = "CANCELLED"
-		em.create("cashreceipt", receipt ); 
+		receipt.amount = 0.0 
+		receipt.totalcash = 0.0
+		receipt.totalnoncash=0.0
+		receipt.cashchange=0.0
+		receipt.totalcredit=0.0
+		em.create("cashreceipt", receipt );  
 
 
 		def v = [objid: "CRCT"+new UID()];

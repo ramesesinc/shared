@@ -10,7 +10,7 @@ class AccountService extends ActiveCrudNodeService {
 	@ActiveDB('account')
 	def em;
 
-	@Service(value='AccountService', connection='etracsorg.osiris3')
+	@Service(value='NGASAccountService', connection='etracsorg.osiris3')
 	def acctSvc;
 
 	public void afterNode( def selectedNode, def list ) {

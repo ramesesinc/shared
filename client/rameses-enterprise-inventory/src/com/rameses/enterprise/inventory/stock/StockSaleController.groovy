@@ -7,7 +7,7 @@ import com.rameses.osiris2.common.*
 import java.rmi.server.*;
 import com.rameses.util.*;
 
-public abstract class StockIssueController {
+public abstract class StockSaleController {
 
     @Binding
     def binding
@@ -15,8 +15,8 @@ public abstract class StockIssueController {
     @Service("StockInventoryService")
     def service;
         
-    @Service("StockIssueService")
-    def issueSvc;
+    @Service("StockSaleService")
+    def saleSvc;
 
     @Service("StockRequestService")
     def stockReqSvc;
@@ -28,14 +28,13 @@ public abstract class StockIssueController {
 
     def create() {
         entity = [items:[]];
-        entity.objid = "STKISS"+new UID();
+        entity.objid = "STKSL"+new UID();
         return "initial";
     }
 
     def open() {
-        entity = issueSvc.open( entity ) 
+        entity = saleSvc.open( entity ) 
         if( entity.items )  selectedItem = entity.items[0] 
-        getRenderer()
         mode = 'read'
         return "default"
     }
@@ -45,7 +44,7 @@ public abstract class StockIssueController {
         entity.request = request;
         entity.reqtype = r.reqtype;
         entity.itemclass = r.itemclass;
-        entity.issueto = request.requester;
+        entity.soldto = request.requester;
         r.items.each {
             def o = [:];
             o.item = it.item;
@@ -70,7 +69,18 @@ public abstract class StockIssueController {
         }
     ] as EditorListModel;
 
-   
+    def getSaleHandler() {
+        if(!selectedItem) return null;
+        if(selectedItem.handler ) {
+            String n = "stocksaleitem:" + selectedItem.handler.toLowerCase() 
+            try {
+                return InvokerUtil.lookupOpener( n, [item:selectedItem] );
+            } catch(e) { println e.message; }
+        }
+        else {
+            return null;
+        }
+    }
 
     def process() {
         if( !entity.items.find{ it.qtyissued > 0  })
@@ -78,6 +88,7 @@ public abstract class StockIssueController {
         entity = service.getAvailable(entity);   
         itemModel.reload();
         mode = "process";
+        title = "Specify Sale Cost";
         return "default";
     }
 
@@ -88,15 +99,11 @@ public abstract class StockIssueController {
 
     void save() {
         if(MsgBox.confirm("You are about to submit this transaction. Continue?")) {
-            entity = issueSvc.create(entity);
+            entity = saleSvc.create(entity);
             mode ="read";
         }
     }
 
-    String getRenderer() {
-        if(!selectedItem) return "";
-        return TemplateProvider.instance.getResult( "com/rameses/handlers/stockissue/" + selectedItem.handler +".gtpl", [entity:selectedItem] );            
-    }
     
     def print() {
         entity.reqno = entity.request.reqno;
@@ -114,8 +121,6 @@ public abstract class StockIssueController {
             }
             itm.series = srs.join(',')
         }   
-
-        
 
         return InvokerUtil.lookupOpener("stockrequest:ris", [entity: entity]);
     }
