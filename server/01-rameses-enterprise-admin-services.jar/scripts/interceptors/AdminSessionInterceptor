@@ -58,9 +58,13 @@ class AdminSessionInterceptor
 		if (!info) throw new Exception("'"+username+"' user account does not exist"); 
 
 		def fullname = new StringBuffer();
-		fullname.append(info.firstname);
-		if (info.middlename) fullname.append(" " + info.middlename);
-		fullname.append(" "+info.lastname);
+		if (isSA) {
+			fullname.append("System Administrator"); 
+		} else {
+			fullname.append(info.firstname);
+			if (info.middlename) fullname.append(" " + info.middlename);
+			fullname.append(" "+info.lastname);
+		}
 
 		def result = evt.result;
 		result.USERID    = info.objid;
