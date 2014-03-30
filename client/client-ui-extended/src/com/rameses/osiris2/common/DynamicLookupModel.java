@@ -11,6 +11,8 @@ package com.rameses.osiris2.common;
 
 import com.rameses.rcp.common.LookupDataSource;
 import com.rameses.rcp.common.LookupSelector;
+import java.lang.reflect.Method;
+import java.util.Map;
 
 /**
  *
@@ -23,10 +25,23 @@ public class DynamicLookupModel extends BasicListModel implements LookupDataSour
     private String returnItemValue;
     private String returnFields; 
     
+    private Object onselect;
+    private Object onempty;
+    
     public DynamicLookupModel() {
-        
+        super();
     }
 
+    // <editor-fold defaultstate="collapsed" desc=" Getters / Setters ">  
+    
+    public Object getOnselect() { return onselect; }    
+    public void setOnselect(Object onselect) { this.onselect = onselect; }
+    
+    public Object getOnempty() { return onempty; }    
+    public void setOnempty(Object onempty) { this.onempty = onempty; }
+
+    // </editor-fold>
+    
     // <editor-fold defaultstate="collapsed" desc=" LookupDataSource implementation ">  
 
     public LookupSelector getSelector() { return selector; }    
@@ -50,8 +65,7 @@ public class DynamicLookupModel extends BasicListModel implements LookupDataSour
     }   
     
     public Object getValue() { 
-        //This method needs to be overidden by the implementors 
-        return null; 
+        return getSelectedValue(); 
     } 
     
     public boolean show(String searchtext) { 
@@ -63,7 +77,7 @@ public class DynamicLookupModel extends BasicListModel implements LookupDataSour
     // </editor-fold>    
     
     // <editor-fold defaultstate="collapsed" desc=" helper/owner methods ">
-        
+
     protected void onselect(Object item) {} 
     protected void oncancel() {}
     
@@ -91,6 +105,23 @@ public class DynamicLookupModel extends BasicListModel implements LookupDataSour
     protected void onfinalize() throws Throwable {
         selector = null;
     }    
+    
+    protected boolean hasMethod(Object bean, String methodName) {
+        if (bean == null || methodName == null) return false; 
+        
+        Class beanClass = bean.getClass();
+        try { 
+            Method[] methods = beanClass.getMethods();
+            for (Method m : methods) {
+                if (m.getName().equals(methodName)) {
+                    return true;
+                } 
+            }
+            return false;
+        } catch(Throwable t) {
+            return false; 
+        }
+    }
     
     // </editor-fold>    
 }

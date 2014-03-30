@@ -21,10 +21,25 @@ class RemittanceService  {
 	@Service("CashBookPostService")
 	def cashBook;
 	
+
 	@ProxyMethod
 	public def init() { 
-		def o = [objid: "REM"+new UID()];	
-		o.items = em.getUnremittedForCollector([collectorid: env.USERID]);
+		//check first if there are still remaining collection on the end of the month 
+		def info = [collectorid: env.USERID, txndate: getMonthFirstDate( dateSvc.serverDate ) ];
+		def items = em.getUnremittedForCollector( info );
+		def o = [objid: "REM"+new UID()];		
+		if( items) { 
+			o.items = items 
+			o.endofmonth = true 
+			o.message = "End of the month remittance only. Please remit again for the remaining collection."
+		} else {
+			info.txndate = dateSvc.serverDate
+			o.message = ""
+		}
+		o.items = em.getUnremittedForCollector( info );
+		if(! o.items)
+			throw new Exception("No collections to be remitted.   ");
+
 		o.items.each {
 			it.cancelSeriesList = em.getUnremittedCancelSeries( [collectorid:it.collector.objid, controlid: it.controlid ])
 		}
@@ -36,10 +51,10 @@ class RemittanceService  {
 			o.totalcash = o.items.sum{ it.totalcash };	
 			o.totalnoncash = o.items.sum{ it.totalnoncash };	
 		}
-		o.checks = em.getUnremittedChecks( [collectorid: env.USERID] );
+		o.checks = em.getUnremittedChecks( info );
 		o.collector = [objid:env.USERID, name:env.FULLNAME, title:env.JOBTITLE ];
 		//used for checking
-		o.checksum = em.getUnremittedTotals( [collectorid: env.USERID] );
+		o.checksum = em.getUnremittedTotals( info  );
 		return o;
 	}
 
@@ -51,8 +66,10 @@ class RemittanceService  {
 		if(! o.cashbreakdown ) throw new Exception("Cash breakdown has been change during the submission.Please recreate transaction");
 
 		//compare checksum. deny if changed
+		def p = [remittanceid: o.objid, collectorid: o.collector.objid, txndate : dateSvc.serverDate]
+		if( o.endofmonth ) p.txndate = getMonthFirstDate( p.txndate )
 		def checksum = o.checksum;
-		def checktest = em.getUnremittedTotals( [collectorid: env.USERID] );
+		def checktest = em.getUnremittedTotals( p );
 		if(checksum!=checktest)
 			throw new Exception("Changes have been made prior to remittance. Please redo transaction");
 
@@ -64,12 +81,11 @@ class RemittanceService  {
 		em.create( o );
 
 		//insert the cash receipts
-		def m = [remittanceid: o.objid, collectorid: o.collector.objid ];
-		em.collectReceipts(m);
-		em.collectChecks(m);
+		em.collectReceipts(p);
+		em.collectChecks(p);
 		
 		//update cashbook to add new entry
-		def flist = em.getRemittedFundTotals(m);
+		def flist = em.getRemittedFundTotals(p);
 		flist.each {
 				def detail = [:];
 				detail.fundid = it.fund.objid;
@@ -102,8 +118,13 @@ class RemittanceService  {
 
 	@ProxyMethod
 	public def getUnremittedReceipts(o) {
-		def m = [collectorid: o.collector.objid];
-		return em.getUnremittedReceipts(m);
+		def m = [collectorid: o.collector.objid, txndate: getMonthFirstDate( dateSvc.serverDate )];
+		def list =  em.getUnremittedReceipts(m);
+		if( !list ) {
+			m.txndate = dateSvc.serverDate;
+			list = em.getUnremittedReceipts(m);
+		}
+		return list;
 	}
 
 	@ProxyMethod
@@ -111,4 +132,11 @@ class RemittanceService  {
 		return em.getRemittedReceipts(o);
 	}
 
+
+	public def getMonthFirstDate( dt ) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(dt);
+        cal.set( Calendar.DAY_OF_MONTH, 1 );
+        return cal.getTime();
+    }
 }

@@ -112,6 +112,22 @@ public abstract class AbstractCashReceipt {
         ]);
     }
 
+
+    def cancelSeries(){
+        def oldentity = entity.clone()
+        return InvokerUtil.lookupOpener( "cashreceipt:cancelseries", [entity:oldentity,
+            handler: { o-> 
+                def newentity = service.init( o );
+                entity.objid = newentity.objid 
+                entity.stub = newentity.stub
+                entity.receiptno = newentity.receiptno;
+                entity.controlid = newentity.controlid;
+		entity.series = newentity.series;
+                binding.refresh("entity.*") ;
+            }
+        ]); 
+    }
+
     //this is overridable bec. some might not follow this convention.
     public void validateBeforePost() {
     }
@@ -140,16 +156,6 @@ public abstract class AbstractCashReceipt {
             completed = true;
             return "completed";
         }
-    }
-
-    def cancelSeries(){
-        def cseries = entity.clone() 
-        return InvokerUtil.lookupOpener( "cashreceipt:cancelseries", [entity:entity,
-            handler: { o-> 
-                entity = service.init( o ) 
-                binding.refresh("entity.*") ;
-            }
-        ]); 
     }
 
     def findReportOpener(def reportData) {

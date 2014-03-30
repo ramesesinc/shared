@@ -26,7 +26,6 @@ LEFT JOIN liquidation_remittance lr ON r.objid=lr.objid
 WHERE r.collector_name like $P{searchtext} 
 ORDER BY r.collector_name, r.txnno DESC 
 
-
 [getUnremittedForCollector]
 SELECT c.formno, c.collector_objid, c.controlid, 
   MIN(series) as startseries, 
@@ -40,6 +39,7 @@ FROM cashreceipt c
 LEFT JOIN remittance_cashreceipt r ON c.objid=r.objid
 LEFT JOIN cashreceipt_void v ON c.objid=v.receiptid
 WHERE r.objid IS NULL
+and c.receiptdate < $P{txndate}
 AND c.state in  ('POSTED', 'CANCELLED') 
 AND c.collector_objid = $P{collectorid}
 GROUP by c.collector_objid, c.formno, c.controlid
@@ -62,6 +62,7 @@ FROM cashreceipt c
 LEFT JOIN remittance_cashreceipt r ON c.objid=r.objid
 LEFT JOIN cashreceipt_void v ON c.objid=v.receiptid
 WHERE r.objid IS NULL
+and c.receiptdate < $P{txndate}
 AND c.state = 'POSTED'
 AND c.collector_objid = $P{collectorid}
 GROUP by c.collector_objid
@@ -76,6 +77,7 @@ LEFT JOIN remittance_cashreceipt r ON c.objid=r.objid
 LEFT JOIN cashreceipt_void v ON c.objid=v.receiptid
 WHERE r.objid IS NULL
 AND c.state = 'POSTED'
+and c.txndate < $P{txndate}  
 AND c.collector_objid = $P{collectorid}
 ORDER BY c.receiptno
 
@@ -90,6 +92,7 @@ INNER JOIN cashreceiptpayment_check crp ON crp.receiptid=cash.objid
 LEFT JOIN cashreceipt_void cv ON crp.receiptid = cv.receiptid
 LEFT JOIN remittance_cashreceipt rc ON rc.objid=cash.objid
 WHERE rc.objid IS NULL 
+and cash.receiptdate < $P{txndate} 
 AND cash.state = 'POSTED'
 AND cash.collector_objid = $P{collectorid}
 
@@ -99,6 +102,7 @@ SELECT c.objid, $P{remittanceid}
 FROM cashreceipt c 
 LEFT JOIN remittance_cashreceipt r ON c.objid=r.objid
 WHERE r.objid IS NULL 
+and c.receiptdate < $P{txndate} 
 AND c.state in ('POSTED', 'CANCELLED')
 AND c.collector_objid = $P{collectorid}
 
@@ -114,6 +118,7 @@ LEFT JOIN remittance_cashreceipt rc ON rc.objid=cash.objid
 LEFT JOIN cashreceipt_void cv ON crp.receiptid = cv.receiptid
 WHERE rc.remittanceid = $P{remittanceid}
 AND cash.state = 'POSTED'
+and cash.receiptdate < $P{txndate} 
 
 [getRemittedFundTotals]
 SELECT ri.fund_objid, ri.fund_title, SUM(chi.amount) AS amount
@@ -123,7 +128,8 @@ INNER JOIN cashreceiptitem chi on chi.receiptid = ch.objid
 INNER JOIN revenueitem ri on ri.objid = chi.item_objid
 LEFT JOIN cashreceipt_void cv ON c.objid = cv.receiptid 
 WHERE c.remittanceid = $P{remittanceid}
-AND cv.objid IS NULL
+AND cv.objid IS NULL 
+and ch.receiptdate < $P{txndate}
 GROUP BY c.remittanceid, ri.fund_objid, ri.fund_title
 
 
