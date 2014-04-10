@@ -49,7 +49,6 @@ class BankDepositService  {
 	
 	@ProxyMethod 
 	public def process( params ) {
-		println params;
 		def o = [:]	
 		o.fundsummaries = adb.getUndepositedByFund(params)
 		o.fundsummaries.each {
@@ -59,7 +58,6 @@ class BankDepositService  {
 		}	
 		
 		o.undepositedChecks = adb.getUndepositedChecks(params)
-		println o
 		return o;
 	}
 
