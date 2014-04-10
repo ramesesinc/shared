@@ -28,6 +28,7 @@ class RemittanceService  {
 		def info = [collectorid: env.USERID, txndate: getMonthFirstDate( dateSvc.serverDate ) ];
 		def items = em.getUnremittedForCollector( info );
 		def o = [objid: "REM"+new UID()];		
+		o.message = ""
 		if( items) { 
 			o.items = items 
 			o.endofmonth = true 
@@ -137,6 +138,6 @@ class RemittanceService  {
         Calendar cal = Calendar.getInstance();
         cal.setTime(dt);
         cal.set( Calendar.DAY_OF_MONTH, 1 );
-        return cal.getTime();
+        return dateSvc.format('yyyy-MM-dd', cal.getTime()) + " 00:00:00";
     }
 }
